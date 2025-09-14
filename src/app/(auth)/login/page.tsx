@@ -62,9 +62,6 @@ const LoginPage = () => {
               className="pr-10"
               {...form.register("password")}
             ></Input>
-            <p className="text-end mt-1.5 text-primary font-semibold">
-              Lupa password?
-            </p>
 
             {/* <ErrorMessageInput
               message={form.formState.errors.password?.message}
