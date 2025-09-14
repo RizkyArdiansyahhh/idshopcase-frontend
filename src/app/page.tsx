@@ -127,6 +127,68 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="h-screen w-screen py-6 px-16 flex flex-row gap-3">
+        <div className="w-[30%] h-full rounded-2xl overflow-hidden  ">
+          <div className="relative w-full h-full ">
+            <Image
+              src={"/images/product-4.jpeg"}
+              alt="Image-Section-4"
+              fill
+              className="object-cover"
+            ></Image>
+            <div className="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-2/5 flex flex-col justify-between px-5 pt-2 pb-5">
+              <div className="text-white">
+                <h2 className="text-4xl font-heading font-black my-5">
+                  Make Your Own Keychain
+                </h2>
+                <p className="font-garamond text-2xl w-[90%]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                </p>
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  size={"xl"}
+                  variant={"outline"}
+                  className="px-10 text-2xl font-medium"
+                >
+                  Custom Now
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-[70%] h-full rounded-2xl overflow-hidden">
+          <div className="relative w-full h-full ">
+            <Image
+              src={"/images/image-section-4-1.jpeg"}
+              alt="Image-Section-4"
+              fill
+              className="object-cover"
+            ></Image>
+            <div className="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-1/3 flex flex-col justify-between px-5 pt-2 pb-5">
+              <div className="text-white">
+                <h2 className="text-4xl font-heading font-black my-5">
+                  Create Your Creative Popsocket
+                </h2>
+                <p className="font-garamond text-2xl w-[90%]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                </p>
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  size={"xl"}
+                  variant={"outline"}
+                  className="px-10 text-2xl font-medium bg-white text-foreground"
+                >
+                  Custom Now
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <footer className="w-screen h-[75vh] bg-foreground">
         <div className="h-full flex items-center pb-36 px-20">
           <div className="w-1/4 text-white flex flex-col gap-4">
