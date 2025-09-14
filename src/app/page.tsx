@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layouts/navbar";
 import { SectionLayout } from "@/components/layouts/section-layout";
+import { Button } from "@/components/ui/button";
 import { CardProduct } from "@/components/ui/card-product";
 import { FooterLink } from "@/components/ui/link";
 import { products } from "@/mocks/products";
@@ -60,7 +61,72 @@ export default function Home() {
         Ut autem fugiat sit delectus suscipit nemo odit quis similique ratione,
         sint provident, nostrum recusandae earum reprehenderit!
       </SectionLayout>
-      <section></section>
+      <section className="h-screen w-screen py-6 px-16 flex flex-row gap-3">
+        <div className="w-2/6 h-full bg-white rounded-2xl overflow-hidden  border-2">
+          <div className="w-full h-1/2 flex flex-col justify-between px-3 pt-8 pb-3">
+            <div>
+              <h2 className="text-4xl font-heading font-black my-5">
+                Hero Section
+              </h2>
+              <p className="text-foreground font-garamond text-2xl w-[90%]">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
+                autem! Officia culpa praesentium delectus atque. Est minima
+                iusto vero quidem!
+              </p>
+            </div>
+            <div className="flex justify-end">
+              <Button
+                variant={"outline"}
+                size={"xl"}
+                className="bg-gradient-to-r from-muted-foreground to-foreground px-10 text-2xl font-medium"
+              >
+                Custom Now
+              </Button>
+            </div>
+          </div>
+          <div className="relative w-full h-1/2">
+            <Image
+              src={"/images/image-section-3-1.jpg"}
+              fill
+              alt="Image-Section-3"
+              className="object-cover object-center"
+            ></Image>
+          </div>
+        </div>
+        <div className="relative w-4/6 h-full bg-blue-400 rounded-2xl overflow-hidden">
+          <Image
+            src={"/images/product-1.jpeg"}
+            alt="Image-Section-3"
+            fill
+            className="object-cover"
+          ></Image>
+          <div className="top-0 right-0 absolute h-full w-1/2 bg-black/[76%] backdrop-blur-lg rounded-2xl flex flex-col justify-between px-5 pt-8 pb-5">
+            <div className="text-white">
+              <h2 className="text-4xl font-heading font-black my-5">
+                Hero Section
+              </h2>
+              <p className="font-garamond text-2xl w-[90%]">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                inventore dolore corrupti velit similique ipsa, dicta illum
+                facere distinctio ut dolorem, quidem temporibus voluptatibus
+                accusantium laudantium veniam deserunt? Explicabo recusandae
+                laborum fugit quo error, ut cum soluta aspernatur provident,
+                optio mollitia ipsa.
+              </p>
+            </div>
+            <div className="flex justify-end">
+              <Button
+                size={"xl"}
+                variant={"outline"}
+                className="px-10 text-2xl font-medium"
+              >
+                Custom Now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
       <footer className="w-screen h-[75vh] bg-foreground">
         <div className="h-full flex items-center pb-36 px-20">
           <div className="w-1/4 text-white flex flex-col gap-4">

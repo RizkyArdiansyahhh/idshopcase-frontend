@@ -32,7 +32,7 @@ export const SectionLayout = (props: SectionLayoutPropsType) => {
           } absolute top-0 h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10 flex flex-col justify-between`}
         >
           <div>
-            <h2 className="text-5xl font-heading text-white font-black my-7">
+            <h2 className="text-4xl font-heading text-white font-black my-7">
               {title}
             </h2>
             <p className="font-garamond text-white text-2xl w-[90%]">
