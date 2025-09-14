@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import ErrorMessageInput from "@/components/elements/errorMessageInput";
+// import ErrorMessageInput from "@/components/elements/errorMessageInput";
 
 const LoginPage = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -50,7 +50,7 @@ const LoginPage = () => {
             placeholder="Email"
             {...form.register("email")}
           ></Input>
-          <ErrorMessageInput message={form.formState.errors.email?.message} />
+          {/* <ErrorMessageInput message={form.formState.errors.email?.message} /> */}
         </div>
         <div>
           <Label htmlFor="password">Password</Label>
@@ -62,9 +62,13 @@ const LoginPage = () => {
               className="pr-10"
               {...form.register("password")}
             ></Input>
-            <ErrorMessageInput
+            <p className="text-end mt-1.5 text-primary font-semibold">
+              Lupa password?
+            </p>
+
+            {/* <ErrorMessageInput
               message={form.formState.errors.password?.message}
-            />
+            /> */}
             <div
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
               className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
