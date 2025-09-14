@@ -172,8 +172,8 @@ export default function Home() {
                   Create Your Creative Popsocket
                 </h2>
                 <p className="font-garamond text-2xl w-[90%]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Amet, enim? Debitis earum sapiente enim reiciendis!
                 </p>
               </div>
               <div className="flex justify-end">
