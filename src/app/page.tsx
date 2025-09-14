@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/layouts/navbar";
+import { SectionLayout } from "@/components/layouts/section-layout";
 import { CardProduct } from "@/components/ui/card-product";
 import { FooterLink } from "@/components/ui/link";
+import { products } from "@/mocks/products";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,41 +23,44 @@ export default function Home() {
           IDSHOP Customization
         </h1>
         <div className="w-full px-10 grid grid-cols-4 justify-items-center">
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
+          {products.map((product) => (
+            <CardProduct key={product.id} {...product} />
+          ))}
         </div>
       </section>
-      <section className="h-screen w-screen py-6 px-16">
-        <div className="relative bg-amber-200 w-full h-full rounded-2xl overflow-hidden">
-          <Image
-            src={"/images/image-section-1.jpg"}
-            alt="image-section-1"
-            fill
-            className="object-cover object-center"
-          />
-          <div className="absolute top-0 left-0 w-[55%] h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10">
-            <h2 className="text-4xl font-heading text-white font-black my-7">
-              Hero Section
-            </h2>
-            <p className="font-garamond text-white text-2xl w-[90%]">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit
-              iusto quasi amet eius ipsum possimus eos eligendi totam ad
-              deserunt. Esse, natus quas deleniti cum mollitia corrupti iusto
-              facilis nam aperiam quod ipsum voluptate error nostrum. Neque
-              ullam praesentium quidem repellendus, rem architecto voluptates
-              impedit consequatur beatae nostrum reprehenderit. Laboriosam et
-              fugiat vero hic distinctio rem nisi veniam laudantium ullam vel,
-              laborum fugit consequuntur error quam aut sapiente dolor dicta
-              maiores voluptatibus earum, alias ratione. Animi necessitatibus
-              exercitationem dolorum neque qui nostrum. Perferendis quibusdam
-              perspiciatis id, ipsum quia corporis officiis natus voluptatem,
-              numquam rerum, qui expedita. Corporis maxime illum labore.
-            </p>
-          </div>
-        </div>
-      </section>
+      <SectionLayout
+        title="Hero Section"
+        image="/images/image-section-1.jpg"
+        alt="image-section-1"
+        isLeft={true}
+      >
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio facere
+        est commodi cumque, illum sit eveniet, fugit quam doloribus debitis,
+        iure vel laboriosam corporis earum minima? Non facilis a modi expedita
+        impedit enim doloribus quaerat iure minima iste vitae laudantium
+        voluptates consequuntur aliquid, commodi deserunt quod odit atque nihil
+        ipsa veritatis! Tempora iusto amet repellat iste neque, quod
+        voluptatibus inventore nulla saepe pariatur animi hic harum sed
+        reiciendis ullam aperiam perferendis aut vel quibusdam numquam
+        repellendus nostrum architecto in. Illum corporis maiores, inventore in
+        quisquam illo autem qui veritatis aliquam cum voluptatum alias, ipsum
+        repudiandae quam voluptatibus repellat. Corporis, ea.
+      </SectionLayout>
+      <SectionLayout
+        title="Show Off Your Personality With a Custom Case"
+        image="/images/product-3.jpeg"
+        alt="image-section-2"
+        isLeft={false}
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ratione
+        soluta, modi odit debitis ut a ipsa qui accusantium nulla vel reiciendis
+        eaque eum, harum at obcaecati ex quas. Quae non recusandae possimus ab,
+        similique cum corporis consequatur totam laudantium ratione aliquam
+        velit unde minima earum, laboriosam nemo ullam soluta eius illo nostrum!
+        Ut autem fugiat sit delectus suscipit nemo odit quis similique ratione,
+        sint provident, nostrum recusandae earum reprehenderit!
+      </SectionLayout>
+      <section></section>
       <footer className="w-screen h-[75vh] bg-foreground">
         <div className="h-full flex items-center pb-36 px-20">
           <div className="w-1/4 text-white flex flex-col gap-4">
