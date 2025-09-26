@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+// import z from "zod";
 // import ErrorMessageInput from "@/components/elements/errorMessageInput";
 
 const LoginPage = () => {
@@ -62,9 +64,6 @@ const LoginPage = () => {
               className="pr-10"
               {...form.register("password")}
             ></Input>
-            <p className="text-end mt-1.5 text-primary font-semibold">
-              Lupa password?
-            </p>
 
             {/* <ErrorMessageInput
               message={form.formState.errors.password?.message}

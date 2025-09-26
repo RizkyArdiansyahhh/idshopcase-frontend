@@ -10,7 +10,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
-      <Navbar />
+      <Navbar isBlur={true} />
       <div className="relative h-[80vh] w-screen ">
         <Image
           src={"/images/hero-section.jpeg"}

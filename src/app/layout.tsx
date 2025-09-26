@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${ebGaramond.variable} ${robotoCondensed.variable} antialiased `}
+        className={` ${ebGaramond.variable} ${robotoCondensed.variable} antialiased`}
       >
         {children}
       </body>
