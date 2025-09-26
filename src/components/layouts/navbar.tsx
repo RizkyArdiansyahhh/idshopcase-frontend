@@ -2,9 +2,21 @@ import Link from "next/link";
 import { Search, User } from "lucide-react";
 import { Button } from "../ui/button";
 
-export const Navbar = () => {
+type NavbarProps = {
+  isBlur: boolean;
+};
+
+export const Navbar = ({ isBlur = false }: NavbarProps) => {
   return (
-    <nav className="fixed z-20 w-[93%] top-10 bg-black/25 backdrop-blur-lg rounded-[12px] border-white border-2">
+    <nav
+      className={` 
+      ${
+        isBlur
+          ? "bg-black/25 backdrop-blur fixed z-20  top-5"
+          : "bg-secondary-foreground"
+      } w-[93%]
+     -lg rounded-[12px] border-white border-2 `}
+    >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 ">
         <Link
           href="/"
