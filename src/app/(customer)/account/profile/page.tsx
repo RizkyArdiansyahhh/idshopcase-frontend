@@ -1,5 +1,3 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { InputCardProfile } from "./_components/input-card-profile";
 import { Button } from "@/components/ui/button";
 
