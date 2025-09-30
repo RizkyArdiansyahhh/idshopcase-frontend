@@ -120,3 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .text-app-semibold-sm {
+    @apply text-sm font-semibold text-foreground;
+  }
+}
