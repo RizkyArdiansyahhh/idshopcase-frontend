@@ -43,16 +43,20 @@ const OrdersPage = () => {
         })}
       </div>
       <div className="flex-1 overflow-y-auto flex flex-col gap-3">
-        {mockOrders.map((item) => {
-          return (
-            <CardOrder
-              key={item.id}
-              productName={item.productName}
-              price={item.amount}
-              status={item.status}
-            />
-          );
-        })}
+        {mockOrders
+          .filter((item) => {
+            return item.status === status;
+          })
+          .map((item) => {
+            return (
+              <CardOrder
+                key={item.id}
+                productName={item.productName}
+                price={item.amount}
+                status={item.status}
+              />
+            );
+          })}
       </div>
     </div>
   );
