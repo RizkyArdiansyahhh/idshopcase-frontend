@@ -1,9 +1,9 @@
-import { ChoiceCard } from "@/components/shared/choice-card";
+import { Payments } from "./_components/payments";
 
 const PaymentsPage = () => {
   return (
     <>
-      <ChoiceCard></ChoiceCard>
+      <Payments></Payments>
     </>
   );
 };
