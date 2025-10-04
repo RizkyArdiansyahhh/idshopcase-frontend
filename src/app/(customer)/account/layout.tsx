@@ -14,7 +14,7 @@ export default function AccountLayout({
         <Sidebar />
       </div>
       <div
-        className={`h-full p-2 w-4/6 rounded-lg ${
+        className={`max-h-fit p-2 w-4/6 rounded-lg ${
           pathName === "/account/profile"
             ? "border-transparent"
             : "border-foreground"
