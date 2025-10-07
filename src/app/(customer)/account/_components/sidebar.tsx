@@ -38,14 +38,16 @@ export const Sidebar = () => {
         })}
       </ul>
 
-      <div>
-        <Button
-          className="w-auto px-8 py-1 font-bold text-xl bg-destructive/80"
-          variant="destructive"
-        >
-          Keluar
-        </Button>
-      </div>
+      {pathName === "/account/profile" && (
+        <div>
+          <Button
+            className="w-auto px-8 py-1 font-bold text-xl bg-destructive/80"
+            variant="destructive"
+          >
+            Keluar
+          </Button>
+        </div>
+      )}
     </nav>
   );
 };

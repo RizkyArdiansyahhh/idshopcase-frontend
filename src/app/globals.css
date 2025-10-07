@@ -125,10 +125,19 @@
   .text-app-semibold-sm {
     @apply text-sm font-semibold text-foreground;
   }
+  .text-app-semibold-xl {
+    @apply text-xl font-semibold text-foreground;
+  }
+  .text-app-semibold-lg {
+    @apply text-lg font-semibold text-foreground;
+  }
   .text-app-light-sm {
     @apply text-sm font-light text-foreground;
   }
   .text-app-extraBold-sm {
     @apply text-sm font-extrabold text-foreground;
+  }
+  .flex-row-center {
+    @apply flex justify-center items-center;
   }
 }

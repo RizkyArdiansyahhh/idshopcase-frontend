@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Search, User } from "lucide-react";
-import { Button } from "../ui/button";
+import { FaUser } from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa6";
 
 type NavbarProps = {
   isBlur: boolean;
@@ -50,16 +50,16 @@ export const Navbar = ({ isBlur = false }: NavbarProps) => {
             />
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          {/* <Button size="icon" variant={"none"}>
-            <Search color="white" />
-          </Button>
-          <Button size="icon" variant={"none"}>
-            <User strokeWidth={3} />
-          </Button>
-          <Button size="icon" variant={"none"}>
-            <Search color="white" />
-          </Button> */}
+        <div
+          className="hidden w-full md:block md:w-auto lg:flex lg:gap-6"
+          id="navbar-default"
+        >
+          <Link href={"/account/profile"}>
+            <FaUser size={24} color="background" />
+          </Link>
+          <Link href={"/cart"}>
+            <FaCartArrowDown size={24} color="background" />
+          </Link>
         </div>
       </div>
     </nav>
