@@ -125,4 +125,10 @@
   .text-app-semibold-sm {
     @apply text-sm font-semibold text-foreground;
   }
+  .text-app-light-sm {
+    @apply text-sm font-light text-foreground;
+  }
+  .text-app-extraBold-sm {
+    @apply text-sm font-extrabold text-foreground;
+  }
 }

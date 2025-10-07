@@ -6,6 +6,7 @@ export default function AccountLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathName = usePathname();
+  const listpath = ["/account/profile", "/account/address"];
   console.log(pathName);
 
   return (
@@ -14,11 +15,14 @@ export default function AccountLayout({
         <Sidebar />
       </div>
       <div
-        className={`max-h-fit p-2 w-4/6 rounded-lg ${
-          pathName === "/account/profile"
-            ? "border-transparent"
-            : "border-foreground"
-        } border-2`}
+        className={`max-h-fit w-4/6 rounded-lg border-2
+          ${
+            listpath.includes(pathName)
+              ? "border-transparent"
+              : "border-foreground"
+          } 
+          ${pathName !== "/account/address" ? "p-2" : ""}
+          `}
       >
         {children}
       </div>

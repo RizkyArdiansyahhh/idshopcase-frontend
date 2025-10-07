@@ -12,7 +12,7 @@ export const ChoiceCard = (props: ChoiceCardProps) => {
     <>
       <FieldLabel
         htmlFor={id}
-        className=" bg-gradient-to-r from-transparent  to-foreground/10"
+        className=" bg-gradient-to-r from-transparent  to-foreground/10 mb-3"
       >
         <Field orientation="horizontal">
           <Image
