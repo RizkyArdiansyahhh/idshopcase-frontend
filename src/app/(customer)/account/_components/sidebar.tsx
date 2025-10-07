@@ -28,12 +28,10 @@ export const Sidebar = () => {
     <nav className="h-5/6 w-5/6 flex flex-col justify-between">
       <ul className="flex flex-col gap-4 ">
         {sidebarLink.map((link) => {
+          const isActive =
+            pathName === link.path || pathName.startsWith(`${link.path}/`);
           return (
-            <SidebarLink
-              key={link.path}
-              isActive={pathName === link.path}
-              href={link.path}
-            >
+            <SidebarLink key={link.path} isActive={isActive} href={link.path}>
               {link.label}
             </SidebarLink>
           );
