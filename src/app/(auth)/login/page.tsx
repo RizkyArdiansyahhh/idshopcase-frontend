@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -13,6 +14,7 @@ import z from "zod";
 // import ErrorMessageInput from "@/components/elements/errorMessageInput";
 
 const LoginPage = () => {
+  const { push } = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const loginSchema = z.object({
@@ -80,7 +82,9 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-        <Button className="font-bold">Masuk</Button>
+        <Button className="font-bold" onClick={() => push("/")}>
+          Masuk
+        </Button>
         <div className="flex justify-center gap-1">
           <p>Kamu belum memiliki akun?</p>
           <Link href="/register" className="text-primary font-bold">

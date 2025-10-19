@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Condensed, EB_Garamond } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--font-roboto-condensed",
@@ -29,7 +30,7 @@ export default function RootLayout({
       <body
         className={` ${ebGaramond.variable} ${robotoCondensed.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
