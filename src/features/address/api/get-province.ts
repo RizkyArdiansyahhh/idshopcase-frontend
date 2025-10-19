@@ -24,11 +24,11 @@ export const getProvincesQueryOptions = () => {
   });
 };
 
-type useGetProvincesParams = {
+type UseGetProvincesParams = {
   queryConfig?: QueryConfig<typeof getProvincesQueryOptions>;
 };
 
-export const useGetProvinces = (params: useGetProvincesParams) => {
+export const useGetProvinces = (params: UseGetProvincesParams = {}) => {
   return useQuery({
     ...getProvincesQueryOptions(),
     ...params.queryConfig,
