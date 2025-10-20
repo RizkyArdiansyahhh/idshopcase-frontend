@@ -128,8 +128,12 @@
   .text-app-semibold-xl {
     @apply text-xl font-semibold text-foreground;
   }
+
   .text-app-semibold-lg {
     @apply text-lg font-semibold text-foreground;
+  }
+  .text-app-light-lg {
+    @apply text-lg font-light text-foreground;
   }
   .text-app-light-sm {
     @apply text-sm font-light text-foreground;
