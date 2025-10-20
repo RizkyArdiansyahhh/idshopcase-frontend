@@ -3,7 +3,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type VillagesItemResponse = {
-  code: string;
+  id: string;
   name: string;
 };
 

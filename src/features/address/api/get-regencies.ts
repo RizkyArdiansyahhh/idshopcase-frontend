@@ -3,7 +3,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type RegenciesItemResponse = {
-  code: string;
+  id: string;
   name: string;
 };
 export const getRegencies = async (codeProvince: string) => {
