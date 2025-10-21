@@ -1,0 +1,1268 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home should render 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="flex flex-col items-center"
+      >
+        <nav
+          class=" 
+      bg-black/25 backdrop-blur fixed z-20  top-5 w-[93%]
+     -lg rounded-[12px] border-white border-2 "
+        >
+          <div
+            class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 "
+          >
+            <a
+              class="flex items-center space-x-3 rtl:space-x-reverse text-white"
+              href="/"
+            >
+              <span
+                class="self-center text-2xl font-bold whitespace-nowrap"
+              >
+                Idshop
+              </span>
+            </a>
+            <button
+              aria-controls="navbar-default"
+              aria-expanded="false"
+              class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400  "
+              data-collapse-toggle="navbar-default"
+              type="button"
+            >
+              <span
+                class="sr-only"
+              >
+                Open main menu
+              </span>
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 17 14"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1h15M1 7h15M1 13h15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+            <div
+              class="hidden w-full md:block md:w-auto lg:flex lg:gap-6"
+              id="navbar-default"
+            >
+              <a
+                href="/account/profile"
+              >
+                <svg
+                  color="background"
+                  fill="currentColor"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  style="color: background;"
+                  viewBox="0 0 448 512"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                  />
+                </svg>
+              </a>
+              <div
+                class="relative"
+              >
+                <a
+                  href="/cart"
+                >
+                  <svg
+                    color="background"
+                    fill="currentColor"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: background;"
+                    viewBox="0 0 576 512"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M24 0C10.7 0 0 10.7 0 24S10.7 48 24 48l45.5 0c3.8 0 7.1 2.7 7.9 6.5l51.6 271c6.5 34 36.2 58.5 70.7 58.5L488 384c13.3 0 24-10.7 24-24s-10.7-24-24-24l-288.3 0c-11.5 0-21.4-8.2-23.6-19.5L170.7 288l288.5 0c32.6 0 61.1-21.8 69.5-53.3l41-152.3C576.6 57 557.4 32 531.1 32L360 32l0 102.1 23-23c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-64 64c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l23 23L312 32 120.1 32C111 12.8 91.6 0 69.5 0L24 0zM176 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm336-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"
+                    />
+                  </svg>
+                </a>
+                <span
+                  class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"
+                >
+                  3
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div
+          class="relative h-[80vh] w-screen "
+        >
+          <img
+            alt="hero-section-image"
+            class="object-cover object-top"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            sizes="100vw"
+            src="/_next/image?url=%2Fimages%2Fhero-section.jpeg&w=3840&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fhero-section.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
+        </div>
+        <section
+          class="h-[85vh] w-screen flex flex-col justify-center"
+        >
+          <h1
+            class="font-black text-3xl mb-20 text-center"
+          >
+            IDSHOP Customization
+          </h1>
+          <div
+            class="w-full px-10 grid grid-cols-4 justify-items-center"
+          >
+            <div
+              class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+            >
+              <div
+                class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+              >
+                <img
+                  alt="product-1"
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75"
+                  srcset="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                />
+              </div>
+              <div
+                class="w-full h-1/6 flex items-center justify-center"
+              >
+                <p
+                  class="font-medium text-xl "
+                >
+                  Product 1
+                </p>
+              </div>
+            </div>
+            <div
+              class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+            >
+              <div
+                class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+              >
+                <img
+                  alt="product-1"
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=3840&q=75"
+                  srcset="/_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                />
+              </div>
+              <div
+                class="w-full h-1/6 flex items-center justify-center"
+              >
+                <p
+                  class="font-medium text-xl "
+                >
+                  Product 2
+                </p>
+              </div>
+            </div>
+            <div
+              class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+            >
+              <div
+                class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+              >
+                <img
+                  alt="product-1"
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75"
+                  srcset="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                />
+              </div>
+              <div
+                class="w-full h-1/6 flex items-center justify-center"
+              >
+                <p
+                  class="font-medium text-xl "
+                >
+                  Product 3
+                </p>
+              </div>
+            </div>
+            <div
+              class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+            >
+              <div
+                class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+              >
+                <img
+                  alt="product-1"
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75"
+                  srcset="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                />
+              </div>
+              <div
+                class="w-full h-1/6 flex items-center justify-center"
+              >
+                <p
+                  class="font-medium text-xl "
+                >
+                  Product 4
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="h-screen w-screen py-6 px-16"
+        >
+          <div
+            class=" relative bg-foreground h-full rounded-2xl overflow-hidden"
+          >
+            <div
+              class="w-full h-full relative "
+            >
+              <img
+                alt="image-section-1"
+                class="object-cover object-center"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="left-0 w-[55%] absolute top-0 h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10 flex flex-col justify-between"
+            >
+              <div>
+                <h2
+                  class="text-4xl font-heading text-white font-black my-7"
+                >
+                  Hero Section
+                </h2>
+                <p
+                  class="font-garamond text-white text-2xl w-[90%]"
+                >
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio facere est commodi cumque, illum sit eveniet, fugit quam doloribus debitis, iure vel laboriosam corporis earum minima? Non facilis a modi expedita impedit enim doloribus quaerat iure minima iste vitae laudantium voluptates consequuntur aliquid, commodi deserunt quod odit atque nihil ipsa veritatis! Tempora iusto amet repellat iste neque, quod voluptatibus inventore nulla saepe pariatur animi hic harum sed reiciendis ullam aperiam perferendis aut vel quibusdam numquam repellendus nostrum architecto in. Illum corporis maiores, inventore in quisquam illo autem qui veritatis aliquam cum voluptatum alias, ipsum repudiandae quam voluptatibus repellat. Corporis, ea.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="h-screen w-screen py-6 px-16"
+        >
+          <div
+            class=" relative bg-foreground h-full rounded-2xl overflow-hidden"
+          >
+            <div
+              class="w-[40%] h-full relative "
+            >
+              <img
+                alt="image-section-2"
+                class="object-cover object-center"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="right-0 w-[60%] absolute top-0 h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10 flex flex-col justify-between"
+            >
+              <div>
+                <h2
+                  class="text-4xl font-heading text-white font-black my-7"
+                >
+                  Show Off Your Personality With a Custom Case
+                </h2>
+                <p
+                  class="font-garamond text-white text-2xl w-[90%]"
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ratione soluta, modi odit debitis ut a ipsa qui accusantium nulla vel reiciendis eaque eum, harum at obcaecati ex quas. Quae non recusandae possimus ab, similique cum corporis consequatur totam laudantium ratione aliquam velit unde minima earum, laboriosam nemo ullam soluta eius illo nostrum! Ut autem fugiat sit delectus suscipit nemo odit quis similique ratione, sint provident, nostrum recusandae earum reprehenderit!
+                </p>
+              </div>
+              <div
+                class="flex justify-end"
+              >
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-2xl"
+                  data-slot="button"
+                >
+                  Custom Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="h-screen w-screen py-6 px-16 flex flex-row gap-3"
+        >
+          <div
+            class="w-2/6 h-full bg-white rounded-2xl overflow-hidden  border-2"
+          >
+            <div
+              class="w-full h-1/2 flex flex-col justify-between px-3 pt-8 pb-3"
+            >
+              <div>
+                <h2
+                  class="text-4xl font-heading font-black my-5"
+                >
+                  Hero Section
+                </h2>
+                <p
+                  class="text-foreground font-garamond text-2xl w-[90%]"
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, autem! Officia culpa praesentium delectus atque. Est minima iusto vero quidem!
+                </p>
+              </div>
+              <div
+                class="flex justify-end"
+              >
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 bg-gradient-to-r from-muted-foreground to-foreground px-10 text-2xl font-medium"
+                  data-slot="button"
+                >
+                  Custom Now
+                </button>
+              </div>
+            </div>
+            <div
+              class="relative w-full h-1/2"
+            >
+              <img
+                alt="Image-Section-3"
+                class="object-cover object-center"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+          </div>
+          <div
+            class="relative w-4/6 h-full bg-blue-400 rounded-2xl overflow-hidden"
+          >
+            <img
+              alt="Image-Section-3"
+              class="object-cover"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+            <div
+              class="top-0 right-0 absolute h-full w-1/2 bg-black/[76%] backdrop-blur-lg rounded-2xl flex flex-col justify-between px-5 pt-8 pb-5"
+            >
+              <div
+                class="text-white"
+              >
+                <h2
+                  class="text-4xl font-heading font-black my-5"
+                >
+                  Hero Section
+                </h2>
+                <p
+                  class="font-garamond text-2xl w-[90%]"
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est sunt adipisci amet praesentium nostrum tenetur voluptatem inventore dolore corrupti velit similique ipsa, dicta illum facere distinctio ut dolorem, quidem temporibus voluptatibus accusantium laudantium veniam deserunt? Explicabo recusandae laborum fugit quo error, ut cum soluta aspernatur provident, optio mollitia ipsa.
+                </p>
+              </div>
+              <div
+                class="flex justify-end"
+              >
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium"
+                  data-slot="button"
+                >
+                  Custom Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="h-screen w-screen py-6 px-16 flex flex-row gap-3"
+        >
+          <div
+            class="w-[30%] h-full rounded-2xl overflow-hidden  "
+          >
+            <div
+              class="relative w-full h-full "
+            >
+              <img
+                alt="Image-Section-4"
+                class="object-cover"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+              <div
+                class="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-2/5 flex flex-col justify-between px-5 pt-2 pb-5"
+              >
+                <div
+                  class="text-white"
+                >
+                  <h2
+                    class="text-4xl font-heading font-black my-5"
+                  >
+                    Make Your Own Keychain
+                  </h2>
+                  <p
+                    class="font-garamond text-2xl w-[90%]"
+                  >
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                  </p>
+                </div>
+                <div
+                  class="flex justify-end"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium"
+                    data-slot="button"
+                  >
+                    Custom Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-[70%] h-full rounded-2xl overflow-hidden"
+          >
+            <div
+              class="relative w-full h-full "
+            >
+              <img
+                alt="Image-Section-4"
+                class="object-cover"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+              <div
+                class="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-1/3 flex flex-col justify-between px-5 pt-2 pb-5"
+              >
+                <div
+                  class="text-white"
+                >
+                  <h2
+                    class="text-4xl font-heading font-black my-5"
+                  >
+                    Create Your Creative Popsocket
+                  </h2>
+                  <p
+                    class="font-garamond text-2xl w-[90%]"
+                  >
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet, enim? Debitis earum sapiente enim reiciendis!
+                  </p>
+                </div>
+                <div
+                  class="flex justify-end"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium bg-white text-foreground"
+                    data-slot="button"
+                  >
+                    Custom Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer
+          class="w-screen h-[75vh] bg-foreground"
+        >
+          <div
+            class="h-full flex items-center pb-36 px-20"
+          >
+            <div
+              class="w-1/4 text-white flex flex-col gap-4"
+            >
+              <h2
+                class="font-bold text-4xl"
+              >
+                IDshop
+              </h2>
+              <ul>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    Beranda
+                  </a>
+                </li>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    Custom Case
+                  </a>
+                </li>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    Tentang Kami
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="w-1/4 text-white flex flex-col gap-4"
+            >
+              <h2
+                class="font-bold text-4xl"
+              >
+                Hubungi Kami
+              </h2>
+              <ul>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    Email: support@idshop.com
+                  </a>
+                </li>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    WhatsApp: 0812-3456-7890
+                  </a>
+                </li>
+                <li
+                  class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+                >
+                  <a
+                    href="/"
+                  >
+                    Instagram: @idshop.official
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="flex flex-col items-center"
+    >
+      <nav
+        class=" 
+      bg-black/25 backdrop-blur fixed z-20  top-5 w-[93%]
+     -lg rounded-[12px] border-white border-2 "
+      >
+        <div
+          class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 "
+        >
+          <a
+            class="flex items-center space-x-3 rtl:space-x-reverse text-white"
+            href="/"
+          >
+            <span
+              class="self-center text-2xl font-bold whitespace-nowrap"
+            >
+              Idshop
+            </span>
+          </a>
+          <button
+            aria-controls="navbar-default"
+            aria-expanded="false"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400  "
+            data-collapse-toggle="navbar-default"
+            type="button"
+          >
+            <span
+              class="sr-only"
+            >
+              Open main menu
+            </span>
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 17 14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1h15M1 7h15M1 13h15"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          <div
+            class="hidden w-full md:block md:w-auto lg:flex lg:gap-6"
+            id="navbar-default"
+          >
+            <a
+              href="/account/profile"
+            >
+              <svg
+                color="background"
+                fill="currentColor"
+                height="24"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: background;"
+                viewBox="0 0 448 512"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                />
+              </svg>
+            </a>
+            <div
+              class="relative"
+            >
+              <a
+                href="/cart"
+              >
+                <svg
+                  color="background"
+                  fill="currentColor"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  style="color: background;"
+                  viewBox="0 0 576 512"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M24 0C10.7 0 0 10.7 0 24S10.7 48 24 48l45.5 0c3.8 0 7.1 2.7 7.9 6.5l51.6 271c6.5 34 36.2 58.5 70.7 58.5L488 384c13.3 0 24-10.7 24-24s-10.7-24-24-24l-288.3 0c-11.5 0-21.4-8.2-23.6-19.5L170.7 288l288.5 0c32.6 0 61.1-21.8 69.5-53.3l41-152.3C576.6 57 557.4 32 531.1 32L360 32l0 102.1 23-23c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-64 64c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l23 23L312 32 120.1 32C111 12.8 91.6 0 69.5 0L24 0zM176 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm336-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"
+                  />
+                </svg>
+              </a>
+              <span
+                class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"
+              >
+                3
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div
+        class="relative h-[80vh] w-screen "
+      >
+        <img
+          alt="hero-section-image"
+          class="object-cover object-top"
+          data-nimg="fill"
+          decoding="async"
+          loading="lazy"
+          sizes="100vw"
+          src="/_next/image?url=%2Fimages%2Fhero-section.jpeg&w=3840&q=75"
+          srcset="/_next/image?url=%2Fimages%2Fhero-section.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fhero-section.jpeg&w=3840&q=75 3840w"
+          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+        />
+      </div>
+      <section
+        class="h-[85vh] w-screen flex flex-col justify-center"
+      >
+        <h1
+          class="font-black text-3xl mb-20 text-center"
+        >
+          IDSHOP Customization
+        </h1>
+        <div
+          class="w-full px-10 grid grid-cols-4 justify-items-center"
+        >
+          <div
+            class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+          >
+            <div
+              class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+            >
+              <img
+                alt="product-1"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="w-full h-1/6 flex items-center justify-center"
+            >
+              <p
+                class="font-medium text-xl "
+              >
+                Product 1
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+          >
+            <div
+              class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+            >
+              <img
+                alt="product-1"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-2.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="w-full h-1/6 flex items-center justify-center"
+            >
+              <p
+                class="font-medium text-xl "
+              >
+                Product 2
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+          >
+            <div
+              class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+            >
+              <img
+                alt="product-1"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="w-full h-1/6 flex items-center justify-center"
+            >
+              <p
+                class="font-medium text-xl "
+              >
+                Product 3
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-[280px] h-80 p-4 border-black border-2 rounded-[12px]"
+          >
+            <div
+              class="relative w-full h-5/6 rounded-[12px] overflow-hidden"
+            >
+              <img
+                alt="product-1"
+                data-nimg="fill"
+                decoding="async"
+                loading="lazy"
+                sizes="100vw"
+                src="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75 3840w"
+                style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+              />
+            </div>
+            <div
+              class="w-full h-1/6 flex items-center justify-center"
+            >
+              <p
+                class="font-medium text-xl "
+              >
+                Product 4
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="h-screen w-screen py-6 px-16"
+      >
+        <div
+          class=" relative bg-foreground h-full rounded-2xl overflow-hidden"
+        >
+          <div
+            class="w-full h-full relative "
+          >
+            <img
+              alt="image-section-1"
+              class="object-cover object-center"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-1.jpg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+          </div>
+          <div
+            class="left-0 w-[55%] absolute top-0 h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10 flex flex-col justify-between"
+          >
+            <div>
+              <h2
+                class="text-4xl font-heading text-white font-black my-7"
+              >
+                Hero Section
+              </h2>
+              <p
+                class="font-garamond text-white text-2xl w-[90%]"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio facere est commodi cumque, illum sit eveniet, fugit quam doloribus debitis, iure vel laboriosam corporis earum minima? Non facilis a modi expedita impedit enim doloribus quaerat iure minima iste vitae laudantium voluptates consequuntur aliquid, commodi deserunt quod odit atque nihil ipsa veritatis! Tempora iusto amet repellat iste neque, quod voluptatibus inventore nulla saepe pariatur animi hic harum sed reiciendis ullam aperiam perferendis aut vel quibusdam numquam repellendus nostrum architecto in. Illum corporis maiores, inventore in quisquam illo autem qui veritatis aliquam cum voluptatum alias, ipsum repudiandae quam voluptatibus repellat. Corporis, ea.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="h-screen w-screen py-6 px-16"
+      >
+        <div
+          class=" relative bg-foreground h-full rounded-2xl overflow-hidden"
+        >
+          <div
+            class="w-[40%] h-full relative "
+          >
+            <img
+              alt="image-section-2"
+              class="object-cover object-center"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-3.jpeg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+          </div>
+          <div
+            class="right-0 w-[60%] absolute top-0 h-full bg-black/[62%] backdrop-blur-lg rounded-2xl py-10 px-10 flex flex-col justify-between"
+          >
+            <div>
+              <h2
+                class="text-4xl font-heading text-white font-black my-7"
+              >
+                Show Off Your Personality With a Custom Case
+              </h2>
+              <p
+                class="font-garamond text-white text-2xl w-[90%]"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ratione soluta, modi odit debitis ut a ipsa qui accusantium nulla vel reiciendis eaque eum, harum at obcaecati ex quas. Quae non recusandae possimus ab, similique cum corporis consequatur totam laudantium ratione aliquam velit unde minima earum, laboriosam nemo ullam soluta eius illo nostrum! Ut autem fugiat sit delectus suscipit nemo odit quis similique ratione, sint provident, nostrum recusandae earum reprehenderit!
+              </p>
+            </div>
+            <div
+              class="flex justify-end"
+            >
+              <button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-2xl"
+                data-slot="button"
+              >
+                Custom Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="h-screen w-screen py-6 px-16 flex flex-row gap-3"
+      >
+        <div
+          class="w-2/6 h-full bg-white rounded-2xl overflow-hidden  border-2"
+        >
+          <div
+            class="w-full h-1/2 flex flex-col justify-between px-3 pt-8 pb-3"
+          >
+            <div>
+              <h2
+                class="text-4xl font-heading font-black my-5"
+              >
+                Hero Section
+              </h2>
+              <p
+                class="text-foreground font-garamond text-2xl w-[90%]"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, autem! Officia culpa praesentium delectus atque. Est minima iusto vero quidem!
+              </p>
+            </div>
+            <div
+              class="flex justify-end"
+            >
+              <button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 bg-gradient-to-r from-muted-foreground to-foreground px-10 text-2xl font-medium"
+                data-slot="button"
+              >
+                Custom Now
+              </button>
+            </div>
+          </div>
+          <div
+            class="relative w-full h-1/2"
+          >
+            <img
+              alt="Image-Section-3"
+              class="object-cover object-center"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-3-1.jpg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+          </div>
+        </div>
+        <div
+          class="relative w-4/6 h-full bg-blue-400 rounded-2xl overflow-hidden"
+        >
+          <img
+            alt="Image-Section-3"
+            class="object-cover"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            sizes="100vw"
+            src="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-1.jpeg&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
+          <div
+            class="top-0 right-0 absolute h-full w-1/2 bg-black/[76%] backdrop-blur-lg rounded-2xl flex flex-col justify-between px-5 pt-8 pb-5"
+          >
+            <div
+              class="text-white"
+            >
+              <h2
+                class="text-4xl font-heading font-black my-5"
+              >
+                Hero Section
+              </h2>
+              <p
+                class="font-garamond text-2xl w-[90%]"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est sunt adipisci amet praesentium nostrum tenetur voluptatem inventore dolore corrupti velit similique ipsa, dicta illum facere distinctio ut dolorem, quidem temporibus voluptatibus accusantium laudantium veniam deserunt? Explicabo recusandae laborum fugit quo error, ut cum soluta aspernatur provident, optio mollitia ipsa.
+              </p>
+            </div>
+            <div
+              class="flex justify-end"
+            >
+              <button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium"
+                data-slot="button"
+              >
+                Custom Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="h-screen w-screen py-6 px-16 flex flex-row gap-3"
+      >
+        <div
+          class="w-[30%] h-full rounded-2xl overflow-hidden  "
+        >
+          <div
+            class="relative w-full h-full "
+          >
+            <img
+              alt="Image-Section-4"
+              class="object-cover"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fproduct-4.jpeg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+            <div
+              class="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-2/5 flex flex-col justify-between px-5 pt-2 pb-5"
+            >
+              <div
+                class="text-white"
+              >
+                <h2
+                  class="text-4xl font-heading font-black my-5"
+                >
+                  Make Your Own Keychain
+                </h2>
+                <p
+                  class="font-garamond text-2xl w-[90%]"
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                </p>
+              </div>
+              <div
+                class="flex justify-end"
+              >
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium"
+                  data-slot="button"
+                >
+                  Custom Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-[70%] h-full rounded-2xl overflow-hidden"
+        >
+          <div
+            class="relative w-full h-full "
+          >
+            <img
+              alt="Image-Section-4"
+              class="object-cover"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=3840&q=75"
+              srcset="/_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=640&q=75 640w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=750&q=75 750w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=828&q=75 828w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=1920&q=75 1920w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=2048&q=75 2048w, /_next/image?url=%2Fimages%2Fimage-section-4-1.jpeg&w=3840&q=75 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+            <div
+              class="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-1/3 flex flex-col justify-between px-5 pt-2 pb-5"
+            >
+              <div
+                class="text-white"
+              >
+                <h2
+                  class="text-4xl font-heading font-black my-5"
+                >
+                  Create Your Creative Popsocket
+                </h2>
+                <p
+                  class="font-garamond text-2xl w-[90%]"
+                >
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet, enim? Debitis earum sapiente enim reiciendis!
+                </p>
+              </div>
+              <div
+                class="flex justify-end"
+              >
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 px-10 text-2xl font-medium bg-white text-foreground"
+                  data-slot="button"
+                >
+                  Custom Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer
+        class="w-screen h-[75vh] bg-foreground"
+      >
+        <div
+          class="h-full flex items-center pb-36 px-20"
+        >
+          <div
+            class="w-1/4 text-white flex flex-col gap-4"
+          >
+            <h2
+              class="font-bold text-4xl"
+            >
+              IDshop
+            </h2>
+            <ul>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  Beranda
+                </a>
+              </li>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  Custom Case
+                </a>
+              </li>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  Tentang Kami
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="w-1/4 text-white flex flex-col gap-4"
+          >
+            <h2
+              class="font-bold text-4xl"
+            >
+              Hubungi Kami
+            </h2>
+            <ul>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  Email: support@idshop.com
+                </a>
+              </li>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  WhatsApp: 0812-3456-7890
+                </a>
+              </li>
+              <li
+                class="py-2 text-2xl font-light hover:underline hover:cursor-pointer transition-all duration-200"
+              >
+                <a
+                  href="/"
+                >
+                  Instagram: @idshop.official
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
