@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "./_components/sidebar";
+import { ProtectedRoute } from "@/features/auth/components/protected-route";
 
 export default function AccountLayout({
   children,
@@ -10,12 +11,13 @@ export default function AccountLayout({
   console.log(pathName);
 
   return (
-    <div className="h-full w-full flex flex-row py-10">
-      <div className="h-full w-2/6 pr-4 bg-background flex flex-col items-end">
-        <Sidebar />
-      </div>
-      <div
-        className={`max-h-fit w-4/6 rounded-lg border-2
+    <ProtectedRoute allowedRoles={["user"]} redirectTo="/login">
+      <div className="h-full w-full flex flex-row py-10">
+        <div className="h-full w-2/6 pr-4 bg-background flex flex-col items-end">
+          <Sidebar />
+        </div>
+        <div
+          className={`max-h-fit w-4/6 rounded-lg border-2
           ${
             listpath.includes(pathName)
               ? "border-transparent"
@@ -23,9 +25,10 @@ export default function AccountLayout({
           } 
           ${pathName !== "/account/address" ? "p-2" : ""}
           `}
-      >
-        {children}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
