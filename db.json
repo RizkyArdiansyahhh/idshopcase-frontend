@@ -1,0 +1,146 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Rizky Ardiansyah",
+      "email": "rizky@example.com",
+      "password": "12345678",
+      "phone": "081234567890",
+      "profile_picture": "/images/profile1.jpg",
+      "resetPasswordToken": null,
+      "resetPasswordExpire": null,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1,
+      "userId": 1,
+      "recipient_name": "Rizky Ardiansyah",
+      "phone": "081234567890",
+      "province": "Riau",
+      "city": "Pekanbaru",
+      "district": "Sukajadi",
+      "sub_district": "Harapan Raya",
+      "postal_code": "28123",
+      "detail": "Jl. Mawar No. 12",
+      "is_primary": true,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Kaos Katun Premium",
+      "description": "Kaos berbahan katun halus, nyaman dipakai sehari-hari.",
+      "price": 120000,
+      "stock": 10,
+      "category": "Fashion",
+      "material": "Katun",
+      "image": "/images/product-1.jpeg",
+      "phone_type": null,
+      "createdAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Hoodie Oversized",
+      "description": "Hoodie tebal, cocok untuk cuaca dingin.",
+      "price": 250000,
+      "stock": 8,
+      "category": "Fashion",
+      "material": "Fleece",
+      "image": "/images/product-2.jpeg",
+      "phone_type": null,
+      "createdAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "carts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "cartItems": [
+    {
+      "id": 1,
+      "cartId": 1,
+      "productId": 1,
+      "customImageId": null,
+      "quantity": 2,
+      "price": 120000,
+      "createdAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 1,
+      "addressId": 1,
+      "status": "pending",
+      "total_price": 240000,
+      "payment_method": "bank_transfer",
+      "tracking_number": "TRK123456789",
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "orderItems": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "productId": 1,
+      "customImageId": null,
+      "quantity": 2,
+      "price": 120000,
+      "createdAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "payment_gateway": "Midtrans",
+      "transaction_id": "TXN001",
+      "status": "paid",
+      "amount": 240000,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 1,
+      "message": "Pesanan kamu sedang diproses!",
+      "is_read": false,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "customImages": [
+    {
+      "id": 1,
+      "userId": 1,
+      "productId": 1,
+      "image_url": "/uploads/custom-1.png",
+      "processed_url": "/uploads/processed-1.png",
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "whatsAppBlasts": [
+    {
+      "id": 1,
+      "message": "Diskon spesial 50% hanya hari ini!",
+      "status": "sent",
+      "amount": 1,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    }
+  ],
+  "sequelizeMeta": [{ "name": "20251020100000-init-database" }]
+}
