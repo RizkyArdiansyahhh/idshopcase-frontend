@@ -11,6 +11,8 @@ const rules = auth.rewriter({
   users: 600, // hanya admin bisa GET /users
   products: 644, // semua bisa GET, owner bisa PATCH/DELETE
   orders: 660, // user bisa lihat order sendiri, admin bisa lihat semua
+  carts: 660, // user hanya bisa lihat cart miliknya sendiri
+  cartItems: 660,
 });
 
 // Middleware

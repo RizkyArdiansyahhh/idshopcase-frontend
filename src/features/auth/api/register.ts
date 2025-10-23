@@ -33,11 +33,11 @@ const register = async (data: registerSchemaType) => {
   return await api.post("/register", { ...payload, role: "USER" });
 };
 
-type UseRegisterOptions = {
+type UseRegisterParams = {
   mutationConfig?: MutationConfig<typeof register>;
 };
 
-export const useRegsiter = (params: UseRegisterOptions = {}) => {
+export const useRegsiter = (params: UseRegisterParams = {}) => {
   return useMutation({
     mutationFn: register,
     ...params.mutationConfig,

@@ -8,3 +8,17 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  category: string;
+  material: string;
+  phone_type: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+};
