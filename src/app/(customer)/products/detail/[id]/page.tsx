@@ -2,18 +2,14 @@
 import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
-import Link from "next/link";
 import { Combobox } from "./components/combo-box";
 import { ShoppingCart, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IoMdAdd, IoMdRemove } from "react-icons/io";
+import { FormCheckout } from "@/features/checkout/components/form-checkout";
+import { Separator } from "@/components/ui/separator";
 
-const pathVariants = [
-  "varian-1.png",
-  "varian-2.png",
-  "varian-3.png",
-  "varian-4.png",
-];
+const pathVariants = ["default.png", "black.png", "green.png", "blue.png"];
 const materials = [
   "Premium Softcase",
   "Diamond Impact",
@@ -35,6 +31,7 @@ const DetailProductPage = () => {
                 ></Image>
               </div>
             </div>
+
             <div className="h-1/3 w-full  grid grid-cols-4">
               {pathVariants.map((variant, index) => {
                 return (
@@ -43,7 +40,7 @@ const DetailProductPage = () => {
                       src={`/images/detail-product/${variant}`}
                       alt={`variant-${index}`}
                       fill
-                      className="object-center object-cover opacity-50 hover:opacity-100 duration-200 ease-in-out transition-all cursor-pointer"
+                      className="object-center object-cover opacity-50 hover:opacity-65 duration-200 ease-in-out transition-all cursor-pointer"
                     />
                   </div>
                 );
@@ -66,19 +63,9 @@ const DetailProductPage = () => {
 
           {/* FORM */}
           <div className="flex flex-col gap-7">
-            <div className="grid grid-cols-4 bg-gradient-to-r from-transparent to-foreground/10 py-3 pr-3 rounded-sm">
-              <p className="text-app-semibold-sm">Pengiriman</p>
-              <p className="text-app-light-sm col-span-2">JNE Reguler</p>
-              <div className="flex justify-end">
-                <Link
-                  className="text-app-semibold-sm cursor-pointer hover:underline transition-all duration-150 ease-in-out"
-                  href=""
-                >
-                  Ubah
-                </Link>
-              </div>
-            </div>
             <div>
+              <Separator orientation="horizontal" className="my-2"></Separator>
+
               <p className="text-app-semibold-sm mb-2">Material</p>
               <RadioGroup className="grid-cols-3">
                 {materials.map((material, index) => {
@@ -98,7 +85,7 @@ const DetailProductPage = () => {
               </RadioGroup>
             </div>
             {/* COMBO BOX */}
-            <Combobox></Combobox>
+            <Combobox className="mb-0"></Combobox>
             <div className="max-w-1/3  border border-foreground flex flex-row justify-between items-center">
               <div className="px-5  font-semibold text-xs">
                 Custom Your Image
@@ -107,43 +94,16 @@ const DetailProductPage = () => {
                 <Upload color="white" />
               </div>
             </div>
-            <div className="flex flex-row items-center">
-              <p className="text-app-semibold-sm">Jumlah</p>
-              <div className=" flex-row-center  px-10">
-                <div className="grid grid-cols-4">
-                  <Button
-                    variant={"outline"}
-                    className="col-span-1 text-foreground rounded-none border-foreground"
-                  >
-                    <IoMdRemove />
-                  </Button>
-                  <div className="col-span-2 border border-foreground flex-row-center ">
-                    <p>1</p>
-                  </div>
-                  <Button
-                    variant={"outline"}
-                    className="col-span-1 text-foreground rounded-none border-foreground"
-                  >
-                    <IoMdAdd />
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <Separator orientation="horizontal" className="my-2"></Separator>
             {/* BUTTON */}
             <div className="flex flex-row gap-3">
-              <Button
-                variant={"outline"}
-                className="text-foreground rounded-none p-7 border-foreground"
-              >
+              <FormCheckout materials={materials} variant="outline">
                 <ShoppingCart />
                 <span className="mx-2">Masukkan Keranjang</span>
-              </Button>
-              <Button
-                variant={"default"}
-                className="text-background rounded-none py-7 px-10 border-foreground"
-              >
+              </FormCheckout>
+              <FormCheckout materials={materials} variant="default">
                 <span className="mx-2">Beli Sekarang</span>
-              </Button>
+              </FormCheckout>
             </div>
           </div>
         </div>

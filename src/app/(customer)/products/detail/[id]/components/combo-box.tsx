@@ -30,7 +30,7 @@ const frameworks = [
   },
 ];
 
-export function Combobox() {
+export function Combobox({ className }: { className?: string }) {
   const [value, setValue] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
@@ -41,7 +41,9 @@ export function Combobox() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between text-foreground rounded-tl-md rounded-tr-md rounded-br-none rounded-bl-none border-foreground mb-5"
+          className={`w-[200px] justify-between text-foreground rounded-xs border-foreground ${
+            className ?? "border-foreground mb-4"
+          }`}
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label

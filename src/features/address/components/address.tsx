@@ -5,119 +5,208 @@ import { ProvinceSelector } from "./province-selector";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { RegencieSelector } from "./regencie-selector";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DistrictSelector } from "./district-selector";
 import { VillageSelector } from "./village-selector";
+import { useEffect } from "react";
+import { useGetAddressById } from "../api/get-addressById";
+import { useCreateAddress } from "../api/create-address";
+import { UseUpdateAddress } from "../api/update-address";
+import { Spinner } from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 
-export const Address = () => {
-  const formAddressSchema = z.object({
-    fullName: z.string(),
-    phoneNumber: z.string(),
-    provinceId: z.string(),
-    regencyId: z.string(),
-    districtId: z.string(),
-    villageId: z.string(),
-    postalCode: z.string(),
-    detailAddress: z.string(),
-    isDefault: z.boolean(),
+const formAddressSchema = z.object({
+  recipient_name: z
+    .string()
+    .min(8, { message: "Name must be at least 8 characters" })
+    .nonempty("Name is required"),
+  phone: z.string().min(12, {
+    message: "Phone number must be at least 12 characters",
+  }),
+  province: z.string().nonempty("Province is required"),
+  city: z.string().nonempty("Regency is required"),
+  district: z.string().nonempty("District is required"),
+  sub_district: z.string().nonempty("Village is required"),
+  postal_code: z.string().length(5, "Postal code must be 5 characters"),
+  detail: z.string().optional(),
+  is_primary: z.boolean().optional(),
+});
+
+export type FormAddressSchemaType = z.infer<typeof formAddressSchema>;
+export const Address = ({ addressId }: { addressId?: number }) => {
+  const router = useRouter();
+
+  const { data: address, isLoading: fetchAddressLoading } = useGetAddressById({
+    id: Number(addressId),
+    queryConfig: {
+      enabled: !!addressId,
+    },
   });
-
-  type FormAddressSchemaType = z.infer<typeof formAddressSchema>;
-
   const form = useForm<FormAddressSchemaType>({
     resolver: zodResolver(formAddressSchema),
   });
 
+  useEffect(() => {
+    if (address) {
+      form.reset({
+        recipient_name: address.recipient_name,
+        phone: address.phone,
+        province: address.province,
+        city: address.city,
+        district: address.district,
+        sub_district: address.sub_district,
+        postal_code: address.postal_code,
+        detail: address.detail,
+        is_primary: !!address.is_primary,
+      });
+    }
+  }, [address, form]);
+
+  const { mutate: createAddress, isPending: createAddressMutationLoading } =
+    useCreateAddress({
+      mutationConfig: {
+        onSuccess: () => {
+          router.back();
+        },
+      },
+    });
+
+  const { mutate: updateAddress, isPending: updateAddressMutationLoading } =
+    UseUpdateAddress({
+      mutationConfig: {
+        onSuccess: () => {
+          router.back();
+        },
+      },
+    });
+  const handleSubmit = (data: FormAddressSchemaType) => {
+    if (addressId) {
+      updateAddress({ id: addressId, data });
+    } else {
+      createAddress(data);
+    }
+  };
+
   return (
     <div>
-      <FieldLegend className="font-semibold">Alamat Baru</FieldLegend>
+      <FieldLegend className="font-semibold">
+        {addressId ? "Ubah Alamat" : "Tambah Alamat"}
+      </FieldLegend>
       <Form {...form}>
-        <form>
+        <form onSubmit={form.handleSubmit((values) => handleSubmit(values))}>
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="fullName"
+              name="recipient_name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       placeholder="Nama Lengkap"
-                      required
                       type="text"
+                      {...field}
+                      value={field.value || ""}
                     ></Input>
                   </FormControl>
+                  <FormMessage></FormMessage>
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="phoneNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       placeholder="No. Handphone"
-                      required
                       type="tel"
+                      {...field}
+                      value={field.value || ""}
                     ></Input>
                   </FormControl>
+                  <FormMessage></FormMessage>
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="provinceId"
+              name="province"
               render={({ field }) => (
-                <ProvinceSelector
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
+                <FormItem>
+                  <ProvinceSelector
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                  <FormMessage></FormMessage>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="regencyId"
+              name="city"
               render={({ field }) => (
-                <RegencieSelector
-                  codeProvince={form.watch("provinceId")}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
+                <FormItem>
+                  <RegencieSelector
+                    codeProvince={form.watch("province")}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                  <FormMessage></FormMessage>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="districtId"
+              name="district"
               render={({ field }) => (
-                <DistrictSelector
-                  codeRegency={form.watch("regencyId")}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
+                <FormItem>
+                  <DistrictSelector
+                    codeRegency={form.watch("city")}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                  <FormMessage></FormMessage>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="villageId"
+              name="sub_district"
               render={({ field }) => (
-                <VillageSelector
-                  codeDistrict={form.watch("districtId")}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
+                <FormItem>
+                  <VillageSelector
+                    codeDistrict={form.watch("district")}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                  <FormMessage></FormMessage>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="postalCode"
+              name="postal_code"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Kode Pos" required type="text"></Input>
+                    <Input
+                      placeholder="Kode Pos"
+                      {...field}
+                      value={field.value || ""}
+                      type="text"
+                    ></Input>
                   </FormControl>
+                  <FormMessage></FormMessage>
                 </FormItem>
               )}
             />
@@ -125,15 +214,21 @@ export const Address = () => {
           <div className="grid grid-cols-1 my-4">
             <FormField
               control={form.control}
-              name="detailAddress"
+              name="detail"
               render={({ field }) => (
-                <Input placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan"></Input>
+                <FormItem>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan"
+                  ></Input>
+                </FormItem>
               )}
             />
           </div>
           <FormField
             control={form.control}
-            name="isDefault"
+            name="is_primary"
             render={({ field }) => (
               <FormItem>
                 <Field orientation="horizontal">
@@ -156,8 +251,25 @@ export const Address = () => {
             )}
           />
           <Field orientation="horizontal" className="justify-end">
-            <Button type="submit">Submit</Button>
-            <Button variant="outline" type="button" className="text-foreground">
+            <Button type="submit">
+              {addressId ? (
+                updateAddressMutationLoading ? (
+                  <Spinner className="text-background size-6"></Spinner>
+                ) : (
+                  "Ubah"
+                )
+              ) : createAddressMutationLoading ? (
+                <Spinner className="text-background size-6"></Spinner>
+              ) : (
+                "Tambah"
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              type="button"
+              className="text-foreground"
+              onClick={() => router.back()}
+            >
               Cancel
             </Button>
           </Field>

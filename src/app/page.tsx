@@ -5,7 +5,6 @@ import { CardProduct } from "@/components/ui/card-product";
 import { FooterLink } from "@/components/ui/link";
 import { products } from "@/mocks/products";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -77,7 +76,7 @@ export default function Home() {
             <div className="flex justify-end">
               <Button
                 variant={"outline"}
-                size={"xl"}
+                size={"lg"}
                 className="bg-gradient-to-r from-muted-foreground to-foreground px-10 text-2xl font-medium"
               >
                 Custom Now
@@ -117,7 +116,7 @@ export default function Home() {
             </div>
             <div className="flex justify-end">
               <Button
-                size={"xl"}
+                size={"lg"}
                 variant={"outline"}
                 className="px-10 text-2xl font-medium"
               >
@@ -148,7 +147,7 @@ export default function Home() {
               </div>
               <div className="flex justify-end">
                 <Button
-                  size={"xl"}
+                  size={"lg"}
                   variant={"outline"}
                   className="px-10 text-2xl font-medium"
                 >
@@ -178,7 +177,7 @@ export default function Home() {
               </div>
               <div className="flex justify-end">
                 <Button
-                  size={"xl"}
+                  size={"lg"}
                   variant={"outline"}
                   className="px-10 text-2xl font-medium bg-white text-foreground"
                 >

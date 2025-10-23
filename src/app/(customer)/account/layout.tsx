@@ -11,7 +11,7 @@ export default function AccountLayout({
   console.log(pathName);
 
   return (
-    <ProtectedRoute allowedRoles={["user"]} redirectTo="/login">
+    <ProtectedRoute allowedRoles={["USER"]} redirectTo="/login">
       <div className="h-full w-full flex flex-row py-10">
         <div className="h-full w-2/6 pr-4 bg-background flex flex-col items-end">
           <Sidebar />

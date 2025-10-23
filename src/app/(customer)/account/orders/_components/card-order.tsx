@@ -1,14 +1,22 @@
+import { useGetProduct } from "@/features/product/api/get-product";
 import { CreditCard, PackageCheck, Truck } from "lucide-react";
 import Image from "next/image";
 
 type CardOrderProps = {
-  productName: string;
+  id: number;
   price: number;
   status: string;
 };
 
 export const CardOrder = (props: CardOrderProps) => {
-  const { productName, price, status } = props;
+  const { id, price, status } = props;
+
+  const { data: product } = useGetProduct({
+    id: id,
+    queryConfig: {
+      enabled: !!id,
+    },
+  });
   return (
     <>
       <div className="flex flex-row w-full">
@@ -25,12 +33,16 @@ export const CardOrder = (props: CardOrderProps) => {
         from-foreground/10 to-transparent flex flex-row justify-around"
         >
           <div className="w-[21.3333%] flex flex-col justify-center">
-            <p className="text-app-semibold-sm">{productName}</p>
-            <p className="text-sm font-light text-foreground/60">Iphone 12</p>
+            <p className="text-app-semibold-sm">{product?.name}</p>
+            <p className="text-sm font-light text-foreground/60">
+              {product?.phone_type}
+            </p>
           </div>
           <p className="w-1/3  self-center text-center text-app-semibold-sm">
-            Rp.
-            {price}
+            {price.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            })}
           </p>
           <div className="w-1/3  px-5 flex flex-row justify-between items-center text-app-semibold-sm">
             <p>{status}</p>
