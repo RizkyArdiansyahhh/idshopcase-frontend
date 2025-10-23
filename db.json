@@ -7,7 +7,9 @@
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
       "role": "USER",
-      "id": 1
+      "id": 1,
+      "first_name": "Dzakwan",
+      "last_name": "arya"
     },
     {
       "email": "fadhil@example.com",
@@ -17,49 +19,155 @@
       "profile_picture": "/images/profile1.jpg",
       "role": "ADMIN",
       "id": 2
+    },
+    {
+      "email": "username@gmail.com",
+      "password": "$2a$10$Rvl0HRhOluThR/hc2bZnj.LbxpEYRhdsPF.WEhrFgVzx2rKFtMgU6",
+      "name": "username12",
+      "phone": "082285219842",
+      "role": "USER",
+      "id": 3
     }
   ],
   "addresses": [
     {
       "id": 1,
       "userId": 1,
-      "recipient_name": "Rizky Ardiansyah",
+      "recipient_name": "Farrazwqq",
       "phone": "081234567890",
-      "province": "Riau",
-      "city": "Pekanbaru",
-      "district": "Sukajadi",
-      "sub_district": "Harapan Raya",
+      "province": "12",
+      "city": "1203",
+      "district": "1203011",
+      "sub_district": "1203011038",
       "postal_code": "28123",
       "detail": "Jl. Mawar No. 12",
       "is_primary": true,
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "recipient_name": "Dzakwan ",
+      "phone": "081298765432",
+      "province": "Jawa Barat",
+      "city": "Bandung",
+      "district": "Coblong",
+      "sub_district": "Dago",
+      "postal_code": "40135",
+      "detail": "Jl. Dago Asri No. 8, Blok B",
+      "is_primary": false,
+      "createdAt": "2025-10-21T10:30:00Z",
+      "updatedAt": "2025-10-21T10:30:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "recipient_name": "Fadhil ",
+      "phone": "082112233445",
+      "province": "DKI Jakarta",
+      "city": "Jakarta Selatan",
+      "district": "Kebayoran Baru",
+      "sub_district": "Pulo",
+      "postal_code": "12160",
+      "detail": "Jl. Senopati Raya No. 21, Lt. 2",
+      "is_primary": false,
+      "createdAt": "2025-10-22T08:15:00Z",
+      "updatedAt": "2025-10-22T08:15:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "recipient_name": "Fania",
+      "phone": "081377788899",
+      "province": "Jawa Timur",
+      "city": "Surabaya",
+      "district": "Tegalsari",
+      "sub_district": "Karang Menjangan",
+      "postal_code": "60262",
+      "detail": "Perum Permata Indah Blok C2 No. 14",
+      "is_primary": false,
+      "createdAt": "2025-10-23T14:00:00Z",
+      "updatedAt": "2025-10-23T14:00:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "recipient_name": "Rendi",
+      "phone": "081244556677",
+      "province": "Sumatera Utara",
+      "city": "Medan",
+      "district": "Medan Barat",
+      "sub_district": "Sukasari",
+      "postal_code": "20213",
+      "detail": "Komplek Taman Sari No. 7",
+      "is_primary": false,
+      "createdAt": "2025-10-24T09:45:00Z",
+      "updatedAt": "2025-10-24T09:45:00Z"
+    },
+    {
+      "id": 6,
+      "userId": 2,
+      "recipient_name": "Daffa",
+      "phone": "081355566677",
+      "province": "Bali",
+      "city": "Denpasar",
+      "district": "Denpasar Selatan",
+      "sub_district": "Sanur",
+      "postal_code": "80228",
+      "detail": "Jl. Pantai Sanur No. 45",
+      "is_primary": false,
+      "createdAt": "2025-10-25T11:20:00Z",
+      "updatedAt": "2025-10-25T11:20:00Z"
+    },
+    {
+      "recipient_name": "addressNew",
+      "phone": "082285219842",
+      "province": "11",
+      "city": "1101",
+      "district": "1101020",
+      "sub_district": "1101020025",
+      "postal_code": "23312",
+      "id": 7
     }
   ],
   "products": [
     {
       "id": 1,
-      "name": "Kaos Katun Premium",
+      "name": "Custom Case",
       "description": "Kaos berbahan katun halus, nyaman dipakai sehari-hari.",
       "price": 120000,
       "stock": 10,
       "category": "Fashion",
       "material": "Katun",
       "image": "/images/product-1.jpeg",
-      "phone_type": null,
+      "phone_type": "Iphone 13",
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z"
     },
     {
       "id": 2,
-      "name": "Hoodie Oversized",
+      "name": "Custom Case",
       "description": "Hoodie tebal, cocok untuk cuaca dingin.",
       "price": 250000,
       "stock": 8,
       "category": "Fashion",
       "material": "Fleece",
       "image": "/images/product-2.jpeg",
-      "phone_type": null,
+      "phone_type": "samsung galaxy s23",
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Custom Case",
+      "description": "Hoodie tebal, cocok untuk cuaca dingin.",
+      "price": 250000,
+      "stock": 8,
+      "category": "Fashion",
+      "material": "Fleece",
+      "image": "/images/product-2.jpeg",
+      "phone_type": "samsung galaxy s23",
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z"
     }
@@ -80,9 +188,9 @@
   ],
   "cartItems": [
     {
-      "id": 1,
-      "cartId": 1,
-      "productId": 1,
+      "id": 2,
+      "cartId": 2,
+      "productId": 2,
       "customImageId": null,
       "quantity": 1,
       "price": 120000,
@@ -90,7 +198,7 @@
     },
     {
       "id": 2,
-      "cartId": 2,
+      "cartId": 3,
       "productId": 2,
       "customImageId": null,
       "quantity": 1,
@@ -108,18 +216,59 @@
       "payment_method": "bank_transfer",
       "tracking_number": "TRK123456789",
       "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    }
-  ],
-  "orderItems": [
+      "updatedAt": "2025-10-20T09:00:00Z",
+      "items": [
+        {
+          "id": 1,
+          "productId": 1,
+          "customImageId": null,
+          "quantity": 2,
+          "price": 120000,
+          "createdAt": "2025-10-20T09:00:00Z"
+        }
+      ]
+    },
     {
-      "id": 1,
-      "orderId": 1,
-      "productId": 1,
-      "customImageId": null,
-      "quantity": 2,
-      "price": 120000,
-      "createdAt": "2025-10-20T09:00:00Z"
+      "id": 2,
+      "userId": 2,
+      "addressId": 2,
+      "status": "completed",
+      "total_price": 360000,
+      "payment_method": "credit_card",
+      "tracking_number": "TRK987654321",
+      "createdAt": "2025-10-21T10:00:00Z",
+      "updatedAt": "2025-10-21T12:00:00Z",
+      "items": [
+        {
+          "id": 2,
+          "productId": 2,
+          "customImageId": null,
+          "quantity": 3,
+          "price": 120000,
+          "createdAt": "2025-10-21T10:05:00Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "addressId": 3,
+      "status": "pending",
+      "total_price": 50000,
+      "payment_method": "e_wallet",
+      "tracking_number": "TRK555555555",
+      "createdAt": "2025-10-22T08:00:00Z",
+      "updatedAt": "2025-10-22T08:30:00Z",
+      "items": [
+        {
+          "id": 3,
+          "productId": 3,
+          "customImageId": null,
+          "quantity": 1,
+          "price": 50000,
+          "createdAt": "2025-10-22T08:00:00Z"
+        }
+      ]
     }
   ],
   "payments": [

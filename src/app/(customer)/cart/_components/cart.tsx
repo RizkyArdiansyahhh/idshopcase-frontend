@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { CartList } from "@/features/cart/components/cart-list";
+import Link from "next/link";
 
 export const Cart = () => {
   return (
@@ -47,12 +48,12 @@ export const Cart = () => {
                   Total (0 Produk)
                 </p>
                 <p className="text-app-semibold-lg text-background">Rp. 0</p>
-                <Button
-                  variant={"default"}
-                  className="bg-card text-foreground font-semibold px-10 hover:text-background"
+                <Link
+                  href="/checkout"
+                  className="bg-background rounded-md p-3 text-foreground font-semibold px-10 hover:text-foreground/80 transition-colors duration-300 ease-in-out"
                 >
                   Checkout
-                </Button>
+                </Link>
               </div>
             </div>
           </div>

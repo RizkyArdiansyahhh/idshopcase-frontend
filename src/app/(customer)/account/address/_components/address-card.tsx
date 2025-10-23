@@ -38,7 +38,7 @@ export const AddressCard = (props: AddressCardProps) => {
         <p className="text-app-light-sm">{phone}</p>
       </div>
       <div className="flex flex-row justify-between items-center">
-        <address className="not-italic text-xs">
+        <address className="not-italic text-xs flex gap-2">
           <span>{detail}</span>
           <span>{village}</span>
           <span>

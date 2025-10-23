@@ -13,10 +13,6 @@ const sidebarLink: { label: string; path: string }[] = [
     path: "/account/orders",
   },
   {
-    label: "Metode Pembayaran",
-    path: "/account/payments",
-  },
-  {
     label: "Alamat",
     path: "/account/address",
   },

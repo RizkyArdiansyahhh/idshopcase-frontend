@@ -2,8 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { TabLinkOrder } from "./tab-link-order";
-import { mockOrders } from "@/mocks/orders";
-import { CardOrder } from "./card-order";
+import { OrdersList } from "@/features/orders/components/orders-list";
 
 export const Orders = () => {
   const pathName = usePathname();
@@ -44,20 +43,7 @@ export const Orders = () => {
         })}
       </div>
       <div className="flex-1 overflow-y-auto flex flex-col gap-3">
-        {mockOrders
-          .filter((item) => {
-            return item.status === status;
-          })
-          .map((item) => {
-            return (
-              <CardOrder
-                key={item.id}
-                productName={item.productName}
-                price={item.amount}
-                status={item.status}
-              />
-            );
-          })}
+        <OrdersList status={status as "pending" | "shipped" | "completed"} />
       </div>
     </div>
   );
