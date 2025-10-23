@@ -11,6 +11,8 @@ const rules = auth.rewriter({
   users: 600, // hanya admin bisa GET /users
   products: 644, // semua bisa GET, owner bisa PATCH/DELETE
   orders: 660, // user bisa lihat order sendiri, admin bisa lihat semua
+  carts: 660, // user hanya bisa lihat cart miliknya sendiri
+  cartItems: 660,
 });
 
 // Middleware
@@ -20,6 +22,7 @@ app.use(rules);
 app.use(auth);
 app.use(router);
 
+console.log("Data keys:", Object.keys(router.db.getState()));
 // Jalankan server
 app.listen(5001, () => {
   console.log("✅ JSON Server Auth berjalan di http://localhost:5001");

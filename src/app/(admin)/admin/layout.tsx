@@ -10,7 +10,7 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <ProtectedRoute allowedRoles={["admin"]} redirectTo="/login">
+      <ProtectedRoute allowedRoles={["ADMIN"]} redirectTo="/login">
         <SidebarProvider
           style={
             {

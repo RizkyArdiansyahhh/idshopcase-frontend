@@ -34,9 +34,7 @@ export const useLogin = (params: useLoginPrams = {}) => {
     mutationFn: loginWithEmailAndPassword,
     ...params.mutationConfig,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (err: any) => {
-      console.log("LOGIN ERROR", err.response?.data);
-    },
+
     onSuccess: (data, variables, onMutateResult, context) => {
       localStorage.setItem("id", data.user.id.toString());
       localStorage.setItem("token", data.accessToken);

@@ -35,7 +35,7 @@ export default function LoginLayout({
               : "Selamat datang! Buat akun IDShopCase kamu sekarang"}
           </p>
         </div>
-        <div className="w-3/5 h-3/5 py-2">{children}</div>
+        <div className="w-3/5 h-3/5">{children}</div>
       </div>
     </div>
   );

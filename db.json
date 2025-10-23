@@ -6,7 +6,7 @@
       "name": "Dzakwan",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
-      "role": "user",
+      "role": "USER",
       "id": 1
     },
     {
@@ -15,7 +15,7 @@
       "name": "Fadhil",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
-      "role": "admin",
+      "role": "ADMIN",
       "id": 2
     }
   ],
@@ -47,7 +47,8 @@
       "material": "Katun",
       "image": "/images/product-1.jpeg",
       "phone_type": null,
-      "createdAt": "2025-10-20T09:00:00Z"
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
     },
     {
       "id": 2,
@@ -59,12 +60,19 @@
       "material": "Fleece",
       "image": "/images/product-2.jpeg",
       "phone_type": null,
-      "createdAt": "2025-10-20T09:00:00Z"
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
     }
   ],
   "carts": [
     {
       "id": 1,
+      "userId": 1,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 2,
       "userId": 1,
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z"
@@ -76,7 +84,16 @@
       "cartId": 1,
       "productId": 1,
       "customImageId": null,
-      "quantity": 2,
+      "quantity": 1,
+      "price": 120000,
+      "createdAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "cartId": 2,
+      "productId": 2,
+      "customImageId": null,
+      "quantity": 1,
       "price": 120000,
       "createdAt": "2025-10-20T09:00:00Z"
     }
