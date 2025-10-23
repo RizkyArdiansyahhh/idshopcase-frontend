@@ -20,6 +20,7 @@ app.use(rules);
 app.use(auth);
 app.use(router);
 
+console.log("Data keys:", Object.keys(router.db.getState()));
 // Jalankan server
 app.listen(5001, () => {
   console.log("✅ JSON Server Auth berjalan di http://localhost:5001");

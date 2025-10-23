@@ -16,6 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SpinnerV2 } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 type LoginFormProps = {
   onSuccess: () => void;
@@ -26,6 +28,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const { mutate: login, isPending: loginIsLoading } = useLogin({
     mutationConfig: {
       onSuccess: onSuccess,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (err: any) => {
+        toast.error(err.response?.data);
+      },
     },
   });
 
@@ -93,8 +99,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="font-bold">
-            Masuk
+          <Button type="submit" className="font-bold" disabled={loginIsLoading}>
+            {loginIsLoading ? (
+              <SpinnerV2 className="text-background size-6" />
+            ) : (
+              "Masuk"
+            )}
           </Button>
           <div className="flex justify-center gap-1">
             <p>Kamu belum memiliki akun?</p>
@@ -104,57 +114,6 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           </div>
         </form>
       </Form>
-      {/* <form
-        action="#"
-        className="flex flex-col gap-5 mt-7"
-        onSubmit={form.handleSubmit(handleLogin)}
-      >
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Email"
-            {...form.register("email")}
-          ></Input>
-          <ErrorMessageInput message={form.formState.errors.email?.message} />
-        </div>
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <div className="relative w-full">
-            <Input
-              type={isPasswordVisible ? "text" : "password"}
-              id="password"
-              placeholder="Password"
-              className="pr-10"
-              {...form.register("password")}
-            ></Input>
-
-            <ErrorMessageInput
-              message={form.formState.errors.password?.message}
-            />
-            <div
-              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
-            >
-              {isPasswordVisible ? (
-                <Eye className="text-ring" />
-              ) : (
-                <EyeClosed className="text-ring" />
-              )}
-            </div>
-          </div>
-        </div>
-        <Button className="font-bold" onClick={() => push("/")}>
-          Masuk
-        </Button>
-        <div className="flex justify-center gap-1">
-          <p>Kamu belum memiliki akun?</p>
-          <Link href="/register" className="text-primary font-bold">
-            Daftar
-          </Link>
-        </div>
-      </form> */}
     </>
   );
 };
