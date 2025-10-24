@@ -62,7 +62,7 @@ describe("Login Page", () => {
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
-        "/login", // sesuaikan endpoint di aplikasi
+        "/api/login", // sesuaikan endpoint di aplikasi
         expect.objectContaining({
           method: "POST",
           body: expect.any(String),

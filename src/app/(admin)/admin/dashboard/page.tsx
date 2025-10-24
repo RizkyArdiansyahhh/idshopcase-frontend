@@ -4,7 +4,7 @@ import { SectionCards } from "@/app/(admin)/admin/components/section-cards";
 
 import data from "./data.json";
 
-export default function Page() {
+export default function DashboardPage() {
   return (
     <>
       <div className="flex flex-1 flex-col">
