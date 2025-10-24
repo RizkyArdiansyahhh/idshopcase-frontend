@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginForm } from "@/features/auth/components/login-form";
+import { LoginForm } from "../../../features/auth/components/login-form";
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
