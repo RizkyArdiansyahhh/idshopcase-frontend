@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Cart } from "../../app/(customer)/cart/components/cart";
+import { Cart } from "@/app/(customer)/cart/_components/cart";
 
 // Mock CartList supaya fokus pada Cart saja
 jest.mock("@/features/cart/components/cart-list", () => ({

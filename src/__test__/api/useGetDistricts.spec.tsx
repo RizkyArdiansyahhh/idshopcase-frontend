@@ -4,7 +4,6 @@ import { useGetDistricts } from "@/features/address/api/get-districts";
 import { wilayahApi } from "@/lib/axios";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Mock wilayahApi
 jest.mock("@/lib/axios", () => ({
   wilayahApi: {
     get: jest.fn(),
@@ -34,7 +33,6 @@ describe("useGetDistricts", () => {
       { wrapper }
     );
 
-    // Tunggu sampai query selesai
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(wilayahApi.get).toHaveBeenCalledWith("/districts/321.json");

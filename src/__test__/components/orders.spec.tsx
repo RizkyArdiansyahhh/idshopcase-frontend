@@ -1,13 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { Orders } from "@/app/(customer)/account/orders/_components/orders";
 
-// Mock Next.js hooks
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
   useSearchParams: jest.fn(),
 }));
 
-// Mock OrdersList
 jest.mock("@/features/orders/components/orders-list", () => ({
   OrdersList: ({ status }: { status: string }) => (
     <div data-testid="orders-list">{status}</div>
@@ -33,7 +31,6 @@ describe("Orders Component", () => {
     expect(screen.getByText("Dikirim")).toBeInTheDocument();
     expect(screen.getByText("Selesai")).toBeInTheDocument();
 
-    // OrdersList status default pending
     expect(screen.getByTestId("orders-list")).toHaveTextContent("pending");
   });
 

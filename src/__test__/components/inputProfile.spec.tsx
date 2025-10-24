@@ -4,14 +4,14 @@ import { InputCardProfile } from "../../app/(customer)/account/profile/_componen
 describe("InputCardProfile", () => {
   it("renders label and input correctly", () => {
     render(
-      <InputCardProfile label="Nama" value="Rizky" type="text" id="name" />
+      <InputCardProfile label="Nama" value="Dzakwa" type="text" id="name" />
     );
 
     // Label muncul
     expect(screen.getByText("Nama")).toBeInTheDocument();
 
     // Input muncul dengan value yang sesuai
-    const input = screen.getByDisplayValue("Rizky") as HTMLInputElement;
+    const input = screen.getByDisplayValue("Dzakwa") as HTMLInputElement;
     expect(input).toBeInTheDocument();
 
     // Input disabled

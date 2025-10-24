@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { SidebarLink } from "../../app/(customer)/account/_components/sidebar-link";
 
-// Mock next/link biar tidak error di environment test
 jest.mock("next/link", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const SidebarLink = ({ href, children, className }: any) => (

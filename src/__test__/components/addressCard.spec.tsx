@@ -19,7 +19,7 @@ describe("AddressCard Component", () => {
   test("menampilkan nama dan nomor telepon dengan benar", () => {
     render(<AddressCard {...mockAddress} />);
 
-    expect(screen.getByText("Rizky Ardiansyah")).toBeInTheDocument();
+    expect(screen.getByText("Rendi wahyudi")).toBeInTheDocument();
     expect(screen.getByText("08123456789")).toBeInTheDocument();
   });
 
