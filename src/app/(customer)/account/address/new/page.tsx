@@ -1,6 +1,6 @@
 import { Address } from "@/features/address/components/address";
 
-const addAddressPage = () => {
+const AddAddressPage = () => {
   return (
     <>
       <Address></Address>
@@ -8,4 +8,4 @@ const addAddressPage = () => {
   );
 };
 
-export default addAddressPage;
+export default AddAddressPage;

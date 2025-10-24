@@ -1,11 +1,16 @@
-import { Address } from "@/features/address/components/address";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render } from "@testing-library/react";
+// __tests__/AddAddressPage.test.tsx
+import { render, screen } from "@testing-library/react";
+import AddAddressPage from "@/app/(customer)/account/address/page";
 
-const queryClient = new QueryClient();
+// Mock komponen Address
+jest.mock("@/features/address/components/address", () => ({
+  Address: () => <div data-testid="mock-address">Address Component</div>,
+}));
 
-render(
-  <QueryClientProvider client={queryClient}>
-    <Address />
-  </QueryClientProvider>
-);
+describe("AddAddressPage", () => {
+  it("renders Address component", () => {
+    render(<AddAddressPage />);
+    expect(screen.getByTestId("mock-address")).toBeInTheDocument();
+    expect(screen.getByText("Address Component")).toBeInTheDocument();
+  });
+});
