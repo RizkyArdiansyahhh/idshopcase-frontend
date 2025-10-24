@@ -41,3 +41,27 @@ test("useUpdateUser mutation error", async () => {
 
   expect(mockedToast.error).toHaveBeenCalledWith(error.message);
 });
+test("useUpdateUser calls onSuccess callback if provided", async () => {
+  const mockResponse = { user: { id: 1, name: "Test User" } };
+  mockedAxios.patch.mockResolvedValueOnce({ data: mockResponse });
+
+  const onSuccessMock = jest.fn();
+
+  const { result } = renderHook(
+    () => useUpdateUser({ mutationConfig: { onSuccess: onSuccessMock } }),
+    { wrapper }
+  );
+
+  result.current.mutate({ id: 1, data: new FormData() });
+
+  await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+  expect(mockedToast.success).toHaveBeenCalledWith("User updated");
+
+  expect(onSuccessMock).toHaveBeenCalledWith(
+    mockResponse,
+    { id: 1, data: expect.any(FormData) },
+    undefined,
+    undefined
+  );
+});
