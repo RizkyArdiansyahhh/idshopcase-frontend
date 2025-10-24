@@ -1,11 +1,16 @@
-import AddressPage from "@/app/(customer)/account/address/page";
-import { render } from "@testing-library/react";
+// __tests__/AddAddressPage.test.tsx
+import { render, screen } from "@testing-library/react";
+import AddAddressPage from "@/app/(customer)/account/address/page";
 
-import { Address } from "@/features/address/components/address";
+// Mock komponen Address
+jest.mock("@/features/address/components/address", () => ({
+  Address: () => <div data-testid="mock-address">Address Component</div>,
+}));
 
-describe("Address", () => {
-  it("should render", () => {
-    const page = render(<Address />);
-    expect(page).toMatchSnapshot();
+describe("AddAddressPage", () => {
+  it("renders Address component", () => {
+    render(<AddAddressPage />);
+    expect(screen.getByTestId("mock-address")).toBeInTheDocument();
+    expect(screen.getByText("Address Component")).toBeInTheDocument();
   });
 });

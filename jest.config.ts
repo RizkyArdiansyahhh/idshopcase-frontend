@@ -9,6 +9,9 @@ const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   modulePaths: ["<rootDir>"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
   collectCoverage: true,
   collectCoverageFrom: [
     "**/*.{js,jsx,ts,tsx}",
@@ -23,6 +26,9 @@ const config: Config = {
     "!**/app/**/layout.{js,jsx,ts,tsx}",
     "!<rootDir>/.next/**",
     "!<rootDir>/*.config.js",
+    "!**/*.config.ts",
+    "!**/server.js",
+    "!**/*test-utils.{ts,tsx}",
   ],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 };
