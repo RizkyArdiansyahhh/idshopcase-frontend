@@ -3,7 +3,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { User } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getUser = async (id: number) => {
+export const getUser = async (id: number) => {
   const response = (await api.get(`/users/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
