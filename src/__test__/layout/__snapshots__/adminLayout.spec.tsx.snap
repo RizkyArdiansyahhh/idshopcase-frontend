@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AdminLayout renders layout and children correctly 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="protected-route"
+  >
+    <div
+      data-testid="sidebar-provider"
+    >
+      <div
+        data-testid="app-sidebar"
+      >
+        Sidebar
+      </div>
+      <div
+        data-testid="sidebar-inset"
+      >
+        <div
+          data-testid="site-header"
+        >
+          Header
+        </div>
+        <div>
+          Dashboard Page
+        </div>
+        <div>
+          Orders Page
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

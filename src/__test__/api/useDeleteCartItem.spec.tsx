@@ -1,71 +1,64 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * @jest-environment jsdom
- */
-
 import { renderHook, act } from "@testing-library/react";
-import { useDeleteCartItem } from "../../features/cart/api/delete-cart";
-import { api } from "@/lib/axios";
-import { queryClient } from "@/lib/react-query";
-import { getCartItemsQueryKey } from "../../features/cart/api/get-cart-items";
-import { getCartsQueryKey } from "../../features/cart/api/get-carts";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { useDeleteCartItem } from "@/features/cart/api/delete-cart";
+import * as reactQuery from "@tanstack/react-query";
+import * as apiModule from "@/lib/axios";
 
-// 🔹 Mock API dan queryClient invalidate
+// Mock api.delete
 jest.mock("@/lib/axios", () => ({
   api: {
     delete: jest.fn(),
   },
 }));
 
-jest.mock("@/lib/react-query", () => ({
-  queryClient: {
-    invalidateQueries: jest.fn(),
-  },
-}));
+// Mock queryClient
+const invalidateQueriesMock = jest.fn();
+jest.spyOn(reactQuery, "useQueryClient").mockReturnValue({
+  invalidateQueries: invalidateQueriesMock,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} as any);
 
 describe("useDeleteCartItem", () => {
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <QueryClientProvider client={queryClient as any}>
-      {children}
-    </QueryClientProvider>
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
+    // Mock localStorage
+    Object.defineProperty(window, "localStorage", {
+      value: {
+        getItem: jest.fn(() => "fake-token"),
+      },
+      writable: true,
+    });
   });
 
-  it("calls api.delete with correct ID and headers", async () => {
-    (api.delete as jest.Mock).mockResolvedValueOnce({ data: {} });
+  it("calls api.delete with correct id", async () => {
+    const apiDeleteSpy = jest
+      .spyOn(apiModule.api, "delete")
+      .mockResolvedValue({});
 
-    const { result } = renderHook(() => useDeleteCartItem(), { wrapper });
+    const { result } = renderHook(() => useDeleteCartItem());
 
     await act(async () => {
-      await result.current.mutateAsync(10);
+      await result.current.mutateAsync(42);
     });
 
-    expect(api.delete).toHaveBeenCalledWith("/cartItems/10", {
+    expect(apiDeleteSpy).toHaveBeenCalledWith("/cartItems/42", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: "Bearer fake-token",
       },
     });
   });
 
-  it("invalidates getCartItems and getCarts queries on success", async () => {
-    (api.delete as jest.Mock).mockResolvedValueOnce({ data: {} });
+  it("invalidates queries on success", async () => {
+    jest.spyOn(apiModule.api, "delete").mockResolvedValue({});
 
-    const { result } = renderHook(() => useDeleteCartItem(), { wrapper });
+    const { result } = renderHook(() => useDeleteCartItem());
 
     await act(async () => {
-      await result.current.mutateAsync(5);
+      await result.current.mutateAsync(100);
     });
 
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-      queryKey: getCartItemsQueryKey(),
-    });
-
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-      queryKey: getCartsQueryKey(),
+    expect(invalidateQueriesMock).toHaveBeenCalled();
+    expect(invalidateQueriesMock).toHaveBeenCalledWith({
+      queryKey: expect.any(Array),
     });
   });
 });

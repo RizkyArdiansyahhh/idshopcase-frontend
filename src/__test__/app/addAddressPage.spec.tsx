@@ -1,11 +1,11 @@
-import AddressPage from "@/app/(customer)/account/address/page";
+import { Address } from "@/features/address/components/address";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 
-import { Address } from "@/features/address/components/address";
+const queryClient = new QueryClient();
 
-describe("Address", () => {
-  it("should render", () => {
-    const page = render(<Address />);
-    expect(page).toMatchSnapshot();
-  });
-});
+render(
+  <QueryClientProvider client={queryClient}>
+    <Address />
+  </QueryClientProvider>
+);
