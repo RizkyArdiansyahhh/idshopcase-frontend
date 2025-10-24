@@ -2,16 +2,14 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getUser, useGetUser } from "@/features/auth/api/get-user";
 import { api } from "@/lib/axios";
-import React from "react"; // ✅ WAJIB untuk JSX di file test
+import React from "react";
 
-// 🧩 Mock Axios
 jest.mock("@/lib/axios", () => ({
   api: {
     get: jest.fn(),
   },
 }));
 
-// 🧰 Mock localStorage biar gak error di Jest environment
 beforeAll(() => {
   Object.defineProperty(window, "localStorage", {
     value: {

@@ -25,13 +25,10 @@ describe("AccountLayout", () => {
       </AccountLayout>
     );
 
-    // Navbar ditampilkan
     expect(screen.getByTestId("navbar")).toBeInTheDocument();
 
-    // ProtectedRoute membungkus children
     expect(screen.getByTestId("protected-route")).toBeInTheDocument();
 
-    // children-nya muncul
     expect(screen.getByTestId("child")).toBeInTheDocument();
   });
 
@@ -42,7 +39,6 @@ describe("AccountLayout", () => {
       </AccountLayout>
     );
 
-    // Cek className utama layout
     const mainDiv = container.querySelector(
       "div.h-screen.w-screen.flex.flex-col.items-center.py-2"
     );

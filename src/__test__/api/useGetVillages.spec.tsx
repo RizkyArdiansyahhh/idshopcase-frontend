@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useGetVillages } from "@/features/address/api/get-villages";
 import { wilayahApi } from "@/lib/axios";
 
-// Mock API
 jest.mock("@/lib/axios", () => ({
   wilayahApi: {
     get: jest.fn(),

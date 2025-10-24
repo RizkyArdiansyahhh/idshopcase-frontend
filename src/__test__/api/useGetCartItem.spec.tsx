@@ -18,7 +18,6 @@ const mockData = [
 
 (api.get as jest.Mock).mockResolvedValue({ data: mockData });
 
-// Setup QueryClient wrapper
 const queryClient = new QueryClient();
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

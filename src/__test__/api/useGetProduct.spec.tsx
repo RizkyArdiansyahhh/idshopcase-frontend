@@ -15,7 +15,6 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 test("useGetProduct fetches product data", async () => {
-  // Mock respons API
   const mockProduct: Product = {
     id: 1,
     name: "Test Product",

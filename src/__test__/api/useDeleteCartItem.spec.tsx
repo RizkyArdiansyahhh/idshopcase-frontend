@@ -3,7 +3,6 @@ import { useDeleteCartItem } from "@/features/cart/api/delete-cart";
 import * as reactQuery from "@tanstack/react-query";
 import * as apiModule from "@/lib/axios";
 
-// Mock api.delete
 jest.mock("@/lib/axios", () => ({
   api: {
     delete: jest.fn(),

@@ -10,7 +10,6 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
-// Mock API hooks
 jest.mock("../api/get-addressById", () => ({
   useGetAddressById: jest.fn(() => ({ data: undefined, isLoading: false })),
 }));
@@ -29,7 +28,6 @@ jest.mock("../api/update-address", () => ({
   })),
 }));
 
-// Mock selectors
 jest.mock("./province-selector", () => ({
   ProvinceSelector: ({ value, onValueChange }: any) => (
     <input value={value} onChange={(e) => onValueChange(e.target.value)} />

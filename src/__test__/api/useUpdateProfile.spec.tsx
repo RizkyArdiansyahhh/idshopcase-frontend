@@ -22,10 +22,8 @@ test("useUpdateUser mutation success", async () => {
 
   const { result } = renderHook(() => useUpdateUser(), { wrapper });
 
-  // Trigger mutation
   result.current.mutate({ id: 1, data: new FormData() });
 
-  // Tunggu sampai berhasil
   await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
   expect(mockedToast.success).toHaveBeenCalledWith("User updated");
