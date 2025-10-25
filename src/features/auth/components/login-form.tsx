@@ -106,9 +106,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               "Masuk"
             )}
           </Button>
-          <div className="flex justify-center gap-1">
-            <p>Kamu belum memiliki akun?</p>
-            <Link href="/register" className="text-primary font-bold">
+          <div className="flex flex-col items-center md:flex-row justify-center gap-1 flex-wrap">
+            <p className="text-md">Kamu belum memiliki akun?</p>
+            <Link
+              href="/register"
+              className="text-primary text-md underline font-bold"
+            >
               Daftar
             </Link>
           </div>

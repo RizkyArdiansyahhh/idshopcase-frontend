@@ -181,9 +181,12 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
               "Daftar"
             )}
           </Button>
-          <div className="flex justify-center gap-1">
-            <p>Kamu sudah punya akun?</p>
-            <Link href="/login" className="text-primary font-bold">
+          <div className="flex flex-col items-center md:flex-row justify-center gap-1 flex-wrap">
+            <p className="text-md">Kamu sudah punya akun?</p>
+            <Link
+              href="/login"
+              className="text-primary text-md underline font-bold"
+            >
               Masuk
             </Link>
           </div>
