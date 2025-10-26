@@ -30,7 +30,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       onSuccess: onSuccess,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (err: any) => {
-        toast.error(err.response?.data);
+        if (err.response?.data) {
+          toast.error(err.response?.data);
+        }
+        toast.error("Terjadi Kesalahan");
       },
     },
   });
