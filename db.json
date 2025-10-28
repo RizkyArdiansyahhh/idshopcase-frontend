@@ -1,32 +1,120 @@
 {
   "users": [
     {
+      "id": 1,
+      "name": "Dzakwan",
       "email": "dzakwan@example.com",
       "password": "$2a$10$GY6q1VqVAv4ldSZVgor1UevdXRC7h67OSAzQ8qCMxjGOPe9z2eAp6",
-      "name": "Dzakwan",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
-      "role": "USER",
-      "id": 1,
-      "first_name": "Dzakwan",
-      "last_name": "arya"
+      "role": "USER"
     },
     {
+      "id": 2,
+      "name": "Fadhil",
       "email": "fadhil@example.com",
       "password": "$2a$10$NLDvflTUwW/ng6uv8T9USO5ff.Zm5dKc4uvu2iXLxp7V4ivOLE4ue",
-      "name": "Fadhil",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
-      "role": "ADMIN",
-      "id": 2
+      "role": "ADMIN"
     },
     {
+      "id": 3,
+      "name": "username12",
       "email": "username@gmail.com",
       "password": "$2a$10$Rvl0HRhOluThR/hc2bZnj.LbxpEYRhdsPF.WEhrFgVzx2rKFtMgU6",
-      "name": "username12",
       "phone": "082285219842",
+      "role": "USER"
+    },
+    {
+      "id": 4,
+      "name": "username2",
+      "email": "username2@gmail.com",
+      "password": "$2a$10$Rvl0HRhOluThR/hc2bZnj.LbxpEYRhdsPF.WEhrFgVzx2rKFtMgU6",
+      "phone": "082285219842",
+      "role": "USER"
+    },
+    {
+      "id": 5,
+      "name": "username3",
+      "email": "username3@gmail.com",
+      "password": "$2a$10$Rvl0HRhOluThR/hc2bZnj.LbxpEYRhdsPF.WEhrFgVzx2rKFtMgU6",
+      "phone": "082285219842",
+      "role": "USER"
+    },
+    {
+      "email": "admin@example.com",
+      "password": "$2a$10$vtJUBLAV/z7jOCHdGlv5Te6AMRBjRqWniLfvg5u0JgP5FG5HA6uAW",
+      "name": "usernamenew",
+      "phone": "081234567890",
       "role": "USER",
-      "id": 3
+      "id": 6
+    },
+    {
+      "email": "dariadmin@admin.com",
+      "password": "$2a$10$8a/gr0BMODrNJIddOW196.qOLGdU1nTazvHE3FOwRq037MwdD4PMW",
+      "name": "Rizky ardiansyah",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "ADMIN",
+      "createdAt": "2025-10-28T03:55:30.992Z",
+      "updatedAt": null,
+      "id": 7
+    },
+    {
+      "email": "aaaaa@gmail.com",
+      "password": "$2a$10$8ZhBVE2lx.SIRM1AGsNsLeLlWd/IlYcl4KK32DV2qJzjIu9JVpo9m",
+      "name": "aaaaaaaaaa",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "ADMIN",
+      "createdAt": "2025-10-28T04:43:47.199Z",
+      "updatedAt": null,
+      "id": 8
+    },
+    {
+      "email": "bbbbbbbb@gmail.com",
+      "password": "$2a$10$VIX94n85bDlzBoipt/kNIu0Hux8aYN4RTPqdRK5.01DO3sE6t0Jpq",
+      "name": "aaaabbbbbbb",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "ADMIN",
+      "createdAt": "2025-10-28T04:54:11.221Z",
+      "updatedAt": null,
+      "id": 9
+    },
+    {
+      "email": "cccccc@gmail.com",
+      "password": "$2a$10$5TjXyJDN5OqIEwqPL4Qy6u0tLHawu0jFusq8YX09TWXP8/RPOgm1O",
+      "name": "dddddddd",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "USER",
+      "createdAt": "2025-10-28T05:11:10.617Z",
+      "updatedAt": "2025-10-28T05:11:21.265Z",
+      "id": 10
+    },
+    {
+      "email": "zzzzz@gmail.com",
+      "password": "$2a$10$owLLWtm8SQRh.T7PBZa7seXyutIgFskQmxswT1/431oTb1dxBT0BC",
+      "name": "zzzzzzzz",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "USER",
+      "createdAt": "2025-10-28T05:15:17.745Z",
+      "updatedAt": null,
+      "id": 11
+    },
+    {
+      "email": "aa@gmail.com",
+      "password": "$2a$10$ohFfQFKtdmxxL/ZHNancp.MpNS/2ixa2qGxDMZ/InkWrraIqv.J5.",
+      "name": "Rizky ardiansyah",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "ADMIN",
+      "createdAt": "2025-10-28T05:15:55.926Z",
+      "updatedAt": null,
+      "id": 12
     }
   ],
   "addresses": [
@@ -121,14 +209,15 @@
       "updatedAt": "2025-10-25T11:20:00Z"
     },
     {
+      "id": 7,
+      "userId": 5,
       "recipient_name": "addressNew",
       "phone": "082285219842",
       "province": "11",
       "city": "1101",
       "district": "1101020",
       "sub_district": "1101020025",
-      "postal_code": "23312",
-      "id": 7
+      "postal_code": "23312"
     }
   ],
   "products": [
@@ -184,6 +273,12 @@
       "userId": 1,
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "createdAt": "2025-10-20T09:00:00Z",
+      "updatedAt": "2025-10-20T09:00:00Z"
     }
   ],
   "cartItems": [
@@ -197,7 +292,7 @@
       "createdAt": "2025-10-20T09:00:00Z"
     },
     {
-      "id": 2,
+      "id": 3,
       "cartId": 3,
       "productId": 2,
       "customImageId": null,
@@ -231,7 +326,7 @@
     {
       "id": 2,
       "userId": 2,
-      "addressId": 2,
+      "addressId": 3,
       "status": "completed",
       "total_price": 360000,
       "payment_method": "credit_card",
@@ -252,7 +347,7 @@
     {
       "id": 3,
       "userId": 3,
-      "addressId": 3,
+      "addressId": 4,
       "status": "pending",
       "total_price": 50000,
       "payment_method": "e_wallet",
@@ -269,54 +364,6 @@
           "createdAt": "2025-10-22T08:00:00Z"
         }
       ]
-    }
-  ],
-  "payments": [
-    {
-      "id": 1,
-      "orderId": 1,
-      "payment_gateway": "Midtrans",
-      "transaction_id": "TXN001",
-      "status": "paid",
-      "amount": 240000,
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    }
-  ],
-  "notifications": [
-    {
-      "id": 1,
-      "userId": 1,
-      "message": "Pesanan kamu sedang diproses!",
-      "is_read": false,
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    }
-  ],
-  "customImages": [
-    {
-      "id": 1,
-      "userId": 1,
-      "productId": 1,
-      "image_url": "/uploads/custom-1.png",
-      "processed_url": "/uploads/processed-1.png",
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    }
-  ],
-  "whatsAppBlasts": [
-    {
-      "id": 1,
-      "message": "Diskon spesial 50% hanya hari ini!",
-      "status": "sent",
-      "amount": 1,
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    }
-  ],
-  "sequelizeMeta": [
-    {
-      "name": "20251020100000-init-database"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import UsersPage from "@/app/(admin)/admin/users/page";
+import UsersPage from "@/app/(admin)/admin/(actions)/users/page";
 import { render } from "@testing-library/react";
 
 describe("Users", () => {

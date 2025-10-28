@@ -1,21 +1,20 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 type DrawerDetailProps = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
+  title?: string;
+  children?: React.ReactNode;
 };
 export const DrawerDetail = (props: DrawerDetailProps) => {
-  const { isOpen, setIsOpen } = props;
+  const { isOpen, setIsOpen, children, title } = props;
   const isMobile = useIsMobile();
 
   return (
@@ -24,13 +23,13 @@ export const DrawerDetail = (props: DrawerDetailProps) => {
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <DrawerContent>
+      <DrawerContent className="p-4">
         <DrawerHeader className="gap-1">
-          <DrawerTitle>Detail</DrawerTitle>
-          <DrawerDescription>
-            Showing total visitors for the last 6 months
-          </DrawerDescription>
+          <DrawerTitle className="text-2xl font-semibold flex justify-center">
+            {title}
+          </DrawerTitle>
         </DrawerHeader>
+        {children}
       </DrawerContent>
     </Drawer>
   );

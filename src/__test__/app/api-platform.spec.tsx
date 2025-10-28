@@ -1,4 +1,4 @@
-import ApiPlatformPage from "@/app/(admin)/admin/api-platform/page";
+import ApiPlatformPage from "@/app/(admin)/admin/(actions)/api-platform/page";
 import { render } from "@testing-library/react";
 
 describe("API Platform", () => {
