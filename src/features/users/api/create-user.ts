@@ -1,0 +1,36 @@
+import { api } from "@/lib/axios";
+import { MutationConfig, queryClient } from "@/lib/react-query";
+import { User } from "@/types/api";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { getUsersQueryKey } from "./get-users";
+
+type CreateUserItemRequest = {
+  data: Omit<User, "id" | "profile_picture" | "createdAt" | "updatedAt">;
+};
+const createUser = async ({ data }: CreateUserItemRequest) => {
+  return await api.post("/users", {
+    ...data,
+    createdAt: new Date().toISOString(),
+    updatedAt: null,
+  });
+};
+
+type UseCreateUser = {
+  mutatationConfig?: MutationConfig<typeof createUser>;
+};
+
+export const useCreateUser = ({ mutatationConfig }: UseCreateUser = {}) => {
+  return useMutation({
+    mutationFn: createUser,
+    ...mutatationConfig,
+    onSuccess: (data, variables, onMutateResult, context) => {
+      queryClient.invalidateQueries({ queryKey: getUsersQueryKey() });
+      toast.success("User Berhasil Ditambahkan");
+      mutatationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+};
