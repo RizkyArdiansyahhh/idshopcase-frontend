@@ -115,6 +115,17 @@
       "createdAt": "2025-10-28T05:15:55.926Z",
       "updatedAt": null,
       "id": 12
+    },
+    {
+      "email": "asdad@gmail.com",
+      "password": "$2a$10$dOH6XAL93/mKUB0IeXyZbeY8E3VVoV4MrWlkcDwhBniX7pb0fyS0e",
+      "name": "adaadDDF",
+      "phone": "081234567890",
+      "confirmPassword": "Password123",
+      "role": "ADMIN",
+      "createdAt": "2025-10-29T12:09:11.147Z",
+      "updatedAt": null,
+      "id": 13
     }
   ],
   "addresses": [
@@ -224,41 +235,80 @@
     {
       "id": 1,
       "name": "Custom Case",
-      "description": "Kaos berbahan katun halus, nyaman dipakai sehari-hari.",
-      "price": 120000,
-      "stock": 10,
-      "category": "Fashion",
-      "material": "Katun",
-      "image": "/images/product-1.jpeg",
-      "phone_type": "Iphone 13",
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
+      "description": "Case custom premium yang bisa disesuaikan dengan model HP dan desain pilihan kamu.",
+      "category": "Case Custom",
+      "basePrice": 120000,
+      "images": ["/images/product-1.jpeg", "/images/products/case-2.jpg"],
+      "variantOptions": [
+        {
+          "id": 1,
+          "name": "Merek HP",
+          "values": [
+            {
+              "id": 1,
+              "label": "iPhone 13",
+              "imageUrl": "/images/variants/iphone13.jpg",
+              "price": 120000,
+              "stock": 10
+            },
+            {
+              "id": 2,
+              "label": "Samsung Galaxy S23",
+              "imageUrl": "/images/variants/s23.jpg",
+              "price": 125000,
+              "stock": 8
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Tipe Case",
+          "values": [
+            {
+              "id": 1,
+              "label": "Softcase",
+              "price": 0
+            },
+            {
+              "id": 2,
+              "label": "Hardcase",
+              "price": 10000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2025-10-28T09:00:00Z",
+      "updatedAt": "2025-10-28T09:00:00Z"
     },
     {
       "id": 2,
-      "name": "Custom Case",
-      "description": "Hoodie tebal, cocok untuk cuaca dingin.",
-      "price": 250000,
-      "stock": 8,
-      "category": "Fashion",
-      "material": "Fleece",
-      "image": "/images/product-2.jpeg",
-      "phone_type": "samsung galaxy s23",
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
-    },
-    {
-      "id": 3,
-      "name": "Custom Case",
-      "description": "Hoodie tebal, cocok untuk cuaca dingin.",
-      "price": 250000,
-      "stock": 8,
-      "category": "Fashion",
-      "material": "Fleece",
-      "image": "/images/product-2.jpeg",
-      "phone_type": "samsung galaxy s23",
-      "createdAt": "2025-10-20T09:00:00Z",
-      "updatedAt": "2025-10-20T09:00:00Z"
+      "name": "Popstand Custom",
+      "description": "Popstand lucu bisa dicustom dengan desain kamu sendiri.",
+      "category": "Popstand",
+      "basePrice": 45000,
+      "images": ["/images/product-2.jpeg"],
+      "variantOptions": [
+        {
+          "id": 1,
+          "name": "Desain",
+          "values": [
+            {
+              "id": 1,
+              "label": "Polos",
+              "price": 0,
+              "stock": 20
+            },
+            {
+              "id": 2,
+              "label": "Custom Gambar",
+              "price": 10000,
+              "stock": 15
+            }
+          ]
+        }
+      ],
+      "createdAt": "2025-10-28T09:00:00Z",
+      "updatedAt": "2025-10-28T09:00:00Z"
     }
   ],
   "carts": [

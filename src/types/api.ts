@@ -9,19 +9,33 @@ export type User = {
   updatedAt: string;
 };
 
-export type Product = {
+export interface Product {
   id: number;
   name: string;
   description: string;
-  price: number;
-  stock: number;
   category: string;
-  material: string;
-  phone_type: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-};
+  basePrice: number;
+  baseStock: number;
+  images: string[];
+  // mainImageIndex?: number;
+  variantOptions?: VariantOption[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface VariantOption {
+  id: number;
+  name: string;
+  values: VariantValue[];
+}
+
+export interface VariantValue {
+  id: number;
+  label: string;
+  imageUrl?: string;
+  price?: number;
+  stock?: number;
+}
 
 export type Address = {
   id: number;
