@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetProducts } from "@/features/product/api/get-ptoducts";
 import { Product } from "@/types/api";
 import {
@@ -13,8 +12,10 @@ import { TableContent } from "../../components/table-content";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import { formatCurrency } from "@/lib/format-currency";
+import { useRouter } from "next/navigation";
 
 export const Products = () => {
+  const { push } = useRouter();
   const columnHelper = createColumnHelper<Product>();
 
   const columns = useMemo(
@@ -113,6 +114,7 @@ export const Products = () => {
             <Button
               onClick={(e) => {
                 e.stopPropagation();
+                push("/admin/products/new");
                 // setSelectedUser(null);
                 // setActions("create");
                 // setIsOpen(true);
@@ -122,7 +124,7 @@ export const Products = () => {
               <div className="bg-background p-1 rounded-full">
                 <Plus className="text-foreground" />
               </div>
-              Tambah User
+              Tambah Produk
             </Button>
           </div>
         </div>
