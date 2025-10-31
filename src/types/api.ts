@@ -14,25 +14,31 @@ export interface Product {
   name: string;
   description: string;
   category: string;
-  basePrice: number;
-  baseStock: number;
+  basePrice?: number;
+  baseStock?: number;
   images: string[];
-  // mainImageIndex?: number;
-  variantOptions?: VariantOption[];
+  variantOptions?: VariantOptionForm[];
+  variantCombinations?: VariantCombination[];
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface VariantOption {
-  id: number;
+export interface VariantOptionForm {
+  id?: number;
   nameVariant: string;
-  valueVariants: ValueVariant[];
+  valueVariant?: ValueVariantForm[];
 }
 
-export interface ValueVariant {
-  id: number;
+export interface ValueVariantForm {
+  id?: number;
   label: string;
-  imageUrl?: string;
+  imageVariant?: string;
+}
+
+export interface VariantCombination {
+  combination: Record<string, string>;
+  stock: number;
+  price: number;
 }
 
 export type Address = {

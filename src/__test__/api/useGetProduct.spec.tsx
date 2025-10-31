@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useGetProduct } from "@/features/products/api/get-product";
+import { useGetProduct } from "@/features/products/api/get-productById";
 import { Product } from "@/types/api";
 import axios from "axios";
 

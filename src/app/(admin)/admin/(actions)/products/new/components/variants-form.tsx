@@ -6,20 +6,30 @@ import { PlusCircle } from "lucide-react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import VariantField from "./variant-field";
 import { generateCombinations } from "@/lib/generate-combinantions";
-import { useState } from "react";
+import { useEffect } from "react";
 
 type VariantsFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<any>;
   isVariant: boolean;
+  isAddedCombination: boolean;
+  isEditCombination: boolean;
+  setIsEditCombination: (arg0: boolean) => void;
+  setIsAddedCombination: (arg0: boolean) => void;
 };
 
 export const VariantsForm = (props: VariantsFormProps) => {
-  const { form, isVariant } = props;
+  const {
+    form,
+    isVariant,
+    isAddedCombination,
+    isEditCombination,
+    setIsEditCombination,
+    setIsAddedCombination,
+  } = props;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [combinations, setCombinations] = useState<Array<any>>([]);
-  const [isEditCombination, setIsEditCombination] = useState(false);
+  const combinations = form.watch("variantCombinations") || [];
+  console.log("combinations", combinations);
 
   const {
     fields: fieldsVariantOptions,
@@ -45,9 +55,16 @@ export const VariantsForm = (props: VariantsFormProps) => {
       }
     );
 
+  useEffect(() => {
+    if (isAddedCombination && !isEditCombination) {
+      handleGenerateCombinations();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAddedCombination, isEditCombination]);
+
   const handleGenerateCombinations = () => {
-    setIsEditCombination(true);
     const options = form.getValues("variantOptions");
+    const existingCombinations = form.getValues("variantCombinations") || [];
     const combos = generateCombinations(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       options.map((v: { nameVariant: any; valueVariant: any[] }) => ({
@@ -56,16 +73,23 @@ export const VariantsForm = (props: VariantsFormProps) => {
       }))
     );
 
-    const result = combos.map((c) => ({
-      combination: c,
-      price: 0,
-      stock: 0,
-    }));
+    const result = combos.map((c) => {
+      const found = existingCombinations.find(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (old: { combination: any }) =>
+          JSON.stringify(old.combination) === JSON.stringify(c)
+      );
 
-    setCombinations(result);
+      return {
+        combination: c,
+        price: found ? found.price : 0,
+        stock: found ? found.stock : 0,
+      };
+    });
+
     form.setValue("variantCombinations", result);
+    console.log("Watch after setValue:", form.watch("variantCombinations"));
   };
-  console.log(form.getValues("variantOptions"));
 
   return (
     <>
@@ -77,7 +101,7 @@ export const VariantsForm = (props: VariantsFormProps) => {
               control={form.control}
               index={index}
               removeVariant={removeVariantOption}
-              isDisabled={isEditCombination}
+              isDisabled={isEditCombination || isAddedCombination}
             />
           );
         })}
@@ -106,78 +130,80 @@ export const VariantsForm = (props: VariantsFormProps) => {
           <PlusCircle />
         </Button>
       </div>
-      {combinations.length > 0 && isEditCombination && (
-        <div className="mt-4 space-y-2 border-t pt-3">
-          <h3 className="font-semibold">Atur Harga dan Stok</h3>
+      {(combinations?.length ?? 0) > 0 &&
+        (isEditCombination || isAddedCombination) && (
+          <div className="mt-4 space-y-2 border-t pt-3">
+            <h3 className="font-semibold">Atur Harga dan Stok</h3>
 
-          {combinations.map(
-            (
-              combo: {
-                combination: Record<string, string>;
-                stock: number;
-                price: number;
-              },
-              i: number
-            ) => (
-              <div key={i} className="flex gap-2 flex-col">
-                <div className="flex-1 text-sm">
-                  <p className="text-app-light-sm">{`${Object.values(
-                    combo.combination
-                  ).join(" / ")}`}</p>
+            {combinations.map(
+              (
+                combo: {
+                  combination: Record<string, string>;
+                  stock: number;
+                  price: number;
+                },
+                i: number
+              ) => (
+                <div key={i} className="flex gap-2 flex-col">
+                  <div className="flex-1 text-sm">
+                    <p className="text-app-light-sm">{`${Object.values(
+                      combo.combination
+                    ).join(" / ")}`}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField
+                      control={form.control}
+                      name={`variantCombinations.${i}.price`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <Input type="text" placeholder="Harga" {...field} />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variantCombinations.${i}.stock`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <Input type="text" placeholder="Stok" {...field} />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  {i < combinations.length - 1 && <Separator></Separator>}
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <FormField
-                    control={form.control}
-                    name={`variantCombinations.${i}.price`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Input
-                          type="string"
-                          placeholder="Harga"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`variantCombinations.${i}.stock`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Input
-                          type="string"
-                          placeholder="Stok"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {i < combinations.length - 1 && <Separator></Separator>}
-              </div>
-            )
-          )}
-        </div>
-      )}
+              )
+            )}
+          </div>
+        )}
 
       <div className={`w-full absolute bottom-0 right-0 p-2 `}>
         <Separator className="my-2"></Separator>
         <Button
           type="button"
-          variant={isEditCombination ? "destructive" : "default"}
+          variant={
+            isEditCombination || isAddedCombination ? "destructive" : "default"
+          }
           className="w-full"
           onClick={
-            isEditCombination
-              ? () => setIsEditCombination(false)
-              : handleGenerateCombinations
+            isEditCombination || isAddedCombination
+              ? () => {
+                  setIsEditCombination(false);
+                  setIsAddedCombination(false);
+                }
+              : () => {
+                  setIsEditCombination(true);
+                  setIsAddedCombination(false);
+                  handleGenerateCombinations();
+                }
           }
           disabled={!isNextEnabled}
         >
-          {isEditCombination ? "Batalkan" : "Selanjutnya Atur Stok dan Harga"}
+          {isEditCombination || isAddedCombination
+            ? "Batalkan untuk Edit Variasi"
+            : "Selanjutnya Atur Stok dan Harga"}
         </Button>
       </div>
     </>
