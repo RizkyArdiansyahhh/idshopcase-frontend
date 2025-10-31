@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import z from "zod";
@@ -25,6 +25,9 @@ import { useRouter } from "next/navigation";
 
 const CreateProductPage = () => {
   const { back } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [combinations, setCombinations] = useState<Array<any>>([]);
+  const [isEditCombination, setIsEditCombination] = useState(false);
   const inputImageRef = useRef<HTMLInputElement>(null);
   const formCreateproductSchema = z.object({
     name: z
@@ -110,6 +113,46 @@ const CreateProductPage = () => {
     toast.success("Produk berhasil ditambahkan");
     form.reset();
     back();
+  };
+
+  function generateCombinations(
+    options: { nameVariant: string; valueVariant: string[] }[]
+  ): { [key: string]: string }[] {
+    if (options.length === 0) return [];
+    const [first, ...rest] = options;
+
+    const restComb = generateCombinations(rest);
+    if (restComb.length === 0) {
+      return first.valueVariant.map((v) => ({ [first.nameVariant]: v }));
+    }
+
+    const combos = [];
+    for (const v of first.valueVariant) {
+      for (const c of restComb) {
+        combos.push({ [first.nameVariant]: v, ...c });
+      }
+    }
+    return combos;
+  }
+
+  const handleGenerateCombinations = () => {
+    setIsEditCombination(true);
+    const options = form.getValues("variantOptions"); // ambil data user
+    const combos = generateCombinations(
+      options.map((v) => ({
+        nameVariant: v.nameVariant,
+        valueVariant: v.valueVariant?.map((val) => val.label) || [],
+      }))
+    );
+
+    const result = combos.map((c) => ({
+      combination: c,
+      price: 0,
+      stock: 0,
+    }));
+
+    setCombinations(result); // simpan ke state untuk ditampilkan
+    form.setValue("variantCombinations", result); // update form
   };
 
   return (
@@ -302,6 +345,7 @@ const CreateProductPage = () => {
                         control={form.control}
                         index={index}
                         removeVariant={removeVariantOption}
+                        isDisabled={isEditCombination}
                       />
                     );
                   })}
@@ -331,15 +375,82 @@ const CreateProductPage = () => {
                     <PlusCircle />
                   </Button>
                 </div>
+                {combinations.length > 0 && isEditCombination && (
+                  <div className="mt-4 space-y-2 border-t pt-3">
+                    <h3 className="font-semibold">Atur Harga dan Stok</h3>
+
+                    {combinations.map(
+                      (
+                        combo: {
+                          combination: Record<string, string>;
+                          stock: number;
+                          price: number;
+                        },
+                        i: number
+                      ) => (
+                        <div key={i} className="flex gap-2 flex-col">
+                          <div className="flex-1 text-sm">
+                            <p className="text-app-light-sm">{`${Object.values(
+                              combo.combination
+                            ).join(" / ")}`}</p>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <FormField
+                              control={form.control}
+                              name={`variantCombinations.${i}.price`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <Input
+                                    type="string"
+                                    placeholder="Harga"
+                                    {...field}
+                                    value={field.value || ""}
+                                  />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name={`variantCombinations.${i}.stock`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <Input
+                                    type="string"
+                                    placeholder="Stok"
+                                    {...field}
+                                    value={field.value || ""}
+                                  />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                          {i < combinations.length - 1 && (
+                            <Separator></Separator>
+                          )}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+
                 <div className={`w-full absolute bottom-0 right-0 p-2 `}>
                   <Separator className="my-2"></Separator>
                   <Button
                     type="button"
-                    variant={"outline"}
+                    variant={isEditCombination ? "destructive" : "default"}
                     className="w-full"
+                    onClick={
+                      isEditCombination
+                        ? () => setIsEditCombination(false)
+                        : handleGenerateCombinations
+                    }
                     disabled={!isNextEnabled}
                   >
-                    Selanjutnya Atur Stok dan Harga
+                    {isEditCombination
+                      ? "Batalkan"
+                      : "Selanjutnya Atur Stok dan Harga"}
                   </Button>
                 </div>
               </div>

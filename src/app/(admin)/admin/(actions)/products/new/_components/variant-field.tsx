@@ -12,9 +12,15 @@ interface VariantFieldProps {
   control: Control<any>;
   index: number;
   removeVariant: (index: number) => void;
+  isDisabled?: boolean;
 }
 
-const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
+const VariantField = ({
+  control,
+  index,
+  removeVariant,
+  isDisabled,
+}: VariantFieldProps) => {
   const {
     fields: valueFields,
     append: appendValue,
@@ -29,6 +35,7 @@ const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
       <TooltipActions
         icon={<Trash />}
         variant={"destructive"}
+        isDisabled={isDisabled}
         action={() => removeVariant(index)}
       >
         <p>Hapus variasi</p>
@@ -44,6 +51,7 @@ const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
                   className="border-none focus-visible:ring-0 shadow-none"
                   {...field}
                   placeholder="Masukkan Nama Variasi"
+                  disabled={isDisabled}
                 ></Input>
                 <FormMessage></FormMessage>
               </FormItem>
@@ -54,6 +62,7 @@ const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
             variant={"default"}
             size={"icon-sm"}
             className="rounded-full"
+            disabled={isDisabled}
             onClick={() =>
               appendValue({
                 label: "",
@@ -73,6 +82,7 @@ const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
                   icon={<MdRemove />}
                   variant={"destructive"}
                   action={() => removeValue(i)}
+                  isDisabled={isDisabled}
                 >
                   <p>Hapus Label</p>
                 </TooltipActions>
@@ -83,6 +93,7 @@ const VariantField = ({ control, index, removeVariant }: VariantFieldProps) => {
                     <FormItem>
                       <Input
                         type="text"
+                        disabled={isDisabled}
                         placeholder={`Label ${i + 1}`}
                         {...field}
                       ></Input>

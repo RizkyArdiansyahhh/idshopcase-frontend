@@ -11,9 +11,10 @@ type TooltipActionsProps = {
   icon?: React.ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: (i: any) => void;
+  isDisabled?: boolean;
 };
 export const TooltipActions = (props: TooltipActionsProps) => {
-  const { children, variant, icon, action } = props;
+  const { children, variant, icon, action, isDisabled } = props;
   return (
     <>
       <Tooltip>
@@ -24,6 +25,7 @@ export const TooltipActions = (props: TooltipActionsProps) => {
             variant={variant}
             className="rounded-full"
             onClick={action}
+            disabled={isDisabled}
           >
             {icon}
           </Button>
