@@ -156,7 +156,14 @@ export const VariantsForm = (props: VariantsFormProps) => {
                       name={`variantCombinations.${i}.price`}
                       render={({ field }) => (
                         <FormItem>
-                          <Input type="text" placeholder="Harga" {...field} />
+                          <Input
+                            type="text"
+                            placeholder="Harga"
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
+                          />
                           <FormMessage />
                         </FormItem>
                       )}
@@ -166,7 +173,14 @@ export const VariantsForm = (props: VariantsFormProps) => {
                       name={`variantCombinations.${i}.stock`}
                       render={({ field }) => (
                         <FormItem>
-                          <Input type="text" placeholder="Stok" {...field} />
+                          <Input
+                            type="text"
+                            placeholder="Stok"
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
+                          />
                           <FormMessage />
                         </FormItem>
                       )}

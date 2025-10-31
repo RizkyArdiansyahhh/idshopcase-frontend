@@ -31,7 +31,7 @@ export const Products = () => {
             <div className="flex flex-row items-center gap-2">
               <div className="w-10 h-14 rounded-xs overflow-hidden relative">
                 <Image
-                  src={product.images[0]}
+                  src={product.images?.[0] || ""}
                   alt={product.name}
                   fill
                   className="object-cover"
@@ -42,47 +42,47 @@ export const Products = () => {
           );
         },
       }),
-      columnHelper.accessor("basePrice", {
-        header: "Harga",
-        cell: ({ row }) => {
-          const product = row.original;
-          return (
-            <span className="text-app-semibold-sm">
-              {formatCurrency(product.basePrice)}
-            </span>
-          );
-        },
-      }),
-      columnHelper.accessor("baseStock", {
-        header: "Stock",
-        cell: ({ row }) => {
-          const product = row.original;
+      // columnHelper.accessor("basePrice", {
+      //   header: "Harga",
+      //   cell: ({ row }) => {
+      //     const product = row.original;
+      //     return (
+      //       // <span className="text-app-semibold-sm">
+      //       //   {formatCurrency(product.basePrice)}
+      //       // </span>
+      //     );
+      //   },
+      // }),
+      // columnHelper.accessor("baseStock", {
+      //   header: "Stock",
+      //   cell: ({ row }) => {
+      //     const product = row.original;
 
-          const hasVariants =
-            Array.isArray(product.variantOptions) &&
-            product.variantOptions.length > 0;
+      //     const hasVariants =
+      //       Array.isArray(product.variantOptions) &&
+      //       product.variantOptions.length > 0;
 
-          if (hasVariants) {
-            const totalStock = product.variantOptions?.reduce(
-              (total, option) => {
-                const variantStock = option.valueVariants?.reduce(
-                  (sum, v) => sum + ((v.stock as number) || 0),
-                  0
-                );
-                return total + (variantStock || 0);
-              },
-              0
-            );
-            return <span className="text-app-semibold-sm">{totalStock}</span>;
-          }
+      //     if (hasVariants) {
+      //       const totalStock = product.variantOptions?.reduce(
+      //         (total, option) => {
+      //           const variantStock = option.valueVariants?.reduce(
+      //             (sum, v) => sum + ((v.stock as number) || 0),
+      //             0
+      //           );
+      //           return total + (variantStock || 0);
+      //         },
+      //         0
+      //       );
+      //       return <span className="text-app-semibold-sm">{totalStock}</span>;
+      //     }
 
-          return (
-            <span className="text-app-semibold-sm">
-              {product.baseStock ?? 0}
-            </span>
-          );
-        },
-      }),
+      //     return (
+      //       <span className="text-app-semibold-sm">
+      //         {product.baseStock ?? 0}
+      //       </span>
+      //     );
+      //   },
+      // }),
       // columnHelper.display({
       //   id: "actions",
       //   cell: ({ row }) => (

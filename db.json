@@ -239,7 +239,10 @@
       "category": "Case Custom",
       "basePrice": 120000,
       "baseStock": 0,
-      "images": ["/images/product-1.jpeg", "/images/products/case-2.jpg"],
+      "images": [
+        "/images/product-1.jpeg",
+        "/images/products/case-2.jpg"
+      ],
       "variantOptions": [
         {
           "id": 1,
@@ -261,19 +264,31 @@
           "id": 2,
           "nameVariant": "Tipe Case",
           "valueVariant": [
-            { "id": 1, "label": "Softcase" },
-            { "id": 2, "label": "Hardcase" }
+            {
+              "id": 1,
+              "label": "Softcase"
+            },
+            {
+              "id": 2,
+              "label": "Hardcase"
+            }
           ]
         }
       ],
       "variantCombinations": [
         {
-          "combination": { "Merek HP": "iPhone 13", "Tipe Case": "Softcase" },
+          "combination": {
+            "Merek HP": "iPhone 13",
+            "Tipe Case": "Softcase"
+          },
           "price": 120000,
           "stock": 10
         },
         {
-          "combination": { "Merek HP": "iPhone 13", "Tipe Case": "Hardcase" },
+          "combination": {
+            "Merek HP": "iPhone 13",
+            "Tipe Case": "Hardcase"
+          },
           "price": 130000,
           "stock": 8
         },
@@ -304,31 +319,103 @@
       "category": "Popstand",
       "basePrice": 45000,
       "baseStock": 0,
-      "images": ["/images/product-2.jpeg"],
+      "images": [
+        "/images/product-2.jpeg"
+      ],
       "variantOptions": [
         {
           "id": 1,
           "nameVariant": "Desain",
           "valueVariant": [
-            { "id": 1, "label": "Polos" },
-            { "id": 2, "label": "Custom Gambar" }
+            {
+              "id": 1,
+              "label": "Polos"
+            },
+            {
+              "id": 2,
+              "label": "Custom Gambar"
+            }
           ]
         }
       ],
       "variantCombinations": [
         {
-          "combination": { "Desain": "Polos" },
+          "combination": {
+            "Desain": "Polos"
+          },
           "price": 45000,
           "stock": 20
         },
         {
-          "combination": { "Desain": "Custom Gambar" },
+          "combination": {
+            "Desain": "Custom Gambar"
+          },
           "price": 55000,
           "stock": 15
         }
       ],
       "createdAt": "2025-10-28T09:00:00Z",
       "updatedAt": "2025-10-28T09:00:00Z"
+    },
+    {
+      "data": {
+        "name": "aaaa",
+        "description": "www",
+        "images": [
+          "blob:http://localhost:3000/aed7cd67-5ebd-419e-b233-8521610d3724"
+        ],
+        "toggleIsVariant": true,
+        "variantOptions": [
+          {
+            "nameVariant": "model",
+            "valueVariant": [
+              {
+                "label": "iphone"
+              }
+            ]
+          }
+        ],
+        "variantCombinations": [
+          {
+            "combination": {
+              "model": "iphone"
+            },
+            "stock": 223,
+            "price": 23
+          }
+        ]
+      },
+      "id": 3
+    },
+    {
+      "data": {
+        "name": "aaaa",
+        "description": "wwww",
+        "basePrice": 444,
+        "baseStock": 21271,
+        "images": [
+          "blob:http://localhost:3000/7dd08247-fe4b-4b14-9b99-34f30e8f2bd9"
+        ],
+        "toggleIsVariant": false,
+        "variantOptions": [],
+        "variantCombinations": []
+      },
+      "id": 4
+    },
+    {
+      "data": {
+        "name": "Rizky ardiansyah",
+        "description": "sss",
+        "basePrice": 444,
+        "baseStock": 4444,
+        "images": [
+          "blob:http://localhost:3000/6b043204-6151-425b-b15f-9c4fd51c3bd1"
+        ],
+        "toggleIsVariant": false,
+        "variantOptions": [],
+        "variantCombinations": []
+      },
+      "id": 5
     }
   ],
   "carts": [

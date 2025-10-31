@@ -22,6 +22,7 @@ import { formProductSchema, FormProductType } from "@/lib/schemas/product";
 import { useForm } from "react-hook-form";
 import { VariantsForm } from "@/app/(admin)/admin/(actions)/products/new/components/variants-form";
 import { useGetProduct } from "../api/get-productById";
+import { useCreateProduct } from "../api/create-product";
 
 export const ProductForm = () => {
   const [isEditCombination, setIsEditCombination] = useState(false);
@@ -76,10 +77,12 @@ export const ProductForm = () => {
 
   const handleSubmit = (data: FormProductType) => {
     console.log(data);
-    toast.success("Produk berhasil ditambahkan");
+    createProductMutate({ data: data });
     form.reset();
     back();
   };
+
+  const { mutate: createProductMutate } = useCreateProduct();
 
   return (
     <>
@@ -218,6 +221,9 @@ export const ProductForm = () => {
                             type="text"
                             {...field}
                             value={field.value || ""}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             placeholder={
                               isVariant
                                 ? "Masukkan harga di variasi"
@@ -228,6 +234,7 @@ export const ProductForm = () => {
                             IDR
                           </span>
                         </div>
+                        <FormMessage></FormMessage>
                       </FormItem>
                     )}
                   />
@@ -243,6 +250,9 @@ export const ProductForm = () => {
                             type="text"
                             {...field}
                             value={field.value || ""}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             placeholder={
                               isVariant
                                 ? "Masukkan stok di variasi"
@@ -253,6 +263,7 @@ export const ProductForm = () => {
                             pcs
                           </span>
                         </div>
+                        <FormMessage></FormMessage>
                       </FormItem>
                     )}
                   />
