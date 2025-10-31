@@ -25,16 +25,14 @@ export interface Product {
 
 export interface VariantOption {
   id: number;
-  name: string;
-  values: VariantValue[];
+  nameVariant: string;
+  valueVariants: ValueVariant[];
 }
 
-export interface VariantValue {
+export interface ValueVariant {
   id: number;
   label: string;
   imageUrl?: string;
-  price?: number;
-  stock?: number;
 }
 
 export type Address = {

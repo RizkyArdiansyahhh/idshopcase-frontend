@@ -1,7 +1,7 @@
 // __tests__/card-order.test.tsx
 import { render, screen } from "@testing-library/react";
 import { CardOrder } from "@/app/(customer)/account/orders/_components/card-order";
-import * as productHook from "@/features/product/api/get-product";
+import * as productHook from "@/features/products/api/get-product";
 
 // Mock useGetProduct
 jest.mock("@/features/product/api/get-product");

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useGetProducts } from "@/features/product/api/get-ptoducts";
+import { useGetProducts } from "@/features/products/api/get-ptoducts";
 import { Product } from "@/types/api";
 import {
   createColumnHelper,
