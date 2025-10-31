@@ -1,4 +1,4 @@
-import { useGetProduct } from "@/features/products/api/get-product";
+import { useGetProduct } from "@/features/products/api/get-productById";
 import { CreditCard, PackageCheck, Truck } from "lucide-react";
 import Image from "next/image";
 

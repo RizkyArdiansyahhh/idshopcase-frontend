@@ -5,7 +5,7 @@ import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
 import { FaTrash } from "react-icons/fa";
 import Link from "next/link";
-import { useGetProduct } from "@/features/products/api/get-product";
+import { useGetProduct } from "@/features/products/api/get-productById";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdateCartItem } from "../api/update-cart";
 import { useDeleteCartItem } from "../api/delete-cart";
