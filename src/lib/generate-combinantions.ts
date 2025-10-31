@@ -1,22 +1,18 @@
-import { VariantOption } from "@/types/api";
-
 export function generateCombinations(
-  options: VariantOption[]
+  options: { nameVariant: string; valueVariant: string[] }[]
 ): { [key: string]: string }[] {
   if (options.length === 0) return [];
   const [first, ...rest] = options;
 
   const restComb = generateCombinations(rest);
   if (restComb.length === 0) {
-    return (
-      first.valueVariants?.map((v) => ({ [first.nameVariant]: v.label })) || []
-    );
+    return first.valueVariant.map((v) => ({ [first.nameVariant]: v }));
   }
 
-  const combos: { [key: string]: string }[] = [];
-  for (const v of first.valueVariants || []) {
+  const combos = [];
+  for (const v of first.valueVariant) {
     for (const c of restComb) {
-      combos.push({ [first.nameVariant]: v.label, ...c });
+      combos.push({ [first.nameVariant]: v, ...c });
     }
   }
   return combos;
