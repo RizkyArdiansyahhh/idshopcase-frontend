@@ -17,6 +17,10 @@ export default function Home() {
           alt="hero-section-image"
           className="object-cover object-top"
         />
+        <div className="font-snell text-white absolute text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <p>Welcome Idshop</p>
+          <p>Case Phone</p>
+        </div>
       </div>
       <section className="h-[85vh] w-screen flex flex-col justify-center">
         <h1 className="font-black text-3xl mb-20 text-center">
@@ -60,14 +64,14 @@ export default function Home() {
         Ut autem fugiat sit delectus suscipit nemo odit quis similique ratione,
         sint provident, nostrum recusandae earum reprehenderit!
       </SectionLayout>
-      <section className="h-screen w-screen py-6 px-16 flex flex-row gap-3">
-        <div className="w-2/6 h-full bg-white rounded-2xl overflow-hidden  border-2">
-          <div className="w-full h-1/2 flex flex-col justify-between px-3 pt-8 pb-3">
+      <section className="h-screen w-screen py-6 flex flex-col lg:flex-row gap-3 px-5 md:px-10 lg:px-16">
+        <div className="w-full lg:w-2/6 h-full bg-white rounded-2xl overflow-hidden  border-2">
+          <div className="w-full h-fit lg:h-1/2 flex flex-col justify-between px-3 pt-4 lg:pt-8 pb-3">
             <div>
-              <h2 className="text-4xl font-heading font-black my-5">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black my-5">
                 Hero Section
               </h2>
-              <p className="text-foreground font-garamond text-2xl w-[90%]">
+              <p className="text-foreground font-garamond text-lg lg:text-xl w-[90%]">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
                 autem! Officia culpa praesentium delectus atque. Est minima
                 iusto vero quidem!
@@ -77,7 +81,7 @@ export default function Home() {
               <Button
                 variant={"outline"}
                 size={"lg"}
-                className="bg-gradient-to-r from-muted-foreground to-foreground px-10 text-2xl font-medium"
+                className="bg-gradient-to-r from-muted-foreground to-foreground px-10 text-lg text-background md:text-xl font-semibold"
               >
                 Custom Now
               </Button>
@@ -92,7 +96,7 @@ export default function Home() {
             ></Image>
           </div>
         </div>
-        <div className="relative w-4/6 h-full bg-blue-400 rounded-2xl overflow-hidden">
+        <div className="relative w-full lg:w-4/6 h-full rounded-2xl overflow-hidden">
           <Image
             src={"/images/product-1.jpeg"}
             alt="Image-Section-3"
@@ -101,10 +105,10 @@ export default function Home() {
           ></Image>
           <div className="top-0 right-0 absolute h-full w-1/2 bg-black/[76%] backdrop-blur-lg rounded-2xl flex flex-col justify-between px-5 pt-8 pb-5">
             <div className="text-white">
-              <h2 className="text-4xl font-heading font-black my-5">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black my-5">
                 Hero Section
               </h2>
-              <p className="font-garamond text-2xl w-[90%]">
+              <p className="font-garamond hidden md:block text-md lg:text-xl w-[90%]">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
                 est sunt adipisci amet praesentium nostrum tenetur voluptatem
                 inventore dolore corrupti velit similique ipsa, dicta illum
@@ -113,12 +117,16 @@ export default function Home() {
                 laborum fugit quo error, ut cum soluta aspernatur provident,
                 optio mollitia ipsa.
               </p>
+              <p className="font-garamond block md:hidden text-md w-[90%]">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                est sunt adipisci amet praesentium nostrum tenetur voluptatem
+              </p>
             </div>
             <div className="flex justify-end">
               <Button
                 size={"lg"}
                 variant={"outline"}
-                className="px-10 text-2xl font-medium"
+                className="px-1 md:px-5 lg:px-10 text-lg md:text-xl font-semibold"
               >
                 Custom Now
               </Button>
@@ -126,8 +134,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="h-screen w-screen py-6 px-16 flex flex-row gap-3">
-        <div className="w-[30%] h-full rounded-2xl overflow-hidden  ">
+      <section className="h-screen w-screen py-6 px-5 md:px-10 lg:px-16 flex flex-col  lg:flex-row gap-3">
+        <div className="w-full lg:w-[30%] h-full rounded-2xl overflow-hidden  ">
           <div className="relative w-full h-full ">
             <Image
               src={"/images/product-4.jpeg"}
@@ -137,10 +145,10 @@ export default function Home() {
             ></Image>
             <div className="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-2/5 flex flex-col justify-between px-5 pt-2 pb-5">
               <div className="text-white">
-                <h2 className="text-4xl font-heading font-black my-5">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black my-5">
                   Make Your Own Keychain
                 </h2>
-                <p className="font-garamond text-2xl w-[90%]">
+                <p className="font-garamond text-xl w-[90%] hidden lg:block">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
                   est sunt adipisci amet praesentium nostrum tenetur voluptatem
                 </p>
@@ -149,7 +157,7 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"outline"}
-                  className="px-10 text-2xl font-medium"
+                  className="px-2 md:px-5 lg:px-10 text-xl md:text-xl font-semibold"
                 >
                   Custom Now
                 </Button>
@@ -157,7 +165,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-[70%] h-full rounded-2xl overflow-hidden">
+        <div className="w-full lg:w-[70%] h-full rounded-2xl overflow-hidden">
           <div className="relative w-full h-full ">
             <Image
               src={"/images/image-section-4-1.jpeg"}
@@ -167,10 +175,10 @@ export default function Home() {
             ></Image>
             <div className="absolute bottom-0 bg-black/75 backdrop-blur-lg left-0 w-full h-1/3 flex flex-col justify-between px-5 pt-2 pb-5">
               <div className="text-white">
-                <h2 className="text-4xl font-heading font-black my-5">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black my-5">
                   Create Your Creative Popsocket
                 </h2>
-                <p className="font-garamond text-2xl w-[90%]">
+                <p className="font-garamond text-xl w-[90%] hidden lg:block">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Amet, enim? Debitis earum sapiente enim reiciendis!
                 </p>
@@ -179,7 +187,7 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"outline"}
-                  className="px-10 text-2xl font-medium bg-white text-foreground"
+                  className="px-2 md:px-5 lg:px-10 text-lg md:text-xl  font-semibold bg-white text-foreground"
                 >
                   Custom Now
                 </Button>
@@ -188,18 +196,22 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <footer className="w-screen h-[75vh] bg-foreground">
-        <div className="h-full flex items-center pb-36 px-20">
-          <div className="w-1/4 text-white flex flex-col gap-4">
-            <h2 className="font-bold text-4xl">IDshop</h2>
+      <footer className="w-screen h-fit md:h-[50vh] bg-foreground">
+        <div className="h-full flex flex-col md:flex-row gap-5 md:gap-0 items-start md:items-center py-10 md:pt-0 md:pb-20 lg:pb-36 px-5 md:px-7 lg:px-20">
+          <div className="md:w-1/4 text-white flex flex-col gap-4">
+            <h2 className="font-bold text-xl md:text-2xl lg:text-3xl">
+              IDshop
+            </h2>
             <ul>
               <FooterLink href="/">Beranda</FooterLink>
               <FooterLink href="/">Custom Case</FooterLink>
               <FooterLink href="/">Tentang Kami</FooterLink>
             </ul>
           </div>
-          <div className="w-1/4 text-white flex flex-col gap-4">
-            <h2 className="font-bold text-4xl">Hubungi Kami</h2>
+          <div className="md:w-1/4 text-white flex flex-col gap-4">
+            <h2 className="font-bold text-xl md:text-2xl lg:text-3xl">
+              Hubungi Kami
+            </h2>
             <ul>
               <FooterLink href="/">Email: support@idshop.com</FooterLink>
               <FooterLink href="/">WhatsApp: 0812-3456-7890</FooterLink>

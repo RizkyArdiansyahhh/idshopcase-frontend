@@ -1,72 +1,146 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaCartArrowDown } from "react-icons/fa6";
+import { motion, AnimatePresence } from "framer-motion";
 
-type NavbarProps = {
-  isBlur: boolean;
-};
+interface NavbarProps {
+  isBlur?: boolean;
+}
 
-export const Navbar = ({ isBlur = false }: NavbarProps) => {
+export const Navbar = ({ isBlur = true }: NavbarProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const dropdown = document.getElementById("mobile-dropdown");
+      const button = document.getElementById("hamburger-btn");
+      if (
+        dropdown &&
+        !dropdown.contains(e.target as Node) &&
+        button &&
+        !button.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isOpen]);
+
+  const backgroundColor = isBlur
+    ? isScrolled
+      ? "rgba(0,0,0,0.6)"
+      : "rgba(255,255,255,0.08)"
+    : "rgb(15,15,15)";
+
+  const backdrop = isBlur ? (isScrolled ? "blur(14px)" : "blur(0px)") : "none";
+
   return (
     <nav
-      className={` 
-      ${
-        isBlur
-          ? "bg-black/25 backdrop-blur fixed z-20  top-5"
-          : "bg-secondary-foreground"
-      } w-[93%]
-     -lg rounded-[12px] border-white border-2 `}
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[93%] border ${
+        isBlur ? "border-white/30" : "border-transparent"
+      } text-white transition-all duration-500`}
+      style={{
+        top: isScrolled ? "0" : "1.25rem",
+        backgroundColor,
+        backdropFilter: backdrop,
+        borderRadius: isBlur
+          ? isScrolled
+            ? "0.75rem"
+            : "1rem"
+          : isScrolled
+          ? "0.5rem"
+          : "0.75rem",
+        boxShadow: isBlur
+          ? isScrolled
+            ? "0 4px 20px rgba(0,0,0,0.3)"
+            : "0 0px 0px rgba(0,0,0,0)"
+          : "0 2px 10px rgba(0,0,0,0.4)",
+      }}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 ">
-        <Link
-          href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse text-white"
-        >
-          <span className="self-center text-2xl font-bold whitespace-nowrap">
-            Idshop
-          </span>
+      <div className="flex justify-between items-center py-4 px-5">
+        <Link href="/" className="text-2xl font-bold select-none">
+          Idshop
         </Link>
+
         <button
-          data-collapse-toggle="navbar-default"
+          id="hamburger-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(!isOpen);
+          }}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400  "
-          aria-controls="navbar-default"
-          aria-expanded="false"
+          className="relative z-[60] inline-flex flex-col items-center justify-center w-10 h-10 md:hidden"
         >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
+          <motion.span
+            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded-sm"
+          />
+          <motion.span
+            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded-sm my-1"
+          />
+          <motion.span
+            animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded-sm"
+          />
         </button>
-        <div
-          className="hidden w-full md:block md:w-auto lg:flex lg:gap-6"
-          id="navbar-default"
-        >
+
+        <div className="hidden md:flex gap-6 items-center">
           <Link href={"/account/profile"}>
-            <FaUser size={24} color="background" />
+            <FaUser size={24} color="white" />
           </Link>
           <div className="relative">
             <Link href={"/cart"}>
-              <FaCartArrowDown size={24} color="background" />
+              <FaCartArrowDown size={24} color="white" />
             </Link>
-            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
               3
             </span>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="mobile-dropdown"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-full right-0 mt-2 w-1/2 bg-black/70 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden"
+          >
+            <div className="flex flex-col py-2 text-white text-center">
+              <Link
+                href={"/account/profile"}
+                className="py-2 hover:bg-white/10 transition"
+              >
+                Profil
+              </Link>
+              <Link
+                href={"/cart"}
+                className="py-2 hover:bg-white/10 transition"
+              >
+                Keranjang
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

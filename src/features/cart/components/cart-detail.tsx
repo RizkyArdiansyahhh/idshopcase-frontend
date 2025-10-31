@@ -43,7 +43,7 @@ export const CartDetail = (props: CartCardProps) => {
               <Skeleton />
             ) : (
               <Image
-                src={product?.image || ""}
+                src={product?.images[0] || ""}
                 alt={product?.name || `product=${product?.id}`}
                 fill
                 className="object-cover"
@@ -55,13 +55,13 @@ export const CartDetail = (props: CartCardProps) => {
               {product?.name}
             </Link>
             <p className="text-sm font-light text-foreground/60">
-              {product?.material}
+              {/* {product?.material} */}
             </p>
           </div>
         </div>
       </div>
       <p className="w-2/12 self-center text-center text-app-semibold-lg">
-        Rp. {product?.price}
+        Rp. {product?.basePrice}
       </p>
       <div className="w-2/12 flex-row-center  px-10">
         <div className="grid grid-cols-4">

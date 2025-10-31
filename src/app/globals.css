@@ -1,11 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@font-face {
+  font-family: "Snell Roundhand";
+  src: url("/fonts/Snell-Roundhand-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-snell: "Snell Roundhand", cursive;
   --font-heading: var(--font-roboto-condensed);
   --font-garamond: var(--font-eb-garamond);
   --color-sidebar-ring: var(--sidebar-ring);
