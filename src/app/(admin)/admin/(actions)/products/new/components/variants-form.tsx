@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { PlusCircle } from "lucide-react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import VariantField from "./variant-field";
-import { VariantOption } from "@/types/api";
 import { generateCombinations } from "@/lib/generate-combinantions";
 import { useState } from "react";
 
@@ -35,21 +34,25 @@ export const VariantsForm = (props: VariantsFormProps) => {
 
   const isNextEnabled =
     variantOptions.length > 0 &&
-    variantOptions.every((variant: VariantOption) => {
-      const hasValidValues =
-        variant.valueVariants &&
-        variant.valueVariants.length > 0 &&
-        variant.valueVariants.every((v) => v.label.trim() !== "");
-      return hasValidValues && variant.nameVariant.trim() !== "";
-    });
+    variantOptions.every(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (variant: { valueVariant: any[]; nameVariant: string }) => {
+        const hasValidValues =
+          variant.valueVariant &&
+          variant.valueVariant.length > 0 &&
+          variant.valueVariant.every((v) => v.label.trim() !== "");
+        return hasValidValues && variant.nameVariant.trim() !== "";
+      }
+    );
 
   const handleGenerateCombinations = () => {
     setIsEditCombination(true);
     const options = form.getValues("variantOptions");
     const combos = generateCombinations(
-      options.map((v: VariantOption) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      options.map((v: { nameVariant: any; valueVariant: any[] }) => ({
         nameVariant: v.nameVariant,
-        valueVariant: v.valueVariants?.map((val) => val.label) || [],
+        valueVariant: v.valueVariant?.map((val) => val.label) || [],
       }))
     );
 
@@ -62,6 +65,7 @@ export const VariantsForm = (props: VariantsFormProps) => {
     setCombinations(result);
     form.setValue("variantCombinations", result);
   };
+  console.log(form.getValues("variantOptions"));
 
   return (
     <>

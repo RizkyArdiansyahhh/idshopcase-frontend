@@ -65,7 +65,7 @@ export const Products = () => {
           if (hasVariants) {
             const totalStock = product.variantOptions?.reduce(
               (total, option) => {
-                const variantStock = option.values?.reduce(
+                const variantStock = option.valueVariants?.reduce(
                   (sum, v) => sum + ((v.stock as number) || 0),
                   0
                 );

@@ -11,7 +11,7 @@ export const formProductSchema = z.object({
   variantOptions: z.array(
     z.object({
       nameVariant: z.string().nonempty(),
-      valueVariants: z
+      valueVariant: z
         .array(
           z.object({
             label: z.string().nonempty(),
