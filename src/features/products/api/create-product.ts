@@ -4,13 +4,16 @@ import { FormProductType } from "@/lib/schemas/product";
 import { useMutation } from "@tanstack/react-query";
 import { getProductsQueryKey } from "./get-ptoducts";
 import { toast } from "sonner";
+import { Product } from "@/types/api";
 
-type CreateProductItemRequest = {
-  data: FormProductType;
-};
+type CreateProductItemRequest = Omit<FormProductType, "toggleIsVariant">;
 
 const createProduct = async (data: CreateProductItemRequest) => {
-  return await api.post("/products", data);
+  return await api.post<Product>("/products", {
+    ...data,
+    createdAt: new Date().toISOString(),
+    updatedAt: null,
+  });
 };
 
 type UseCreateProductParams = {

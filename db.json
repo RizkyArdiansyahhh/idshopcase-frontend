@@ -2,12 +2,13 @@
   "users": [
     {
       "id": 1,
-      "name": "Dzakwan",
+      "name": "Dzakwann",
       "email": "dzakwan@example.com",
       "password": "$2a$10$GY6q1VqVAv4ldSZVgor1UevdXRC7h67OSAzQ8qCMxjGOPe9z2eAp6",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
-      "role": "USER"
+      "role": "ADMIN",
+      "updatedAt": "2025-11-02T12:05:03.712Z"
     },
     {
       "id": 2,
@@ -234,9 +235,9 @@
   "products": [
     {
       "id": 1,
-      "name": "Custom Case",
+      "name": "Custom Case new",
       "description": "Case custom premium yang bisa disesuaikan dengan model HP dan desain pilihan kamu.",
-      "category": "Case Custom",
+      "category": "custom_case",
       "basePrice": 120000,
       "baseStock": 0,
       "images": [
@@ -245,31 +246,25 @@
       ],
       "variantOptions": [
         {
-          "id": 1,
           "nameVariant": "Merek HP",
           "valueVariant": [
             {
-              "id": 1,
               "label": "iPhone 13",
               "imageVariant": "/images/variants/iphone13.jpg"
             },
             {
-              "id": 2,
               "label": "Samsung Galaxy S23",
               "imageVariant": "/images/variants/s23.jpg"
             }
           ]
         },
         {
-          "id": 2,
           "nameVariant": "Tipe Case",
           "valueVariant": [
             {
-              "id": 1,
               "label": "Softcase"
             },
             {
-              "id": 2,
               "label": "Hardcase"
             }
           ]
@@ -281,141 +276,37 @@
             "Merek HP": "iPhone 13",
             "Tipe Case": "Softcase"
           },
-          "price": 120000,
-          "stock": 10
+          "stock": 10,
+          "price": 120000
         },
         {
           "combination": {
             "Merek HP": "iPhone 13",
             "Tipe Case": "Hardcase"
           },
-          "price": 130000,
-          "stock": 8
+          "stock": 8,
+          "price": 130000
         },
         {
           "combination": {
             "Merek HP": "Samsung Galaxy S23",
             "Tipe Case": "Softcase"
           },
-          "price": 125000,
-          "stock": 5
+          "stock": 5,
+          "price": 125000
         },
         {
           "combination": {
             "Merek HP": "Samsung Galaxy S23",
             "Tipe Case": "Hardcase"
           },
-          "price": 135000,
-          "stock": 4
+          "stock": 4,
+          "price": 135000
         }
       ],
       "createdAt": "2025-10-28T09:00:00Z",
-      "updatedAt": "2025-10-28T09:00:00Z"
-    },
-    {
-      "id": 2,
-      "name": "Popstand Custom",
-      "description": "Popstand lucu bisa dicustom dengan desain kamu sendiri.",
-      "category": "Popstand",
-      "basePrice": 45000,
-      "baseStock": 0,
-      "images": [
-        "/images/product-2.jpeg"
-      ],
-      "variantOptions": [
-        {
-          "id": 1,
-          "nameVariant": "Desain",
-          "valueVariant": [
-            {
-              "id": 1,
-              "label": "Polos"
-            },
-            {
-              "id": 2,
-              "label": "Custom Gambar"
-            }
-          ]
-        }
-      ],
-      "variantCombinations": [
-        {
-          "combination": {
-            "Desain": "Polos"
-          },
-          "price": 45000,
-          "stock": 20
-        },
-        {
-          "combination": {
-            "Desain": "Custom Gambar"
-          },
-          "price": 55000,
-          "stock": 15
-        }
-      ],
-      "createdAt": "2025-10-28T09:00:00Z",
-      "updatedAt": "2025-10-28T09:00:00Z"
-    },
-    {
-      "data": {
-        "name": "aaaa",
-        "description": "www",
-        "images": [
-          "blob:http://localhost:3000/aed7cd67-5ebd-419e-b233-8521610d3724"
-        ],
-        "toggleIsVariant": true,
-        "variantOptions": [
-          {
-            "nameVariant": "model",
-            "valueVariant": [
-              {
-                "label": "iphone"
-              }
-            ]
-          }
-        ],
-        "variantCombinations": [
-          {
-            "combination": {
-              "model": "iphone"
-            },
-            "stock": 223,
-            "price": 23
-          }
-        ]
-      },
-      "id": 3
-    },
-    {
-      "data": {
-        "name": "aaaa",
-        "description": "wwww",
-        "basePrice": 444,
-        "baseStock": 21271,
-        "images": [
-          "blob:http://localhost:3000/7dd08247-fe4b-4b14-9b99-34f30e8f2bd9"
-        ],
-        "toggleIsVariant": false,
-        "variantOptions": [],
-        "variantCombinations": []
-      },
-      "id": 4
-    },
-    {
-      "data": {
-        "name": "Rizky ardiansyah",
-        "description": "sss",
-        "basePrice": 444,
-        "baseStock": 4444,
-        "images": [
-          "blob:http://localhost:3000/6b043204-6151-425b-b15f-9c4fd51c3bd1"
-        ],
-        "toggleIsVariant": false,
-        "variantOptions": [],
-        "variantCombinations": []
-      },
-      "id": 5
+      "updatedAt": "2025-11-02T12:15:54.228Z",
+      "toggleIsVariant": true
     }
   ],
   "carts": [

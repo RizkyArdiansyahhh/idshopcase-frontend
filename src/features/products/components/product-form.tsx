@@ -15,7 +15,6 @@ import { IoMdClose } from "react-icons/io";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { CustomInputImage } from "@/components/shared/custom-input-image";
 import { formProductSchema, FormProductType } from "@/lib/schemas/product";
@@ -23,6 +22,17 @@ import { useForm } from "react-hook-form";
 import { VariantsForm } from "@/app/(admin)/admin/(actions)/products/new/components/variants-form";
 import { useGetProduct } from "../api/get-productById";
 import { useCreateProduct } from "../api/create-product";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
+import { useUpdateProduct } from "../api/update-product";
 
 export const ProductForm = () => {
   const [isEditCombination, setIsEditCombination] = useState(false);
@@ -31,7 +41,7 @@ export const ProductForm = () => {
 
   const params = useParams();
   const productId = params.id;
-  const { back } = useRouter();
+  const { replace } = useRouter();
   const inputImageRef = useRef<HTMLInputElement>(null);
 
   const { data: product } = useGetProduct({
@@ -76,13 +86,23 @@ export const ProductForm = () => {
   const isVariant = form.watch("toggleIsVariant");
 
   const handleSubmit = (data: FormProductType) => {
-    console.log(data);
-    createProductMutate({ data: data });
+    if (product) {
+      updateProductMutate({
+        id: product.id,
+        data,
+      });
+    } else {
+      createProductMutate(data);
+    }
     form.reset();
-    back();
+    replace("/admin/products");
   };
 
-  const { mutate: createProductMutate } = useCreateProduct();
+  const { mutate: createProductMutate, isPending: createProductIsLoading } =
+    useCreateProduct();
+
+  const { mutate: updateProductMutate, isPending: updateProductIsLoading } =
+    useUpdateProduct();
 
   return (
     <>
@@ -93,32 +113,76 @@ export const ProductForm = () => {
         >
           <div className="w-full flex  flex-col md:flex-row justify-between gap-2">
             <h1 className="text-foreground font-semibold text-lg md:text-xl lg:text-2xl">
-              Tambah Produk
+              {product ? "Edit Produk" : "Tambah Produk"}
             </h1>
-            <Button className="w-fit">Tambah Produk</Button>
+            {product ? (
+              <Button variant={"outline"} className="w-fit">
+                {updateProductIsLoading ? <Spinner></Spinner> : "Update Produk"}
+              </Button>
+            ) : (
+              <Button className="w-fit">
+                {createProductIsLoading ? <Spinner></Spinner> : "Tambah Produk"}{" "}
+              </Button>
+            )}
           </div>
           <div className="w-full flex flex-col gap-3 lg:flex-row">
             <div className="w-full lg:w-1/2 xl:w-2/3 flex-col">
               <div className="w-full border rounded-md p-4 flex flex-col gap-3 mb-3">
                 <p className="text-foreground/40 font-medium">Produk</p>
-                <FormField
-                  name="name"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-foreground/80">
-                        Nama Produk
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        placeholder="Nama Produk anda"
-                        {...field}
-                        value={field.value || ""}
-                      ></Input>
-                      <FormMessage></FormMessage>
-                    </FormItem>
-                  )}
-                />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <FormField
+                    name="name"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground/80">
+                          Nama Produk
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          placeholder="Nama Produk anda"
+                          {...field}
+                          value={field.value || ""}
+                        ></Input>
+                        <FormMessage></FormMessage>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="category"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Kategori</FormLabel>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full rounded-sm py-5">
+                            <SelectValue placeholder="Pilih Kategori" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Karegori</SelectLabel>
+                              <SelectItem value="custom_case">
+                                Custom Case
+                              </SelectItem>
+                              <SelectItem value="keychain">Keychain</SelectItem>
+                              <SelectItem value="phone_charm">
+                                Phone Charm
+                              </SelectItem>
+                              <SelectItem value="pop_socket">
+                                Pop Socket
+                              </SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
                   name="description"
                   control={form.control}
@@ -133,6 +197,7 @@ export const ProductForm = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   name="images"
                   control={form.control}

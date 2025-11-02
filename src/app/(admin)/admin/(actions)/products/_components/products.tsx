@@ -13,10 +13,24 @@ import { Plus } from "lucide-react";
 import Image from "next/image";
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { IconDotsVertical } from "@tabler/icons-react";
 
 export const Products = () => {
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
   const columnHelper = createColumnHelper<Product>();
+
+  const hasVariants = (product: Product): boolean => {
+    return (
+      Array.isArray(product.variantOptions) && product.variantOptions.length > 0
+    );
+  };
 
   const columns = useMemo(
     () => [
@@ -27,6 +41,7 @@ export const Products = () => {
         header: "Product Name",
         cell: ({ row }) => {
           const product = row.original;
+          console.log(product.images);
           return (
             <div className="flex flex-row items-center gap-2">
               <div className="w-10 h-14 rounded-xs overflow-hidden relative">
@@ -42,57 +57,102 @@ export const Products = () => {
           );
         },
       }),
-      // columnHelper.accessor("basePrice", {
-      //   header: "Harga",
-      //   cell: ({ row }) => {
-      //     const product = row.original;
-      //     return (
-      //       // <span className="text-app-semibold-sm">
-      //       //   {formatCurrency(product.basePrice)}
-      //       // </span>
-      //     );
-      //   },
-      // }),
-      // columnHelper.accessor("baseStock", {
-      //   header: "Stock",
-      //   cell: ({ row }) => {
-      //     const product = row.original;
+      columnHelper.accessor("basePrice", {
+        header: "Harga",
+        cell: ({ row }) => {
+          const product = row.original;
+          const isHasVariants = hasVariants(product);
+          if (isHasVariants) {
+            const minPrice = Math.min(
+              ...product.variantCombinations!.map((p) => p.price)
+            );
+            const maxPrice = Math.max(
+              ...product.variantCombinations!.map((p) => p.price)
+            );
+            return (
+              <span className="text-app-semibold-sm">
+                {minPrice === maxPrice
+                  ? formatCurrency(minPrice)
+                  : ` ${formatCurrency(minPrice)} - ${formatCurrency(
+                      maxPrice
+                    )}`}
+              </span>
+            );
+          }
+          return (
+            <span className="text-app-semibold-sm">
+              {formatCurrency(product.basePrice ?? 0)}
+            </span>
+          );
+        },
+      }),
+      columnHelper.accessor("baseStock", {
+        header: "Stock",
+        cell: ({ row }) => {
+          const product = row.original;
 
-      //     const hasVariants =
-      //       Array.isArray(product.variantOptions) &&
-      //       product.variantOptions.length > 0;
+          const hasVariants =
+            Array.isArray(product.variantOptions) &&
+            product.variantOptions.length > 0;
 
-      //     if (hasVariants) {
-      //       const totalStock = product.variantOptions?.reduce(
-      //         (total, option) => {
-      //           const variantStock = option.valueVariants?.reduce(
-      //             (sum, v) => sum + ((v.stock as number) || 0),
-      //             0
-      //           );
-      //           return total + (variantStock || 0);
-      //         },
-      //         0
-      //       );
-      //       return <span className="text-app-semibold-sm">{totalStock}</span>;
-      //     }
+          if (hasVariants) {
+            const totalStock = product.variantCombinations?.reduce(
+              (total, combination) => total + combination.stock,
+              0
+            );
+            return <span className="text-app-semibold-sm">{totalStock}</span>;
+          }
 
-      //     return (
-      //       <span className="text-app-semibold-sm">
-      //         {product.baseStock ?? 0}
-      //       </span>
-      //     );
-      //   },
-      // }),
-      // columnHelper.display({
-      //   id: "actions",
-      //   cell: ({ row }) => (
-      //     <div>
-      //       <button>View</button>
-      //       <button>Edit</button>
-      //       <button>Delete</button>
-      //     </div>
-      //   ),
-      // }),
+          return (
+            <span className="text-app-semibold-sm">
+              {product.baseStock ?? 0}
+            </span>
+          );
+        },
+      }),
+      columnHelper.display({
+        id: "actions",
+        cell: ({ row }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={"ghost"} className="data-[state=open]:bg-muted">
+                <IconDotsVertical />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // setSelectedUser(row.original);
+                  // setActions("view");
+                  // setIsOpen(true);
+                }}
+              >
+                View
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  push(`/admin/products/edit/${row.original.id}`);
+                }}
+              >
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // setSelectedUser(row.original);
+                  // setIsOpenDialogDelete(true);
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
+      }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
