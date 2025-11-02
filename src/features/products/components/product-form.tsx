@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { useUpdateProduct } from "../api/update-product";
+import { formatNumber } from "@/lib/format-currency";
 
 export const ProductForm = () => {
   const [isEditCombination, setIsEditCombination] = useState(false);
@@ -285,9 +286,11 @@ export const ProductForm = () => {
                             disabled={isVariant}
                             type="text"
                             {...field}
-                            value={field.value || ""}
+                            value={formatNumber(field.value)}
                             onChange={(e) =>
-                              field.onChange(Number(e.target.value))
+                              field.onChange(
+                                Number(e.target.value.replace(/\D/g, ""))
+                              )
                             }
                             placeholder={
                               isVariant
@@ -314,9 +317,11 @@ export const ProductForm = () => {
                             disabled={isVariant}
                             type="text"
                             {...field}
-                            value={field.value || ""}
+                            value={formatNumber(field.value)}
                             onChange={(e) =>
-                              field.onChange(Number(e.target.value))
+                              field.onChange(
+                                Number(e.target.value.replace(/\D/g, ""))
+                              )
                             }
                             placeholder={
                               isVariant
