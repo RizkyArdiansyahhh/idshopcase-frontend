@@ -6,7 +6,8 @@ import { PlusCircle } from "lucide-react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import VariantField from "./variant-field";
 import { generateCombinations } from "@/lib/generate-combinantions";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { formatNumber } from "@/lib/format-currency";
 
 type VariantsFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +42,7 @@ export const VariantsForm = (props: VariantsFormProps) => {
   });
 
   const variantOptions = form.watch("variantOptions");
+  const inputImageVariantRef = useRef<(HTMLInputElement | null)[][]>([]);
 
   const isNextEnabled =
     variantOptions.length > 0 &&
@@ -82,8 +84,8 @@ export const VariantsForm = (props: VariantsFormProps) => {
 
       return {
         combination: c,
-        price: found ? found.price : 0,
-        stock: found ? found.stock : 0,
+        price: found?.price,
+        stock: found?.stock,
       };
     });
 
@@ -102,6 +104,7 @@ export const VariantsForm = (props: VariantsFormProps) => {
               index={index}
               removeVariant={removeVariantOption}
               isDisabled={isEditCombination || isAddedCombination}
+              inputRefs={inputImageVariantRef}
             />
           );
         })}
@@ -156,7 +159,17 @@ export const VariantsForm = (props: VariantsFormProps) => {
                       name={`variantCombinations.${i}.price`}
                       render={({ field }) => (
                         <FormItem>
-                          <Input type="text" placeholder="Harga" {...field} />
+                          <Input
+                            type="text"
+                            placeholder="Harga"
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(
+                                Number(e.target.value.replace(/\D/g, ""))
+                              )
+                            }
+                            value={formatNumber(field.value)}
+                          />
                           <FormMessage />
                         </FormItem>
                       )}
@@ -166,7 +179,17 @@ export const VariantsForm = (props: VariantsFormProps) => {
                       name={`variantCombinations.${i}.stock`}
                       render={({ field }) => (
                         <FormItem>
-                          <Input type="text" placeholder="Stok" {...field} />
+                          <Input
+                            type="text"
+                            placeholder="Stok"
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(
+                                Number(e.target.value.replace(/\D/g, ""))
+                              )
+                            }
+                            value={field.value || ""}
+                          />
                           <FormMessage />
                         </FormItem>
                       )}

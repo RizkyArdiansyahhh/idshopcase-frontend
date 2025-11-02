@@ -5,3 +5,8 @@ export function formatCurrency(value: number) {
     minimumFractionDigits: 0,
   });
 }
+
+export function formatNumber(value: number | undefined) {
+  if (!value) return "";
+  return value.toLocaleString("id-ID");
+}
