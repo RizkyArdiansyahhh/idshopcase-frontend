@@ -57,16 +57,7 @@ export type Address = {
   updatedAt: string;
 };
 
-export type OrderItem = {
-  id: number;
-  productId: number;
-  customImageId: number | null;
-  quantity: number;
-  price: number;
-  createdAt: string;
-};
-
-export type Order = {
+export type Orders = {
   id: number;
   userId: number;
   addressId: number;
@@ -77,4 +68,26 @@ export type Order = {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
+};
+
+export type order = {
+  id: number;
+  userId: number;
+  addressId: number;
+  status: string;
+  total_price: number;
+  payment_method: string;
+  tracking_number: string;
+  createdAt: string;
+  updatedAt: string;
+  paymentId: number;
+  items: OrderItem[];
+};
+
+export type OrderItem = {
+  id: number;
+  productId: number;
+  customImageUrl: string | null;
+  quantity: number;
+  price: number;
 };
