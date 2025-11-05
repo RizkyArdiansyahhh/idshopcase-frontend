@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import z from "zod";
 
 export const registerSchema = z
@@ -33,7 +34,7 @@ export const updateSchema = z.object({
   name: z.string({ message: "Name is required" }).min(8, {
     message: "Name must be at least 8 characters",
   }),
-  role: z.enum(["ADMIN", "USER"]),
+  role: z.enum(["admin", "customer"]),
 });
 
 type registerSchemaType = z.infer<typeof registerSchema>;
@@ -41,7 +42,7 @@ type registerSchemaType = z.infer<typeof registerSchema>;
 const register = async (data: registerSchemaType) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { confirmPassword, ...payload } = data;
-  return await api.post("/register", { ...payload, role: "USER" });
+  return await api.post("/auth/register", { ...payload });
 };
 
 type UseRegisterParams = {
@@ -52,5 +53,8 @@ export const useRegsiter = (params: UseRegisterParams = {}) => {
   return useMutation({
     mutationFn: register,
     ...params.mutationConfig,
+    onError: (err) => {
+      toast.error(err.message);
+    },
   });
 };

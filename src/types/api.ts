@@ -70,7 +70,7 @@ export type Orders = {
   items: OrderItem[];
 };
 
-export type order = {
+export type Order = {
   id: number;
   userId: number;
   addressId: number;
@@ -90,4 +90,18 @@ export type OrderItem = {
   customImageUrl: string | null;
   quantity: number;
   price: number;
+};
+
+export type Productss = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  category: string;
+  material: string;
+  phone_type: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
 };

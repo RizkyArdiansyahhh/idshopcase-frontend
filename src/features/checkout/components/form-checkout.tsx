@@ -19,7 +19,7 @@ import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import z from "zod";
 
 type FormCheckoutProps = {
-  materials: string[];
+  materials?: string[];
   children: React.ReactNode;
   variant: "default" | "outline";
 };
@@ -60,7 +60,7 @@ export const FormCheckout = (props: FormCheckoutProps) => {
                   Material
                 </span>
               </div>
-              <RadioGroup className="grid-cols-3 mb-2">
+              {/* <RadioGroup className="grid-cols-3 mb-2">
                 {materials.map((material, index) => {
                   return (
                     <FieldLabel key={index} className="relative">
@@ -75,7 +75,7 @@ export const FormCheckout = (props: FormCheckoutProps) => {
                     </FieldLabel>
                   );
                 })}
-              </RadioGroup>
+              </RadioGroup> */}
               <Separator orientation="horizontal" className="my-2"></Separator>
               <Combobox className="border-foreground/10"></Combobox>
               <Separator orientation="horizontal" className="mb-2"></Separator>
