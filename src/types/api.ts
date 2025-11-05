@@ -4,9 +4,7 @@ export type User = {
   email: string;
   phone: string;
   profile_picture: string;
-  role: "USER" | "ADMIN";
-  createdAt: string;
-  updatedAt: string;
+  address: [];
 };
 
 export interface Product {
@@ -92,7 +90,7 @@ export type OrderItem = {
   price: number;
 };
 
-export type Productss = {
+export type Products = {
   id: number;
   name: string;
   description: string;

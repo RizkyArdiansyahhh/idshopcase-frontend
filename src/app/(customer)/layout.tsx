@@ -11,7 +11,7 @@ export default function AccountLayout({
 }>) {
   const pathName = usePathname();
   return (
-    <ProtectedRoute allowedRoles={["USER"]} redirectTo="/login">
+    <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
       <div
         className={`${
           !pathName.startsWith("/products/detail") && "h-screen"

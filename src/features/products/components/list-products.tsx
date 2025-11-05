@@ -13,8 +13,14 @@ import {
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Product, Productss } from "@/types/api";
+import { Products } from "@/types/api";
 
+const images = [
+  "/images/products/custom-case/custom-case-1.webp",
+  "/images/products/keychain/keychain-1.webp",
+  "/images/products/phone-charm/phone_charm_1.webp",
+  "/images/products/popstand/popstand-1.webp",
+];
 export const ListProducts = () => {
   const { push } = useRouter();
   const { data: products, isLoading: fetchProductsIsLoading } =
@@ -53,8 +59,8 @@ export const ListProducts = () => {
         className="w-5/6 mx-auto"
       >
         <CarouselContent>
-          {products?.map((product: Product) => {
-            const price = product.basePrice ?? 0;
+          {products?.map((product: Products, index) => {
+            const price = product.price ?? 0;
             return (
               <CarouselItem
                 key={product.id}
@@ -66,7 +72,7 @@ export const ListProducts = () => {
                 >
                   <div className="w-full h-52 relative rounded-[12px] overflow-hidden">
                     <Image
-                      src={product.images[0]}
+                      src={images[index]}
                       alt="phone-charm"
                       fill
                       className="object-cover object-center"
@@ -120,8 +126,8 @@ export const ListProductsDetail = () => {
         Produk Yang Mungkin Anda Suka
       </h1>
       <div className="flex flex-row flex-wrap justify-center gap-8">
-        {products?.map((product: Product) => {
-          const price = product.basePrice ?? 0;
+        {products?.map((product: Products, index) => {
+          const price = product.price ?? 0;
           return (
             <div
               key={product.id}
@@ -129,10 +135,11 @@ export const ListProductsDetail = () => {
             >
               <div className="w-full h-52 relative rounded-[12px] overflow-hidden">
                 <Image
-                  src={product.images[0]}
+                  src={images[index]}
                   alt="phone-charm"
                   fill
                   className="object-cover object-center"
+                  loading="lazy"
                 ></Image>
               </div>
               <div className="flex-1 flex justify-between flex-col">

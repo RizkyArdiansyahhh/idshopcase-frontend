@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { useGetUser } from "@/features/auth/api/get-user";
 
 type ProtectedRouteProps = {
@@ -16,28 +16,17 @@ export const ProtectedRoute = ({
   redirectTo = "/login",
 }: ProtectedRouteProps) => {
   const router = useRouter();
-  const [id, setId] = useState<number | null>(null);
-  const [ready, setReady] = useState(false);
+  const { data: user, isLoading } = useGetUser();
 
   useEffect(() => {
-    const storedId = localStorage.getItem("id");
-    if (storedId) setId(Number(storedId));
-    setReady(true);
-  }, []);
-
-  const { data: user } = useGetUser({
-    id: id as number,
-    queryConfig: { enabled: !!id },
-  });
-
-  useEffect(() => {
-    if (user && !allowedRoles.includes(user.role)) {
+    if (!isLoading && user && !allowedRoles.includes(user.role)) {
       router.replace(redirectTo);
     }
-    console.log(user);
-  }, [user, allowedRoles, router, redirectTo]);
+  }, [user, isLoading, allowedRoles, router, redirectTo]);
 
-  if (!ready || !user || !allowedRoles.includes(user.role)) return null;
+  if (isLoading) return <div>Loading...</div>;
+  if (!user) return null;
+  if (!allowedRoles.includes(user.role)) return null;
 
   return <>{children}</>;
 };
