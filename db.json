@@ -4,6 +4,7 @@
       "id": 1,
       "name": "Dzakwann",
       "email": "dzakwan@example.com",
+      "password": "$2a$10$GY6q1VqVAv4ldSZVgor1UevdXRC7h67OSAzQ8qCMxjGOPe9z2eAp6",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
       "role": "USER",
@@ -13,6 +14,7 @@
       "id": 2,
       "name": "Fadhil",
       "email": "fadhil@example.com",
+      "password": "$2a$10$NLDvflTUwW/ng6uv8T9USO5ff.Zm5dKc4uvu2iXLxp7V4ivOLE4ue",
       "phone": "081234567890",
       "profile_picture": "/images/profile1.jpg",
       "role": "ADMIN"
@@ -154,10 +156,10 @@
       "description": "Introducing our new product of Idshopcase\n\n• 1 Strap bisa untuk 12 foto sekaligus!\n\n• HD Print & Material\n\n• Custom dengan wajah / logo / pet mu sendiri\n\n• Bisa digunakan untuk case apa saja\n\nWith Love,\n\nIdshopteam",
       "category": "phone_charm",
       "images": [
-        "blob:http://localhost:3000/3f9107a7-9f77-459b-bec9-f9e400bfaa45",
-        "blob:http://localhost:3000/e4ac06de-f428-4ec5-8c10-e0380681c971",
-        "blob:http://localhost:3000/d2c168c5-25d9-4c17-af96-4cab5c01a36a",
-        "blob:http://localhost:3000/8a52810a-a75c-4725-9ee5-1666b238a9be"
+        "/images/products/phone-charm/phone_charm_1.webp",
+        "/images/products/phone-charm/phone_charm_2.webp",
+        "/images/products/phone-charm/phone_charm_3.webp",
+        "/images/products/phone-charm/phone_charm_4.webp"
       ],
       "toggleIsVariant": true,
       "variantOptions": [
@@ -248,11 +250,11 @@
       "basePrice": 50000,
       "baseStock": 95,
       "images": [
-        "blob:http://localhost:3000/66224fc2-c7b3-4fcb-8630-b77a49f40fa2",
-        "blob:http://localhost:3000/1e4f1aca-80ef-4d3e-85ca-33da7c2fff9f",
-        "blob:http://localhost:3000/a91f8267-f693-436a-8721-002ef07717dd",
-        "blob:http://localhost:3000/07c021c6-bb80-4ced-92f1-b3265d82c555",
-        "blob:http://localhost:3000/cfba1ab9-9299-49ac-a0f8-ef0e79e94433"
+        "/images/products/keychain/keychain-1.webp",
+        "/images/products/keychain/keychain-2.webp",
+        "/images/products/keychain/keychain-3.webp",
+        "/images/products/keychain/keychain-4.webp",
+        "/images/products/keychain/keychain-5.webp"
       ],
       "toggleIsVariant": false,
       "variantOptions": [],
@@ -267,9 +269,7 @@
       "category": "phone_charm",
       "basePrice": 50000,
       "baseStock": 110,
-      "images": [
-        "blob:http://localhost:3000/5566f9ad-a97d-4361-adfb-774a96f247e8"
-      ],
+      "images": ["/images/products/popstand/popstand-1.webp"],
       "toggleIsVariant": false,
       "variantOptions": [],
       "variantCombinations": [],
@@ -283,9 +283,7 @@
       "category": "pop_socket",
       "basePrice": 60000,
       "baseStock": 80,
-      "images": [
-        "blob:http://localhost:3000/0240ed8c-e5de-400d-a765-151a58820bbe"
-      ],
+      "images": ["/images/products/popstand/popstand-1.webp"],
       "toggleIsVariant": false,
       "variantOptions": [],
       "variantCombinations": [],

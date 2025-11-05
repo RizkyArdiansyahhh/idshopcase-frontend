@@ -3,6 +3,7 @@ import { Roboto_Condensed, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--font-roboto-condensed",
@@ -31,6 +32,13 @@ export default function RootLayout({
       <body
         className={` ${ebGaramond.variable} ${robotoCondensed.variable} antialiased`}
       >
+        <NextTopLoader
+          color="#003077"
+          showSpinner={false}
+          height={3}
+          shadow={false}
+          speed={200}
+        ></NextTopLoader>
         <QueryProvider>{children}</QueryProvider>
         <Toaster position="top-center"></Toaster>
       </body>

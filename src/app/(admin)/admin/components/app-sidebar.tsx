@@ -12,9 +12,6 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 
-import { NavMain } from "@/app/(admin)/admin/components/nav-main";
-import { NavSecondary } from "@/app/(admin)/admin/components/nav-secondary";
-import { NavUser } from "@/app/(admin)/admin/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +22,9 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { KeyRound, PackageSearch, ShoppingCart, Users } from "lucide-react";
+import { NavMain } from "./nav-main";
+import { NavSecondary } from "./nav-secondary";
+import { NavUser } from "./nav-user";
 
 const data = {
   user: {

@@ -8,7 +8,7 @@ const RegisterPage = () => {
     <>
       <RegisterForm
         onSuccess={() => {
-          router.replace("/login");
+          router.replace("/");
         }}
       ></RegisterForm>
     </>

@@ -7,9 +7,11 @@ export const wilayahApi = axios.create({
   },
 });
 export const api = axios.create({
-  baseURL: "http://localhost:5001",
+  baseURL: "https://monistically-exopathic-maida.ngrok-free.dev/api",
+  // baseURL: "http://:5001",
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
   },
 });
 

@@ -8,20 +8,20 @@ export const loginSchema = z.object({
   email: z.email(),
   password: z
     .string({ message: "Password is required" })
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(/[A-Z]/, {
-      message: "Must contain at least one uppercase letter",
-    })
-    .regex(/[a-z]/, {
-      message: "Must contain at least one lowercase letter",
-    })
-    .regex(/\d/, { message: "Must contain at least one number" }),
+    .min(6, { message: "Password must be at least 8 characters" }),
+  // .regex(/[A-Z]/, {
+  //   message: "Must contain at least one uppercase letter",
+  // })
+  // .regex(/[a-z]/, {
+  //   message: "Must contain at least one lowercase letter",
+  // })
+  // .regex(/\d/, { message: "Must contain at least one number" }),
 });
 
 type loginSchemaType = z.infer<typeof loginSchema>;
 
 const loginWithEmailAndPassword = async (data: loginSchemaType) => {
-  const response = await api.post("/login", data);
+  const response = await api.post("/auth/login", data);
   return response.data;
 };
 
@@ -36,8 +36,8 @@ export const useLogin = (params: useLoginPrams = {}) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
     onSuccess: (data, variables, onMutateResult, context) => {
-      localStorage.setItem("id", data.user.id.toString());
-      localStorage.setItem("token", data.accessToken);
+      // localStorage.setItem("id", String(data.user.id));
+      localStorage.setItem("token", data.token);
       queryClient.setQueryData(getUserQueryKey(), data.user);
       params.mutationConfig?.onSuccess?.(
         data,

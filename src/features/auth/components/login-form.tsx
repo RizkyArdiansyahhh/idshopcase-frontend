@@ -49,7 +49,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       <Form {...form}>
         <form
           className="flex flex-col gap-5"
-          onSubmit={form.handleSubmit((values) => login(values))}
+          onSubmit={form.handleSubmit((values) => {
+            console.log(values);
+            login(values);
+          })}
         >
           <FormField
             control={form.control}
