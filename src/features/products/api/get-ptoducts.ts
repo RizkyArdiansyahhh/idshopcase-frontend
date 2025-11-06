@@ -6,7 +6,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProducts = async () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response = await api.get<Product[]>("/products");
+  const response = await api.get<Products[]>("/product");
 
   return response.data;
 };

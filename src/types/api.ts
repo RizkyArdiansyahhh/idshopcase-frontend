@@ -4,7 +4,7 @@ export type User = {
   email: string;
   phone: string;
   profile_picture: string;
-  role: "USER" | "ADMIN";
+  role: "customer" | "admin";
   createdAt: string;
   updatedAt: string;
 };
@@ -43,18 +43,16 @@ export interface VariantCombination {
 
 export type Address = {
   id: number;
-  userId: number;
+  // userId: number;
   recipient_name: string;
   phone: string;
   province: string;
   city: string;
   district: string;
-  sub_district: string;
+  // sub_district: string;
   postal_code: string;
-  detail?: string;
+  details?: string;
   is_primary: boolean;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type Orders = {

@@ -11,7 +11,7 @@ export const api = axios.create({
   // baseURL: "http://localhost:5001",
   headers: {
     "Content-Type": "application/json",
-    // "ngrok-skip-browser-warning": "true",
+    "ngrok-skip-browser-warning": "true",
   },
 });
 
