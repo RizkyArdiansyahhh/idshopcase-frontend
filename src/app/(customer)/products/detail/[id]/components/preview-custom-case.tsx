@@ -129,7 +129,7 @@ export default function CasePreview() {
       </div>
       <div className=" h-full  flex  gap-7 p-6 font-sans flex-row">
         <div
-          className={`relative w-72 h-[36rem] rounded-[3.1rem] overflow-hidden flex items-center justify-center shadow-lg ${colorSelected}`}
+          className={`relative w-[17rem] h-[30.5rem] rounded-[2.4rem] overflow-hidden flex items-center justify-center shadow-lg ${colorSelected}`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}

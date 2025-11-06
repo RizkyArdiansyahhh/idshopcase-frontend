@@ -9,7 +9,7 @@ const LoginPage = () => {
     <>
       <LoginForm
         onSuccess={() => {
-          router.replace("/");
+          router.replace("/admin/dashboard");
         }}
       />
     </>

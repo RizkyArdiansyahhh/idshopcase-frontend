@@ -92,7 +92,7 @@ export type OrderItem = {
   price: number;
 };
 
-export type Productss = {
+export type Products = {
   id: number;
   name: string;
   description: string;

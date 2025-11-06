@@ -38,12 +38,14 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
   return (
     <div className="h-[300px] lg:h-[500px]  w-full flex flex-col lg:flex-row">
       <div className="w-full lg:w-4/6 h-full  relative rounded-[12px] overflow-hidden">
-        <Image
-          src={previewImage}
-          alt="banner-detail-product"
-          fill
-          className="object-center object-cover"
-        ></Image>
+        {previewImage && (
+          <Image
+            src={previewImage}
+            alt="banner-detail-product"
+            fill
+            className="object-center object-cover"
+          ></Image>
+        )}
       </div>
       <div className="h-1/3 lg:h-full w-full lg:w-2/6 flex flex-row lg:flex-col gap-2 px-7">
         {images.map((image, index) => (

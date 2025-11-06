@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { Product, Productss } from "@/types/api";
+import { Product, Products } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProducts = async () => {

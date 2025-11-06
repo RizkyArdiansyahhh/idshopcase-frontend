@@ -5,10 +5,47 @@ import { PreviewImageProduct } from "./preview-image-product";
 import { formatCurrency } from "@/lib/format-currency";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbCustom } from "@/components/shared/breadCrumbCustom";
-import { Footer } from "@/app/_components/footer";
-import { ListProducts, ListProductsDetail } from "./list-products";
+import { ListProductsDetail } from "./list-products";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/preview-custom-case";
+
+const images = [
+  {
+    id: 1,
+    default: "/images/products/custom-case/custom-case-1.webp",
+    image: [
+      "/images/products/custom-case/custom-case-1.webp",
+      "/images/products/custom-case/custom-case-2.webp",
+      "/images/products/custom-case/custom-case-3.webp",
+    ],
+  },
+  {
+    id: 2,
+    default: "/images/products/keychain/keychain-1.webp",
+    image: [
+      "/images/products/keychain/keychain-1.webp",
+      "/images/products/keychain/keychain-2.webp",
+      "/images/products/keychain/keychain-3.webp",
+      "/images/products/keychain/keychain-4.webp",
+      "/images/products/keychain/keychain-5.webp",
+    ],
+  },
+  {
+    id: 3,
+    default: "/images/products/phone-charm/phone_charm_1.webp",
+    image: [
+      "/images/products/phone-charm/phone_charm_1.webp",
+      "/images/products/phone-charm/phone_charm_2.webp",
+      "/images/products/phone-charm/phone_charm_3.webp",
+      "/images/products/phone-charm/phone_charm_4.webp",
+    ],
+  },
+  {
+    id: 4,
+    default: "/images/products/popstand/popstand-1.webp",
+    image: ["/images/products/popstand/popstand-1.webp"],
+  },
+];
 
 type DetailProductProps = {
   id: number;
@@ -24,19 +61,19 @@ export const DetailProduct = (props: DetailProductProps) => {
       enabled: !!id,
     },
   });
-  const { minPrice, maxPrice } = useMemo(() => {
-    if (product?.variantOptions && product.variantOptions.length > 0) {
-      const prices = product.variantCombinations!.map((v) => v.price);
-      return {
-        minPrice: Math.min(...prices),
-        maxPrice: Math.max(...prices),
-      };
-    }
-    return {
-      minPrice: product?.basePrice ?? 0,
-      maxPrice: product?.basePrice ?? 0,
-    };
-  }, [product]);
+  // const { minPrice, maxPrice } = useMemo(() => {
+  //   if (product?.variantOptions && product.variantOptions.length > 0) {
+  //     const prices = product.variantCombinations!.map((v) => v.price);
+  //     return {
+  //       minPrice: Math.min(...prices),
+  //       maxPrice: Math.max(...prices),
+  //     };
+  //   }
+  //   return {
+  //     minPrice: product?.basePrice ?? 0,
+  //     maxPrice: product?.basePrice ?? 0,
+  //   };
+  // }, [product]);
 
   if (!product) return null;
 
@@ -52,7 +89,7 @@ export const DetailProduct = (props: DetailProductProps) => {
           <div className="w-full h-full lg:h-5/6 flex flex-col">
             <PreviewImageProduct
               isLoading={fetchProductLoading}
-              images={product?.images || []}
+              images={images[id - 1].image}
             ></PreviewImageProduct>
           </div>
         </div>
@@ -62,13 +99,14 @@ export const DetailProduct = (props: DetailProductProps) => {
               {product.name}
             </h1>
             <h3 className="text-2xl font-semibold text-foreground/70 my-2">
-              {minPrice === maxPrice
-                ? formatCurrency(minPrice)
-                : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
+              {formatCurrency(Number(product.price))}
             </h3>
             <Separator></Separator>
           </div>
-          <FormDetailProduct product={product}></FormDetailProduct>
+          <FormDetailProduct
+            productDetail={product}
+            image={images[id - 1].default}
+          ></FormDetailProduct>
         </div>
       </div>
       <div className="w-full mt-20 flex">
