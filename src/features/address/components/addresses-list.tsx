@@ -6,6 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const AddressesList = () => {
   const { data: addresses, isLoading: fetchAddressesLoading } =
     useGetAddresses();
+
+  console.log("ini alamat", addresses);
   return (
     <>
       {fetchAddressesLoading
@@ -24,8 +26,8 @@ export const AddressesList = () => {
                 id={address.id.toString()}
                 fullname={address.recipient_name}
                 phone={address.phone}
-                detail={address.detail || ""}
-                village={address.sub_district}
+                detail={address.details || ""}
+                // village={address.sub_district}
                 district={address.district}
                 city={address.city}
                 province={address.province}

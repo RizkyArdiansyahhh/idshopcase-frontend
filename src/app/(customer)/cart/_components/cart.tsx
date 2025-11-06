@@ -39,7 +39,7 @@ export const Cart = () => {
                     htmlFor="selectedAll"
                     className="text-app-semibold-sm text-background"
                   >
-                    Pilih Semua (3)
+                    Pilih Semuanya (3)
                   </FieldLabel>
                 </Field>
               </div>

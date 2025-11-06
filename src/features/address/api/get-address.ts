@@ -4,13 +4,14 @@ import { Address } from "@/types/api";
 import { Query, queryOptions, useQuery } from "@tanstack/react-query";
 
 const getAddresses = async () => {
-  const response = await api.get<Address[]>("/addresses", {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const response = await api.get<{ addresses: Address[] }>("/user/addresses", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 
-  return response.data;
+  return response.data.addresses;
 };
 
 export const getAddressesQueryKey = () => ["address"];

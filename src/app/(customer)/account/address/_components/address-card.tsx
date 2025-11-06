@@ -5,7 +5,7 @@ type AddressCardProps = {
   fullname: string;
   phone: string;
   detail: string;
-  village: string;
+  // village: string;
   district: string;
   city: string;
   province: string;
@@ -18,7 +18,7 @@ export const AddressCard = (props: AddressCardProps) => {
     fullname,
     phone,
     detail,
-    village,
+    // village,
     district,
     city,
     province,
@@ -40,7 +40,7 @@ export const AddressCard = (props: AddressCardProps) => {
       <div className="flex flex-row justify-between items-center">
         <address className="not-italic text-xs flex gap-2">
           <span>{detail}</span>
-          <span>{village}</span>
+          {/* <span>{village}</span> */}
           <span>
             {city} - {district}
           </span>
