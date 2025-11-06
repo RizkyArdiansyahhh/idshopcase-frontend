@@ -43,9 +43,9 @@ const CheckoutPage = () => {
     {
       id: 1,
       label: "Rumah",
-      street: "Jalan Sudirman 14",
-      city: "Bogor",
-      province: "Jawa Barat",
+      street: "Jl. Harapan Raya, Bukit Raya",
+      city: "Kota Pekanbaru",
+      province: "Riau",
       zip: "16623",
     },
     {
@@ -59,7 +59,9 @@ const CheckoutPage = () => {
   ];
 
   const [selectedAddress, setSelectedAddress] = useState(userAddresses[0]);
-  const shippingCost = 10000;
+  const shippingCost = 240;
+
+  // Payment method (fixed: DOKU)
   const paymentMethod = "DOKU";
 
   const subtotal = product.price * quantity;
@@ -68,8 +70,9 @@ const CheckoutPage = () => {
   const handleIncrease = () => setQuantity((q) => q + 1);
   const handleDecrease = () => setQuantity((q) => Math.max(1, q - 1));
 
-  // Load CSS Jokul
+  // --- Jokul DOKU modal ---
   useEffect(() => {
+    // Load CSS Jokul
     const cssJokul = document.createElement("link");
     cssJokul.rel = "stylesheet";
     cssJokul.href =
@@ -77,71 +80,88 @@ const CheckoutPage = () => {
     document.head.appendChild(cssJokul);
   }, []);
 
-  // Event listener untuk komunikasi iframe DOKU
-  useEffect(() => {
-    function receive(event: { data: any }) {
-      const data = event.data;
-      if (typeof (window as any)[data.func] === "function") {
-        (window as any)[data.func](data);
-      }
-    }
-    window.addEventListener("message", receive);
-    return () => window.removeEventListener("message", receive);
-  }, []);
-
-  // Fungsi membuka modal DOKU
-  const loadJokulCheckout = (url: string) => {
+  function loadJokulCheckout(url: string) {
     const token = url + "?view=iframe";
     const existingModal = document.getElementById("jokul_checkout_modal");
+
     if (existingModal) {
       existingModal.style.display = "block";
       const iframeElement = existingModal.querySelector("iframe");
-      if (iframeElement) iframeElement.src = token;
+      if (iframeElement) {
+        iframeElement.src = token;
+      }
       return;
     }
+
     const jokulCheckoutModal = document.createElement("div");
     jokulCheckoutModal.className = "jokul-modal";
     jokulCheckoutModal.id = "jokul_checkout_modal";
     jokulCheckoutModal.innerHTML = `
       <div class="jokul-content">
-        <iframe src="${token}" width="100%" height="100%"></iframe>
+        <iframe src="${token}"></iframe>
       </div>
     `;
     document.body.appendChild(jokulCheckoutModal);
-  };
+  }
 
   const handleCreateOrder = async () => {
     setIsLoading(true);
 
+    // Mock orderData (untuk backend nanti)
     const orderData = {
-      productId: product.id,
-      productName: product.name,
-      quantity,
-      material: product.material,
-      phoneType: product.phoneType,
-      subtotal,
-      shippingCost,
-      totalPayment,
-      shippingAddress: selectedAddress,
-      paymentMethod,
+      addressId: 1,
+      selecetedItemIds: [5],
     };
 
-    // Panggil backend untuk dapat paymentUrl (contoh hardcode)
-    const paymentUrl =
-      "https://jokul.doku.com/checkout/link/SU5WFDferd561dfasfasdfae123c20200510090550775";
+    // Panggil Jokul modal
+    loadJokulCheckout(
+      "https://jokul.doku.com/checkout/link/SU5WFDferd561dfasfasdfae123c20200510090550775"
+    );
 
-    loadJokulCheckout(paymentUrl);
-
+    // Simulasikan request ke backend (opsional)
     try {
-      const res = await fetch("/api/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-      });
-      const data = await res.json();
-      console.log("Backend response:", data);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        "https://monistically-exopathic-maida.ngrok-free.dev/api/order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // <- perbaikan di sini
+          },
+          body: JSON.stringify({
+            addressId: orderData.addressId,
+            selectedItemIds: orderData.selecetedItemIds,
+          }),
+        }
+      );
+      const resData = await res.json();
+
+      if (!res.ok) {
+        console.error("Order failed:", resData);
+        return;
+      }
+
+      console.log("Order success:", resData);
+
+      // Ambil payment URL dari response
+      const paymentUrl = resData.checkout.response.payment.url;
+      console.log("Payment URL:", paymentUrl);
+
+      if (paymentUrl) {
+        loadJokulCheckout(paymentUrl); // <-- buka DOKU Checkout modal
+      }
+
+      if (!res.ok) {
+        const errData = await res.json();
+        console.error("Order failed:", errData);
+      } else {
+        const data = await res.json();
+        console.log("Order success:", data);
+      }
     } catch (err) {
-      console.error("Payment error:", err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -149,7 +169,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 p-6 bg-gray-50">
-      {/* Pilih Alamat */}
+      {/* Alamat Pengiriman */}
       <Dialog open={isAddressModalOpen} onOpenChange={setIsAddressModalOpen}>
         <Card>
           <CardHeader className="flex justify-between items-center">
@@ -202,7 +222,7 @@ const CheckoutPage = () => {
         </Card>
       </Dialog>
 
-      {/* Ringkasan Produk */}
+      {/* Ringkasan Pesanan */}
       <Card>
         <CardHeader>
           <CardTitle>Ringkasan Pesanan</CardTitle>
@@ -235,25 +255,27 @@ const CheckoutPage = () => {
         </CardContent>
       </Card>
 
-      {/* Total & Checkout */}
+      {/* Payment & Total */}
       <Card>
         <CardHeader className="flex justify-between items-center">
-          <CardTitle>Total Pembayaran</CardTitle>
+          <CardTitle>Metode Pembayaran</CardTitle>
           <p>{paymentMethod}</p>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          <div className="flex justify-between">
-            <span>Subtotal:</span>
-            <span>{formatCurrency(subtotal)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Pengiriman:</span>
-            <span>{formatCurrency(shippingCost)}</span>
-          </div>
-          <Separator />
-          <div className="flex justify-between font-bold text-lg">
-            <span>Total Pembayaran:</span>
-            <span>{formatCurrency(totalPayment)}</span>
+        <CardContent>
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between">
+              <span>Subtotal:</span>
+              <span>{formatCurrency(subtotal)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Pengiriman:</span>
+              <span>{formatCurrency(shippingCost)}</span>
+            </div>
+            <Separator />
+            <div className="flex justify-between font-bold text-lg">
+              <span>Total Pembayaran:</span>
+              <span>{formatCurrency(totalPayment)}</span>
+            </div>
           </div>
         </CardContent>
         <CardFooter>

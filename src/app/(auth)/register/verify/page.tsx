@@ -8,9 +8,14 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
+import { useVerifyOtp } from "@/features/auth/api/verify-otp";
+import { useRouter } from "next/navigation";
 
 const VerifyEmailPage = () => {
   const [seconds, setSeconds] = useState(180);
+  const { push } = useRouter();
+
+  const { mutate: verify, isPending: verifyLoading } = useVerifyOtp();
 
   useEffect(() => {
     if (seconds > 0) {
@@ -41,7 +46,7 @@ const VerifyEmailPage = () => {
         </div>
         <div className="flex flex-col gap-6">
           <InputOTPWithSeparator />
-          <Button>Verifikasi</Button>
+          <Button onClick={() => push("/")}>Verifikasi</Button>
         </div>
 
         <div className="flex flex-row justify-between items-center gap-2">

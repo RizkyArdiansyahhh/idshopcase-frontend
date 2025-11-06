@@ -1,10 +1,10 @@
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { Products } from "@/types/api";
+import { Product, Products } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProduct = async (id: number) => {
-  const response = await api.get<Products>(`/product/${id}`);
+  const response = await api.get<Product>(`/products/${id}`);
 
   return response.data;
 };

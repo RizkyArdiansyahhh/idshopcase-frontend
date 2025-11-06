@@ -4,7 +4,9 @@ export type User = {
   email: string;
   phone: string;
   profile_picture: string;
-  address: [];
+  role: "USER" | "ADMIN";
+  createdAt: string;
+  updatedAt: string;
 };
 
 export interface Product {

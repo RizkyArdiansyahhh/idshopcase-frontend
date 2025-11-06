@@ -256,11 +256,11 @@
         "/images/products/keychain/keychain-4.webp",
         "/images/products/keychain/keychain-5.webp"
       ],
-      "toggleIsVariant": false,
+      "toggleIsVariant": true,
       "variantOptions": [],
       "variantCombinations": [],
       "createdAt": "2025-11-02T18:12:47.823Z",
-      "updatedAt": null,
+      "updatedAt": "2025-11-05T11:31:22.064Z",
       "id": 2
     },
     {
@@ -269,7 +269,9 @@
       "category": "phone_charm",
       "basePrice": 50000,
       "baseStock": 110,
-      "images": ["/images/products/popstand/popstand-1.webp"],
+      "images": [
+        "/images/products/popstand/popstand-1.webp"
+      ],
       "toggleIsVariant": false,
       "variantOptions": [],
       "variantCombinations": [],
@@ -283,13 +285,215 @@
       "category": "pop_socket",
       "basePrice": 60000,
       "baseStock": 80,
-      "images": ["/images/products/popstand/popstand-1.webp"],
+      "images": [
+        "/images/products/popstand/popstand-1.webp"
+      ],
       "toggleIsVariant": false,
       "variantOptions": [],
       "variantCombinations": [],
       "createdAt": "2025-11-02T18:17:45.518Z",
       "updatedAt": null,
       "id": 4
+    },
+    {
+      "name": "Custom Case",
+      "description": "shbjhbs",
+      "category": "custom_case",
+      "images": [
+        "blob:http://localhost:3000/98208e72-dbbb-4ec8-9ef0-1453c3612453",
+        "blob:http://localhost:3000/342e3688-471a-4994-a162-acace907b7ee",
+        "blob:http://localhost:3000/ef1d695b-4b28-463f-9ccd-6b6a28554b82",
+        "blob:http://localhost:3000/2cc1de9d-7c1e-44ba-b7cd-b11b85b73e06"
+      ],
+      "toggleIsVariant": true,
+      "variantOptions": [
+        {
+          "nameVariant": "tipe hp",
+          "valueVariant": [
+            {
+              "label": "samsung"
+            }
+          ]
+        },
+        {
+          "nameVariant": "variasi",
+          "valueVariant": [
+            {
+              "label": "1 sisi"
+            },
+            {
+              "label": "2 sisi"
+            }
+          ]
+        }
+      ],
+      "variantCombinations": [
+        {
+          "combination": {
+            "tipe hp": "samsung",
+            "variasi": "1 sisi"
+          },
+          "stock": 10,
+          "price": 120000
+        },
+        {
+          "combination": {
+            "tipe hp": "samsung",
+            "variasi": "2 sisi"
+          },
+          "stock": 20,
+          "price": 130000
+        }
+      ],
+      "createdAt": "2025-11-05T11:28:54.008Z",
+      "updatedAt": null,
+      "id": 5
+    },
+    {
+      "name": "Samsung s24",
+      "description": "Custom Case Samsung s24",
+      "category": "custom_case",
+      "images": [
+        "blob:http://localhost:3000/f831d026-c443-408b-ae2e-9b1ce1de6ff6",
+        "blob:http://localhost:3000/7c7fbbf1-cdfb-4f45-8f3c-6a6ae34adce8",
+        "blob:http://localhost:3000/43c93760-eeac-4a28-9e18-b3bddcc573eb",
+        "blob:http://localhost:3000/28253e46-6342-4836-b38c-c07002f0c61e"
+      ],
+      "toggleIsVariant": true,
+      "variantOptions": [
+        {
+          "nameVariant": "Tipe Hp",
+          "valueVariant": [
+            {
+              "label": "Samsung s24"
+            },
+            {
+              "label": "Iphone 16"
+            }
+          ]
+        },
+        {
+          "nameVariant": "Material Case",
+          "valueVariant": [
+            {
+              "label": "Premium Softcase"
+            },
+            {
+              "label": "Black Softcase"
+            }
+          ]
+        }
+      ],
+      "variantCombinations": [
+        {
+          "combination": {
+            "Tipe Hp": "Samsung s24",
+            "Material Case": "Premium Softcase"
+          },
+          "stock": 10,
+          "price": 120000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Samsung s24",
+            "Material Case": "Black Softcase"
+          },
+          "stock": 8,
+          "price": 130000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Iphone 16",
+            "Material Case": "Premium Softcase"
+          },
+          "stock": 5,
+          "price": 125000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Iphone 16",
+            "Material Case": "Black Softcase"
+          },
+          "stock": 4,
+          "price": 135000
+        }
+      ],
+      "createdAt": "2025-11-05T12:14:24.852Z",
+      "updatedAt": null,
+      "id": 6
+    },
+    {
+      "name": "Samsung s24",
+      "description": "Custom Case Samsung s24",
+      "category": "custom_case",
+      "images": [
+        "blob:http://localhost:3000/dac78e6f-cb14-44b0-a225-6ea416aaa6ea",
+        "blob:http://localhost:3000/37a311f5-76d8-40fd-8050-e92ebbf9fe89",
+        "blob:http://localhost:3000/4ae387aa-7a25-40c4-a23a-6ef99a80c41c",
+        "blob:http://localhost:3000/6db57d83-b49f-4528-af88-804f5c26f982"
+      ],
+      "toggleIsVariant": true,
+      "variantOptions": [
+        {
+          "nameVariant": "Tipe Hp",
+          "valueVariant": [
+            {
+              "label": "Samsung s24"
+            },
+            {
+              "label": "Iphone 16"
+            }
+          ]
+        },
+        {
+          "nameVariant": "Material Case",
+          "valueVariant": [
+            {
+              "label": "Premium Softcase"
+            },
+            {
+              "label": "Black Softcase"
+            }
+          ]
+        }
+      ],
+      "variantCombinations": [
+        {
+          "combination": {
+            "Tipe Hp": "Samsung s24",
+            "Material Case": "Premium Softcase"
+          },
+          "stock": 10,
+          "price": 125000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Samsung s24",
+            "Material Case": "Black Softcase"
+          },
+          "stock": 8,
+          "price": 132000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Iphone 16",
+            "Material Case": "Premium Softcase"
+          },
+          "stock": 5,
+          "price": 125000
+        },
+        {
+          "combination": {
+            "Tipe Hp": "Iphone 16",
+            "Material Case": "Black Softcase"
+          },
+          "stock": 4,
+          "price": 135000
+        }
+      ],
+      "createdAt": "2025-11-05T12:18:19.466Z",
+      "updatedAt": "2025-11-05T12:19:06.595Z",
+      "id": 7
     }
   ],
   "carts": [],
@@ -305,7 +509,14 @@
       "tracking_number": "TRK100001",
       "createdAt": "2025-10-20T09:00:00Z",
       "updatedAt": "2025-10-20T09:00:00Z",
-      "items": [{ "id": 1, "productId": 1, "quantity": 1, "price": 99000 }]
+      "items": [
+        {
+          "id": 1,
+          "productId": 1,
+          "quantity": 1,
+          "price": 99000
+        }
+      ]
     },
     {
       "id": "ORD-4D5E6F",
@@ -317,7 +528,14 @@
       "tracking_number": "TRK100002",
       "createdAt": "2025-10-21T10:00:00Z",
       "updatedAt": "2025-10-21T10:05:00Z",
-      "items": [{ "id": 2, "productId": 2, "quantity": 3, "price": 50000 }]
+      "items": [
+        {
+          "id": 2,
+          "productId": 2,
+          "quantity": 3,
+          "price": 50000
+        }
+      ]
     },
     {
       "id": "ORD-7G8H9I",
@@ -329,7 +547,14 @@
       "tracking_number": "TRK100003",
       "createdAt": "2025-10-22T11:00:00Z",
       "updatedAt": "2025-10-22T11:05:00Z",
-      "items": [{ "id": 3, "productId": 3, "quantity": 2, "price": 55000 }]
+      "items": [
+        {
+          "id": 3,
+          "productId": 3,
+          "quantity": 2,
+          "price": 55000
+        }
+      ]
     },
     {
       "id": "ORD-0J1K2L",
@@ -341,7 +566,14 @@
       "tracking_number": "TRK100004",
       "createdAt": "2025-10-23T12:00:00Z",
       "updatedAt": "2025-10-23T12:05:00Z",
-      "items": [{ "id": 4, "productId": 4, "quantity": 4, "price": 60000 }]
+      "items": [
+        {
+          "id": 4,
+          "productId": 4,
+          "quantity": 4,
+          "price": 60000
+        }
+      ]
     },
     {
       "id": "ORD-3M4N5O",
@@ -353,7 +585,14 @@
       "tracking_number": "TRK100005",
       "createdAt": "2025-10-24T09:00:00Z",
       "updatedAt": "2025-10-24T09:05:00Z",
-      "items": [{ "id": 5, "productId": 1, "quantity": 1, "price": 149000 }]
+      "items": [
+        {
+          "id": 5,
+          "productId": 1,
+          "quantity": 1,
+          "price": 149000
+        }
+      ]
     },
     {
       "id": "ORD-6P7Q8R",
@@ -365,7 +604,14 @@
       "tracking_number": "TRK100006",
       "createdAt": "2025-10-25T14:00:00Z",
       "updatedAt": "2025-10-25T14:05:00Z",
-      "items": [{ "id": 6, "productId": 3, "quantity": 3, "price": 55000 }]
+      "items": [
+        {
+          "id": 6,
+          "productId": 3,
+          "quantity": 3,
+          "price": 55000
+        }
+      ]
     },
     {
       "id": "ORD-9S0T1U",
@@ -377,7 +623,14 @@
       "tracking_number": "TRK100007",
       "createdAt": "2025-10-26T10:00:00Z",
       "updatedAt": "2025-10-26T10:05:00Z",
-      "items": [{ "id": 7, "productId": 2, "quantity": 2, "price": 50000 }]
+      "items": [
+        {
+          "id": 7,
+          "productId": 2,
+          "quantity": 2,
+          "price": 50000
+        }
+      ]
     },
     {
       "id": "ORD-2V3W4X",
@@ -389,7 +642,14 @@
       "tracking_number": "TRK100008",
       "createdAt": "2025-10-26T11:30:00Z",
       "updatedAt": "2025-10-26T11:35:00Z",
-      "items": [{ "id": 8, "productId": 4, "quantity": 3, "price": 60000 }]
+      "items": [
+        {
+          "id": 8,
+          "productId": 4,
+          "quantity": 3,
+          "price": 60000
+        }
+      ]
     },
     {
       "id": "ORD-5Y6Z7A",
@@ -401,7 +661,14 @@
       "tracking_number": "TRK100009",
       "createdAt": "2025-10-27T09:15:00Z",
       "updatedAt": "2025-10-27T09:20:00Z",
-      "items": [{ "id": 9, "productId": 1, "quantity": 2, "price": 109000 }]
+      "items": [
+        {
+          "id": 9,
+          "productId": 1,
+          "quantity": 2,
+          "price": 109000
+        }
+      ]
     },
     {
       "id": "ORD-8B9C0D",
@@ -413,7 +680,14 @@
       "tracking_number": null,
       "createdAt": "2025-10-28T12:00:00Z",
       "updatedAt": "2025-10-28T12:00:00Z",
-      "items": [{ "id": 10, "productId": 3, "quantity": 1, "price": 55000 }]
+      "items": [
+        {
+          "id": 10,
+          "productId": 3,
+          "quantity": 1,
+          "price": 55000
+        }
+      ]
     },
     {
       "id": "ORD-1E2F3G",
@@ -425,7 +699,14 @@
       "tracking_number": "TRK100011",
       "createdAt": "2025-10-28T15:00:00Z",
       "updatedAt": "2025-10-28T15:05:00Z",
-      "items": [{ "id": 11, "productId": 2, "quantity": 2, "price": 50000 }]
+      "items": [
+        {
+          "id": 11,
+          "productId": 2,
+          "quantity": 2,
+          "price": 50000
+        }
+      ]
     },
     {
       "id": "ORD-4H5I6J",
@@ -438,8 +719,18 @@
       "createdAt": "2025-10-29T10:00:00Z",
       "updatedAt": "2025-10-29T10:05:00Z",
       "items": [
-        { "id": 12, "productId": 3, "quantity": 2, "price": 55000 },
-        { "id": 13, "productId": 4, "quantity": 1, "price": 60000 }
+        {
+          "id": 12,
+          "productId": 3,
+          "quantity": 2,
+          "price": 55000
+        },
+        {
+          "id": 13,
+          "productId": 4,
+          "quantity": 1,
+          "price": 60000
+        }
       ]
     },
     {
@@ -452,7 +743,14 @@
       "tracking_number": "TRK100013",
       "createdAt": "2025-10-29T11:00:00Z",
       "updatedAt": "2025-10-29T11:05:00Z",
-      "items": [{ "id": 14, "productId": 1, "quantity": 1, "price": 119000 }]
+      "items": [
+        {
+          "id": 14,
+          "productId": 1,
+          "quantity": 1,
+          "price": 119000
+        }
+      ]
     },
     {
       "id": "ORD-0N1O2P",
@@ -464,7 +762,14 @@
       "tracking_number": null,
       "createdAt": "2025-10-30T09:30:00Z",
       "updatedAt": "2025-10-30T09:30:00Z",
-      "items": [{ "id": 15, "productId": 4, "quantity": 1, "price": 60000 }]
+      "items": [
+        {
+          "id": 15,
+          "productId": 4,
+          "quantity": 1,
+          "price": 60000
+        }
+      ]
     },
     {
       "id": "ORD-3Q4R5S",
@@ -476,7 +781,14 @@
       "tracking_number": "TRK100015",
       "createdAt": "2025-10-30T14:00:00Z",
       "updatedAt": "2025-10-30T14:05:00Z",
-      "items": [{ "id": 16, "productId": 2, "quantity": 1, "price": 50000 }]
+      "items": [
+        {
+          "id": 16,
+          "productId": 2,
+          "quantity": 1,
+          "price": 50000
+        }
+      ]
     },
     {
       "id": "ORD-6T7U8V",
@@ -488,7 +800,14 @@
       "tracking_number": "TRK100016",
       "createdAt": "2025-10-31T10:00:00Z",
       "updatedAt": "2025-10-31T10:05:00Z",
-      "items": [{ "id": 17, "productId": 3, "quantity": 4, "price": 55000 }]
+      "items": [
+        {
+          "id": 17,
+          "productId": 3,
+          "quantity": 4,
+          "price": 55000
+        }
+      ]
     },
     {
       "id": "ORD-9W0X1Y",
@@ -500,7 +819,14 @@
       "tracking_number": "TRK100017",
       "createdAt": "2025-11-01T11:00:00Z",
       "updatedAt": "2025-11-01T11:05:00Z",
-      "items": [{ "id": 18, "productId": 1, "quantity": 1, "price": 139000 }]
+      "items": [
+        {
+          "id": 18,
+          "productId": 1,
+          "quantity": 1,
+          "price": 139000
+        }
+      ]
     },
     {
       "id": "ORD-2Z3A4B",
@@ -512,7 +838,14 @@
       "tracking_number": "TRK100018",
       "createdAt": "2025-11-01T15:00:00Z",
       "updatedAt": "2025-11-01T15:05:00Z",
-      "items": [{ "id": 19, "productId": 4, "quantity": 2, "price": 60000 }]
+      "items": [
+        {
+          "id": 19,
+          "productId": 4,
+          "quantity": 2,
+          "price": 60000
+        }
+      ]
     },
     {
       "id": "ORD-5C6D7E",
@@ -525,8 +858,18 @@
       "createdAt": "2025-11-02T09:00:00Z",
       "updatedAt": "2025-11-02T09:05:00Z",
       "items": [
-        { "id": 20, "productId": 2, "quantity": 1, "price": 50000 },
-        { "id": 21, "productId": 3, "quantity": 1, "price": 55000 }
+        {
+          "id": 20,
+          "productId": 2,
+          "quantity": 1,
+          "price": 50000
+        },
+        {
+          "id": 21,
+          "productId": 3,
+          "quantity": 1,
+          "price": 55000
+        }
       ]
     },
     {
@@ -539,7 +882,14 @@
       "tracking_number": "TRK100020",
       "createdAt": "2025-11-02T13:00:00Z",
       "updatedAt": "2025-11-02T13:05:00Z",
-      "items": [{ "id": 22, "productId": 1, "quantity": 2, "price": 104000 }]
+      "items": [
+        {
+          "id": 22,
+          "productId": 1,
+          "quantity": 2,
+          "price": 104000
+        }
+      ]
     }
   ],
   "payments": [

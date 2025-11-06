@@ -1,12 +1,12 @@
 "use client";
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { Products } from "@/types/api";
+import { Product, Products } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProducts = async () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response = await api.get<Products[]>("/product");
+  const response = await api.get<Product[]>("/products");
 
   return response.data;
 };
