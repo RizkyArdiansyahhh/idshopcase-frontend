@@ -6,12 +6,13 @@ import { DropdownSelector } from "./dropdown-selector";
 type RegencieSelectorProps = {
   codeProvince: string;
   value?: string;
-  onValueChange: (value: string) => void;
+  onValueChange: ({ id, name }: { id: string; name: string }) => void;
 };
 
 export const RegencieSelector = (props: RegencieSelectorProps) => {
   const { codeProvince, value, onValueChange } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedRegency, setSelectedRegency] = useState<string>("");
   const {
     data: regencies,
     isLoading: fetchRegenciesLoading,

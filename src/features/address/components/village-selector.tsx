@@ -6,7 +6,7 @@ import { useGetVillages } from "../api/get-villages";
 type VillageSelectorProps = {
   codeDistrict: string;
   value?: string;
-  onValueChange: (value: string) => void;
+  onValueChange: ({ id, name }: { id: string; name: string }) => void;
 };
 
 export const VillageSelector = (props: VillageSelectorProps) => {

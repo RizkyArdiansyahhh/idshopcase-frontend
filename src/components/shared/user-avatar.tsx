@@ -27,11 +27,18 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
 
   const color = randomColor[safeName.charCodeAt(0) % randomColor.length];
 
+  const isBlob = image?.startsWith("blob:") || image?.startsWith("data:");
+  const imageSrc = isBlob
+    ? image
+    : image
+    ? `${process.env.NEXT_PUBLIC_API_URL}${image}`
+    : undefined;
+
   return (
     <Avatar className={cn(className)}>
       {image ? (
         <AvatarImage
-          src={image}
+          src={imageSrc}
           alt="avatar-image"
           className="object-cover"
         ></AvatarImage>

@@ -3,13 +3,15 @@ import { QueryConfig } from "@/lib/react-query";
 import { Address } from "@/types/api";
 import { Query, queryOptions, useQuery } from "@tanstack/react-query";
 
+type GetAddressesItemResponse = Omit<
+  Address,
+  "province_id" | "city_id" | "district_id" | "sub_district_id"
+>;
+
 const getAddresses = async () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response = await api.get<{ addresses: Address[] }>("/user/addresses", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  const response = await api.get<{ addresses: GetAddressesItemResponse[] }>(
+    "/user/addresses"
+  );
 
   return response.data.addresses;
 };

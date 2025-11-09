@@ -18,7 +18,7 @@ type DropdownSelectorProps<T> = {
   value: string;
   disabled?: boolean;
   fieldImportant?: string;
-  onValueChange: (value: string) => void;
+  onValueChange: ({ id, name }: { id: string; name: string }) => void;
   onOpenChange: (open: boolean) => void;
 };
 
@@ -33,12 +33,18 @@ export const DropdownSelector = <T extends { id: string; name: string }>({
   onValueChange,
   onOpenChange,
 }: DropdownSelectorProps<T>) => {
+  const handleValueChange = (value: string) => {
+    const selectedItem = data.find((item) => item.id === value);
+    if (selectedItem) {
+      onValueChange(selectedItem);
+    }
+  };
   return (
     <Field>
       <Select
         onOpenChange={(open) => onOpenChange(open)}
         value={value}
-        onValueChange={onValueChange}
+        onValueChange={handleValueChange}
       >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />

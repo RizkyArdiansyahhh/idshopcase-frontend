@@ -27,7 +27,7 @@ export const AddressesList = () => {
                 fullname={address.recipient_name}
                 phone={address.phone}
                 detail={address.details || ""}
-                // village={address.sub_district}
+                village={address.sub_district}
                 district={address.district}
                 city={address.city}
                 province={address.province}
