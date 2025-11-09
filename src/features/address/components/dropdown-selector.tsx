@@ -10,19 +10,19 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 
-type DropdownSelectorProps<T> = {
+type DropdownSelectorProps = {
   placeholder: string;
-  data: T[];
+  data: string[];
   isLoading: boolean;
   isError: boolean;
   value: string;
   disabled?: boolean;
   fieldImportant?: string;
-  onValueChange: ({ id, name }: { id: string; name: string }) => void;
+  onValueChange: (value: string) => void;
   onOpenChange: (open: boolean) => void;
 };
 
-export const DropdownSelector = <T extends { id: string; name: string }>({
+export const DropdownSelector = ({
   placeholder,
   data,
   isLoading,
@@ -32,19 +32,13 @@ export const DropdownSelector = <T extends { id: string; name: string }>({
   fieldImportant,
   onValueChange,
   onOpenChange,
-}: DropdownSelectorProps<T>) => {
-  const handleValueChange = (value: string) => {
-    const selectedItem = data.find((item) => item.id === value);
-    if (selectedItem) {
-      onValueChange(selectedItem);
-    }
-  };
+}: DropdownSelectorProps) => {
   return (
     <Field>
       <Select
-        onOpenChange={(open) => onOpenChange(open)}
         value={value}
-        onValueChange={handleValueChange}
+        onValueChange={onValueChange}
+        onOpenChange={onOpenChange}
       >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
@@ -66,13 +60,11 @@ export const DropdownSelector = <T extends { id: string; name: string }>({
                 <p className="text-sm text-foreground/30">Terjadi kesalahan</p>
               </div>
             ) : (
-              data?.map((item) => {
-                return (
-                  <SelectItem key={item.id} value={item.id}>
-                    {item.name}
-                  </SelectItem>
-                );
-              })
+              data?.map((item) => (
+                <SelectItem key={item} value={item}>
+                  {item}
+                </SelectItem>
+              ))
             )}
           </SelectGroup>
         </SelectContent>

@@ -1,39 +1,35 @@
-import { wilayahApi } from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type DistrictsItemResponse = {
-  id: string;
-  name: string;
+  data: string[];
 };
 
-export const getDistricts = async (codeRegency: string) => {
-  const response = await wilayahApi.get<DistrictsItemResponse[]>(
-    `/districts/${codeRegency}.json`
+export const getDistricts = async (regency: string) => {
+  const response = await api.get<DistrictsItemResponse>(
+    `/jnt-address/districts/?city=${regency}`
   );
-  return response.data;
+  return response.data.data;
 };
 
-export const getDistrictsQueryKey = (codeRegency: string) => [
-  "districts",
-  codeRegency,
-];
+export const getDistrictsQueryKey = (regency: string) => ["districts", regency];
 
-export const getDistrictsQueryOptions = (codeRegency: string) => {
+export const getDistrictsQueryOptions = (regency: string) => {
   return queryOptions({
-    queryKey: getDistrictsQueryKey(codeRegency),
-    queryFn: () => getDistricts(codeRegency),
+    queryKey: getDistrictsQueryKey(regency),
+    queryFn: () => getDistricts(regency),
   });
 };
 
 type UseGetDistricts = {
   queryConfig?: QueryConfig<typeof getDistrictsQueryOptions>;
-  codeRegency: string;
+  regency: string;
 };
 
 export const useGetDistricts = (params: UseGetDistricts) => {
   return useQuery({
-    ...getDistrictsQueryOptions(params.codeRegency),
+    ...getDistrictsQueryOptions(params.regency),
     ...params.queryConfig,
   });
 };

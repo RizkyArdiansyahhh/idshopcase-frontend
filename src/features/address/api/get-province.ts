@@ -1,18 +1,14 @@
-import { wilayahApi } from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type AddressItemResponse = {
-  id: string;
-  name: string;
+  data: string[];
 };
 
 export const getProvince = async () => {
-  const response = await wilayahApi.get<AddressItemResponse[]>(
-    "/provinces.json"
-  );
-
-  return response.data;
+  const response = await api.get<AddressItemResponse>("/jnt-address/provinces");
+  return response.data.data;
 };
 
 export const getProvincesQueryKey = () => ["provinces"];

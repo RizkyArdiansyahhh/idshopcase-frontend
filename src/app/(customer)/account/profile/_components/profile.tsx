@@ -7,15 +7,14 @@ export const Profile = () => {
   if (!user) {
     return null;
   }
-  const cleanPath = user?.profile_picture.split("/uploads/")[1];
-  const imageUrl = `/images/${cleanPath}`;
-  console.log(imageUrl);
+  const cleanPath = user?.profile_picture?.split("/uploads/")[1] ?? null;
+  const imageUrl = cleanPath ? `/images/${cleanPath}` : null;
 
   if (!user) return null;
   return (
     <>
       <div className="py-7">
-        <ProfileForm {...user} imageurl={imageUrl}></ProfileForm>
+        <ProfileForm {...user} imageurl={imageUrl ?? ""}></ProfileForm>
       </div>
     </>
   );

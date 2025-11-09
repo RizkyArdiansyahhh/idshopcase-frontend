@@ -16,7 +16,6 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DistrictSelector } from "./district-selector";
-import { VillageSelector } from "./village-selector";
 import { useEffect } from "react";
 import { useGetAddressById } from "../api/get-addressById";
 import { useCreateAddress } from "../api/create-address";
@@ -32,42 +31,9 @@ const formAddressSchema = z.object({
   phone: z.string().min(12, {
     message: "Phone number must be at least 12 characters",
   }),
-  province: z.object(
-    {
-      id: z.string(),
-      name: z.string(),
-    },
-    {
-      message: "Province is required",
-    }
-  ),
-  city: z.object(
-    {
-      id: z.string(),
-      name: z.string(),
-    },
-    {
-      message: "City is required",
-    }
-  ),
-  district: z.object(
-    {
-      id: z.string(),
-      name: z.string(),
-    },
-    {
-      message: "District is required",
-    }
-  ),
-  sub_district: z.object(
-    {
-      id: z.string(),
-      name: z.string(),
-    },
-    {
-      message: "Sub district is required",
-    }
-  ),
+  province: z.string().nonempty("Province is required"),
+  city: z.string().nonempty("City is required"),
+  district: z.string().nonempty("District is required"),
   postal_code: z.string().length(5, "Postal code must be 5 characters"),
   detail: z.string().optional(),
   is_primary: z.boolean().optional(),
@@ -87,25 +53,6 @@ export const Address = ({ addressId }: { addressId?: number }) => {
 
   const form = useForm<FormAddressSchemaType>({
     resolver: zodResolver(formAddressSchema),
-    // defaultValues: {
-    //   recipient_name: address?.recipient_name,
-    //   phone: address?.phone,
-    //   province: {
-    //     name: address?.province,
-    //   },
-    //   city: {
-    //     name: address?.city,
-    //   },
-    //   district: {
-    //     name: address?.district,
-    //   },
-    //   sub_district: {
-    //     name: address?.sub_district,
-    //   },
-    //   postal_code: address?.postal_code,
-    //   detail: address?.details,
-    //   is_primary: !!address?.is_primary || false,
-    // },
   });
 
   useEffect(() => {
@@ -113,22 +60,9 @@ export const Address = ({ addressId }: { addressId?: number }) => {
       form.reset({
         recipient_name: address.recipient_name,
         phone: address.phone,
-        province: {
-          // id: address.province_id,
-          name: address.province,
-        },
-        city: {
-          // id: address.city_id,
-          name: address.city,
-        },
-        district: {
-          // id: address.district_id,
-          name: address.district,
-        },
-        sub_district: {
-          // id: address.sub_district_id,
-          name: address.sub_district,
-        },
+        province: address.province,
+        city: address.city,
+        district: address.district,
         postal_code: address.postal_code,
         detail: address.details,
         is_primary: !!address.is_primary,
@@ -160,10 +94,9 @@ export const Address = ({ addressId }: { addressId?: number }) => {
       const payload = {
         recipient_name: data.recipient_name,
         phone: data.phone,
-        province: data.province.name,
-        city: data.city.name,
-        district: data.district.name,
-        sub_district: data.sub_district.name,
+        province: data.province,
+        city: data.city,
+        district: data.district,
         postal_code: data.postal_code,
         details: data.detail || "",
         is_primary: data.is_primary || false,
@@ -174,7 +107,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
   };
 
   return (
-    <div>
+    <div className="p-5">
       <FieldLegend className="font-semibold">
         {addressId ? "Ubah Alamat" : "Tambah Alamat"}
       </FieldLegend>
@@ -221,15 +154,9 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               render={({ field }) => (
                 <FormItem>
                   <ProvinceSelector
-                    value={field.value?.id || ""}
-                    onValueChange={({
-                      id,
-                      name,
-                    }: {
-                      id: string;
-                      name: string;
-                    }) => {
-                      field.onChange({ id, name });
+                    value={field.value || ""}
+                    onValueChange={(value: string) => {
+                      field.onChange(value);
                     }}
                   />
                   <FormMessage></FormMessage>
@@ -242,16 +169,10 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               render={({ field }) => (
                 <FormItem>
                   <RegencieSelector
-                    codeProvince={form.watch("province")?.id}
-                    value={field.value?.id || ""}
-                    onValueChange={({
-                      id,
-                      name,
-                    }: {
-                      id: string;
-                      name: string;
-                    }) => {
-                      field.onChange({ id, name });
+                    province={form.watch("province")}
+                    value={field.value || ""}
+                    onValueChange={(value: string) => {
+                      field.onChange(value);
                     }}
                   />
                   <FormMessage></FormMessage>
@@ -264,44 +185,17 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               render={({ field }) => (
                 <FormItem>
                   <DistrictSelector
-                    codeRegency={form.watch("city")?.id}
-                    value={field.value?.id || ""}
-                    onValueChange={({
-                      id,
-                      name,
-                    }: {
-                      id: string;
-                      name: string;
-                    }) => {
-                      field.onChange({ id, name });
+                    regency={form.watch("city")}
+                    value={field.value || ""}
+                    onValueChange={(value: string) => {
+                      field.onChange(value);
                     }}
                   />
                   <FormMessage></FormMessage>
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="sub_district"
-              render={({ field }) => (
-                <FormItem>
-                  <VillageSelector
-                    codeDistrict={form.watch("district")?.id}
-                    value={field.value?.id || ""}
-                    onValueChange={({
-                      id,
-                      name,
-                    }: {
-                      id: string;
-                      name: string;
-                    }) => {
-                      field.onChange({ id, name });
-                    }}
-                  />
-                  <FormMessage></FormMessage>
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="postal_code"
