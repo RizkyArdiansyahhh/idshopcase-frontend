@@ -13,7 +13,7 @@ export default function LoginLayout({
   const isLoginLayout = pathName === "/login";
   console.log(isLoginLayout);
   if (!pathName) return null;
-  if (pathName === "/register/verify") return <>{children}</>;
+  if (pathName === "/verify") return <>{children}</>;
 
   console.log(pathName);
   return (

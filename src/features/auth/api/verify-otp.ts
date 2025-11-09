@@ -20,10 +20,6 @@ export const useVerifyOtp = ({ mutationConfig }: useVerifyOtpParams = {}) => {
   return useMutation({
     mutationFn: verifyOtp,
     ...mutationConfig,
-    onSuccess: (data, variables, onMutateResult, context) => {
-      toast.success("OTP berhasil diverifikasi");
-      mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
-    },
     onError: (error) => {
       toast.error(error.message);
     },

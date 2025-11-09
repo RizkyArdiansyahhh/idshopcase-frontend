@@ -42,7 +42,9 @@ type registerSchemaType = z.infer<typeof registerSchema>;
 const register = async (data: registerSchemaType) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { confirmPassword, ...payload } = data;
-  return await api.post("/auth/register", { ...payload });
+  const response = await api.post("/auth/register", { ...payload });
+
+  return response.data;
 };
 
 type UseRegisterParams = {
