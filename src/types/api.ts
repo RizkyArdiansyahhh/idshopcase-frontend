@@ -46,7 +46,6 @@ export type Address = {
   province: string;
   city: string;
   district: string;
-  sub_district: string;
   postal_code: string;
   details?: string;
   is_primary: boolean;

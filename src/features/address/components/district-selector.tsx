@@ -4,22 +4,22 @@ import { DropdownSelector } from "./dropdown-selector";
 import { useGetDistricts } from "../api/get-districts";
 
 type DistrictSelectorProps = {
-  codeRegency: string;
+  regency: string;
   value?: string;
-  onValueChange: ({ id, name }: { id: string; name: string }) => void;
+  onValueChange: (value: string) => void;
 };
 
 export const DistrictSelector = (props: DistrictSelectorProps) => {
-  const { codeRegency, value, onValueChange } = props;
+  const { regency, value, onValueChange } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const {
     data: districts,
     isLoading: fetchDistrictsLoading,
     isError: fetchDistrictsError,
   } = useGetDistricts({
-    codeRegency,
+    regency,
     queryConfig: {
-      enabled: isOpen && !!codeRegency,
+      enabled: isOpen && !!regency,
     },
   });
   return (
@@ -29,7 +29,7 @@ export const DistrictSelector = (props: DistrictSelectorProps) => {
       isLoading={fetchDistrictsLoading}
       isError={fetchDistrictsError}
       value={value || ""}
-      disabled={!codeRegency}
+      disabled={!regency}
       fieldImportant="Kabupaten/Kota"
       onValueChange={onValueChange}
       onOpenChange={setIsOpen}

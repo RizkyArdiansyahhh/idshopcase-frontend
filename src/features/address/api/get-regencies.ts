@@ -1,38 +1,37 @@
-import { wilayahApi } from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type RegenciesItemResponse = {
-  id: string;
-  name: string;
+  data: string[];
 };
-export const getRegencies = async (codeProvince: string) => {
-  const response = await wilayahApi.get<RegenciesItemResponse[]>(
-    `/regencies/${codeProvince}.json`
+export const getRegencies = async (province: string) => {
+  const response = await api.get<RegenciesItemResponse>(
+    `/jnt-address/cities/?province=${province}`
   );
-  return response.data;
+  return response.data.data;
 };
 
-export const getRegenciesQueryKey = (codeProvince: string) => [
+export const getRegenciesQueryKey = (province: string) => [
   "regencies",
-  codeProvince,
+  province,
 ];
 
-export const getRegenciesQueryOptions = (codeProvince: string) => {
+export const getRegenciesQueryOptions = (province: string) => {
   return queryOptions({
-    queryKey: getRegenciesQueryKey(codeProvince),
-    queryFn: () => getRegencies(codeProvince),
+    queryKey: getRegenciesQueryKey(province),
+    queryFn: () => getRegencies(province),
   });
 };
 
 type UseGetRegenciesParams = {
   queryConfig?: QueryConfig<typeof getRegenciesQueryOptions>;
-  codeProvince: string;
+  province: string;
 };
 
 export const useGetRegencies = (params: UseGetRegenciesParams) => {
   return useQuery({
-    ...getRegenciesQueryOptions(params.codeProvince),
+    ...getRegenciesQueryOptions(params.province),
     ...params.queryConfig,
   });
 };
