@@ -10,7 +10,7 @@ import { SpinnerV2 } from "@/components/ui/spinner";
 import { UserForm } from "@/components/shared/user-form";
 
 type RegisterFormProps = {
-  onSuccess: () => void;
+  onSuccess: (data: { email: string }) => void;
 };
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -19,7 +19,13 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 
   const { mutate: register, isPending: regsiterIsLoading } = useRegsiter({
     mutationConfig: {
-      onSuccess: onSuccess,
+      onSuccess: (data) => {
+        form.reset();
+        const email = data.email;
+        if (email) {
+          onSuccess({ email });
+        }
+      },
     },
   });
 

@@ -86,6 +86,7 @@ export default function CasePreview() {
 
   return (
     <div className="h-[80vh] w-full flex flex-col md:flex-row gap-10 py-7">
+      {/* === KIRI: Step Info === */}
       <div className="h-full w-2/5 flex flex-col gap-5">
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 relative">
@@ -94,18 +95,18 @@ export default function CasePreview() {
               alt="step-1"
               fill
               className="object-cover scale-75"
-            ></Image>
+            />
           </div>
           <div>
             <p className="text-lg font-semibold">Step 1 : Tambahkan Gambar</p>
             <p className="text-sm font-medium text-foreground/70">
-              Pastikan Gambar Yang anda upload sudah ekstensi .png
+              Pastikan Gambar yang anda upload berformat .png atau .jpg
             </p>
           </div>
         </div>
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 flex justify-center items-center">
-            <div className="h-16 w-16 rounded-full bg-teal-800"></div>
+            <div className="h-16 w-16 rounded-full bg-teal-800" />
           </div>
           <div>
             <p className="text-lg font-semibold">Step 2 : Pilih Warna</p>
@@ -121,15 +122,16 @@ export default function CasePreview() {
           <div>
             <p className="text-lg font-semibold">Step 3 : Jalankan Aksi</p>
             <p className="text-sm font-medium text-foreground/70">
-              Anda dapat menjalankan aksi seperti mengatur lokasi gambar dan
-              ukuran gambar
+              Anda dapat mengatur posisi dan ukuran pola
             </p>
           </div>
         </div>
       </div>
-      <div className=" h-full  flex  gap-7 p-6 font-sans flex-row">
+
+      {/* === KANAN: Preview Area === */}
+      <div className="h-full flex gap-7 p-6 font-sans flex-row">
         <div
-          className={`relative w-[17rem] h-[30.5rem] rounded-[2.4rem] overflow-hidden flex items-center justify-center shadow-lg ${colorSelected}`}
+          className={`relative w-[17rem] h-[30.5rem] rounded-[2.4rem] overflow-hidden shadow-lg ${colorSelected}`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}
@@ -139,6 +141,7 @@ export default function CasePreview() {
           onTouchEnd={onDragEnd}
           onTouchCancel={onDragEnd}
         >
+          {/* Mockup HP */}
           <Image
             src="/images/phone-template.png"
             alt="Mockup HP"
@@ -147,27 +150,32 @@ export default function CasePreview() {
             priority
           />
 
+          {/* Pattern Background */}
           {designImage && (
-            <Image
-              src={designImage}
-              alt="Desain Casing"
-              width={200}
-              height={200}
-              className="absolute top-0 left-0 cursor-grab"
+            <div
+              className="absolute inset-0"
               style={{
+                backgroundImage: `url(${designImage})`,
+                backgroundRepeat: "repeat",
+                backgroundSize: "80px auto", // ubah ukuran pola di sini
+                backgroundPosition: "center",
                 transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
                 transition: isDragging ? "none" : "transform 0.1s ease-out",
               }}
-            />
+            ></div>
           )}
 
+          {/* Placeholder */}
           {!designImage && (
             <span className="absolute text-gray-500 text-center px-3 bg-white/70 rounded-md">
               Unggah desain casing Anda
             </span>
           )}
         </div>
+
+        {/* === Kontrol === */}
         <div className="mt-6 w-full max-w-xs space-y-3">
+          {/* Pilih warna */}
           <div className="flex flex-row gap-3 items-center p-5">
             {colors.map((color, index) => (
               <div
@@ -181,22 +189,26 @@ export default function CasePreview() {
               ></div>
             ))}
           </div>
+
+          {/* Upload Gambar */}
           <Field>
             <Input
               id="imageUploadCustomCase"
               ref={designInputRef}
               type="file"
               accept="image/*"
-              className=" w-full mt-1 text-sm hidden"
+              className="hidden"
               onChange={handleDesignUpload}
-            ></Input>
+            />
             <FieldLabel htmlFor="imageUploadCustomCase">
-              <div className=" h-20 border-dotted border p-5 rounded-sm flex flex-col items-center justify-center text-foreground/50 cursor-pointer hover:bg-foreground/5 transition-all ease-in duration-100  hover:border-foreground/40">
+              <div className="h-20 border-dotted border p-5 rounded-sm flex flex-col items-center justify-center text-foreground/50 cursor-pointer hover:bg-foreground/5 transition-all ease-in duration-100 hover:border-foreground/40">
                 <ImageUp size={36} />
                 <p>Unggah desain casing</p>
               </div>
             </FieldLabel>
           </Field>
+
+          {/* Zoom */}
           <div className="flex gap-3 mt-4">
             <Button variant={"default"} onClick={handleZoomOut}>
               −
@@ -206,6 +218,7 @@ export default function CasePreview() {
             </Button>
           </div>
 
+          {/* Reset */}
           <Button variant={"destructive"} onClick={handleReset}>
             Reset
           </Button>
