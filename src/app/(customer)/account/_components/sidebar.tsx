@@ -21,7 +21,7 @@ const sidebarLink: { label: string; path: string }[] = [
 export const Sidebar = () => {
   const pathName = usePathname();
   return (
-    <nav className="h-5/6 w-5/6 flex flex-col justify-between">
+    <nav className="h-5/6 w-5/6 flex flex-col justify-between bg-transparent">
       <ul className="flex flex-col gap-4 ">
         {sidebarLink.map((link) => {
           const isActive =

@@ -4,15 +4,12 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const updateUser = async (variables: { id: number; data: FormData }) => {
-  const { id, data } = variables;
-
-  const response = await api.patch(`/users/${id}`, data, {
+const updateUser = async (data: FormData) => {
+  const response = await api.put(`/user/profile`, data, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "multipart/form-data",
     },
   });
-
   return response.data;
 };
 

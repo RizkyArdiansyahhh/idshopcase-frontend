@@ -5,7 +5,7 @@ import { DropdownSelector } from "./dropdown-selector";
 
 type ProvinceSelectorProps = {
   value: string;
-  onValueChange: (value: string) => void;
+  onValueChange: ({ id, name }: { id: string; name: string }) => void;
 };
 
 export const ProvinceSelector = (props: ProvinceSelectorProps) => {

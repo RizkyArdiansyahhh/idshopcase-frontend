@@ -1,17 +1,18 @@
 import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
-import { Address } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { getAddressesQueryKey } from "./get-address";
 import { toast } from "sonner";
-import { FormAddressSchemaType } from "../components/address";
+import { Address } from "@/types/api";
+import { Console } from "console";
 
-const createAddress = async (data: FormAddressSchemaType) => {
-  return await api.post("/addresses", data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+type CreateAddressItemRequest = Omit<
+  Address,
+  "id" | "province_id" | "city_id" | "district_id" | "sub_district_id"
+>;
+
+const createAddress = async (data: CreateAddressItemRequest) => {
+  return await api.post("/user/addresses", data);
 };
 
 type UseCreateAddressParams = {
@@ -33,7 +34,8 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
       );
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error("Gagal menambahkan alamat");
+      console.error(err);
     },
   });
 };

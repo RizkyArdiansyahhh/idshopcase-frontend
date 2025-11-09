@@ -6,7 +6,7 @@ import { useGetDistricts } from "../api/get-districts";
 type DistrictSelectorProps = {
   codeRegency: string;
   value?: string;
-  onValueChange: (value: string) => void;
+  onValueChange: ({ id, name }: { id: string; name: string }) => void;
 };
 
 export const DistrictSelector = (props: DistrictSelectorProps) => {

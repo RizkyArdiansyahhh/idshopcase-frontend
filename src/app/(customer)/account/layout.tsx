@@ -7,28 +7,27 @@ export default function AccountLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathName = usePathname();
-  const listpath = ["/account/profile", "/account/address"];
+  const listpath = ["/account/address"];
   console.log(pathName);
 
   return (
-    <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
-      <div className="h-full w-full flex flex-row py-10">
-        <div className="h-full w-2/6 pr-4 bg-background flex flex-col items-end">
-          <Sidebar />
-        </div>
-        <div
-          className={`max-h-fit w-4/6 rounded-lg border-2
+    // <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
+    <div className="h-full w-full flex flex-row py-10">
+      <div className="h-full w-2/6 pr-4 bg-transparent flex flex-col items-end ">
+        <Sidebar />
+      </div>
+      <div
+        className={`max-h-fit w-4/6 rounded-lg border-2
           ${
             listpath.includes(pathName)
               ? "border-transparent"
               : "border-foreground"
           }
-          ${pathName !== "/account/address" ? "p-2" : ""}
           `}
-        >
-          {children}
-        </div>
+      >
+        {children}
       </div>
-    </ProtectedRoute>
+    </div>
+    // </ProtectedRoute>
   );
 }
