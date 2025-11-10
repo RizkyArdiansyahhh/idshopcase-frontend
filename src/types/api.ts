@@ -51,41 +51,6 @@ export type Address = {
   is_primary: boolean;
 };
 
-export type Orders = {
-  id: number;
-  userId: number;
-  addressId: number;
-  status: "pending" | "shipped" | "completed";
-  total_price: number;
-  payment_method: string;
-  tracking_number: string;
-  createdAt: string;
-  updatedAt: string;
-  items: OrderItem[];
-};
-
-export type Order = {
-  id: number;
-  userId: number;
-  addressId: number;
-  status: string;
-  total_price: number;
-  payment_method: string;
-  tracking_number: string;
-  createdAt: string;
-  updatedAt: string;
-  paymentId: number;
-  items: OrderItem[];
-};
-
-export type OrderItem = {
-  id: number;
-  productId: number;
-  customImageUrl: string | null;
-  quantity: number;
-  price: number;
-};
-
 export type Products = {
   id: number;
   name: string;
@@ -98,4 +63,50 @@ export type Products = {
   image: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type ProductOrder = {
+  id: number;
+  name: string;
+  price: string;
+  image: string;
+};
+
+export type OrderItem = {
+  id: number;
+  orderId: number;
+  productId: number;
+  customImageId: number | null;
+  quantity: number;
+  price: string;
+  createdAt: string;
+  updatedAt: string;
+  Product: ProductOrder;
+};
+
+export type Payment = {
+  id: number;
+  payment_gateway: string;
+  status: string;
+  amount: string;
+};
+
+export type Order = {
+  id: number;
+  userId: number;
+  addressId: number;
+  status: string;
+  total_price: string;
+  payment_method: string;
+  tracking_number: string | null;
+  requestId: string;
+  createdAt: string;
+  updatedAt: string;
+  OrderItems: OrderItem[];
+  Payment: Payment;
+  Address: Address;
+};
+
+export type OrdersResponse = {
+  orders: Order[];
 };

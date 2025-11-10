@@ -1,14 +1,12 @@
+"use client";
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
+import { Order } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getOrders = async () => {
-  const response = await api.get("/orders", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  return response.data;
+  const response = await api.get<{ orders: Order[] }>("/order");
+  return response.data.orders;
 };
 
 export const getOrdersQueryKey = () => ["orders"];
