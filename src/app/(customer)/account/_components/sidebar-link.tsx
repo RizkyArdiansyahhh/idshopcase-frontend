@@ -10,8 +10,8 @@ export const SidebarLink = (props: AboutLinkProps) => {
   const { href, children, isActive } = props;
   return (
     <Link
-      className={`p-4 rounded-lg border-foreground border font-bold text-xl hover:bg-foreground hover:text-background transition-colors duration-300 ease-in-out cursor-pointer
-      ${isActive && "bg-foreground text-background"} `}
+      className={`p-4 rounded-md font-bold text-md hover:bg-foreground/5 transition-colors duration-300 ease-in-out cursor-pointer
+      ${isActive && "bg-foreground/5 "} `}
       href={href}
     >
       {children}

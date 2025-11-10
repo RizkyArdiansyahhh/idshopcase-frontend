@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { SidebarLink } from "./sidebar-link";
 import { usePathname } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { NavMainAccount } from "./nav-main-account";
 
 const sidebarLink: { label: string; path: string }[] = [
   {
@@ -25,8 +27,10 @@ const sidebarLink: { label: string; path: string }[] = [
 export const Sidebar = () => {
   const pathName = usePathname();
   return (
-    <nav className="h-5/6 w-5/6 flex flex-col justify-between bg-transparent">
-      <ul className="flex flex-col gap-4 ">
+    <nav className="h-full w-full flex flex-col bg-transparent  ">
+      <NavMainAccount></NavMainAccount>
+      <Separator></Separator>
+      <ul className="flex flex-col gap-4 p-5">
         {sidebarLink.map((link) => {
           const isActive =
             pathName === link.path || pathName.startsWith(`${link.path}/`);
@@ -38,7 +42,7 @@ export const Sidebar = () => {
         })}
       </ul>
 
-      {pathName === "/account/profile" && (
+      {/* {pathName === "/account/profile" && (
         <div>
           <Button
             className="w-auto px-8 py-1 font-bold text-xl bg-destructive/80"
@@ -47,7 +51,7 @@ export const Sidebar = () => {
             Keluar
           </Button>
         </div>
-      )}
+      )} */}
     </nav>
   );
 };
