@@ -1,50 +1,69 @@
 "use client";
-
-import { usePathname, useSearchParams } from "next/navigation";
-import { TabLinkOrder } from "./tab-link-order";
+import { Separator } from "@/components/ui/separator";
+import {
+  Tabs,
+  TabsContent,
+  TabsListV2,
+  TabsTriggerV2,
+} from "@/components/ui/tabs";
+import { CreditCard, Package, Truck } from "lucide-react";
+import { MdOutlinePendingActions } from "react-icons/md";
+import { TbClockCancel } from "react-icons/tb";
 import { OrdersList } from "@/features/orders/components/orders-list";
+// import { OrdersList } from "@/features/orders/components/orders-list";
 
 export const Orders = () => {
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
-  const status = searchParams.get("status") ?? "pending";
   return (
-    <div className="h-full w-full flex flex-col gap-2">
-      <div className="flex flex-row gap-4">
-        <TabLinkOrder
-          isActive={status === "pending"}
-          href={`${pathName}?status=pending`}
-        >
-          Belum Dibayar
-        </TabLinkOrder>
-        <TabLinkOrder
-          isActive={status === "shipped"}
-          href={`${pathName}?status=shipped`}
-        >
-          Dikirim
-        </TabLinkOrder>
-        <TabLinkOrder
-          isActive={status === "completed"}
-          href={`${pathName}?status=completed`}
-        >
-          Selesai
-        </TabLinkOrder>
+    <>
+      <div className="w-full h-full py-5 ">
+        <Tabs defaultValue="all" className="w-full h-full flex flex-col">
+          <TabsListV2 className="bg-transparent gap-4 px-4 item w-full">
+            <TabsTriggerV2 value="all">All</TabsTriggerV2>
+            <TabsTriggerV2 value="pending" className="">
+              <MdOutlinePendingActions size={24} />
+              Pending
+            </TabsTriggerV2>
+            <TabsTriggerV2 value="paid">
+              <CreditCard size={24} />
+              Paid
+            </TabsTriggerV2>
+            <TabsTriggerV2 value="shipped">
+              <Package size={24} />
+              Shipped
+            </TabsTriggerV2>
+            <TabsTriggerV2 value="delivered">
+              <Truck size={24} />
+              Delivered
+            </TabsTriggerV2>
+            <TabsTriggerV2 value="cancelled">
+              <TbClockCancel size={24} />
+              Cancelled
+            </TabsTriggerV2>
+          </TabsListV2>
+          <Separator className="my-3 w-full"></Separator>
+
+          <TabsContent value="all" className="h-full">
+            <OrdersList status="all"></OrdersList>
+          </TabsContent>
+          <TabsContent value="pending" className="h-full">
+            <OrdersList status="pending"></OrdersList>
+          </TabsContent>
+          <TabsContent value="paid" className="h-full">
+            <OrdersList status="paid"></OrdersList>
+          </TabsContent>
+          <TabsContent value="shipped" className="h-full">
+            <OrdersList status="shipped"></OrdersList>
+          </TabsContent>
+          <TabsContent value="delivered" className="h-full">
+            <OrdersList status="delivered"></OrdersList>
+          </TabsContent>
+          <TabsContent value="cancelled" className="h-full">
+            <OrdersList status="cancelled"></OrdersList>
+          </TabsContent>
+
+          <TabsContent value="password">Change your password here.</TabsContent>
+        </Tabs>
       </div>
-      <div className="w-full border rounded-sm py-3  flex flex-row justify-around">
-        {["Produk", "Harga", "Status"].map((item, index) => {
-          return (
-            <p
-              key={index}
-              className="w-1/3  text-center font-semibold text-foreground/50"
-            >
-              {item}
-            </p>
-          );
-        })}
-      </div>
-      <div className="flex-1 overflow-y-auto flex flex-col gap-3">
-        <OrdersList status={status as "pending" | "shipped" | "completed"} />
-      </div>
-    </div>
+    </>
   );
 };
