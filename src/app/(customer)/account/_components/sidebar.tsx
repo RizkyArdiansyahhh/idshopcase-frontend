@@ -16,6 +16,10 @@ const sidebarLink: { label: string; path: string }[] = [
     label: "Alamat",
     path: "/account/address",
   },
+  {
+    label: "Ubah Password",
+    path: "/account/update-password",
+  },
 ];
 
 export const Sidebar = () => {
