@@ -73,38 +73,47 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={isPasswordVisible ? "text" : "password"}
-                      id="password"
-                      placeholder="Password"
-                      className="pr-10"
-                      {...field}
-                      value={field.value || ""}
-                    ></Input>
-                    <div
-                      onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
-                    >
-                      {isPasswordVisible ? (
-                        <Eye className="text-ring" />
-                      ) : (
-                        <EyeClosed className="text-ring" />
-                      )}
+          <div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        id="password"
+                        placeholder="Password"
+                        className="pr-10"
+                        {...field}
+                        value={field.value || ""}
+                      ></Input>
+                      <div
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
+                      >
+                        {isPasswordVisible ? (
+                          <Eye className="text-ring" />
+                        ) : (
+                          <EyeClosed className="text-ring" />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </FormControl>
-                <FormMessage></FormMessage>
-              </FormItem>
-            )}
-          />
+                  </FormControl>
+                  <FormMessage></FormMessage>
+                </FormItem>
+              )}
+            />
+            <Link
+              href="/auth/forgot-password"
+              className="text-sm font-semibold hover:underline text-primary transition-all duration-200 ease-in-out"
+            >
+              Lupa Password?
+            </Link>
+          </div>
+
           <Button type="submit" className="font-bold" disabled={loginIsLoading}>
             {loginIsLoading ? (
               <SpinnerV2 className="text-background size-6" />

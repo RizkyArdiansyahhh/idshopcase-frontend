@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { SpinnerV2 } from "@/components/ui/spinner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Separator } from "@/components/ui/separator";
+import { TbEditCircle } from "react-icons/tb";
 
 type ProfileFormProps = {
   id: number;
@@ -123,7 +124,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
       <Separator className="my-4"></Separator>
       <Form {...form}>
         <form className="mt-5 px-10" onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="border rounded-[12px] px-6 py-4">
+          <div className="border rounded-[12px] px-6 py-4 shadow-xs">
             <div className="flex flex-row justify-between">
               <p className="text-foreground font-semibold">Informasi Pribadi</p>
               <Button
@@ -134,6 +135,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
                   setIsEditing(true);
                 }}
               >
+                <TbEditCircle />
                 Edit
               </Button>
             </div>
