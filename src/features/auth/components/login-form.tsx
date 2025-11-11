@@ -108,7 +108,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             />
             <Link
               href="/auth/forgot-password"
-              className="text-sm font-semibold hover:underline text-primary transition-all duration-200 ease-in-out"
+              className="text-xs font-semibold hover:underline text-primary transition-all duration-200 ease-in-out"
             >
               Lupa Password?
             </Link>

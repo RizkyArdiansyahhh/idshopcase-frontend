@@ -1,21 +1,11 @@
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
+import { CartItem } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-type GetCartItemResponse = {
-  id: number;
-  userId: number;
-  productId: number;
-  updatedAt: string;
-};
-
 export const getCarts = async () => {
-  const response = await api.get<GetCartItemResponse[]>("/carts", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  return response.data;
+  const response = await api.get<{ CartItems: CartItem[] }>("/cart");
+  return response.data.CartItems;
 };
 
 export const getCartsQueryKey = () => ["carts"];
