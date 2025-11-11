@@ -110,3 +110,28 @@ export type Order = {
 export type OrdersResponse = {
   orders: Order[];
 };
+
+export type CartItem = {
+  id: number;
+  cartId: number;
+  productId: number;
+  quantity: number;
+  price: string;
+  createdAt: string;
+  updatedAt: string;
+  Product: {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    stock: number;
+    category: string;
+    material: string | null;
+    variation: string | null;
+    phone_type: string | null;
+    createdAt: string;
+    updatedAt: string;
+    image: string;
+  };
+  CustomImage: null;
+};

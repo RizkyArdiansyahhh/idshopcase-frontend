@@ -9,7 +9,7 @@ export default function ResetPasswordPage() {
   console.log(token);
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen h-screen flex justify-center items-center bg-foreground/5">
       <div className="w-2/6  bg-card p-6 rounded-2xl shadow">
         <h2 className="text-xl font-semibold text-center mb-4">
           Reset Password
