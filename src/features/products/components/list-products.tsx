@@ -13,18 +13,14 @@ import {
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Products } from "@/types/api";
+import { Product } from "@/types/api";
 
-const images = [
-  "/images/products/custom-case/custom-case-1.webp",
-  "/images/products/keychain/keychain-1.webp",
-  "/images/products/phone-charm/phone_charm_1.webp",
-  "/images/products/popstand/popstand-1.webp",
-];
 export const ListProducts = () => {
   const { push } = useRouter();
   const { data: products, isLoading: fetchProductsIsLoading } =
     useGetProducts();
+
+  console.log(products);
 
   if (fetchProductsIsLoading) {
     return (
@@ -59,7 +55,7 @@ export const ListProducts = () => {
         className="w-5/6 mx-auto"
       >
         <CarouselContent>
-          {products?.map((product: Products, index) => {
+          {products?.map((product) => {
             const price = product.price ?? 0;
             return (
               <CarouselItem
@@ -71,12 +67,30 @@ export const ListProducts = () => {
                   className="w-full h-fit p-2.5 rounded-[12px] border bg-background group hover:bg-foreground hover:text-background transition-all ease-in-out duration-400 hover:cursor-pointer"
                 >
                   <div className="w-full h-52 relative rounded-[12px] overflow-hidden">
-                    <Image
-                      src={images[index]}
-                      alt="phone-charm"
-                      fill
-                      className="object-cover object-center"
-                    ></Image>
+                    {!product.ProductImages ? (
+                      <div className="absolute top-0 right-0 flex justify-center items-center w-full h-full">
+                        <p>No Image</p>
+                      </div>
+                    ) : (
+                      product.ProductImages.map((image) => {
+                        if (image.isPrimary) {
+                          const cleanPath =
+                            image.imageUrl?.split("/uploads/")[1] ?? null;
+                          const imageUrl = cleanPath
+                            ? `/images/${cleanPath}`
+                            : null;
+                          return (
+                            <Image
+                              key={image.id}
+                              src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
+                              alt="phone-charm"
+                              fill
+                              className="object-cover object-center"
+                            ></Image>
+                          );
+                        }
+                      })
+                    )}
                   </div>
                   <div>
                     <p className="text-lg font-semibold wrap-break-word my-2">
@@ -126,7 +140,7 @@ export const ListProductsDetail = () => {
         Produk Yang Mungkin Anda Suka
       </h1>
       <div className="flex flex-row flex-wrap justify-center gap-8">
-        {products?.map((product: Products, index) => {
+        {products?.map((product, index) => {
           const price = product.price ?? 0;
           return (
             <div
@@ -134,13 +148,30 @@ export const ListProductsDetail = () => {
               className="w-60 h-[25rem] flex flex-col p-2.5 rounded-[12px] border bg-background group hover:bg-foreground hover:text-background transition-all ease-in-out duration-400 hover:cursor-pointer"
             >
               <div className="w-full h-52 relative rounded-[12px] overflow-hidden">
-                <Image
-                  src={images[index]}
-                  alt="phone-charm"
-                  fill
-                  className="object-cover object-center"
-                  loading="lazy"
-                ></Image>
+                {!product.ProductImages ? (
+                  <div className="absolute top-0 right-0 flex justify-center items-center w-full h-full">
+                    <p>No Image</p>
+                  </div>
+                ) : (
+                  product.ProductImages.map((image) => {
+                    if (image.isPrimary) {
+                      const cleanPath =
+                        image.imageUrl?.split("/uploads/")[1] ?? null;
+                      const imageUrl = cleanPath
+                        ? `/images/${cleanPath}`
+                        : null;
+                      return (
+                        <Image
+                          key={image.id}
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
+                          alt="phone-charm"
+                          fill
+                          className="object-cover object-center"
+                        ></Image>
+                      );
+                    }
+                  })
+                )}
               </div>
               <div className="flex-1 flex justify-between flex-col">
                 <div>
