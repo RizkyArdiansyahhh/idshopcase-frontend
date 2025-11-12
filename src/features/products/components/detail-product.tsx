@@ -9,44 +9,6 @@ import { ListProductsDetail } from "./list-products";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/preview-custom-case";
 
-const images = [
-  {
-    id: 1,
-    default: "/images/products/custom-case/custom-case-1.webp",
-    image: [
-      "/images/products/custom-case/custom-case-1.webp",
-      "/images/products/custom-case/custom-case-2.webp",
-      "/images/products/custom-case/custom-case-3.webp",
-    ],
-  },
-  {
-    id: 2,
-    default: "/images/products/keychain/keychain-1.webp",
-    image: [
-      "/images/products/keychain/keychain-1.webp",
-      "/images/products/keychain/keychain-2.webp",
-      "/images/products/keychain/keychain-3.webp",
-      "/images/products/keychain/keychain-4.webp",
-      "/images/products/keychain/keychain-5.webp",
-    ],
-  },
-  {
-    id: 3,
-    default: "/images/products/phone-charm/phone_charm_1.webp",
-    image: [
-      "/images/products/phone-charm/phone_charm_1.webp",
-      "/images/products/phone-charm/phone_charm_2.webp",
-      "/images/products/phone-charm/phone_charm_3.webp",
-      "/images/products/phone-charm/phone_charm_4.webp",
-    ],
-  },
-  {
-    id: 4,
-    default: "/images/products/popstand/popstand-1.webp",
-    image: ["/images/products/popstand/popstand-1.webp"],
-  },
-];
-
 type DetailProductProps = {
   id: number;
   isCustomCase?: boolean;
@@ -61,23 +23,17 @@ export const DetailProduct = (props: DetailProductProps) => {
       enabled: !!id,
     },
   });
-  // const { minPrice, maxPrice } = useMemo(() => {
-  //   if (product?.variantOptions && product.variantOptions.length > 0) {
-  //     const prices = product.variantCombinations!.map((v) => v.price);
-  //     return {
-  //       minPrice: Math.min(...prices),
-  //       maxPrice: Math.max(...prices),
-  //     };
-  //   }
-  //   return {
-  //     minPrice: product?.basePrice ?? 0,
-  //     maxPrice: product?.basePrice ?? 0,
-  //   };
-  // }, [product]);
+  console.log(product, "product");
+
+  const image = useMemo(() => {
+    if (!product?.ProductImages) return null;
+    const defaultImage = product.ProductImages.find((image) => image.isPrimary);
+    const cleanPath = defaultImage?.imageUrl?.split("/uploads/")[1] ?? null;
+    return cleanPath ? `/images/${cleanPath}` : null;
+  }, [product?.ProductImages]);
 
   if (!product) return null;
-
-  console.log(product);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
 
   return (
     <>
@@ -89,7 +45,7 @@ export const DetailProduct = (props: DetailProductProps) => {
           <div className="w-full h-full lg:h-5/6 flex flex-col">
             <PreviewImageProduct
               isLoading={fetchProductLoading}
-              images={images[id - 1].image}
+              images={product.ProductImages}
             ></PreviewImageProduct>
           </div>
         </div>
@@ -105,7 +61,7 @@ export const DetailProduct = (props: DetailProductProps) => {
           </div>
           <FormDetailProduct
             productDetail={product}
-            image={images[id - 1].default}
+            image={image ?? ""}
           ></FormDetailProduct>
         </div>
       </div>

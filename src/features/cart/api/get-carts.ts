@@ -4,8 +4,17 @@ import { CartItem } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export const getCarts = async () => {
-  const response = await api.get<{ CartItems: CartItem[] }>("/cart");
-  return response.data.CartItems;
+  try {
+    const response = await api.get<{ CartItems: CartItem[] }>("/cart");
+    return response.data.CartItems;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      console.warn("Cart kosong:", error.response.data.message);
+      return [];
+    }
+    throw error;
+  }
 };
 
 export const getCartsQueryKey = () => ["carts"];

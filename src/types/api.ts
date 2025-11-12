@@ -7,19 +7,19 @@ export type User = {
   role: "customer" | "admin";
 };
 
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  basePrice?: number;
-  baseStock?: number;
-  images: string[];
-  variantOptions?: VariantOptionForm[];
-  variantCombinations?: VariantCombination[];
-  createdAt?: string;
-  updatedAt?: string;
-}
+// export interface Product {
+//   id: number;
+//   name: string;
+//   description: string;
+//   category: string;
+//   basePrice?: number;
+//   baseStock?: number;
+//   images: string[];
+//   variantOptions?: VariantOptionForm[];
+//   variantCombinations?: VariantCombination[];
+//   createdAt?: string;
+//   updatedAt?: string;
+// }
 
 export interface VariantOptionForm {
   id?: number;
@@ -51,19 +51,37 @@ export type Address = {
   is_primary: boolean;
 };
 
-export type Products = {
+export type Product = {
   id: number;
   name: string;
   description: string;
-  price: number;
+  price: string;
   stock: number;
   category: string;
   material: string;
   phone_type: string;
-  image: string;
   createdAt: string;
   updatedAt: string;
+  ProductImages: ProductImage[];
 };
+export type ProductImage = {
+  id: number;
+  imageUrl: string;
+  isPrimary: boolean;
+};
+// export type Products = {
+//   id: number;
+//   name: string;
+//   description: string;
+//   price: number;
+//   stock: number;
+//   category: string;
+//   material: string;
+//   phone_type: string;
+//   image: string;
+//   createdAt: string;
+//   updatedAt: string;
+// };
 
 export type ProductOrder = {
   id: number;
