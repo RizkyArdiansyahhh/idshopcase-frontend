@@ -13,10 +13,10 @@ export const Address = () => {
 
   return (
     <div className="w-full flex flex-col h-5/6 ">
-      <div className="p-3 flex flex-col gap-3 h-[80%] border-2 rounded-lg border-foreground overflow-auto">
+      <div className="p-3 flex flex-col gap-3 h-[80%]  rounded-lg border-foreground overflow-auto">
         <AddressesList />
       </div>
-      <div className="flex items-center flex-1">
+      <div className="flex items-center flex-1 px-3">
         <Button className="py-5" variant={"default"} onClick={handleAddAddress}>
           Tambah Alamat Baru
         </Button>

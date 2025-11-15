@@ -4,7 +4,7 @@ export type User = {
   email: string;
   phone: string;
   profile_picture: string;
-  role: "customer" | "admin";
+  role: string;
 };
 
 // export interface Product {

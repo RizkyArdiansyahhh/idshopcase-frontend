@@ -27,8 +27,11 @@ import {
 } from "@/components/ui/dialog";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useCreateCart } from "@/features/cart/api/create-cart";
+import { toast } from "sonner";
 
 type ValidateFormDetailProductProps = {
+  productId: number;
   children: React.ReactNode;
   variant: "default" | "outline";
   imageProduct: string;
@@ -43,6 +46,7 @@ export const ValidateFormDetailProduct = (
   props: ValidateFormDetailProductProps
 ) => {
   const {
+    productId,
     children,
     variant,
     imageProduct,
@@ -72,10 +76,28 @@ export const ValidateFormDetailProduct = (
     }
   }, [data, form]);
 
+  const { mutate: createCartItem } = useCreateCart({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Produk berhasil ditambahkan ke keranjang");
+        form.reset();
+      },
+    },
+  });
+
+  const handleAddCart = (data: FormDetailProductType) => {
+    createCartItem({
+      productId: productId,
+      quantity: data.quantity,
+    });
+  };
+
   const handleCheckout = (data: FormDetailProductType) => {
     console.log("Form submitted:", data);
     push(`/checkout?order=${encodeURIComponent(JSON.stringify(data))}`);
   };
+
+  console.log(imageProduct, "imageProduct");
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -98,7 +120,7 @@ export const ValidateFormDetailProduct = (
                 <div className="w-1/3 h-full relative p-2">
                   {imageProduct && (
                     <Image
-                      src={imageProduct}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${imageProduct}`}
                       alt="banner-detail-product"
                       fill
                       className="object-center object-cover scale-90"
@@ -148,6 +170,8 @@ export const ValidateFormDetailProduct = (
                   onClick={() => {
                     if (isCheckout) {
                       handleCheckout(form.getValues());
+                    } else {
+                      handleAddCart(form.getValues());
                     }
                   }}
                 >{` ${

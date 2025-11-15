@@ -29,6 +29,10 @@ export const CartCard = (props: CartCardProps) => {
     id: productId,
   });
 
+  const imageProduct = product?.ProductImages.find((image) => image.isPrimary);
+
+  const cleanPath = imageProduct?.imageUrl?.split("/uploads/")[1] ?? null;
+  const imageUrl = cleanPath ? `/images/${cleanPath}` : null;
   const quantitySchema = z.object({
     quantity,
   });
@@ -80,7 +84,7 @@ export const CartCard = (props: CartCardProps) => {
               <Skeleton />
             ) : (
               <Image
-                src={"/images/product-1.jpeg"}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
                 alt={product?.name || `product=${product?.id}`}
                 fill
                 className="object-cover"
