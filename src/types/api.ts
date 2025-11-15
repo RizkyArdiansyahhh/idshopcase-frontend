@@ -58,8 +58,9 @@ export type Product = {
   price: string;
   stock: number;
   category: string;
-  material: string;
-  phone_type: string;
+  materialId: number | null;
+  phone_typeId: number | null;
+  variantId: number | null;
   createdAt: string;
   updatedAt: string;
   ProductImages: ProductImage[];

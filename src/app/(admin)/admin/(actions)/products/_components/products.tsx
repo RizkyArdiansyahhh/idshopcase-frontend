@@ -21,16 +21,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IconDotsVertical } from "@tabler/icons-react";
+import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
 
 export const Products = () => {
   const { push, replace } = useRouter();
   const columnHelper = createColumnHelper<Product>();
 
-  const hasVariants = (product: Product): boolean => {
-    return (
-      Array.isArray(product.variantOptions) && product.variantOptions.length > 0
-    );
-  };
+  // const hasVariants = (product: Product): boolean => {
+  //   return (
+  //     Array.isArray(product.variantOptions) && product.variantOptions.length > 0
+  //   );
+  // };
 
   const columns = useMemo(
     () => [
@@ -41,12 +42,14 @@ export const Products = () => {
         header: "Product Name",
         cell: ({ row }) => {
           const product = row.original;
-          console.log(product.images);
+          const imageUrlPrimaryy = imageUrlPrimary(product.ProductImages);
+          console.log(imageUrlPrimaryy);
+
           return (
             <div className="flex flex-row items-center gap-2">
               <div className="w-10 h-14 rounded-xs overflow-hidden relative">
                 <Image
-                  src={product.images?.[0] || ""}
+                  src={imageUrlPrimary(product.ProductImages) ?? ""}
                   alt={product.name}
                   fill
                   className="object-cover"
@@ -57,56 +60,54 @@ export const Products = () => {
           );
         },
       }),
-      columnHelper.accessor("basePrice", {
+      columnHelper.accessor("price", {
         header: "Harga",
         cell: ({ row }) => {
-          const product = row.original;
-          const isHasVariants = hasVariants(product);
-          if (isHasVariants) {
-            const minPrice = Math.min(
-              ...product.variantCombinations!.map((p) => p.price)
-            );
-            const maxPrice = Math.max(
-              ...product.variantCombinations!.map((p) => p.price)
-            );
-            return (
-              <span className="text-app-semibold-sm">
-                {minPrice === maxPrice
-                  ? formatCurrency(minPrice)
-                  : ` ${formatCurrency(minPrice)} - ${formatCurrency(
-                      maxPrice
-                    )}`}
-              </span>
-            );
-          }
+          // const product = row.original;
+          // const isHasVariants = hasVariants(product);
+          // if (isHasVariants) {
+          //   const minPrice = Math.min(
+          //     ...product.variantCombinations!.map((p) => p.price)
+          //   );
+          //   const maxPrice = Math.max(
+          //     ...product.variantCombinations!.map((p) => p.price)
+          //   );
+          //   return (
+          //     <span className="text-app-semibold-sm">
+          //       {minPrice === maxPrice
+          //         ? formatCurrency(minPrice)
+          //         : ` ${formatCurrency(minPrice)} - ${formatCurrency(
+          //             maxPrice
+          //           )}`}
+          //     </span>
+          //   );
+          // }
           return (
             <span className="text-app-semibold-sm">
-              {formatCurrency(product.basePrice ?? 0)}
+              {formatCurrency(Number(row.original.price))}
             </span>
           );
         },
       }),
-      columnHelper.accessor("baseStock", {
+      columnHelper.accessor("stock", {
         header: "Stock",
         cell: ({ row }) => {
-          const product = row.original;
+          // const product = row.original;
 
-          const hasVariants =
-            Array.isArray(product.variantOptions) &&
-            product.variantOptions.length > 0;
+          // const hasVariants =
+          //   Array.isArray(product.variantOptions) &&
+          //   product.variantOptions.length > 0;
 
-          if (hasVariants) {
-            const totalStock = product.variantCombinations?.reduce(
-              (total, combination) => total + combination.stock,
-              0
-            );
-            return <span className="text-app-semibold-sm">{totalStock}</span>;
-          }
+          // if (hasVariants) {
+          //   const totalStock = product.variantCombinations?.reduce(
+          //     (total, combination) => total + combination.stock,
+          //     0
+          //   );
+          //   return <span className="text-app-semibold-sm">{totalStock}</span>;
+          // }
 
           return (
-            <span className="text-app-semibold-sm">
-              {product.baseStock ?? 0}
-            </span>
+            <span className="text-app-semibold-sm">{row.original.stock}</span>
           );
         },
       }),

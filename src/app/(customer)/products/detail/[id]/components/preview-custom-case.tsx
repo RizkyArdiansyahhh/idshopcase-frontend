@@ -5,7 +5,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ImageUp, SquaresSubtract } from "lucide-react";
 import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, JSX } from "react";
 
 export default function CasePreview() {
   const [designImage, setDesignImage] = useState<string | null>(null);
@@ -36,6 +36,35 @@ export default function CasePreview() {
       };
       reader.readAsDataURL(file);
     }
+  };
+  const generatePatternGrid = () => {
+    if (!designImage) return null;
+
+    const items: JSX.Element[] = [];
+    const size = 70; // ukuran kotak pattern
+
+    // jumlah item, sesuaikan area preview
+    const rows = 8;
+    const cols = 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        items.push(
+          <img
+            key={`${r}-${c}`}
+            src={designImage}
+            className="object-cover "
+            style={{
+              width: size,
+              height: size,
+              transform: r % 2 === 1 ? "translateX(50px) " : "none", // zigzag offset
+            }}
+          />
+        );
+      }
+    }
+
+    return items;
   };
 
   const handleReset = () => {
@@ -128,10 +157,9 @@ export default function CasePreview() {
         </div>
       </div>
 
-      {/* === KANAN: Preview Area === */}
       <div className="h-full flex gap-7 p-6 font-sans flex-row">
         <div
-          className={`relative w-[17rem] h-[30.5rem] rounded-[2.4rem] overflow-hidden shadow-lg ${colorSelected}`}
+          className={`relative w-[17rem] h-[30.5rem]  bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected}`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}
@@ -141,30 +169,29 @@ export default function CasePreview() {
           onTouchEnd={onDragEnd}
           onTouchCancel={onDragEnd}
         >
-          {/* Mockup HP */}
-          <Image
-            src="/images/phone-template.png"
+          <img
+            src="/images/preview-case-2.png"
             alt="Mockup HP"
-            fill
-            className="object-contain pointer-events-none select-none"
-            priority
+            className="w-full h-full object-cover"
           />
-
+          <img
+            src="/images/preview-case-camera.png"
+            alt=""
+            className="absolute -top-0.5 -left-0.5 z-10 "
+          />
           {/* Pattern Background */}
           {designImage && (
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 grid grid-cols-2 gap-x-2"
               style={{
-                backgroundImage: `url(${designImage})`,
-                backgroundRepeat: "repeat",
-                backgroundSize: "80px auto", // ubah ukuran pola di sini
-                backgroundPosition: "center",
                 transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
                 transition: isDragging ? "none" : "transform 0.1s ease-out",
+                pointerEvents: "none",
               }}
-            ></div>
+            >
+              {generatePatternGrid()}
+            </div>
           )}
-
           {/* Placeholder */}
           {!designImage && (
             <span className="absolute text-gray-500 text-center px-3 bg-white/70 rounded-md">
@@ -173,9 +200,7 @@ export default function CasePreview() {
           )}
         </div>
 
-        {/* === Kontrol === */}
         <div className="mt-6 w-full max-w-xs space-y-3">
-          {/* Pilih warna */}
           <div className="flex flex-row gap-3 items-center p-5">
             {colors.map((color, index) => (
               <div
