@@ -31,7 +31,7 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
     useState(false);
   const isEdit = user !== undefined;
   const userFormCreateSchema = userSchema.safeExtend({
-    role: z.enum(["ADMIN", "USER"]),
+    role: z.enum(["admin", "customer"]).default("customer"),
   });
 
   // type UserFormCreateSchema = z.infer<typeof userFormCreateSchema>;
@@ -45,7 +45,7 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
       name: user?.name || "",
       email: user?.email || "",
       phone: user?.phone || "",
-      role: user?.role || "USER",
+      role: user?.role || "customer",
     },
   });
 
@@ -64,6 +64,7 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
               if (isEdit) {
                 updateUser({ id: user!.id, data: values });
               } else {
+                console.log(values);
                 createUser({ data: values });
               }
             })}
@@ -89,8 +90,8 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
                       <SelectValue placeholder="Pilih Role" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="ADMIN">Admin</SelectItem>
-                      <SelectItem value="USER">User</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="customer">Customer</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>

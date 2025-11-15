@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { getUsersQueryKey } from "./get-users";
 
 const deleteUser = async (id: number) => {
-  return await api.delete(`/users/${id}`, {});
+  return await api.delete(`/user/${id}`, {});
 };
 
 type UseDeleteUser = {

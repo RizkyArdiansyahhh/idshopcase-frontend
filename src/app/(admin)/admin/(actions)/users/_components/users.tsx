@@ -59,7 +59,7 @@ const Users = () => {
         cell: (info) => {
           const role = info.getValue();
           return (
-            <Badge variant={role === "ADMIN" ? "default" : "outline"}>
+            <Badge variant={role === "admin" ? "default" : "outline"}>
               {role.charAt(0).toUpperCase() + role.slice(1).toLowerCase()}
             </Badge>
           );
@@ -129,6 +129,7 @@ const Users = () => {
   };
 
   const { data: users } = useGetUsers();
+  console.log("Users:", users);
 
   const table = useReactTable({
     data: users || [],
@@ -157,12 +158,15 @@ const Users = () => {
               >
                 All
               </TabsTrigger>
-              <TabsTrigger value="user" onClick={() => handleTabByRole("USER")}>
-                User
+              <TabsTrigger
+                value="customer"
+                onClick={() => handleTabByRole("customer")}
+              >
+                Customer
               </TabsTrigger>
               <TabsTrigger
                 value="admin"
-                onClick={() => handleTabByRole("ADMIN")}
+                onClick={() => handleTabByRole("admin")}
               >
                 Admin
               </TabsTrigger>
@@ -188,7 +192,7 @@ const Users = () => {
         <TabsContent value="all">
           <TableContent table={table} columns={columns}></TableContent>
         </TabsContent>
-        <TabsContent value="user">
+        <TabsContent value="customer">
           <TableContent table={table} columns={columns}></TableContent>
         </TabsContent>
         <TabsContent value="admin">

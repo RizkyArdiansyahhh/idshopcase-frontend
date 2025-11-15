@@ -6,13 +6,12 @@ import { toast } from "sonner";
 import { getUsersQueryKey } from "./get-users";
 
 type CreateUserItemRequest = {
-  data: Omit<User, "id" | "profile_picture" | "createdAt" | "updatedAt">;
+  data: Omit<User, "id" | "profile_picture">;
 };
 const createUser = async ({ data }: CreateUserItemRequest) => {
-  return await api.post("/users", {
+  console.log(data);
+  return await api.post("/user", {
     ...data,
-    createdAt: new Date().toISOString(),
-    updatedAt: null,
   });
 };
 

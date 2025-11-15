@@ -1,11 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
 
 export default function ResetPasswordPage() {
   const { token } = useParams();
+  const { push } = useRouter();
   console.log(token);
 
   return (
@@ -20,6 +21,7 @@ export default function ResetPasswordPage() {
           token={token as string}
           onSuccess={() => {
             alert("Password berhasil direset!");
+            push("/login");
           }}
         />
       </div>

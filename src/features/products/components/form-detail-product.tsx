@@ -5,15 +5,16 @@ import {
 } from "@/app/(customer)/products/detail/[id]/components/input-form-detail-product";
 import { Form } from "@/components/ui/form";
 import { ValidateFormDetailProduct } from "@/app/(customer)/products/detail/[id]/components/validate-form-detail-product";
-import { Products } from "@/types/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShoppingCart } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { product } from "@/mocks/products";
+import { Product } from "@/types/api";
 
 type FormDetailProductProps = {
-  productDetail: Products;
+  productId: number;
+  productDetail: Product;
   image: string;
 };
 export const formDetailProductShema = z.object({
@@ -34,7 +35,7 @@ export const formDetailProductShema = z.object({
     .min(1, "Minimal 1 item"),
 });
 export const FormDetailProduct = (props: FormDetailProductProps) => {
-  const { productDetail, image } = props;
+  const { productId, productDetail, image } = props;
 
   type FormDetailProductType = z.infer<typeof formDetailProductShema>;
   const form = useForm<FormDetailProductType>({
@@ -65,8 +66,9 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
 
         <div className="flex-1 flex flex-row gap-3  items-end">
           <ValidateFormDetailProduct
+            productId={productId}
             nameProduct={productDetail.name}
-            priceProduct={productDetail.price}
+            priceProduct={Number(productDetail.price)}
             imageProduct={image}
             quantityProduct={productDetail.stock}
             variant="outline"
@@ -77,12 +79,13 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
           </ValidateFormDetailProduct>
           <ValidateFormDetailProduct
             nameProduct={productDetail.name}
-            priceProduct={productDetail.price}
+            priceProduct={Number(productDetail.price)}
             imageProduct={image}
             quantityProduct={productDetail.stock}
             variant="default"
             data={formValues}
             isCheckout={true}
+            productId={productId}
           >
             <span className="mx-2">Beli Sekarang</span>
           </ValidateFormDetailProduct>

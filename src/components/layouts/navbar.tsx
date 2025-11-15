@@ -20,7 +20,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const { data: user } = useGetUser();
-  console.log(user);
+  console.log(user?.role);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
