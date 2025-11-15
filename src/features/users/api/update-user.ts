@@ -7,12 +7,11 @@ import { getUsersQueryKey } from "./get-users";
 
 type UpdateUserProps = {
   id: number;
-  data: Omit<User, "id" | "profile_picture" | "createdAt" | "updatedAt">;
+  data: Omit<User, "id" | "profile_picture">;
 };
 const UpdateUser = async ({ id, data }: UpdateUserProps) => {
-  return await api.patch(`/users/${id}`, {
+  return await api.put(`/user/${id}`, {
     ...data,
-    updatedAt: new Date().toISOString(),
   });
 };
 
