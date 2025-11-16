@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { FaCartArrowDown } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUser } from "@/features/auth/api/get-user";
 import { Button } from "../ui/button";
@@ -78,7 +77,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
     >
       <div className="flex justify-between items-center py-4 px-5">
         <Link href="/" className="text-2xl font-bold select-none">
-          Idshop
+          idshopcase.
         </Link>
 
         <button

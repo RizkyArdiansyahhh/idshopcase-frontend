@@ -15,42 +15,48 @@ import { material, PhoneType, variant } from "@/types/api";
 type InputProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
-  materials?: string[];
-  variants?: string[];
-  phone_type?: string[];
+  materials?: Array<{ id: string; name: string }>;
+  variants?: Array<{ id: string; name: string }>;
+  phone_type?: Array<{ id: string; model: string }>;
   stockProduct?: number;
 };
-export const VariantInput = (props: InputProps) => {
-  const { control, variants } = props;
+
+export const VariantInput = ({ control, variants }: InputProps) => {
   return (
     <FormField
       name="variant"
       control={control}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Variant</FormLabel>
+          <FormLabel>Varian</FormLabel>
+
           <RadioGroup
             onValueChange={field.onChange}
-            value={(field.value as string) || undefined}
-            className={"flex flex-row"}
+            value={field.value || undefined}
+            className="flex flex-row gap-3"
           >
             {variants?.map((item) => (
-              <FieldLabel htmlFor={item} key={item}>
+              <FieldLabel htmlFor={`variant-${item.id}`} key={item.id}>
                 <Field orientation="horizontal" className="w-fit">
-                  <FieldTitle>{item}</FieldTitle>
-                  <RadioGroupItem value={item} id={item} className="sr-only" />
+                  <FieldTitle>{item.name}</FieldTitle>
+                  <RadioGroupItem
+                    value={item.id}
+                    id={`variant-${item.id}`}
+                    className="sr-only"
+                  />
                 </Field>
               </FieldLabel>
             ))}
           </RadioGroup>
-          <FormMessage></FormMessage>
+
+          <FormMessage />
         </FormItem>
       )}
     />
   );
 };
-export const MaterialInput = (props: InputProps) => {
-  const { control, materials } = props;
+
+export const MaterialInput = ({ control, materials }: InputProps) => {
   return (
     <FormField
       name="material"
@@ -58,37 +64,39 @@ export const MaterialInput = (props: InputProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Material</FormLabel>
+
           <RadioGroup
             onValueChange={field.onChange}
-            value={(field.value as string) || undefined}
-            className={"flex flex-row"}
+            value={field.value || undefined}
+            className="flex flex-row gap-3"
           >
             {materials?.map((item) => (
-              <FieldLabel htmlFor={item} key={item}>
+              <FieldLabel htmlFor={`material-${item.id}`} key={item.id}>
                 <Field orientation="horizontal" className="w-fit">
-                  <FieldTitle>{item}</FieldTitle>
-                  <RadioGroupItem value={item} id={item} className="sr-only" />
+                  <FieldTitle>{item.name}</FieldTitle>
+                  <RadioGroupItem
+                    value={item.id}
+                    id={`material-${item.id}`}
+                    className="sr-only"
+                  />
                 </Field>
               </FieldLabel>
             ))}
           </RadioGroup>
-          <FormMessage></FormMessage>
+
+          <FormMessage />
         </FormItem>
       )}
     />
   );
 };
-export const PhoneTypeInput = (props: InputProps) => {
-  const { control, phone_type } = props;
 
-  const data = phone_type?.map((item) => {
-    const label = item.trim();
-    const value = item.trim().toLowerCase().replace(/\s+/g, "-");
-    return {
-      value,
-      label,
-    };
-  });
+export const PhoneTypeInput = ({ control, phone_type }: InputProps) => {
+  const data =
+    phone_type?.map((p) => ({
+      value: p.id,
+      label: p.model,
+    })) ?? [];
 
   return (
     <FormField
@@ -97,12 +105,14 @@ export const PhoneTypeInput = (props: InputProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Jenis Handphone</FormLabel>
+
           <Combobox
             field={field}
-            data={data || []}
+            data={data}
             className="border-foreground/10"
-          ></Combobox>
-          <FormMessage></FormMessage>
+          />
+
+          <FormMessage />
         </FormItem>
       )}
     />

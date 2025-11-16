@@ -32,9 +32,9 @@ type ValidateFormDetailProductProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   isCheckout?: boolean;
-  productTypeOptions?: string[];
-  materialOptions?: string[];
-  variantOptions?: string[];
+  phoneTypeOptions?: Array<{ id: string; model: string }>;
+  materialOptions?: Array<{ id: string; name: string }>;
+  variantOptions?: Array<{ id: string; name: string }>;
 };
 export const ValidateFormDetailProduct = (
   props: ValidateFormDetailProductProps
@@ -49,32 +49,33 @@ export const ValidateFormDetailProduct = (
     quantityProduct,
     data,
     isCheckout,
-    productTypeOptions = [],
+    phoneTypeOptions = [],
     materialOptions = [],
     variantOptions = [],
   } = props;
 
   const formDetailProductSchema = z.object({
-    phone_type:
-      productTypeOptions.length > 0
-        ? z.enum(productTypeOptions as [string, ...string[]], {
-            message: "Pilih tipe ponsel terlebih dahulu",
+    variant:
+      variantOptions.length > 0
+        ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
+            message: "Pilih varian terlebih dahulu",
           })
         : z.string().optional(),
 
     material:
       materialOptions.length > 0
-        ? z.enum(materialOptions as [string, ...string[]], {
+        ? z.enum(materialOptions.map((m) => m.id) as [string, ...string[]], {
             message: "Pilih material terlebih dahulu",
           })
         : z.string().optional(),
 
-    variant:
-      variantOptions.length > 0
-        ? z.enum(variantOptions as [string, ...string[]], {
-            message: "Pilih varian terlebih dahulu",
+    phone_type:
+      phoneTypeOptions.length > 0
+        ? z.enum(phoneTypeOptions.map((p) => p.id) as [string, ...string[]], {
+            message: "Pilih tipe ponsel terlebih dahulu",
           })
         : z.string().optional(),
+
     quantity: z
       .number({
         message: "Jumlah harus berupa angka",
@@ -88,6 +89,7 @@ export const ValidateFormDetailProduct = (
       quantity: data?.quantity,
       material: data?.material,
       phone_type: data?.phone_type,
+      variant: data?.variant,
     },
   });
   const { push } = useRouter();
@@ -97,6 +99,7 @@ export const ValidateFormDetailProduct = (
         quantity: data.quantity ?? 1,
         material: data.material ?? "",
         phone_type: data.phone_type ?? "",
+        variant: data.variant ?? "",
       });
     }
   }, [data, form]);
@@ -111,6 +114,7 @@ export const ValidateFormDetailProduct = (
   });
 
   const handleAddCart = (data: FormDetailProductType) => {
+    console.log("Form submitted:", data);
     createCartItem({
       productId: productId,
       quantity: data.quantity,
@@ -137,7 +141,11 @@ export const ValidateFormDetailProduct = (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((data) => {
-              console.log(data);
+              if (isCheckout) {
+                handleCheckout(data);
+              } else {
+                handleAddCart(data);
+              }
             })}
           >
             <div className="mx-auto w-full max-w-4xl">
@@ -168,9 +176,9 @@ export const ValidateFormDetailProduct = (
                   ></Separator>
                   <InputsFormProduct
                     control={form.control}
-                    variantOptions={variantOptions}
-                    materialOptions={materialOptions}
-                    phoneTypeOptions={productTypeOptions}
+                    variants={variantOptions}
+                    materials={materialOptions}
+                    phone_type={phoneTypeOptions}
                     isValidate={true}
                   />
                   <QuantityInput
@@ -181,16 +189,7 @@ export const ValidateFormDetailProduct = (
               </div>
 
               <DrawerFooter>
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    if (isCheckout) {
-                      handleCheckout(form.getValues());
-                    } else {
-                      handleAddCart(form.getValues());
-                    }
-                  }}
-                >{` ${
+                <Button type="submit">{` ${
                   isCheckout ? "Lanjut ke Checkout" : "Tambah ke Keranjang"
                 }`}</Button>
                 <DrawerClose asChild>

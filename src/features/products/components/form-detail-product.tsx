@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { Product } from "@/types/api";
 import { InputsFormProduct } from "@/app/(customer)/products/detail/[id]/components/inputs-form-product";
+import { id } from "zod/v4/locales";
 
 type FormDetailProductProps = {
   productDetail: Product;
@@ -22,38 +23,47 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
   const { productDetail, image } = props;
 
   const phoneTypeOptions = productDetail.phoneTypes?.length
-    ? productDetail.phoneTypes.map((p) => p.model)
+    ? productDetail.phoneTypes.map((p) => ({
+        id: String(p.id),
+        model: p.model,
+      }))
     : [];
 
   const materialOptions = productDetail.materials?.length
-    ? productDetail.materials.map((m) => m.name)
+    ? productDetail.materials.map((m) => ({
+        id: String(m.id),
+        name: m.name,
+      }))
     : [];
 
   const variantOptions = productDetail.variants?.length
-    ? productDetail.variants.map((v) => v.name)
+    ? productDetail.variants.map((v) => ({
+        id: String(v.id),
+        name: v.name,
+      }))
     : [];
-
   const formDetailProductSchema = z.object({
-    phone_type:
-      phoneTypeOptions.length > 0
-        ? z.enum(phoneTypeOptions as [string, ...string[]], {
-            message: "Pilih tipe ponsel terlebih dahulu",
+    variant:
+      variantOptions.length > 0
+        ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
+            message: "Pilih varian terlebih dahulu",
           })
         : z.string().optional(),
 
     material:
       materialOptions.length > 0
-        ? z.enum(materialOptions as [string, ...string[]], {
+        ? z.enum(materialOptions.map((m) => m.id) as [string, ...string[]], {
             message: "Pilih material terlebih dahulu",
           })
         : z.string().optional(),
 
-    variant:
-      variantOptions.length > 0
-        ? z.enum(variantOptions as [string, ...string[]], {
-            message: "Pilih varian terlebih dahulu",
+    phone_type:
+      phoneTypeOptions.length > 0
+        ? z.enum(phoneTypeOptions.map((p) => p.id) as [string, ...string[]], {
+            message: "Pilih tipe ponsel terlebih dahulu",
           })
         : z.string().optional(),
+
     quantity: z
       .number({
         message: "Jumlah harus berupa angka",
@@ -81,9 +91,9 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
         </div>
         <InputsFormProduct
           control={form.control}
-          variantOptions={variantOptions}
-          materialOptions={materialOptions}
-          phoneTypeOptions={phoneTypeOptions}
+          variants={variantOptions}
+          materials={materialOptions}
+          phone_type={phoneTypeOptions}
         />
         <div className="flex-1 flex flex-row gap-3  items-end">
           <ValidateFormDetailProduct
@@ -94,7 +104,7 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
             quantityProduct={productDetail.stock}
             variant="outline"
             data={formValues}
-            productTypeOptions={phoneTypeOptions}
+            phoneTypeOptions={phoneTypeOptions}
             variantOptions={variantOptions}
             materialOptions={materialOptions}
           >
@@ -110,7 +120,7 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
             data={formValues}
             isCheckout={true}
             productId={productDetail.id}
-            productTypeOptions={phoneTypeOptions}
+            phoneTypeOptions={phoneTypeOptions}
             variantOptions={variantOptions}
             materialOptions={materialOptions}
           >

@@ -80,7 +80,7 @@ export const useCheckout = () => {
     console.log("🟡 [STEP 1] Mulai membuat order...");
     console.log("📦 Payload dikirim:", {
       addressId: selectedAddress.id,
-      selectedItemIds: [10],
+      selectedItemIds: [4],
     });
 
     setIsLoading(true);

@@ -35,16 +35,19 @@ export type Product = {
 };
 
 export type PhoneType = {
+  id: number;
   brand: string;
   model: string;
 };
 
 export type material = {
+  id: number;
   name: string;
   description: string;
 };
 
 export type variant = {
+  id: number;
   name: string;
   description: string;
 };
