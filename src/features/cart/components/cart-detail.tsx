@@ -3,9 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGetCarts } from "../api/get-carts";
 import { formatCurrency } from "@/lib/format-currency";
+import { useRouter } from "next/navigation";
 
-export const CartDetail = () => {
+type CartDetailProps = {
+  selectedCartItems: number[];
+};
+export const CartDetail = (props: CartDetailProps) => {
+  const { selectedCartItems } = props;
   const { data: cartItem } = useGetCarts();
+  const cartItemsSelected = cartItem?.filter((item) =>
+    selectedCartItems.includes(item.id)
+  );
+  const { push } = useRouter();
+  const handleSubmit = () => {
+    push("/checkout?order=" + JSON.stringify(cartItemsSelected));
+  };
   return (
     <div className="w-full border rounded-[12px] p-5 shadow-md bg-white">
       <p className="text-lg font-semibold mb-3">Ringkasan Belanja</p>
@@ -13,15 +25,18 @@ export const CartDetail = () => {
 
       <div className="flex justify-between mb-2">
         <span>Total Produk</span>
-        <span>{cartItem?.length || "-"}</span>
+        <span>{cartItemsSelected?.length || "-"}</span>
       </div>
 
       <div className="flex justify-between mb-2">
         <span>Total Harga</span>
-        {cartItem?.length != 0 ? (
+        {cartItemsSelected && cartItemsSelected?.length > 0 ? (
           <span>
             {formatCurrency(
-              cartItem?.reduce((a: number, b) => a + Number(b.price), 0) ?? 0
+              cartItemsSelected?.reduce(
+                (a: number, b) => a + Number(b.price),
+                0
+              ) ?? 0
             )}
           </span>
         ) : (
@@ -30,7 +45,7 @@ export const CartDetail = () => {
       </div>
       <Separator className="mt-3 mb-8"></Separator>
 
-      <Button disabled={!cartItem?.length} className="w-full">
+      <Button disabled={!cartItemsSelected?.length} className="w-full">
         Beli Sekarang
       </Button>
     </div>

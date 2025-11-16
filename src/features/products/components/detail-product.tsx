@@ -60,7 +60,6 @@ export const DetailProduct = (props: DetailProductProps) => {
             <Separator></Separator>
           </div>
           <FormDetailProduct
-            productId={product.id}
             productDetail={product}
             image={image ?? ""}
           ></FormDetailProduct>

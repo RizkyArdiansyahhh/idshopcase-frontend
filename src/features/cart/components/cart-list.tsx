@@ -4,9 +4,22 @@ import { useGetCarts } from "../api/get-carts";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CartItem } from "@/types/api";
 
-export const CartList = () => {
-  const { data: cartItems, isLoading: fetchCartsLoading } = useGetCarts();
+type CartListProps = {
+  selectedCartItems: number[];
+  setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
+  cartItems: CartItem[];
+  fetchCartsLoading: boolean;
+};
+
+export const CartList = (props: CartListProps) => {
+  const {
+    selectedCartItems,
+    setSelectedCartItems,
+    cartItems,
+    fetchCartsLoading,
+  } = props;
 
   if (fetchCartsLoading) {
     return (
@@ -56,8 +69,22 @@ export const CartList = () => {
         </div>
       ) : (
         cartItems?.map((cartItem, index) => {
+          if (selectedCartItems.includes(cartItem.id)) {
+            return (
+              <CartCard
+                setSelectedCartItems={setSelectedCartItems}
+                isSelected={true}
+                key={index}
+                cartId={cartItem.id}
+                productId={cartItem.Product.id}
+                quantity={cartItem.quantity}
+              />
+            );
+          }
           return (
             <CartCard
+              setSelectedCartItems={setSelectedCartItems}
+              isSelected={false}
               key={index}
               cartId={cartItem.id}
               productId={cartItem.Product.id}

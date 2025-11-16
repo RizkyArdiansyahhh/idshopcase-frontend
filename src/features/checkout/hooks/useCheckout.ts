@@ -37,6 +37,7 @@ export const useCheckout = () => {
   const handleDecrease = () => setQuantity((q) => Math.max(1, q - 1));
 
   useEffect(() => {
+    // Load CSS Jokul
     const cssJokul = document.createElement("link");
     cssJokul.rel = "stylesheet";
     cssJokul.href =
@@ -79,7 +80,7 @@ export const useCheckout = () => {
     console.log("🟡 [STEP 1] Mulai membuat order...");
     console.log("📦 Payload dikirim:", {
       addressId: selectedAddress.id,
-      selectedItemIds: [3],
+      selectedItemIds: [10],
     });
 
     setIsLoading(true);
@@ -89,7 +90,7 @@ export const useCheckout = () => {
       console.log("🟡 [STEP 2] Mengirim request ke backend...");
       const res = await api.post("/order", {
         addressId: selectedAddress.id,
-        selectedItemIds: [3],
+        selectedItemIds: [10],
       });
 
       console.log("🟢 [STEP 3] Respons diterima:", res);
@@ -108,7 +109,10 @@ export const useCheckout = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.error("❌ [ERROR] Gagal membuat order:", err?.response || err);
+      console.error("❌ [ERROR] Gagal membuat order:");
+      console.log("📌 ERR MESSAGE:", err?.response?.data);
+      console.log("📌 ERR STATUS:", err?.response?.status);
+      console.log("📌 FULL ERR:", err);
     } finally {
       const endTime = performance.now();
       console.log(
