@@ -7,28 +7,19 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
-import { formDetailProductShema } from "@/features/products/components/form-detail-product";
 import { formatCurrency } from "@/lib/format-currency";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import {
-  MaterialInput,
-  PhoneTypeInput,
-  QuantityInput,
-} from "./input-form-detail-product";
+import { QuantityInput } from "./input-form-detail-product";
 import { Form } from "@/components/ui/form";
-import { product } from "@/mocks/products";
-import {
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
+import { InputsFormProduct } from "./inputs-form-product";
 
 type ValidateFormDetailProductProps = {
   productId: number;
@@ -41,6 +32,9 @@ type ValidateFormDetailProductProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   isCheckout?: boolean;
+  productTypeOptions?: string[];
+  materialOptions?: string[];
+  variantOptions?: string[];
 };
 export const ValidateFormDetailProduct = (
   props: ValidateFormDetailProductProps
@@ -55,10 +49,41 @@ export const ValidateFormDetailProduct = (
     quantityProduct,
     data,
     isCheckout,
+    productTypeOptions = [],
+    materialOptions = [],
+    variantOptions = [],
   } = props;
-  type FormDetailProductType = z.infer<typeof formDetailProductShema>;
+
+  const formDetailProductSchema = z.object({
+    phone_type:
+      productTypeOptions.length > 0
+        ? z.enum(productTypeOptions as [string, ...string[]], {
+            message: "Pilih tipe ponsel terlebih dahulu",
+          })
+        : z.string().optional(),
+
+    material:
+      materialOptions.length > 0
+        ? z.enum(materialOptions as [string, ...string[]], {
+            message: "Pilih material terlebih dahulu",
+          })
+        : z.string().optional(),
+
+    variant:
+      variantOptions.length > 0
+        ? z.enum(variantOptions as [string, ...string[]], {
+            message: "Pilih varian terlebih dahulu",
+          })
+        : z.string().optional(),
+    quantity: z
+      .number({
+        message: "Jumlah harus berupa angka",
+      })
+      .min(1, "Minimal 1 item"),
+  });
+  type FormDetailProductType = z.infer<typeof formDetailProductSchema>;
   const form = useForm<FormDetailProductType>({
-    resolver: zodResolver(formDetailProductShema),
+    resolver: zodResolver(formDetailProductSchema),
     defaultValues: {
       quantity: data?.quantity,
       material: data?.material,
@@ -141,22 +166,13 @@ export const ValidateFormDetailProduct = (
                     orientation="horizontal"
                     className="my-2"
                   ></Separator>
-                  <MaterialInput
-                    product={product}
+                  <InputsFormProduct
                     control={form.control}
-                  ></MaterialInput>
-                  <Separator
-                    orientation="horizontal"
-                    className="my-2"
-                  ></Separator>
-                  <PhoneTypeInput
-                    product={product}
-                    control={form.control}
-                  ></PhoneTypeInput>
-                  <Separator
-                    orientation="horizontal"
-                    className="mb-2"
-                  ></Separator>
+                    variantOptions={variantOptions}
+                    materialOptions={materialOptions}
+                    phoneTypeOptions={productTypeOptions}
+                    isValidate={true}
+                  />
                   <QuantityInput
                     stockProduct={quantityProduct}
                     control={form.control}

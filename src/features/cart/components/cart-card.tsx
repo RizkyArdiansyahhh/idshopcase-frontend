@@ -13,15 +13,19 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatCurrency } from "@/lib/format-currency";
 import { useEffect } from "react";
+import { imageUrlPrimary } from "@/utils/image-utils";
 
 type CartCardProps = {
   cartId: number;
   productId: number;
   quantity: number;
+  isSelected: boolean;
+  setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 export const CartCard = (props: CartCardProps) => {
-  const { productId, quantity, cartId } = props;
+  const { productId, quantity, cartId, isSelected, setSelectedCartItems } =
+    props;
 
   console.log(quantity);
 
@@ -29,10 +33,6 @@ export const CartCard = (props: CartCardProps) => {
     id: productId,
   });
 
-  const imageProduct = product?.ProductImages.find((image) => image.isPrimary);
-
-  const cleanPath = imageProduct?.imageUrl?.split("/uploads/")[1] ?? null;
-  const imageUrl = cleanPath ? `/images/${cleanPath}` : null;
   const quantitySchema = z.object({
     quantity,
   });
@@ -77,14 +77,27 @@ export const CartCard = (props: CartCardProps) => {
   return (
     <div className="w-full border rounded-sm py-3  flex flex-row justify-around ">
       <div className="w-6/12 flex flex-row items-center gap-2 ">
-        <Checkbox id={cartId.toString()} />
+        <Checkbox
+          id={cartId.toString()}
+          value={cartId.toString()}
+          checked={isSelected}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              setSelectedCartItems((prev) => [...prev, cartId]);
+            } else {
+              setSelectedCartItems((prev) =>
+                prev.filter((id) => id !== cartId)
+              );
+            }
+          }}
+        />
         <div className="w-full flex flex-row gap-2 ">
           <div className="w-1/4 h-28 relative rounded-md overflow-hidden">
             {fetchProductLoading ? (
               <Skeleton />
             ) : (
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
+                src={imageUrlPrimary(product?.ProductImages) || ""}
                 alt={product?.name || `product=${product?.id}`}
                 fill
                 className="object-cover"
@@ -96,7 +109,7 @@ export const CartCard = (props: CartCardProps) => {
               {product?.name}
             </Link>
             <p className="text-sm font-light text-foreground/60">
-              {product?.material || "Material"}
+              {product?.category || "Material"}
             </p>
           </div>
         </div>

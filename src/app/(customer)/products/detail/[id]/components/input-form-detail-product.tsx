@@ -10,21 +10,47 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Control } from "react-hook-form";
 import { Combobox } from "./combo-box";
 import { CardQuantity } from "@/components/shared/card-quantity";
+import { material, PhoneType, variant } from "@/types/api";
 
 type InputProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
-  product?: {
-    material: string[];
-    phone_type: {
-      value: string;
-      label: string;
-    }[];
-  };
+  materials?: string[];
+  variants?: string[];
+  phone_type?: string[];
   stockProduct?: number;
 };
+export const VariantInput = (props: InputProps) => {
+  const { control, variants } = props;
+  return (
+    <FormField
+      name="variant"
+      control={control}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Variant</FormLabel>
+          <RadioGroup
+            onValueChange={field.onChange}
+            value={(field.value as string) || undefined}
+            className={"flex flex-row"}
+          >
+            {variants?.map((item) => (
+              <FieldLabel htmlFor={item} key={item}>
+                <Field orientation="horizontal" className="w-fit">
+                  <FieldTitle>{item}</FieldTitle>
+                  <RadioGroupItem value={item} id={item} className="sr-only" />
+                </Field>
+              </FieldLabel>
+            ))}
+          </RadioGroup>
+          <FormMessage></FormMessage>
+        </FormItem>
+      )}
+    />
+  );
+};
 export const MaterialInput = (props: InputProps) => {
-  const { control, product } = props;
+  const { control, materials } = props;
   return (
     <FormField
       name="material"
@@ -37,7 +63,7 @@ export const MaterialInput = (props: InputProps) => {
             value={(field.value as string) || undefined}
             className={"flex flex-row"}
           >
-            {product?.material?.map((item) => (
+            {materials?.map((item) => (
               <FieldLabel htmlFor={item} key={item}>
                 <Field orientation="horizontal" className="w-fit">
                   <FieldTitle>{item}</FieldTitle>
@@ -53,7 +79,17 @@ export const MaterialInput = (props: InputProps) => {
   );
 };
 export const PhoneTypeInput = (props: InputProps) => {
-  const { control, product } = props;
+  const { control, phone_type } = props;
+
+  const data = phone_type?.map((item) => {
+    const label = item.trim();
+    const value = item.trim().toLowerCase().replace(/\s+/g, "-");
+    return {
+      value,
+      label,
+    };
+  });
+
   return (
     <FormField
       name="phone_type"
@@ -63,7 +99,7 @@ export const PhoneTypeInput = (props: InputProps) => {
           <FormLabel>Jenis Handphone</FormLabel>
           <Combobox
             field={field}
-            data={product!.phone_type}
+            data={data || []}
             className="border-foreground/10"
           ></Combobox>
           <FormMessage></FormMessage>

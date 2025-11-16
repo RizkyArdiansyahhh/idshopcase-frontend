@@ -7,38 +7,6 @@ export type User = {
   role: string;
 };
 
-// export interface Product {
-//   id: number;
-//   name: string;
-//   description: string;
-//   category: string;
-//   basePrice?: number;
-//   baseStock?: number;
-//   images: string[];
-//   variantOptions?: VariantOptionForm[];
-//   variantCombinations?: VariantCombination[];
-//   createdAt?: string;
-//   updatedAt?: string;
-// }
-
-export interface VariantOptionForm {
-  id?: number;
-  nameVariant: string;
-  valueVariant?: ValueVariantForm[];
-}
-
-export interface ValueVariantForm {
-  id?: number;
-  label: string;
-  imageVariant?: string;
-}
-
-export interface VariantCombination {
-  combination: Record<string, string>;
-  stock: number;
-  price: number;
-}
-
 export type Address = {
   id: number;
   recipient_name: string;
@@ -58,30 +26,34 @@ export type Product = {
   price: string;
   stock: number;
   category: string;
-  material: string;
-  phone_type: string;
   createdAt: string;
   updatedAt: string;
   ProductImages: ProductImage[];
+  materials?: material[];
+  variants?: variant[];
+  phoneTypes?: PhoneType[];
 };
+
+export type PhoneType = {
+  brand: string;
+  model: string;
+};
+
+export type material = {
+  name: string;
+  description: string;
+};
+
+export type variant = {
+  name: string;
+  description: string;
+};
+
 export type ProductImage = {
   id: number;
   imageUrl: string;
   isPrimary: boolean;
 };
-// export type Products = {
-//   id: number;
-//   name: string;
-//   description: string;
-//   price: number;
-//   stock: number;
-//   category: string;
-//   material: string;
-//   phone_type: string;
-//   image: string;
-//   createdAt: string;
-//   updatedAt: string;
-// };
 
 export type ProductOrder = {
   id: number;
