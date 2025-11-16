@@ -9,52 +9,52 @@ import { Separator } from "@/components/ui/separator";
 type InputsFormProductProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
-  variantOptions: string[];
-  materialOptions: string[];
-  phoneTypeOptions: string[];
+  materials?: Array<{ id: string; name: string }>;
+  variants?: Array<{ id: string; name: string }>;
+  phone_type?: Array<{ id: string; model: string }>;
   isValidate?: boolean;
 };
 
 export const InputsFormProduct = (props: InputsFormProductProps) => {
   const {
     control,
-    variantOptions,
-    materialOptions,
-    phoneTypeOptions,
+    variants = [],
+    materials = [],
+    phone_type = [],
     isValidate = false,
   } = props;
 
   return (
     <>
       {/* MATERIAL */}
-      {materialOptions.length > 0 && (
+      {materials.length > 0 && (
         <>
-          <MaterialInput materials={materialOptions} control={control} />
+          <MaterialInput materials={materials} control={control} />
 
           {isValidate && (
-            <Separator orientation="horizontal" className="my-2"></Separator>
+            <Separator orientation="horizontal" className="my-2" />
           )}
         </>
       )}
 
       {/* VARIANT */}
-      {variantOptions.length > 0 && (
+      {variants.length > 0 && (
         <>
-          <VariantInput variants={variantOptions} control={control} />
+          <VariantInput variants={variants} control={control} />
 
           {isValidate && (
-            <Separator orientation="horizontal" className="my-2"></Separator>
+            <Separator orientation="horizontal" className="my-2" />
           )}
         </>
       )}
 
       {/* PHONE TYPE */}
-      {phoneTypeOptions.length > 0 && (
+      {phone_type.length > 0 && (
         <>
-          <PhoneTypeInput phone_type={phoneTypeOptions} control={control} />
+          <PhoneTypeInput phone_type={phone_type} control={control} />
 
           {isValidate && (
-            <Separator orientation="horizontal" className="my-2"></Separator>
+            <Separator orientation="horizontal" className="my-2" />
           )}
         </>
       )}
