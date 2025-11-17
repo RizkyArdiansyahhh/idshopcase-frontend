@@ -6,11 +6,16 @@ import { toast } from "sonner";
 import { getUsersQueryKey } from "./get-users";
 
 type CreateUserItemRequest = {
-  data: Omit<User, "id" | "profile_picture">;
+  data: {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+  };
 };
 const createUser = async ({ data }: CreateUserItemRequest) => {
   console.log(data);
-  return await api.post("/user", {
+  return await api.post("/user/create", {
     ...data,
   });
 };
