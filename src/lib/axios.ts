@@ -15,7 +15,27 @@ export const api = axios.create({
   },
 });
 
+export const apiUpload = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    "ngrok-skip-browser-warning": "true",
+  },
+});
+
 api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+apiUpload.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {

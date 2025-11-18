@@ -90,7 +90,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
       formData.append("profile_picture", data.image);
     }
 
-    updateUser(formData);
+    // updateUser(formData);
     console.log(data);
   };
 

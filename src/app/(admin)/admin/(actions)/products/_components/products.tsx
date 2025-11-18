@@ -7,7 +7,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { TableContent } from "../../components/table-content";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -22,16 +22,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IconDotsVertical } from "@tabler/icons-react";
 import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
+import { DeleteProduct } from "@/features/products/components/delete-product";
 
 export const Products = () => {
-  const { push, replace } = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { push } = useRouter();
   const columnHelper = createColumnHelper<Product>();
-
-  // const hasVariants = (product: Product): boolean => {
-  //   return (
-  //     Array.isArray(product.variantOptions) && product.variantOptions.length > 0
-  //   );
-  // };
 
   const columns = useMemo(
     () => [
@@ -63,25 +60,6 @@ export const Products = () => {
       columnHelper.accessor("price", {
         header: "Harga",
         cell: ({ row }) => {
-          // const product = row.original;
-          // const isHasVariants = hasVariants(product);
-          // if (isHasVariants) {
-          //   const minPrice = Math.min(
-          //     ...product.variantCombinations!.map((p) => p.price)
-          //   );
-          //   const maxPrice = Math.max(
-          //     ...product.variantCombinations!.map((p) => p.price)
-          //   );
-          //   return (
-          //     <span className="text-app-semibold-sm">
-          //       {minPrice === maxPrice
-          //         ? formatCurrency(minPrice)
-          //         : ` ${formatCurrency(minPrice)} - ${formatCurrency(
-          //             maxPrice
-          //           )}`}
-          //     </span>
-          //   );
-          // }
           return (
             <span className="text-app-semibold-sm">
               {formatCurrency(Number(row.original.price))}
@@ -92,20 +70,6 @@ export const Products = () => {
       columnHelper.accessor("stock", {
         header: "Stock",
         cell: ({ row }) => {
-          // const product = row.original;
-
-          // const hasVariants =
-          //   Array.isArray(product.variantOptions) &&
-          //   product.variantOptions.length > 0;
-
-          // if (hasVariants) {
-          //   const totalStock = product.variantCombinations?.reduce(
-          //     (total, combination) => total + combination.stock,
-          //     0
-          //   );
-          //   return <span className="text-app-semibold-sm">{totalStock}</span>;
-          // }
-
           return (
             <span className="text-app-semibold-sm">{row.original.stock}</span>
           );
@@ -144,8 +108,8 @@ export const Products = () => {
                 variant="destructive"
                 onClick={(e) => {
                   e.stopPropagation();
-                  // setSelectedUser(row.original);
-                  // setIsOpenDialogDelete(true);
+                  setSelectedProduct(row.original);
+                  setIsOpen(true);
                 }}
               >
                 Delete
@@ -191,6 +155,14 @@ export const Products = () => {
         </div>
         <TableContent table={table} columns={columns}></TableContent>
       </div>
+      {isOpen && selectedProduct && (
+        <DeleteProduct
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          id={selectedProduct?.id ?? 0}
+          setSelectedProduct={setSelectedProduct}
+        ></DeleteProduct>
+      )}
     </>
   );
 };

@@ -25,6 +25,7 @@ export const DeleteUser = ({
   return (
     <CustomDialog
       isOpen={isOpen}
+      title="User"
       onClose={() => setIsOpen(false)}
       action={() => {
         deleteUser(id);

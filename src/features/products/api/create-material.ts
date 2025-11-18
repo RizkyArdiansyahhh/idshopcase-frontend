@@ -1,10 +1,10 @@
 import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
-import { material } from "@/types/api";
+import { Material } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { getMaterialsQueryKey } from "./get-materials";
 
-type CreateMaterialItemRequest = Omit<material, "id">;
+type CreateMaterialItemRequest = Omit<Material, "id">;
 
 const createMaterial = async (data: CreateMaterialItemRequest) => {
   const response = await api.post("/reference/materials", data);
