@@ -14,14 +14,15 @@ type CustomDialogProps = {
   isLoading?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
+  title: string;
 };
 export const CustomDialog = (props: CustomDialogProps) => {
-  const { action, isLoading, isOpen, onClose } = props;
+  const { action, isLoading, isOpen, onClose, title } = props;
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
-          <DialogTitle>Delete User</DialogTitle>
+          <DialogTitle>Delete {title}</DialogTitle>
           <DialogDescription>Apakah anda yakin?</DialogDescription>
           <DialogFooter>
             <DialogClose asChild>

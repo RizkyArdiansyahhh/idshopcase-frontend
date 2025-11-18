@@ -29,8 +29,8 @@ export type Product = {
   createdAt: string;
   updatedAt: string;
   ProductImages: ProductImage[];
-  materials?: material[];
-  variants?: variant[];
+  materials?: Material[];
+  variants?: Variant[];
   phoneTypes?: PhoneType[];
 };
 
@@ -40,13 +40,13 @@ export type PhoneType = {
   model: string;
 };
 
-export type material = {
+export type Material = {
   id: number;
   name: string;
   description: string;
 };
 
-export type variant = {
+export type Variant = {
   id: number;
   name: string;
   description: string;

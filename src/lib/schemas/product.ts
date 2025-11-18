@@ -9,33 +9,15 @@ export const formProductSchema = z.object({
   category: z.enum(["custom_case", "keychain", "phone_charm", "pop_socket"], {
     message: "Silahkan pilih kategori produk",
   }),
-  basePrice: z.number().min(0, "Harga tidak boleh negatif").optional(),
-  baseStock: z.number().min(0, "Stok tidak boleh negatif").optional(),
-  images: z.array(z.string()),
-  toggleIsVariant: z.boolean(),
-  variantOptions: z.array(
-    z.object({
-      nameVariant: z.string().nonempty(),
-      valueVariant: z
-        .array(
-          z.object({
-            label: z.string().nonempty(),
-            isAddedImage: z.boolean().optional(),
-            imageVariant: z.string().optional(),
-          })
-        )
-        .optional(),
-    })
-  ),
-  variantCombinations: z
-    .array(
-      z.object({
-        combination: z.record(z.string(), z.string()),
-        stock: z.number().min(0, "Stok tidak boleh negatif"),
-        price: z.number().min(0, "Harga tidak boleh negatif"),
-      })
-    )
-    .optional(),
+  price: z.string().min(0, "Harga tidak boleh negatif"),
+  stock: z.number().min(0, "Stok tidak boleh negatif"),
+  images: z.array(z.instanceof(File)).min(1, "Minimal 1 gambar wajib diupload"),
+  toggleIsMaterial: z.boolean().optional(),
+  material: z.array(z.number()).optional(),
+  toggleIsVariant: z.boolean().optional(),
+  variant: z.array(z.string()).optional(),
+  toggleIsPhoneType: z.boolean().optional(),
+  phone_type: z.array(z.number()).optional(),
 });
 
 export type FormProductType = z.infer<typeof formProductSchema>;

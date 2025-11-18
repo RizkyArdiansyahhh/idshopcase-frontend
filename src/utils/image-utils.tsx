@@ -14,3 +14,9 @@ export const imageUrlPrimary = (imagesUrl: ProductImage[] = []) => {
   const imagePrimary = imagesUrl.find((image) => image.isPrimary);
   return cleanImageUrl(imagePrimary?.imageUrl ?? "");
 };
+
+export const imageUrlList = (imagesUrl: ProductImage[] = []) => {
+  return imagesUrl
+    .map((img) => cleanImageUrl(img.imageUrl))
+    .filter((url): url is string => url !== null);
+};

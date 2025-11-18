@@ -3,9 +3,14 @@ import { QueryConfig } from "@/lib/react-query";
 import { PhoneType } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
+type PhoneTypeResponse = {
+  message: string;
+  data: PhoneType[];
+};
+
 const getPhoneTypes = async () => {
-  const response = await api.get<PhoneType[]>("/reference/phone-types");
-  return response.data;
+  const response = await api.get<PhoneTypeResponse>("/reference/phone-types");
+  return response.data.data;
 };
 
 export const getPhoneTypesQueryKey = () => ["phone-types"];

@@ -1,10 +1,10 @@
 import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
-import { variant } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { getVariantsQueryKey } from "./get-variants";
+import { Variant } from "@/types/api";
 
-type CreateVariantItemRequest = Omit<variant, "id">;
+type CreateVariantItemRequest = Omit<Variant, "id">;
 
 const createVariant = async (data: CreateVariantItemRequest) => {
   const response = await api.post("/reference/variants", data);

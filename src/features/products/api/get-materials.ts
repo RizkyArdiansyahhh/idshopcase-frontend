@@ -3,9 +3,13 @@ import { QueryConfig } from "@/lib/react-query";
 import { material } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
+type GetMaterialsResponse = {
+  data: material[];
+};
+
 const getMaterials = async () => {
-  const response = await api.get<material[]>("/reference/materials");
-  return response.data;
+  const response = await api.get<GetMaterialsResponse>("/reference/materials");
+  return response.data.data;
 };
 
 export const getMaterialsQueryKey = () => ["materials"];
