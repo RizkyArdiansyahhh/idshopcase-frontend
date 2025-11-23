@@ -1,22 +1,36 @@
 "use client";
 
 import { useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { Upload, Image as ImageIcon, X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 
-type UploadCardProps = {
-  previewImage?: string | null;
-  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onRemove?: () => void;
+type UploadCardDynamicProps = {
+  slotCount: number; // jumlah slot upload
+  previewImages?: (string | null)[];
+  onFilesSelect: (index: number, file: File) => void;
+  onRemove?: (index: number) => void;
 };
 
-export const UploadCard = ({
-  previewImage,
-  onImageChange,
+export const UploadCardDynamic = ({
+  slotCount,
+  previewImages = [],
+  onFilesSelect,
   onRemove,
-}: UploadCardProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+}: UploadCardDynamicProps) => {
+  const refs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    onFilesSelect(idx, file);
+
+    // reset input agar bisa memilih file yang sama lagi
+    if (refs.current[idx]) refs.current[idx]!.value = "";
+  };
 
   return (
     <Card className="border border-gray-300 bg-white dark:bg-neutral-900 rounded-xl shadow-sm">
@@ -26,39 +40,53 @@ export const UploadCard = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {!previewImage ? (
-          <div
-            onClick={() => inputRef.current?.click()}
-            className="border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-gray-50 hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-          >
-            <Upload className="h-10 w-10 text-gray-500 mb-2" />
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              Seret gambar ke sini atau klik untuk upload
-            </p>
-            <p className="text-xs text-gray-400 mt-1">PNG, JPG (max 2MB)</p>
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/*"
-              onChange={onImageChange}
-              hidden
-            />
-          </div>
-        ) : (
-          <div className="relative">
-            <img
-              src={previewImage}
-              alt="Preview desain custom"
-              className="w-full h-64 object-cover rounded-lg border border-gray-200"
-            />
-            <button
-              onClick={onRemove}
-              className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all"
+        <div className="flex flex-wrap gap-4">
+          {Array.from({ length: slotCount }).map((_, idx) => (
+            <div
+              key={idx}
+              className="relative flex flex-col items-center gap-2"
             >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
+              <div
+                onClick={() => refs.current[idx]?.click()}
+                className="border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 rounded-xl p-4 flex flex-col items-center justify-center text-center cursor-pointer w-24 h-24 bg-gray-50 hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 relative"
+              >
+                {previewImages[idx] ? (
+                  <img
+                    src={previewImages[idx]!}
+                    alt={`preview-${idx}`}
+                    className="w-full h-full object-cover rounded"
+                  />
+                ) : (
+                  <Upload className="h-6 w-6 text-gray-500" />
+                )}
+
+                <input
+                  ref={(el) => {
+                    refs.current[idx] = el;
+                  }}
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={(e) => handleChange(e, idx)}
+                />
+
+                {/* Tombol Hapus di pojok */}
+                {previewImages[idx] && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation(); // agar klik tombol tidak memicu open file dialog
+                      onRemove?.(idx);
+                    }}
+                    className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white shadow-md"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

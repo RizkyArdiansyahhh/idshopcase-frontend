@@ -94,7 +94,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     updateUser(formData);
   };
 
-  console.log(isEditing);
+  console.log(previewImage, "previewImage");
   return (
     <div>
       <div className="flex flex-row items-center gap-5 px-16">

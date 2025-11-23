@@ -1,17 +1,14 @@
-import { api } from "@/lib/axios";
+import { api, apiUpload } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
 import { CheckoutData } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-type createOrderItemRequest = {
-  addressId: number;
-  buyNow?: CheckoutData;
-  selectedItemIds?: number[];
-};
-
-const createOrder = async (data: createOrderItemRequest) => {
-  const response = await api.post("/order", data);
+const createOrder = async (data: FormData) => {
+  data.forEach((value, key) => {
+    console.log(key, value);
+  });
+  const response = await apiUpload.post("/order", data);
   return response.data.checkout.response.payment.url;
 };
 
