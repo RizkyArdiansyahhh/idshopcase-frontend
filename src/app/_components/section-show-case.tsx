@@ -89,8 +89,8 @@ export const SectionShowCase = () => {
                   Make Your Own Keychain
                 </h2>
                 <p className="font-garamond text-xl w-[90%] hidden lg:block">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                  Buat gantungan kunci versi kamu sendiri—unik, personal, dan
+                  penuh cerita.
                 </p>
               </div>
               <div className="flex justify-end">
@@ -119,8 +119,9 @@ export const SectionShowCase = () => {
                   Create Your Creative Popsocket
                 </h2>
                 <p className="font-garamond text-xl w-[90%] hidden lg:block">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Amet, enim? Debitis earum sapiente enim reiciendis!
+                  Ciptakan popsocket unik yang mencerminkan dirimu. Clean,
+                  personal, dan dibuat khusus untuk melengkapi gaya ponselmu
+                  yang bikin HP-mu makin standout dan personal.
                 </p>
               </div>
               <div className="flex justify-end">

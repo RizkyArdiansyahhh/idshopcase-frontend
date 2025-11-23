@@ -1,14 +1,9 @@
-// features/checkout/components/OrderSummaryCard.tsx
 "use client";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { formatCurrency } from "@/lib/format-currency";
-import { Product } from "@/types/api";
 import Image from "next/image";
-import { imageUrlPrimary } from "@/utils/image-utils";
-import { useCheckoutStore } from "@/store/checkout-store";
-import { UploadCard } from "./UploadCard";
+import { formatCurrency } from "@/lib/format-currency";
+import { UploadCardDynamic } from "./UploadCard";
 
 export type DetailProduct = {
   image: string;
@@ -19,28 +14,37 @@ export type DetailProduct = {
   phoneType: string | null;
   quantity: number;
 };
+
 type OrderSummaryCardProps = {
   detailProduct: DetailProduct[];
-  previewImage: string | null;
-  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setPreviewImage: React.Dispatch<React.SetStateAction<string | null>>;
+  // setiap produk punya slot preview image
+  previewImages: (string | null)[][];
+  onFilesSelect: (productIdx: number, slotIdx: number, file: File) => void;
+  onRemove: (productIdx: number, slotIdx: number) => void;
+  slotCount?: number; // default slot per produk
 };
 
-export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
-  const { detailProduct, previewImage, handleImageChange, setPreviewImage } =
-    props;
+export const OrderSummaryCard = ({
+  detailProduct,
+  previewImages,
+  onFilesSelect,
+  onRemove,
+  slotCount = 3,
+}: OrderSummaryCardProps) => {
   return (
     <Card className="p-4">
       <CardHeader>
         <h3 className="text-lg font-semibold">Ringkasan Pesanan</h3>
       </CardHeader>
-      {detailProduct.map((item, index) => (
-        <div key={index} className="flex flex-col gap-3">
+
+      {detailProduct.map((item, productIdx) => (
+        <div key={productIdx} className="flex flex-col gap-3">
+          {/* Produk Card */}
           <Card>
             <CardContent className="flex flex-row gap-4 items-center">
               <div className="relative w-24 h-24 flex-shrink-0">
                 <Image
-                  src={item.image ?? ""}
+                  src={item.image}
                   alt={item.productName}
                   fill
                   className="w-full h-full object-cover rounded-md"
@@ -49,12 +53,11 @@ export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
 
               <div className="flex-1">
                 <p className="font-semibold">{item.productName}</p>
-                <div className="flex flex-row gap-1 items-center text-sm text-foreground/60 ">
+                <div className="flex flex-row gap-1 items-center text-sm text-foreground/60">
                   {item.phoneType && <p>{item.phoneType}</p>}
                   <span>|</span>
                   {item.material && <p>{item.material}</p>}
                 </div>
-
                 <p className="text-sm text-foreground/60">
                   Quantity : {item.quantity}
                 </p>
@@ -64,12 +67,18 @@ export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
               </div>
             </CardContent>
           </Card>
-          <UploadCard
-            previewImage={previewImage}
-            onImageChange={handleImageChange}
-            onRemove={() => setPreviewImage(null)}
+
+          {/* Upload Dinamis per produk */}
+          <UploadCardDynamic
+            slotCount={slotCount}
+            previewImages={
+              previewImages[productIdx] || Array(slotCount).fill(null)
+            }
+            onFilesSelect={(slotIdx, file) =>
+              onFilesSelect(productIdx, slotIdx, file)
+            }
+            onRemove={(slotIdx) => onRemove(productIdx, slotIdx)}
           />
-          ;
         </div>
       ))}
     </Card>

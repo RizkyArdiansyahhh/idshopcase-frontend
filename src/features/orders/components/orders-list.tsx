@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const OrdersList = ({ status }: { status: string }) => {
   const { data: orders, isLoading: isLoadingOrders } = useGetOrders();
-  console.log(orders);
+  console.log(orders, "orders");
 
   const filteredOrders =
     status === "all"

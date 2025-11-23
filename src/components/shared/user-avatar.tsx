@@ -2,6 +2,7 @@ import { cleanImageUrl } from "@/utils/image-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
 import { useGetUser } from "@/features/auth/api/get-user";
+import Image from "next/image";
 
 type AvatarFallbackProps = {
   name: string;
@@ -34,16 +35,17 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
   const isBlob = image?.startsWith("blob:") || image?.startsWith("data:");
   const imageSrc = isBlob ? image : cleanImageUrl(image) ?? "";
 
-  console.log(image);
+  console.log(image, "image");
 
   return (
     <Avatar className={cn(className)}>
       {image ? (
-        <AvatarImage
-          src={"/images/testimoni/speak-1.jpg"}
+        <Image
+          src={imageSrc ?? image}
           alt="avatar-image"
           className="object-cover"
-        ></AvatarImage>
+          fill
+        ></Image>
       ) : (
         <AvatarFallback className={`${color} text-white font-bold text-4xl`}>
           {initials}

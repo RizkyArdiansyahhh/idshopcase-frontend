@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { useGetOrders } from "@/features/orders/api/get-orders";
 import { useGetUsers } from "@/features/users/api/get-users";
-import { Order } from "@/types/api";
+import { Order, OrderAdmin } from "@/types/api";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -13,17 +13,18 @@ import {
 import { useMemo, useState } from "react";
 import { TableContent } from "../components/table-content";
 import { CircleCheck, ClipboardClock, Loader, Truck } from "lucide-react";
+import { useGetOrdersAdmin } from "@/features/orders/api/get-orders-admin";
 
 const OrdersPage = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-  const columnHelper = createColumnHelper<Order>();
+  const columnHelper = createColumnHelper<OrderAdmin>();
 
   const { data: users } = useGetUsers();
 
-  const { data: orders } = useGetOrders();
+  const { data: orders } = useGetOrdersAdmin();
   console.log(orders, "orders");
 
   const columns = useMemo(
