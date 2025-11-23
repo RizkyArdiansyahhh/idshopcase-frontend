@@ -8,7 +8,7 @@ import Image from "next/image";
 import React, { useState, useRef, JSX } from "react";
 
 export default function CasePreview() {
-  const [designImage, setDesignImage] = useState<string | null>(null);
+  const [designImages, setDesignImages] = useState<string[]>([]);
   const [colorSelected, setColorSelected] = useState<string>("bg-background");
   const colors = [
     "bg-background",
@@ -25,50 +25,75 @@ export default function CasePreview() {
 
   const designInputRef = useRef<HTMLInputElement | null>(null);
 
+  /** --------------------------
+   *  UPLOAD MAX 3 GAMBAR
+   * --------------------------- */
   const handleDesignUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setDesignImage(reader.result as string);
-        setScale(1);
-        setTranslate({ x: 0, y: 0 });
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(e.target.files || []);
+
+    if (files.length > 3) {
+      alert("Maksimal upload 3 gambar!");
+      return;
     }
+
+    const readers = files.map(
+      (file) =>
+        new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.readAsDataURL(file);
+        })
+    );
+
+    Promise.all(readers).then((results) => {
+      setDesignImages(results);
+      setScale(1);
+      setTranslate({ x: 0, y: 0 });
+    });
   };
+
+  /** --------------------------
+   *  GENERATE POLA TILE BERGANTIAN
+   * --------------------------- */
   const generatePatternGrid = () => {
-    if (!designImage) return null;
+    if (designImages.length === 0) return null;
 
     const items: JSX.Element[] = [];
-    const size = 70; // ukuran kotak pattern
-
-    // jumlah item, sesuaikan area preview
+    const size = 60;
     const rows = 8;
     const cols = 2;
 
+    let imgIndex = 0;
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
+        const currentImage = designImages[imgIndex];
+
         items.push(
           <img
             key={`${r}-${c}`}
-            src={designImage}
-            className="object-cover "
+            src={currentImage}
+            className="object-cover"
             style={{
               width: size,
               height: size,
-              transform: r % 2 === 1 ? "translateX(50px) " : "none", // zigzag offset
+              transform: r % 2 === 1 ? "translateX(55px)" : "none",
             }}
           />
         );
+
+        imgIndex = (imgIndex + 1) % designImages.length;
       }
     }
 
     return items;
   };
 
+  /** --------------------------
+   *  DRAG, ZOOM, RESET
+   * --------------------------- */
   const handleReset = () => {
-    setDesignImage(null);
+    setDesignImages([]);
     setScale(1);
     setTranslate({ x: 0, y: 0 });
     if (designInputRef.current) designInputRef.current.value = "";
@@ -89,7 +114,7 @@ export default function CasePreview() {
   const onDragStart = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    if (!designImage) return;
+    if (designImages.length === 0) return;
     e.preventDefault();
     setIsDragging(true);
     const coords = getEventCoords(e);
@@ -115,7 +140,7 @@ export default function CasePreview() {
 
   return (
     <div className="h-[80vh] w-full flex flex-col md:flex-row gap-10 py-7">
-      {/* === KIRI: Step Info === */}
+      {/* === LEFT: STEPS === */}
       <div className="h-full w-2/5 flex flex-col gap-5">
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 relative">
@@ -129,10 +154,11 @@ export default function CasePreview() {
           <div>
             <p className="text-lg font-semibold">Step 1 : Tambahkan Gambar</p>
             <p className="text-sm font-medium text-foreground/70">
-              Pastikan Gambar yang anda upload berformat .png atau .jpg
+              Unggah 1–3 gambar untuk membuat pola casing
             </p>
           </div>
         </div>
+
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 flex justify-center items-center">
             <div className="h-16 w-16 rounded-full bg-teal-800" />
@@ -144,22 +170,24 @@ export default function CasePreview() {
             </p>
           </div>
         </div>
+
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 flex justify-center items-center">
             <SquaresSubtract size={52} className="text-foreground/80" />
           </div>
           <div>
-            <p className="text-lg font-semibold">Step 3 : Jalankan Aksi</p>
+            <p className="text-lg font-semibold">Step 3 : Atur Pola</p>
             <p className="text-sm font-medium text-foreground/70">
-              Anda dapat mengatur posisi dan ukuran pola
+              Geser & atur zoom pola sesuai keinginan
             </p>
           </div>
         </div>
       </div>
 
+      {/* === RIGHT: PREVIEW === */}
       <div className="h-full flex gap-7 p-6 font-sans flex-row">
         <div
-          className={`relative w-[17rem] h-[30.5rem]  bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected}`}
+          className={`relative w-[17rem] h-[30.5rem] bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected}`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}
@@ -177,10 +205,11 @@ export default function CasePreview() {
           <img
             src="/images/preview-case-camera.png"
             alt=""
-            className="absolute -top-0.5 -left-0.5 z-10 "
+            className="absolute -top-0.5 -left-0.5 z-10"
           />
-          {/* Pattern Background */}
-          {designImage && (
+
+          {/* === PATTERN GRID === */}
+          {designImages.length > 0 && (
             <div
               className="absolute inset-0 grid grid-cols-2 gap-x-2"
               style={{
@@ -192,14 +221,16 @@ export default function CasePreview() {
               {generatePatternGrid()}
             </div>
           )}
-          {/* Placeholder */}
-          {!designImage && (
+
+          {/* === PLACEHOLDER === */}
+          {designImages.length === 0 && (
             <span className="absolute text-gray-500 text-center px-3 bg-white/70 rounded-md">
-              Unggah desain casing Anda
+              Unggah hingga 3 gambar
             </span>
           )}
         </div>
 
+        {/* === CONTROLS === */}
         <div className="mt-6 w-full max-w-xs space-y-3">
           <div className="flex flex-row gap-3 items-center p-5">
             {colors.map((color, index) => (
@@ -215,25 +246,26 @@ export default function CasePreview() {
             ))}
           </div>
 
-          {/* Upload Gambar */}
+          {/* UPLOAD */}
           <Field>
             <Input
               id="imageUploadCustomCase"
               ref={designInputRef}
               type="file"
-              accept="image/*"
+              accept="image/png"
+              multiple
               className="hidden"
               onChange={handleDesignUpload}
             />
             <FieldLabel htmlFor="imageUploadCustomCase">
               <div className="h-20 border-dotted border p-5 rounded-sm flex flex-col items-center justify-center text-foreground/50 cursor-pointer hover:bg-foreground/5 transition-all ease-in duration-100 hover:border-foreground/40">
                 <ImageUp size={36} />
-                <p>Unggah desain casing</p>
+                <p>Unggah 1–3 gambar</p>
               </div>
             </FieldLabel>
           </Field>
 
-          {/* Zoom */}
+          {/* ZOOM */}
           <div className="flex gap-3 mt-4">
             <Button variant={"default"} onClick={handleZoomOut}>
               −
@@ -243,7 +275,7 @@ export default function CasePreview() {
             </Button>
           </div>
 
-          {/* Reset */}
+          {/* RESET */}
           <Button variant={"destructive"} onClick={handleReset}>
             Reset
           </Button>

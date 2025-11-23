@@ -1,3 +1,5 @@
+import { product } from "@/mocks/products";
+
 export type User = {
   id: number;
   name: string;
@@ -29,9 +31,9 @@ export type Product = {
   createdAt: string;
   updatedAt: string;
   ProductImages: ProductImage[];
-  materials?: Material[];
-  variants?: Variant[];
-  phoneTypes?: PhoneType[];
+  Materials?: Material[];
+  Variants?: Variant[];
+  PhoneTypes?: PhoneType[];
 };
 
 export type PhoneType = {
@@ -62,7 +64,7 @@ export type ProductOrder = {
   id: number;
   name: string;
   price: string;
-  image: string;
+  ProductImages: ProductImage[];
 };
 
 export type OrderItem = {
@@ -110,7 +112,7 @@ export type CartItem = {
   productId: number;
   quantity: number;
   price: string;
-  createdAt: string;
+  createdAt: Date;
   updatedAt: string;
   Product: {
     id: number;
@@ -127,4 +129,20 @@ export type CartItem = {
     image: string;
   };
   CustomImage: null;
+  Material: Material | null;
+  Variant: Variant | null;
+  PhoneType: PhoneType | null;
 };
+
+export interface CheckoutData {
+  productId: number;
+  quantity: number;
+  materialId: number | null;
+  materialName: string | null;
+  phoneTypeId: number | null;
+  phoneTypeName: string | null;
+  variantId: number | null;
+  variantName: string | null;
+  cartId?: number;
+  price?: number;
+}

@@ -22,22 +22,26 @@ type FormDetailProductProps = {
 export const FormDetailProduct = (props: FormDetailProductProps) => {
   const { productDetail, image } = props;
 
-  const phoneTypeOptions = productDetail.phoneTypes?.length
-    ? productDetail.phoneTypes.map((p) => ({
+  console.log(productDetail, "productDetail");
+
+  const phoneTypeOptions = productDetail.PhoneTypes?.length
+    ? productDetail.PhoneTypes.map((p) => ({
         id: String(p.id),
         model: p.model,
       }))
     : [];
 
-  const materialOptions = productDetail.materials?.length
-    ? productDetail.materials.map((m) => ({
+  const materialOptions = productDetail.Materials?.length
+    ? productDetail.Materials.map((m) => ({
         id: String(m.id),
         name: m.name,
       }))
     : [];
 
-  const variantOptions = productDetail.variants?.length
-    ? productDetail.variants.map((v) => ({
+  console.log(materialOptions, "materialOptions");
+
+  const variantOptions = productDetail.Variants?.length
+    ? productDetail.Variants.map((v) => ({
         id: String(v.id),
         name: v.name,
       }))
@@ -84,17 +88,18 @@ export const FormDetailProduct = (props: FormDetailProductProps) => {
     <div className="h-full">
       <Form {...form}>
         <div className="flex flex-col gap-6 h-full">
+          <InputsFormProduct
+            control={form.control}
+            variants={variantOptions}
+            materials={materialOptions}
+            phone_type={phoneTypeOptions}
+          />
           <QuantityInput
             stockProduct={productDetail.stock}
             control={form.control}
           />
         </div>
-        <InputsFormProduct
-          control={form.control}
-          variants={variantOptions}
-          materials={materialOptions}
-          phone_type={phoneTypeOptions}
-        />
+
         <div className="flex-1 flex flex-row gap-3  items-end">
           <ValidateFormDetailProduct
             productId={productDetail.id}

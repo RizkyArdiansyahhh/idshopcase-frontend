@@ -1,10 +1,10 @@
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { material } from "@/types/api";
+import { Material } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 type GetMaterialsResponse = {
-  data: material[];
+  data: Material[];
 };
 
 const getMaterials = async () => {

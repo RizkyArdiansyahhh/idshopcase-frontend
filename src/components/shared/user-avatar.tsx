@@ -1,5 +1,7 @@
+import { cleanImageUrl } from "@/utils/image-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
+import { useGetUser } from "@/features/auth/api/get-user";
 
 type AvatarFallbackProps = {
   name: string;
@@ -18,6 +20,8 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
     "bg-slate-400",
   ];
 
+  const { data: user } = useGetUser();
+
   const safeName = name.trim();
   const splitName = name.split(" ");
   const initials =
@@ -28,17 +32,15 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
   const color = randomColor[safeName.charCodeAt(0) % randomColor.length];
 
   const isBlob = image?.startsWith("blob:") || image?.startsWith("data:");
-  const imageSrc = isBlob
-    ? image
-    : image
-    ? `${process.env.NEXT_PUBLIC_API_URL}${image}`
-    : undefined;
+  const imageSrc = isBlob ? image : cleanImageUrl(image) ?? "";
+
+  console.log(image);
 
   return (
     <Avatar className={cn(className)}>
       {image ? (
         <AvatarImage
-          src={imageSrc}
+          src={"/images/testimoni/speak-1.jpg"}
           alt="avatar-image"
           className="object-cover"
         ></AvatarImage>

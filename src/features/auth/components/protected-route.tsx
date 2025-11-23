@@ -17,14 +17,23 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const router = useRouter();
   const { data: user, isLoading } = useGetUser();
+  console.log(user?.role, "role");
 
   useEffect(() => {
-    if (!isLoading && user && !allowedRoles.includes(user.role)) {
+    if (isLoading) return;
+
+    if (!user) {
       router.replace(redirectTo);
+      return;
+    }
+    if (!allowedRoles.includes(user.role)) {
+      router.replace(redirectTo);
+      return;
     }
   }, [user, isLoading, allowedRoles, router, redirectTo]);
 
   if (isLoading) return <div>Loading...</div>;
+
   if (!user) return null;
   if (!allowedRoles.includes(user.role)) return null;
 

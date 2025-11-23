@@ -74,7 +74,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     mutationConfig: {
       onSuccess: () => {
         setIsEditing(false);
-        router.refresh();
+        // router.refresh();
       },
     },
   });
@@ -89,9 +89,9 @@ export const ProfileForm = (props: ProfileFormProps) => {
       console.log(data.image);
       formData.append("profile_picture", data.image);
     }
+    formData.append("role", "customer");
 
-    // updateUser(formData);
-    console.log(data);
+    updateUser(formData);
   };
 
   console.log(isEditing);

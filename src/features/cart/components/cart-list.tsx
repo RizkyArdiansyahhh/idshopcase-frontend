@@ -68,30 +68,28 @@ export const CartList = (props: CartListProps) => {
           </div>
         </div>
       ) : (
-        cartItems?.map((cartItem, index) => {
-          if (selectedCartItems.includes(cartItem.id)) {
+        cartItems
+          ?.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          .map((cartItem, index) => {
+            const isSelected = selectedCartItems.includes(cartItem.id);
+
             return (
               <CartCard
-                setSelectedCartItems={setSelectedCartItems}
-                isSelected={true}
                 key={index}
+                setSelectedCartItems={setSelectedCartItems}
+                isSelected={isSelected}
                 cartId={cartItem.id}
                 productId={cartItem.Product.id}
                 quantity={cartItem.quantity}
+                material={cartItem.Material?.name || null}
+                phoneType={cartItem.PhoneType?.model || null}
+                variant={cartItem.Variant?.name || null}
               />
             );
-          }
-          return (
-            <CartCard
-              setSelectedCartItems={setSelectedCartItems}
-              isSelected={false}
-              key={index}
-              cartId={cartItem.id}
-              productId={cartItem.Product.id}
-              quantity={cartItem.quantity}
-            />
-          );
-        })
+          })
       )}
     </div>
   );

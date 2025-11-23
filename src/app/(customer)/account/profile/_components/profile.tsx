@@ -10,6 +10,8 @@ export const Profile = () => {
   const cleanPath = user?.profile_picture?.split("/uploads/")[1] ?? null;
   const imageUrl = cleanPath ? `/images/${cleanPath}` : null;
 
+  console.log(imageUrl);
+
   if (!user) return null;
   return (
     <>

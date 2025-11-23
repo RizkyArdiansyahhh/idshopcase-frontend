@@ -14,14 +14,12 @@ type PaymentSummaryProps = {
   paymentMethod: string;
   subtotal: number;
   shippingCost: number;
-  totalPayment: number;
 };
 
 export const PaymentSummary = ({
   paymentMethod,
   subtotal,
   shippingCost,
-  totalPayment,
 }: PaymentSummaryProps) => {
   return (
     <Card>
@@ -43,7 +41,7 @@ export const PaymentSummary = ({
           <Separator className="my-2" />
           <div className="flex justify-between font-bold text-lg">
             <span>Total Pembayaran:</span>
-            <span>{formatCurrency(totalPayment)}</span>
+            <span>{formatCurrency(subtotal + shippingCost)}</span>
           </div>
         </div>
       </CardContent>

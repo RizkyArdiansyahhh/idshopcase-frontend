@@ -21,11 +21,22 @@ type CartCardProps = {
   quantity: number;
   isSelected: boolean;
   setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
+  material: string | null;
+  variant: string | null;
+  phoneType: string | null;
 };
 
 export const CartCard = (props: CartCardProps) => {
-  const { productId, quantity, cartId, isSelected, setSelectedCartItems } =
-    props;
+  const {
+    productId,
+    quantity,
+    cartId,
+    isSelected,
+    setSelectedCartItems,
+    material,
+    variant,
+    phoneType,
+  } = props;
 
   console.log(quantity);
 
@@ -108,9 +119,11 @@ export const CartCard = (props: CartCardProps) => {
             <Link href={"#"} className="text-md font-semibold">
               {product?.name}
             </Link>
-            <p className="text-sm font-light text-foreground/60">
-              {product?.category || "Material"}
-            </p>
+            <div className="text-sm font-light text-foreground/60 flex flex-col gap-0.5">
+              {phoneType && <span className="font-semibold">{phoneType}</span>}
+              {material && <span>{material}</span>}
+              {variant && <span>{variant}</span>}
+            </div>
           </div>
         </div>
       </div>

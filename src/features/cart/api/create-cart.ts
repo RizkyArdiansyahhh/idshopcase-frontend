@@ -1,13 +1,16 @@
 import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
-import { getCartsQueryKey, useGetCarts } from "./get-carts";
+import { getCartsQueryKey } from "./get-carts";
 
 type CartItemRequest = {
   productId: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customImageId?: any;
   quantity: number;
+  phoneTypeId: number | null;
+  variantId: number | null;
+  materialId: number | null;
 };
 
 const createCart = async (data: CartItemRequest) => {
