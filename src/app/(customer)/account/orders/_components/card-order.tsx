@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/format-currency";
 import { formatDate } from "@/lib/format-date";
 import { OrderItem } from "@/types/api";
+import { imageUrlPrimary } from "@/utils/image-utils";
 import { MapPin, Truck } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { TbShoppingBag } from "react-icons/tb";
 
 export const ArrowCustom = () => {
@@ -57,6 +59,7 @@ type CardOrderProps = {
 export const CardOrder = (props: CardOrderProps) => {
   const { orderId, createdAt, status, address, orderItems, total_price } =
     props;
+  const { push } = useRouter();
 
   const colorsPick: Record<string, string> = {
     pending: "yellow-200",
@@ -74,7 +77,7 @@ export const CardOrder = (props: CardOrderProps) => {
               <p className="text-xs text-foreground/50">Order ID</p>
               <div className="flex flex-row gap-3 items-center text-foreground/70">
                 <TbShoppingBag size={28} />
-                <p className="text-md font-semibold">CTH - 8979</p>
+                <p className="text-md font-semibold">{`INV-${orderId}`}</p>
               </div>
             </div>
             <div className="flex flex-row gap-3">
@@ -105,11 +108,11 @@ export const CardOrder = (props: CardOrderProps) => {
             {orderItems.map((item) => (
               <div
                 key={item.id}
-                className="h-28 w-full border rounded-[12px] overflow-hidden flex flex-row gap-2 "
+                className="h-28 w-full border rounded-[12px] overflow-hidden flex flex-row gap-2 mb-2 "
               >
                 <div className="h-full w-1/6 relative">
                   <Image
-                    src={"/images/product-1.jpeg"}
+                    src={imageUrlPrimary(item.Product.ProductImages) ?? ""}
                     alt="product-1"
                     fill
                     className="object-center object-cover"
@@ -145,13 +148,14 @@ export const CardOrder = (props: CardOrderProps) => {
               {formatCurrency(total_price)}
             </span>
             <span className="text-foreground/20 font-medium text-sm">
-              (1 item)
+              ({orderItems.length} produk)
             </span>
           </div>
           <Button
             type="button"
             variant={"default"}
             className="rounded-full px-10"
+            onClick={() => push(`/account/orders/detail/${orderId}`)}
           >
             Detail
           </Button>

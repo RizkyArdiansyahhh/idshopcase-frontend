@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
 import { InputsFormProduct } from "./inputs-form-product";
+import { CheckoutData } from "@/types/api";
+import { useCheckoutStore } from "@/store/checkout-store";
 
 type ValidateFormDetailProductProps = {
   productId: number;
@@ -93,6 +95,7 @@ export const ValidateFormDetailProduct = (
     },
   });
   const { push } = useRouter();
+  const setDataCheckout = useCheckoutStore((state) => state.setCheckoutData);
   useEffect(() => {
     if (data) {
       form.reset({
@@ -114,16 +117,37 @@ export const ValidateFormDetailProduct = (
   });
 
   const handleAddCart = (data: FormDetailProductType) => {
-    console.log("Form submitted:", data);
-    createCartItem({
+    const cartData = {
       productId: productId,
-      quantity: data.quantity,
-    });
+      quantity: Number(data.quantity),
+      materialId: Number(data.material) || null,
+      phoneTypeId: Number(data.phone_type) || null,
+      variantId: Number(data.variant) || null,
+    };
+    createCartItem(cartData);
   };
 
   const handleCheckout = (data: FormDetailProductType) => {
-    console.log("Form submitted:", data);
-    push(`/checkout?order=${encodeURIComponent(JSON.stringify(data))}`);
+    const selectedVariant = variantOptions.find((v) => v.id === data.variant);
+    const selectedMaterial = materialOptions.find(
+      (m) => m.id === data.material
+    );
+    const selectedPhoneType = phoneTypeOptions.find(
+      (p) => p.id === data.phone_type
+    );
+
+    setDataCheckout({
+      productId,
+      quantity: Number(data.quantity),
+      variantId: data.variant ? Number(data.variant) : null,
+      variantName: selectedVariant?.name || null,
+      materialId: data.material ? Number(data.material) : null,
+      materialName: selectedMaterial?.name || null,
+      phoneTypeId: data.phone_type ? Number(data.phone_type) : null,
+      phoneTypeName: selectedPhoneType?.model || null,
+    });
+
+    push("/order");
   };
 
   console.log(imageProduct, "imageProduct");

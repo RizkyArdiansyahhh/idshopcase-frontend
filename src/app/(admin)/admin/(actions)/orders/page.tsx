@@ -24,6 +24,7 @@ const OrdersPage = () => {
   const { data: users } = useGetUsers();
 
   const { data: orders } = useGetOrders();
+  console.log(orders, "orders");
 
   const columns = useMemo(
     () => [

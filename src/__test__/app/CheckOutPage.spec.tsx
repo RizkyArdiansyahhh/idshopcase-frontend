@@ -1,6 +1,6 @@
 // __tests__/CheckOutPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
-import CheckOutPage from "@/app/(customer)/checkout/page";
+import CheckOutPage from "@/app/(customer)/order/page";
 
 describe("CheckOutPage", () => {
   beforeEach(() => {

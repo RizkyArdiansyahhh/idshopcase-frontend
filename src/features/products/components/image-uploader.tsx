@@ -4,6 +4,7 @@ import Image from "next/image";
 import { IoMdClose } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
 import { useState, useEffect } from "react";
+import { ImageUp } from "lucide-react";
 
 type ImageItem = File | string; // File baru atau URL string
 
@@ -73,9 +74,14 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
         {isDragActive ? (
           <p className="text-sm text-gray-700">Lepaskan gambar…</p>
         ) : (
-          <p className="text-sm text-gray-600">
-            Drag & drop gambar di sini, atau klik untuk pilih file
-          </p>
+          <div className="text-sm flex flex-col items-center text-gray-600">
+            <ImageUp size={50} className="text-foreground/50" />
+            <p>Unggah Gambar</p>
+            <p>Maksimal 5MB</p>
+            <p className=" ">
+              Drag & drop gambar di sini, atau klik untuk pilih file
+            </p>
+          </div>
         )}
       </div>
 

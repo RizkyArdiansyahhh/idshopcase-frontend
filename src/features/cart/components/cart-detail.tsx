@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { useGetCarts } from "../api/get-carts";
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
+import { use } from "react";
+import { useCheckoutStore } from "@/store/checkout-store";
 
 type CartDetailProps = {
   selectedCartItems: number[];
@@ -14,9 +16,27 @@ export const CartDetail = (props: CartDetailProps) => {
   const cartItemsSelected = cartItem?.filter((item) =>
     selectedCartItems.includes(item.id)
   );
+  console.log(cartItem, "cartItem");
   const { push } = useRouter();
+  const setDataCheckout = useCheckoutStore((state) => state.setSelectedCartIds);
   const handleSubmit = () => {
-    push("/checkout?order=" + JSON.stringify(cartItemsSelected));
+    if (!cartItemsSelected) return;
+
+    const checkoutPayload = cartItemsSelected.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      materialId: item.Material?.id ?? null,
+      materialName: null,
+      phoneTypeId: item.PhoneType?.id ?? null,
+      phoneTypeName: null,
+      variantId: item.Variant?.id ?? null,
+      variantName: null,
+      cartId: item.id,
+    }));
+
+    setDataCheckout(checkoutPayload);
+
+    push("/order");
   };
   return (
     <div className="w-full border rounded-[12px] p-5 shadow-md bg-white">
@@ -45,7 +65,11 @@ export const CartDetail = (props: CartDetailProps) => {
       </div>
       <Separator className="mt-3 mb-8"></Separator>
 
-      <Button disabled={!cartItemsSelected?.length} className="w-full">
+      <Button
+        disabled={!cartItemsSelected?.length}
+        className="w-full"
+        onClick={handleSubmit}
+      >
         Beli Sekarang
       </Button>
     </div>
