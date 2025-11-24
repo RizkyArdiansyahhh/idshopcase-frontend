@@ -6,9 +6,9 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProducts = async () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response = await api.get<Product[]>("/product");
+  const response = await api.get<{ data: Product[] }>("/product");
 
-  return response.data;
+  return response.data.data;
 };
 
 export const getProductsQueryKey = () => ["products"];

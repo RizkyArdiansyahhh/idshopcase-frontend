@@ -1,8 +1,10 @@
 import { api, apiUpload } from "@/lib/axios";
-import { MutationConfig } from "@/lib/react-query";
+import { MutationConfig, queryClient } from "@/lib/react-query";
 import { CheckoutData } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { getOrdersAdminQueryKey } from "./get-orders-admin";
+import { getOrdersQueryKey } from "./get-orders";
 
 const createOrder = async (data: FormData) => {
   data.forEach((value, key) => {
@@ -22,6 +24,8 @@ export const useCreateOrder = ({ mutationConfig }: UseCreateOrder = {}) => {
     ...mutationConfig,
     onSuccess: (data, variables, onMutateResult, context) => {
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+      queryClient.invalidateQueries({ queryKey: getOrdersAdminQueryKey() });
+      queryClient.invalidateQueries({ queryKey: getOrdersQueryKey() });
     },
     onError: (err) => {
       console.error(err);

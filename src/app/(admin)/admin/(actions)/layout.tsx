@@ -3,5 +3,5 @@ export default function AdminActionsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="p-4 lg:p-6">{children}</div>;
+  return <div className="p-4 lg:p-6 h-full">{children}</div>;
 }
