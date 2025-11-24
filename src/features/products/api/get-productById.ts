@@ -4,9 +4,9 @@ import { Product } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getProduct = async (id: number) => {
-  const response = await api.get<Product>(`/product/${id}`);
+  const response = await api.get<{ data: Product }>(`/product/${id}`);
 
-  return response.data;
+  return response.data.data;
 };
 
 export const getProductQueryKey = (id: number) => ["product", id];

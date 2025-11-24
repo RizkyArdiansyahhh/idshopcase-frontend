@@ -12,6 +12,15 @@ import { CardProductDetail } from "../detail/[orderId]/_components/card-product-
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { add } from "@dnd-kit/utilities";
 import { formatDate } from "@/lib/format-date";
+import { TbCopy } from "react-icons/tb";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { copyToClipboard } from "@/utils/copy-clipboard";
+import { ButtonCopyResi } from "@/components/shared/button-copy-resi";
 
 export default function OrderDetail({
   order,
@@ -153,18 +162,27 @@ export default function OrderDetail({
             </div>
 
             <div className="border rounded-md px-5 pt-2 pb-5">
-              <p className="text-2xl font-semibold text-foreground/80 mb-3">
-                Order #{order.id}
+              <p className="font-semibold text-sm text-foreground/80 mb-2">
+                Informasi Pesanan
               </p>
-              <div className="flex flex-row gap-2 justify-between">
-                <CalendarDays size={18} className="text-foreground/50" />
+              <div className="flex justify-between text-sm text-foreground/50">
+                <p>Order ID : </p>
+                <p className="text-foreground/70 font-semibold">#{order.id}</p>
+              </div>
+              <div className="flex flex-row gap-2 justify-between items-center">
+                {/* <CalendarDays size={18} className="text-foreground/50" /> */}
+                <p className="text-sm text-foreground/50">Di buat :</p>
                 <p className="text-sm text-foreground/50">
                   {formatDate(order.createdAt)}
                 </p>
               </div>
-              <div className="flex justify-between text-sm text-foreground/50">
+              <div className="flex items-center justify-between text-sm text-foreground/50">
                 <p>Resi : </p>
-                <p>{order.tracking_number ?? "-"}</p>
+                <div className="flex flex-row gap-1 items-center">
+                  <p>{order.tracking_number ?? "-"}</p>
+                  {order.tracking_number &&
+                    ButtonCopyResi(order.tracking_number ?? "")}
+                </div>
               </div>
             </div>
           </div>

@@ -147,6 +147,45 @@ export interface CheckoutData {
   price?: number;
 }
 
+export type OrderItemAdmin = {
+  id: number;
+  orderId: number;
+  productId: number;
+  customImageId: number | null;
+  quantity: number;
+  price: string;
+  phoneTypeId: number | null;
+  materialId: number | null;
+  variantId: number | null;
+  createdAt: string;
+  updatedAt: string;
+  Product: {
+    id: number;
+    name: string;
+    price: string;
+    category: string;
+    ProductImages: ProductImage[];
+  };
+  PhoneType: {
+    id: number;
+    model: string;
+  };
+  Material: {
+    id: number;
+    name: string;
+  };
+  Variant: {
+    id: number;
+    name: string;
+  };
+  CustomImage: {
+    id: number;
+    image_url: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    processed_url: any;
+  };
+};
+
 export type OrderAdmin = {
   id: number;
   userId: number;
@@ -164,48 +203,12 @@ export type OrderAdmin = {
     email: string;
     phone: string;
   };
-  OrderItems: Array<{
+  OrderItems: OrderItemAdmin[];
+  Payment: {
     id: number;
-    orderId: number;
-    productId: number;
-    customImageId: number | null;
-    quantity: number;
-    price: string;
-    phoneTypeId: number | null;
-    materialId: number | null;
-    variantId: number | null;
-    createdAt: string;
-    updatedAt: string;
-    Product: {
-      id: number;
-      name: string;
-      price: string;
-      ProductImages: ProductImage[];
-      CustomImage: Array<{
-        id: number;
-        image_url: string;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        processed_url: any;
-      }>;
-      PhoneType: {
-        id: number;
-        model: string;
-      };
-      Material: {
-        id: number;
-        name: string;
-      };
-      Variant: {
-        id: number;
-        name: string;
-      };
-    };
-    Payment: {
-      id: number;
-      payment_gateway: string;
-      status: string;
-      amount: string;
-    };
-    Address: Address;
-  }>;
+    payment_gateway: string;
+    status: string;
+    amount: string;
+  };
+  Address: Address;
 };
