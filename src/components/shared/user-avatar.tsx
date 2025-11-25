@@ -21,8 +21,6 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
     "bg-slate-400",
   ];
 
-  const { data: user } = useGetUser();
-
   const safeName = name.trim();
   const splitName = name.split(" ");
   const initials =
@@ -35,7 +33,7 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
   const isBlob = image?.startsWith("blob:") || image?.startsWith("data:");
   const imageSrc = isBlob ? image : cleanImageUrl(image) ?? "";
 
-  console.log(image, "image");
+  console.log(imageSrc, "image");
 
   return (
     <Avatar className={cn(className)}>
