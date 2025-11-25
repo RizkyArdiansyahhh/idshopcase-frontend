@@ -30,6 +30,7 @@ export const useCheckout = () => {
   // State global
   const dataCheckout = useCheckoutStore((state) => state.data);
   const cartItems = useCheckoutStore((state) => state.selectedCartIds);
+  console.log(cartItems, "cartItems");
 
   // API
   const { data: userAddresses } = useGetAddresses() || [];
@@ -146,32 +147,64 @@ export const useCheckout = () => {
   const handleCreateOrder = () => {
     const formData = new FormData();
     formData.append("addressId", String(selectedAddress?.id ?? 1));
+    // formData.append(
+    //   "buyNow",
+    //   JSON.stringify({
+    //     productId: dataCheckout?.productId,
+    //     quantity: dataCheckout?.quantity,
+    //     variantId: dataCheckout?.variantId,
+    //     materialId: dataCheckout?.materialId,
+    //     phoneTypeId: dataCheckout?.phoneTypeId,
+    //   })
+    // );
+    // const files: File[] = customImage
+    //   .flat()
+    //   .filter((file) => file !== undefined);
+    // files.forEach((file) => {
+    //   formData.append("custom_images", file);
+    // });
+    // formData.append(
+    //   "customMap",
+    //   JSON.stringify({
+    //     buyNow: files.map((_, index) => index),
+    //   })
+    // );
+    // selectedItemIds
+    formData.append(
+      "selectedItemIds",
+      JSON.stringify(cartItems.map((i) => i.cartId))
+    ); // [27, 28]
 
-    if (cartItems && cartItems.length > 0) {
-      // Jika dari cart
-      const selectedItemIds: number[] = cartItems
-        .map((item) => item.cartId)
-        .filter((id): id is number => id !== undefined);
+    // Append files dan build customMap
+    let globalFileIndex = 0;
+    const customMapData: { id: number; files: number[] }[] = [];
 
-      formData.append("selectedItemIds", JSON.stringify(selectedItemIds));
-    } else if (dataCheckout) {
-      // Jika Buy Now
-      formData.append(
-        "buyNow",
-        JSON.stringify({
-          productId: dataCheckout.productId,
-          quantity: dataCheckout.quantity,
-          materialId: dataCheckout.materialId,
-          phoneTypeId: dataCheckout.phoneTypeId,
-          variantId: dataCheckout.variantId,
-        })
-      );
-    }
+    cartItems.forEach((itemId, itemIndex) => {
+      const fileIndices: number[] = [];
+      const itemImages = customImage[itemIndex] || [];
 
-    // Custom images
-    customImage.flat().forEach((file) => {
-      if (file) formData.append("custom_images", file);
+      itemImages.forEach((file) => {
+        if (file) {
+          // Append file
+          formData.append("custom_images", file);
+
+          // Track index untuk customMap
+          fileIndices.push(globalFileIndex);
+          globalFileIndex++;
+        }
+      });
+
+      // Tambah ke customMap jika ada file
+      if (fileIndices.length > 0) {
+        customMapData.push({
+          id: itemId.cartId ?? 0,
+          files: fileIndices,
+        });
+      }
     });
+
+    // customMap
+    formData.append("customMap", JSON.stringify(customMapData));
 
     createOrder(formData);
   };
