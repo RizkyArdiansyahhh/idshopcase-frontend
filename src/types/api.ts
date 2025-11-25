@@ -7,6 +7,8 @@ export type User = {
   phone: string;
   profile_picture: string;
   role: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Address = {

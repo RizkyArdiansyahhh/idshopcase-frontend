@@ -7,21 +7,20 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { useGetOrders } from "@/features/orders/api/get-orders";
+import { useGetOrdersAdmin } from "@/features/orders/api/get-orders-admin";
 import { formatCurrency } from "@/lib/format-currency";
 import { Order } from "@/types/api";
 import { IconTrendingUp } from "@tabler/icons-react";
 
 export const TotalRevenue = () => {
-  const { data: orders } = useGetOrders();
+  const { data: orders } = useGetOrdersAdmin();
 
   if (!orders) return null;
 
   const getMonthlyRevenue = (orders: Order[]) => {
     const completedOrders = orders.filter(
-      (order) => order.status === "completed"
+      (order) => order.status === "shipped" // atau "completed" sesuaikan dengan backend
     );
 
     const monthlyRevenue: Record<string, number> = {};
@@ -32,8 +31,8 @@ export const TotalRevenue = () => {
         .toString()
         .padStart(2, "0")}`;
 
-      if (!monthlyRevenue[monthKey]) monthlyRevenue[monthKey] = 0;
-      monthlyRevenue[monthKey] += order.total_price;
+      monthlyRevenue[monthKey] =
+        (monthlyRevenue[monthKey] || 0) + Number(order.total_price);
     });
 
     return monthlyRevenue;

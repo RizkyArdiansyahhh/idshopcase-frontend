@@ -14,10 +14,11 @@ import { IconUserPlus } from "@tabler/icons-react";
 
 export const TotalUserCard = () => {
   const { data: users } = useGetUsers();
+  console.log(users);
 
   if (!users) return null;
 
-  const normalUsers = users.filter((u) => u.role === "USER");
+  const normalUsers = users.filter((u) => u.role === "customer");
 
   const totalUsers = normalUsers.length;
 

@@ -49,7 +49,7 @@ export const Sidebar = () => {
       <Separator></Separator>
       <div className="p-5">
         <Button
-          className="w-full px-8 py-1 font-bold text-md bg-destructive/80"
+          className="w-full px-8 py-1 font-bold text-md bg-foreground text-background"
           variant="destructive"
         >
           <IoLogOut size={32} />
