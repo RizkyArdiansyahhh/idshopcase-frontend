@@ -1,18 +1,21 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { donwloadCustomImage } from "@/features/orders/api/donwload-custom-image";
 import { formatCurrency } from "@/lib/format-currency";
 import { OrderItemAdmin } from "@/types/api";
 import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
 import Image from "next/image";
 import { format } from "path";
+import CustomImages from "./custom-images";
+import { PreviewImage } from "@/components/shared/preview-image";
 
 type CardOrderItemProps = {
   item: OrderItemAdmin;
 };
 export const CardOrderItem = (props: CardOrderItemProps) => {
   const { item } = props;
+
+  console.log(item.CustomImages, "item.CustomImages");
 
   return (
     <>
@@ -51,7 +54,7 @@ export const CardOrderItem = (props: CardOrderItemProps) => {
             </div>
           </div>
         </div>
-        {item.CustomImage && (
+        {item.CustomImages && item.CustomImages.length > 0 && (
           <>
             <Separator className="my-2"></Separator>
 
@@ -59,23 +62,7 @@ export const CardOrderItem = (props: CardOrderItemProps) => {
               <p className="text-xs text-foreground/80 font-semibold">
                 File Custom Case Original Item #12
               </p>
-              <div className="p-3">
-                <div className="w-16 h-16 rounded-md overflow-hidden relative hover:cursor-zoom-in">
-                  <Image
-                    src={cleanImageUrl(item.CustomImage.image_url) ?? ""}
-                    alt="custom-case"
-                    fill
-                    className="object-cover object-center"
-                  ></Image>
-                </div>
-              </div>
-              <Button
-                onClick={() => {
-                  donwloadCustomImage(item.CustomImage.id);
-                }}
-              >
-                Unduh File
-              </Button>
+              <CustomImages images={item.CustomImages}></CustomImages>
             </div>
           </>
         )}

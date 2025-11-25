@@ -23,6 +23,10 @@ const sidebarLink: { label: string; path: string }[] = [
     label: "Ubah Password",
     path: "/account/update-password",
   },
+  {
+    label: "Lacak Pesanan",
+    path: "/account/track-order",
+  },
 ];
 
 export const Sidebar = () => {

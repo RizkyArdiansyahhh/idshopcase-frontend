@@ -4,7 +4,8 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getTrackOrder = async (orderId: number) => {
   const response = await api.get(`/order/${orderId}/tracking`);
-  return response.data;
+  console.log(response, "response");
+  return response.data.tracking;
 };
 
 export const getTrackOrderQueryKey = (orderId: number) => [

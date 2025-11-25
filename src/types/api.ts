@@ -178,12 +178,12 @@ export type OrderItemAdmin = {
     id: number;
     name: string;
   };
-  CustomImage: {
+  CustomImages: Array<{
     id: number;
     image_url: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     processed_url: any;
-  };
+  }>;
 };
 
 export type OrderAdmin = {
