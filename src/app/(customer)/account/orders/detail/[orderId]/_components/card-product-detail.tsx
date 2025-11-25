@@ -24,7 +24,7 @@ export const CardProductDetail = (props: CardProductDetailProps) => {
   return (
     <>
       <div className="flex flex-row gap-2 border border-foreground/5 rounded-md">
-        <div className="h-28 w-28 rounded-xs relative overflow-hidden">
+        <div className="h-28 w-28 rounded-md relative overflow-hidden">
           {imageUrl && (
             <Image
               src={imageUrl}
@@ -41,8 +41,8 @@ export const CardProductDetail = (props: CardProductDetailProps) => {
               {productName}
             </span>
             <div className="text-foreground/50 font-medium text-xs flex flex-col gap-0.5 my-1">
-              <span>Material</span>
-              <span>Phone Type</span>
+              <span>{material}</span>
+              <span>{variant}</span>
             </div>
           </div>
           <div>
