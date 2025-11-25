@@ -1,25 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
-import { ArrowLeft, CalendarDays, Mail, Phone } from "lucide-react";
+import { ArrowLeft, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { Order, OrderItem, User } from "@/types/api";
 import { CardProductDetail } from "../detail/[orderId]/_components/card-product-detail";
 import { imageUrlPrimary } from "@/utils/image-utils";
-import { add } from "@dnd-kit/utilities";
 import { formatDate } from "@/lib/format-date";
-import { TbCopy } from "react-icons/tb";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { copyToClipboard } from "@/utils/copy-clipboard";
+
 import { ButtonCopyResi } from "@/components/shared/button-copy-resi";
 
 export default function OrderDetail({

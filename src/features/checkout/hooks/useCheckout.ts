@@ -89,12 +89,10 @@ export const useCheckout = () => {
     }
   }, [detailProduct]);
 
-  // Set default address
   useEffect(() => {
     if (userAddresses?.length) setSelectedAddress(userAddresses[0]);
   }, [userAddresses]);
 
-  // Hitung total
   const quantity = dataCheckout?.quantity ?? 0;
   const subtotal =
     detailProduct.reduce((acc, item) => acc + item.price * item.quantity, 0) ??
@@ -103,7 +101,6 @@ export const useCheckout = () => {
   const totalPayment = subtotal + shippingCost;
   const paymentMethod = "DOKU";
 
-  // Create Order API
   const { mutate: createOrder, isPending: createOrderIsLoading } =
     useCreateOrder({
       mutationConfig: {
@@ -113,7 +110,6 @@ export const useCheckout = () => {
       },
     });
 
-  // File handlers
   const handleFileSelect = (
     productIdx: number,
     slotIdx: number,
@@ -147,64 +143,60 @@ export const useCheckout = () => {
   const handleCreateOrder = () => {
     const formData = new FormData();
     formData.append("addressId", String(selectedAddress?.id ?? 1));
-    // formData.append(
-    //   "buyNow",
-    //   JSON.stringify({
-    //     productId: dataCheckout?.productId,
-    //     quantity: dataCheckout?.quantity,
-    //     variantId: dataCheckout?.variantId,
-    //     materialId: dataCheckout?.materialId,
-    //     phoneTypeId: dataCheckout?.phoneTypeId,
-    //   })
-    // );
-    // const files: File[] = customImage
-    //   .flat()
-    //   .filter((file) => file !== undefined);
-    // files.forEach((file) => {
-    //   formData.append("custom_images", file);
-    // });
-    // formData.append(
-    //   "customMap",
-    //   JSON.stringify({
-    //     buyNow: files.map((_, index) => index),
-    //   })
-    // );
-    // selectedItemIds
-    formData.append(
-      "selectedItemIds",
-      JSON.stringify(cartItems.map((i) => i.cartId))
-    ); // [27, 28]
 
-    // Append files dan build customMap
-    let globalFileIndex = 0;
-    const customMapData: { id: number; files: number[] }[] = [];
+    if (cartItems && cartItems.length) {
+      formData.append(
+        "selectedItemIds",
+        JSON.stringify(cartItems.map((i) => i.cartId))
+      );
 
-    cartItems.forEach((itemId, itemIndex) => {
-      const fileIndices: number[] = [];
-      const itemImages = customImage[itemIndex] || [];
+      let globalFileIndex = 0;
+      const customMapData: Record<string, { files: number[] }> = {};
 
-      itemImages.forEach((file) => {
-        if (file) {
-          // Append file
+      cartItems.forEach((item, index) => {
+        const itemImages = customImage[index] || [];
+        const fileIndices: number[] = [];
+
+        itemImages.forEach((file) => {
+          if (!file) return;
+
           formData.append("custom_images", file);
 
-          // Track index untuk customMap
           fileIndices.push(globalFileIndex);
           globalFileIndex++;
+        });
+
+        if (fileIndices.length > 0) {
+          const cartId = String(item.cartId ?? 0);
+          customMapData[cartId] = { files: fileIndices };
         }
       });
 
-      // Tambah ke customMap jika ada file
-      if (fileIndices.length > 0) {
-        customMapData.push({
-          id: itemId.cartId ?? 0,
-          files: fileIndices,
-        });
-      }
-    });
+      formData.append("customMap", JSON.stringify(customMapData));
+    }
 
-    // customMap
-    formData.append("customMap", JSON.stringify(customMapData));
+    formData.append(
+      "buyNow",
+      JSON.stringify({
+        productId: dataCheckout?.productId,
+        quantity: dataCheckout?.quantity,
+        variantId: dataCheckout?.variantId,
+        materialId: dataCheckout?.materialId,
+        phoneTypeId: dataCheckout?.phoneTypeId,
+      })
+    );
+    const files: File[] = customImage
+      .flat()
+      .filter((file) => file !== undefined);
+    files.forEach((file) => {
+      formData.append("custom_images", file);
+    });
+    formData.append(
+      "customMap",
+      JSON.stringify({
+        buyNow: files.map((_, index) => index),
+      })
+    );
 
     createOrder(formData);
   };

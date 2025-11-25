@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getOrdersAdminQueryKey } from "./get-orders-admin";
 import { getOrdersQueryKey } from "./get-orders";
+import { getCartsQueryKey } from "@/features/cart/api/get-carts";
 
 const createOrder = async (data: FormData) => {
   data.forEach((value, key) => {
@@ -26,6 +27,7 @@ export const useCreateOrder = ({ mutationConfig }: UseCreateOrder = {}) => {
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
       queryClient.invalidateQueries({ queryKey: getOrdersAdminQueryKey() });
       queryClient.invalidateQueries({ queryKey: getOrdersQueryKey() });
+      queryClient.invalidateQueries({ queryKey: getCartsQueryKey() });
     },
     onError: (err) => {
       console.error(err);
