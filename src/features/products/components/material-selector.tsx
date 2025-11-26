@@ -33,7 +33,8 @@ export const VariantSelector = (props: VariantSelectorProps) => {
         {value.length === 0 && (
           <div className="w-ful h-full justify-center">
             <span className="text-foreground/50 text-xs">
-              Belum ada pilihan, silahkan pilih variant yang tersedia
+              Belum ada pilihan, Anda dapat menambahkan variant yang tersedia
+              atau menambahkan variant baru
             </span>
           </div>
         )}

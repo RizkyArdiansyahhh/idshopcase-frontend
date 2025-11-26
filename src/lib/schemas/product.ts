@@ -14,6 +14,12 @@ export const formProductSchema = z.object({
   variant: z.array(z.number()).optional(),
   toggleIsPhoneType: z.boolean().optional(),
   phone_type: z.array(z.number()).optional(),
+  toggleIsCreateVariant: z.boolean().optional(),
+
+  nameVariant: z.string().nullable().optional(),
+  priceVariant: z.string().nullable().optional(),
+  stockVariant: z.string().nullable().optional(),
+  maxImagesVariant: z.string().nullable().optional(),
 });
 
 export type FormProductType = z.infer<typeof formProductSchema>;
