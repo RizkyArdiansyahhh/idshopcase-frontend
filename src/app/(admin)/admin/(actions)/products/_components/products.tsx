@@ -57,24 +57,59 @@ export const Products = () => {
           );
         },
       }),
-      columnHelper.accessor("price", {
-        header: "Harga",
-        cell: ({ row }) => {
-          return (
-            <span className="text-app-semibold-sm">
-              {formatCurrency(Number(row.original.price))}
-            </span>
-          );
+      columnHelper.accessor(
+        // Accessor function → ambil angka price dari Variants
+        (row) => {
+          const variants = row.Variants ?? [];
+
+          if (variants.length === 0) return null;
+
+          const prices = variants.map((v) => v.price);
+
+          const min = Math.min(Number(...prices));
+          const max = Math.max(Number(...prices));
+
+          return { min, max };
         },
-      }),
-      columnHelper.accessor("stock", {
-        header: "Stock",
-        cell: ({ row }) => {
-          return (
-            <span className="text-app-semibold-sm">{row.original.stock}</span>
+        {
+          id: "price",
+          header: "Harga",
+          cell: ({ getValue }) => {
+            const value = getValue();
+
+            if (!value) return <span>-</span>;
+
+            const { min, max } = value;
+
+            return (
+              <span className="text-app-semibold-sm">
+                {min === max
+                  ? formatCurrency(min)
+                  : `${formatCurrency(min)} - ${formatCurrency(max)}`}
+              </span>
+            );
+          },
+        }
+      ),
+
+      columnHelper.accessor(
+        (row) => {
+          const variants = row.Variants ?? [];
+          const totalStock = variants.reduce(
+            (sum, v) => sum + (v.stock ?? 0),
+            0
           );
+          return totalStock;
         },
-      }),
+        {
+          id: "stock",
+          header: "Stock",
+          cell: ({ getValue }) => {
+            const stock = getValue() as number;
+            return <span className="text-app-semibold-sm">{stock}</span>;
+          },
+        }
+      ),
       columnHelper.display({
         id: "actions",
         cell: ({ row }) => (
@@ -124,6 +159,7 @@ export const Products = () => {
   );
 
   const { data: products } = useGetProducts();
+  console.log(products);
 
   const table = useReactTable({
     data: products || [],

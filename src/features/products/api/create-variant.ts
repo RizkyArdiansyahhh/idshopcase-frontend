@@ -3,8 +3,9 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { getVariantsQueryKey } from "./get-variants";
 import { Variant } from "@/types/api";
+import { toast } from "sonner";
 
-type CreateVariantItemRequest = Omit<Variant, "id">;
+type CreateVariantItemRequest = Omit<Variant, "id" | "createdAt" | "updatedAt">;
 
 const createVariant = async (data: CreateVariantItemRequest) => {
   const response = await api.post("/reference/variants", data);
@@ -22,6 +23,7 @@ export const useCreateVariant = ({ mutationConfig }: UseCreateVariant = {}) => {
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: getVariantsQueryKey() });
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+      toast.success("Variant berhasil ditambahkan");
     },
     onError: (err) => {
       console.error(err);

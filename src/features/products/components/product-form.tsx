@@ -30,6 +30,9 @@ import { useUpdateProduct } from "../api/update-product";
 import { ImageUploader } from "./image-uploader";
 import { FieldCheckbox } from "./field-checkbox";
 import { PhoneTypeOptions, VariantOptions } from "./type-options";
+import { Separator } from "@/components/ui/separator";
+import { useCreateVariant } from "../api/create-variant";
+import { CreateVariant } from "./create-variant";
 
 export const ProductForm = () => {
   console.log("saya render product form");
@@ -52,6 +55,7 @@ export const ProductForm = () => {
       images: [],
       toggleIsVariant: false,
       toggleIsPhoneType: false,
+      toggleIsCreateVariant: false,
     },
   });
   // useEffect(() => {
@@ -69,6 +73,9 @@ export const ProductForm = () => {
 
   const isVariant = form.watch("toggleIsVariant");
   const isPhoneType = form.watch("toggleIsPhoneType");
+  const isCreateVariant = form.watch("toggleIsCreateVariant");
+
+  console.log(isCreateVariant);
 
   const handleSubmit = (data: FormProductType) => {
     const formData = new FormData();
@@ -84,6 +91,10 @@ export const ProductForm = () => {
 
     data.phone_type?.forEach((id) => {
       formData.append("phoneTypes[]", String(id));
+    });
+
+    data.variant?.forEach((id) => {
+      formData.append("variants[]", String(id));
     });
 
     if (product) {
@@ -219,51 +230,62 @@ export const ProductForm = () => {
                     </FormItem>
                   )}
                 />
+                <div>
+                  <FieldCheckbox
+                    control={form.control}
+                    name="toggleIsPhoneType"
+                    label="Apakah Produk memiliki Tipe Handphone"
+                  />
+                  {isPhoneType && (
+                    <FormField
+                      name="phone_type"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <PhoneTypeOptions
+                            value={field.value}
+                            onChange={field.onChange}
+                          ></PhoneTypeOptions>
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
             <div className="w-full lg:w-1/2 border rounded-md p-4 relative pb-20 flex flex-col gap-4">
               <p className="text-foreground/40 font-medium mb-2">Variasi</p>
-              <div>
-                <FieldCheckbox
-                  control={form.control}
-                  name="toggleIsPhoneType"
-                  label="Tipe Handphone"
-                />
-                {isPhoneType && (
-                  <FormField
-                    name="phone_type"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <PhoneTypeOptions
-                          value={field.value}
-                          onChange={field.onChange}
-                        ></PhoneTypeOptions>
-                      </FormItem>
-                    )}
-                  />
-                )}
-              </div>
+
               <div>
                 <FieldCheckbox
                   control={form.control}
                   name="toggleIsVariant"
-                  label="Variant"
+                  label="Apakah Produk memiliki Variant"
                 />
                 {isVariant && (
-                  <FormField
-                    name="variant"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <VariantOptions
-                          value={field.value}
-                          onChange={field.onChange}
-                        ></VariantOptions>
-                      </FormItem>
+                  <>
+                    <FormField
+                      name="variant"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem className="mb-3">
+                          <VariantOptions
+                            value={field.value}
+                            onChange={field.onChange}
+                          ></VariantOptions>
+                        </FormItem>
+                      )}
+                    />
+                    <FieldCheckbox
+                      control={form.control}
+                      name="toggleIsCreateVariant"
+                      label="Tambah Variant Baru"
+                    />
+                    {isCreateVariant && (
+                      <CreateVariant form={form}></CreateVariant>
                     )}
-                  />
+                  </>
                 )}
               </div>
 

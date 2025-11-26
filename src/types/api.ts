@@ -1,5 +1,3 @@
-import { product } from "@/mocks/products";
-
 export type User = {
   id: number;
   name: string;
@@ -27,13 +25,10 @@ export type Product = {
   id: number;
   name: string;
   description: string;
-  price: string;
-  stock: number;
   category: string;
   createdAt: string;
   updatedAt: string;
   ProductImages: ProductImage[];
-  Materials?: Material[];
   Variants?: Variant[];
   PhoneTypes?: PhoneType[];
 };

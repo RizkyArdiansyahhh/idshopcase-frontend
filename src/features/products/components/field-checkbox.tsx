@@ -18,7 +18,7 @@ export const FieldCheckbox = (props: FieldCheckboxProps) => {
         control={control}
         render={({ field }) => (
           <FormItem className="flex flex-row justify-between">
-            <FormLabel>Apakah produk memiliki {label} ?</FormLabel>
+            <FormLabel> {label} ?</FormLabel>
             <Checkbox
               checked={field.value}
               onCheckedChange={field.onChange}
