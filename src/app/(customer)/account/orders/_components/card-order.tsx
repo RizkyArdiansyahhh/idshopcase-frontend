@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
 import { formatDate } from "@/lib/format-date";
-import { OrderItem } from "@/types/api";
+import { OrderItem, OrderItemAdmin } from "@/types/api";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { MapPin, Truck } from "lucide-react";
 import Image from "next/image";
@@ -52,7 +53,7 @@ type CardOrderProps = {
   status: string;
   address: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  orderItems: Array<OrderItem>;
+  orderItems: OrderItemAdmin[];
   total_price: number;
 };
 
@@ -96,7 +97,7 @@ export const CardOrder = (props: CardOrderProps) => {
           <div className="p-2 flex flex-row justify-between items-center">
             <Badge variant={"outline"}>
               <Truck></Truck>
-              <span className="ml-2">Jakarta Selatan</span>
+              <span className="ml-2">Jawa Barat</span>
             </Badge>
             <ArrowCustom></ArrowCustom>
             <Badge>
@@ -108,9 +109,9 @@ export const CardOrder = (props: CardOrderProps) => {
             {orderItems.map((item) => (
               <div
                 key={item.id}
-                className="h-28 w-full border rounded-[12px] overflow-hidden flex flex-row gap-2 mb-2 "
+                className="h-24 w-full border rounded-[12px] overflow-hidden flex flex-row gap-2 mb-2 "
               >
-                <div className="h-full w-1/6 relative">
+                <div className="h-full w-[12%] relative">
                   <Image
                     src={imageUrlPrimary(item.Product.ProductImages) ?? ""}
                     alt="product-1"
@@ -130,16 +131,35 @@ export const CardOrder = (props: CardOrderProps) => {
                       x1
                     </span>
                   </div>
-                  <p className="text-sm font-medium text-foreground/70">
-                    Custom Case
-                  </p>
+                  <div className="flex flex-row gap-1">
+                    {item.Variant && (
+                      <p className="text-xs font-medium text-foreground/70">
+                        {item.Variant.name}
+                      </p>
+                    )}
+                    {item.PhoneType && (
+                      <>
+                        <p className="text-xs font-medium text-foreground/70">
+                          {item.PhoneType.model}
+                        </p>
+                      </>
+                    )}
+                    {item.Material && (
+                      <>
+                        <p className="text-xs font-medium text-foreground/70">
+                          {item.Material.name}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  {}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="w-full h-16 bg-foreground/10 flex flex-row justify-between items-center px-4">
+        <div className="w-full h-16 bg-foreground/5 flex flex-row justify-between items-center px-4">
           <div className="flex flex-row gap-1 items-center">
             <span className="text-foreground font-semibold text-md">
               Total:{" "}

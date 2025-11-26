@@ -53,7 +53,11 @@ export type Material = {
 export type Variant = {
   id: number;
   name: string;
-  description: string;
+  price: string;
+  stock: number;
+  max_images: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ProductImage = {

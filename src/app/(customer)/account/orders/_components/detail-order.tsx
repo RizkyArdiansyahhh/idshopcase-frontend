@@ -5,7 +5,13 @@ import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
 import { ArrowLeft, Mail, Phone } from "lucide-react";
 import Link from "next/link";
-import { Order, OrderItem, User } from "@/types/api";
+import {
+  Order,
+  OrderAdmin,
+  OrderItem,
+  OrderItemAdmin,
+  User,
+} from "@/types/api";
 import { CardProductDetail } from "../detail/[orderId]/_components/card-product-detail";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { formatDate } from "@/lib/format-date";
@@ -16,7 +22,7 @@ export default function OrderDetail({
   order,
   user,
 }: {
-  order: Order;
+  order: OrderAdmin;
   user: User;
 }) {
   if (!order) return <p>Loading...</p>;
@@ -44,13 +50,16 @@ export default function OrderDetail({
         <div className="w-full h-full flex flex-row gap-5 ">
           <div className="w-2/3 h-fit ">
             <div className="border shadow-xs rounded-md mb-3 p-3 flex flex-col gap-2">
-              {orderItems.map((item: OrderItem) => (
+              {orderItems.map((item: OrderItemAdmin) => (
                 <CardProductDetail
                   key={item.id}
                   imageUrl={imageUrlPrimary(item.Product.ProductImages) ?? ""}
                   productName={item.Product.name}
                   price={item.Product.price}
                   quantity={item.quantity}
+                  material={item.Material?.name}
+                  variant={item.Variant?.name}
+                  phoneType={item.PhoneType?.model}
                 ></CardProductDetail>
               ))}
             </div>
@@ -123,11 +132,11 @@ export default function OrderDetail({
                   Info Kontak
                 </p>
                 <div className="flex flex-col gap-2">
-                  <div className="flex flex-row gap-2 items-center text-foreground/70">
+                  <div className="flex flex-row justify-between gap-2 items-center text-foreground/70">
                     <Mail size={18} />
                     <p className="text-sm">{user.email}</p>
                   </div>
-                  <div className="flex flex-row gap-2 items-center text-foreground/70">
+                  <div className="flex flex-row justify-between gap-2 items-center text-foreground/70">
                     <Phone size={18} />
                     <p className="text-sm">{user.phone}</p>
                   </div>

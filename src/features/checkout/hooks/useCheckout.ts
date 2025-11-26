@@ -16,6 +16,7 @@ export type DetailProduct = {
   variant: string | null;
   phoneType: string | null;
   quantity: number;
+  category: string;
 };
 
 const SLOT_COUNT = 3;
@@ -52,6 +53,7 @@ export const useCheckout = () => {
         variant: dataCheckout.variantName ?? null,
         phoneType: dataCheckout.phoneTypeName ?? null,
         quantity: dataCheckout.quantity,
+        category: productItem.category,
       });
     }
   } else if (cartItems?.length) {
@@ -75,6 +77,7 @@ export const useCheckout = () => {
         variant: variant?.name ?? null,
         phoneType: phoneType?.model ?? null,
         quantity: item.quantity,
+        category: productItem.category,
       });
     });
   }

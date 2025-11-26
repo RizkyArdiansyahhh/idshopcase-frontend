@@ -7,16 +7,18 @@ import {
 } from "@/components/ui/popover";
 import { Check } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Material } from "@/types/api";
+import { Material, Variant } from "@/types/api";
 
-type MaterialSelectorProps = {
-  options: Material[];
+type VariantSelectorProps = {
+  options: Variant[];
   value?: number[];
   onChange: (val: number[]) => void;
 };
 
-export const MaterialSelector = (props: MaterialSelectorProps) => {
+export const VariantSelector = (props: VariantSelectorProps) => {
   const { options = [], value = [], onChange } = props;
+
+  console.log(options, "value");
   const toggleSelect = (id: number) => {
     if (value.includes(id)) {
       onChange(value.filter((v) => v !== id));
@@ -31,7 +33,7 @@ export const MaterialSelector = (props: MaterialSelectorProps) => {
         {value.length === 0 && (
           <div className="w-ful h-full justify-center">
             <span className="text-foreground/50 text-xs">
-              Belum ada pilihan, silahkan pilih tipe handphone
+              Belum ada pilihan, silahkan pilih variant yang tersedia
             </span>
           </div>
         )}

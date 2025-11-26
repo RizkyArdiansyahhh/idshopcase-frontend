@@ -4,8 +4,8 @@ import { Variant } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getVariants = async () => {
-  const response = await api.get<Variant[]>("/reference/variants");
-  return response.data;
+  const response = await api.get<{ data: Variant[] }>("/reference/variants");
+  return response.data.data;
 };
 
 export const getVariantsQueryKey = () => ["variants"];

@@ -14,7 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useUpdateUser } from "../api/update-user";
-import { useRouter } from "next/navigation";
 import { SpinnerV2 } from "@/components/ui/spinner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Separator } from "@/components/ui/separator";
@@ -30,7 +29,7 @@ type ProfileFormProps = {
 export const ProfileForm = (props: ProfileFormProps) => {
   const { name, email, phone, imageurl } = props;
 
-  const router = useRouter();
+  console.log(imageurl, "imageurl");
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(imageurl);
   const imageRef = useRef<HTMLInputElement>(null);

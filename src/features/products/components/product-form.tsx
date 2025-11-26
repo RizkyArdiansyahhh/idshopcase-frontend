@@ -9,17 +9,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { IoMdClose } from "react-icons/io";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
-import { CustomInputImage } from "@/components/shared/custom-input-image";
 import { formProductSchema, FormProductType } from "@/lib/schemas/product";
 import { useForm } from "react-hook-form";
-import { VariantsForm } from "@/app/(admin)/admin/(actions)/products/new/components/variants-form";
 import { useGetProduct } from "../api/get-productById";
 import { useCreateProduct } from "../api/create-product";
 import {
@@ -33,20 +27,15 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { useUpdateProduct } from "../api/update-product";
-import { formatNumber } from "@/lib/format-currency";
-import { imageUrlList } from "@/utils/image-utils";
 import { ImageUploader } from "./image-uploader";
-import { PhoneTypeSelector } from "./phone-type-selector";
 import { FieldCheckbox } from "./field-checkbox";
-import { MaterialOptions, PhoneTypeOptions } from "./type-options";
+import { PhoneTypeOptions, VariantOptions } from "./type-options";
 
 export const ProductForm = () => {
   console.log("saya render product form");
 
   const params = useParams();
   const productId = params.id;
-  const { replace } = useRouter();
-  const inputImageRef = useRef<HTMLInputElement>(null);
 
   const { data: product } = useGetProduct({
     id: Number(productId),
@@ -61,7 +50,6 @@ export const ProductForm = () => {
     resolver: zodResolver(formProductSchema),
     defaultValues: {
       images: [],
-      toggleIsMaterial: false,
       toggleIsVariant: false,
       toggleIsPhoneType: false,
     },
@@ -80,7 +68,6 @@ export const ProductForm = () => {
   // }, [product, form]);
 
   const isVariant = form.watch("toggleIsVariant");
-  const isMaterial = form.watch("toggleIsMaterial");
   const isPhoneType = form.watch("toggleIsPhoneType");
 
   const handleSubmit = (data: FormProductType) => {
@@ -89,19 +76,14 @@ export const ProductForm = () => {
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("category", data.category);
-    formData.append("price", data.price);
 
     data.images.forEach((file) => {
       console.log(file);
       formData.append("images", file);
     });
 
-    formData.append("stock", data.stock.toString());
     data.phone_type?.forEach((id) => {
       formData.append("phoneTypes[]", String(id));
-    });
-    data.material?.forEach((id) => {
-      formData.append("materials[]", String(id));
     });
 
     if (product) {
@@ -124,6 +106,7 @@ export const ProductForm = () => {
     useUpdateProduct();
 
   const phoneTypes = form.watch("phone_type");
+  const variants = form.watch("variant");
   console.log(phoneTypes);
 
   return (
@@ -237,72 +220,6 @@ export const ProductForm = () => {
                   )}
                 />
               </div>
-              <div className="w-full border rounded-md p-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <FormField
-                    name="price"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Harga</FormLabel>
-                        <div className="relative">
-                          <Input
-                            disabled={isVariant}
-                            type="text"
-                            {...field}
-                            value={formatNumber(Number(field.value || "0"))}
-                            onChange={(e) => {
-                              const raw = e.target.value.replace(/\D/g, "");
-                              field.onChange(raw);
-                            }}
-                            placeholder={
-                              isVariant
-                                ? "Masukkan harga di variasi"
-                                : "Harga Produk"
-                            }
-                          />
-
-                          <span className="absolute top-1/2 right-2 -translate-y-1/2 font-medium text-foreground/50">
-                            IDR
-                          </span>
-                        </div>
-                        <FormMessage></FormMessage>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    name="stock"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Stok</FormLabel>
-                        <div className="relative">
-                          <Input
-                            disabled={isVariant}
-                            type="text"
-                            {...field}
-                            value={formatNumber(field.value)}
-                            onChange={(e) =>
-                              field.onChange(
-                                Number(e.target.value.replace(/\D/g, ""))
-                              )
-                            }
-                            placeholder={
-                              isVariant
-                                ? "Masukkan stok di variasi"
-                                : "Stok Produk"
-                            }
-                          ></Input>
-                          <span className="absolute top-1/2 right-2 -translate-y-1/2 font-medium text-foreground/50">
-                            pcs
-                          </span>
-                        </div>
-                        <FormMessage></FormMessage>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
             </div>
 
             <div className="w-full lg:w-1/2 border rounded-md p-4 relative pb-20 flex flex-col gap-4">
@@ -331,19 +248,19 @@ export const ProductForm = () => {
               <div>
                 <FieldCheckbox
                   control={form.control}
-                  name="toggleIsMaterial"
-                  label="Material"
+                  name="toggleIsVariant"
+                  label="Variant"
                 />
-                {isMaterial && (
+                {isVariant && (
                   <FormField
-                    name="material"
+                    name="variant"
                     control={form.control}
                     render={({ field }) => (
                       <FormItem>
-                        <MaterialOptions
+                        <VariantOptions
                           value={field.value}
                           onChange={field.onChange}
-                        ></MaterialOptions>
+                        ></VariantOptions>
                       </FormItem>
                     )}
                   />

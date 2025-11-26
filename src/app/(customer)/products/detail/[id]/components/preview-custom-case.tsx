@@ -52,9 +52,6 @@ export default function CasePreview() {
     });
   };
 
-  /** --------------------------
-   *  GENERATE POLA TILE BERGANTIAN
-   * --------------------------- */
   const generatePatternGrid = () => {
     if (designImages.length === 0) return null;
 
@@ -63,11 +60,16 @@ export default function CasePreview() {
     const rows = 8;
     const cols = 2;
 
-    let imgIndex = 0;
-
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const currentImage = designImages[imgIndex];
+        let currentImage = "";
+
+        if (designImages.length === 2) {
+          currentImage = r % 2 === 0 ? designImages[c] : designImages[1 - c];
+        } else {
+          const index = (r * cols + c) % designImages.length;
+          currentImage = designImages[index];
+        }
 
         items.push(
           <img
@@ -81,17 +83,12 @@ export default function CasePreview() {
             }}
           />
         );
-
-        imgIndex = (imgIndex + 1) % designImages.length;
       }
     }
 
     return items;
   };
 
-  /** --------------------------
-   *  DRAG, ZOOM, RESET
-   * --------------------------- */
   const handleReset = () => {
     setDesignImages([]);
     setScale(1);
