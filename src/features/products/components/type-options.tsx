@@ -1,6 +1,7 @@
 import { useGetMaterials } from "../api/get-materials";
 import { useGetPhoneTypes } from "../api/get-phone-types";
-import { MaterialSelector } from "./material-selector";
+import { useGetVariants } from "../api/get-variants";
+import { VariantSelector } from "./material-selector";
 import { PhoneTypeSelector } from "./phone-type-selector";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,13 +25,15 @@ export const PhoneTypeOptions = (props: TypeOptionsProps) => {
   );
 };
 
-export const MaterialOptions = (props: TypeOptionsProps) => {
+export const VariantOptions = (props: TypeOptionsProps) => {
   const { value = [], onChange } = props;
-  const { data: materials = [] } = useGetMaterials();
+  const { data: variants = [] } = useGetVariants();
+
+  console.log(variants, "variants");
 
   return (
     <div className="space-y-2">
-      <MaterialSelector options={materials} value={value} onChange={onChange} />
+      <VariantSelector options={variants} value={value} onChange={onChange} />
     </div>
   );
 };
