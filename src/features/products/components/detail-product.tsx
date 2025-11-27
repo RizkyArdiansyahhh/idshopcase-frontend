@@ -33,7 +33,18 @@ export const DetailProduct = (props: DetailProductProps) => {
   }, [product?.ProductImages]);
 
   if (!product) return null;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const variants = product.Variants ?? []; // pastikan selalu array
+
+  const { minPrice, maxPrice } = variants.reduce(
+    (acc, variant) => {
+      const price = Number(variant.price);
+      return {
+        minPrice: price < acc.minPrice ? price : acc.minPrice,
+        maxPrice: price > acc.maxPrice ? price : acc.maxPrice,
+      };
+    },
+    { minPrice: Infinity, maxPrice: -Infinity }
+  );
 
   return (
     <>
@@ -55,7 +66,9 @@ export const DetailProduct = (props: DetailProductProps) => {
               {product.name}
             </h1>
             <h3 className="text-2xl font-semibold text-foreground/70 my-2">
-              {formatCurrency(Number(product.price))}
+              {minPrice === maxPrice
+                ? formatCurrency(minPrice)
+                : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
             </h3>
             <Separator></Separator>
           </div>

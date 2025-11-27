@@ -10,7 +10,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Control } from "react-hook-form";
 import { Combobox } from "./combo-box";
 import { CardQuantity } from "@/components/shared/card-quantity";
-import { material, PhoneType, variant } from "@/types/api";
 
 type InputProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

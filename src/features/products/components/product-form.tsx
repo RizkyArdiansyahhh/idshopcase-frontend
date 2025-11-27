@@ -38,6 +38,7 @@ export const ProductForm = () => {
   console.log("saya render product form");
 
   const params = useParams();
+  const { replace } = useRouter();
   const productId = params.id;
 
   const { data: product } = useGetProduct({
@@ -89,13 +90,8 @@ export const ProductForm = () => {
       formData.append("images", file);
     });
 
-    data.phone_type?.forEach((id) => {
-      formData.append("phoneTypes[]", String(id));
-    });
-
-    data.variant?.forEach((id) => {
-      formData.append("variants[]", String(id));
-    });
+    formData.append("phoneTypes", JSON.stringify(data.phone_type ?? []));
+    formData.append("variants", JSON.stringify(data.variant ?? []));
 
     if (product) {
       // updateProductMutate({
@@ -111,7 +107,13 @@ export const ProductForm = () => {
   };
 
   const { mutate: createProductMutate, isPending: createProductIsLoading } =
-    useCreateProduct();
+    useCreateProduct({
+      mutationConfig: {
+        onSuccess: () => {
+          replace("/admin/products");
+        },
+      },
+    });
 
   const { mutate: updateProductMutate, isPending: updateProductIsLoading } =
     useUpdateProduct();
@@ -194,6 +196,7 @@ export const ProductForm = () => {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
+                        <FormMessage></FormMessage>
                       </FormItem>
                     )}
                   />
@@ -274,6 +277,7 @@ export const ProductForm = () => {
                             value={field.value}
                             onChange={field.onChange}
                           ></VariantOptions>
+                          <FormMessage></FormMessage>
                         </FormItem>
                       )}
                     />
