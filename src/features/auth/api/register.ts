@@ -41,6 +41,7 @@ type registerSchemaType = z.infer<typeof registerSchema>;
 
 const register = async (data: registerSchemaType) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  console.log("path URL : ", process.env.NEXT_PUBLIC_API_URL);
   const { confirmPassword, ...payload } = data;
   const response = await api.post("/auth/register", { ...payload });
 
