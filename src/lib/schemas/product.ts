@@ -11,7 +11,9 @@ export const formProductSchema = z.object({
   }),
   images: z.array(z.instanceof(File)).min(1, "Minimal 1 gambar wajib diupload"),
   toggleIsVariant: z.boolean().optional(),
-  variant: z.array(z.number()).optional(),
+  variant: z.array(z.number(), {
+    message: "Variant tidak boleh kosong, minimal 1 variant",
+  }),
   toggleIsPhoneType: z.boolean().optional(),
   phone_type: z.array(z.number()).optional(),
   toggleIsCreateVariant: z.boolean().optional(),

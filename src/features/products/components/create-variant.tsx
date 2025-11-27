@@ -83,7 +83,6 @@ export function CreateVariant({ form }: CreateVariantProps) {
                     }
                     placeholder="Stok"
                   />
-                  <FormMessage></FormMessage>
                   <span className="absolute top-1/2 right-2 -translate-y-1/2 font-medium text-foreground/50">
                     pcs
                   </span>

@@ -5,7 +5,9 @@ import { toast } from "sonner";
 import { apiUpload } from "@/lib/axios";
 
 const createProduct = async (data: FormData) => {
-  console.log(Array.from(data.entries()));
+  data.forEach((value, key) => {
+    console.log(key, value);
+  });
 
   return await apiUpload.post("/product", data);
 };

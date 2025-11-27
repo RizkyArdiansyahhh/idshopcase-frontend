@@ -23,20 +23,25 @@ import {
 import { IconDotsVertical } from "@tabler/icons-react";
 import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
 import { DeleteProduct } from "@/features/products/components/delete-product";
+import { set } from "react-hook-form";
+import DialogViewProduct from "./dialog-view-product";
 
 export const Products = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const { push } = useRouter();
   const columnHelper = createColumnHelper<Product>();
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor("id", {
-        header: "ID",
+      columnHelper.display({
+        id: "number",
+        header: "No",
+        cell: (info) => info.row.index + 1,
       }),
       columnHelper.accessor("name", {
-        header: "Product Name",
+        header: "Produk",
         cell: ({ row }) => {
           const product = row.original;
           const imageUrlPrimaryy = imageUrlPrimary(product.ProductImages);
@@ -58,16 +63,14 @@ export const Products = () => {
         },
       }),
       columnHelper.accessor(
-        // Accessor function → ambil angka price dari Variants
         (row) => {
           const variants = row.Variants ?? [];
 
           if (variants.length === 0) return null;
 
-          const prices = variants.map((v) => v.price);
-
-          const min = Math.min(Number(...prices));
-          const max = Math.max(Number(...prices));
+          const prices = variants.map((v) => Number(v.price));
+          const min = Math.min(...prices);
+          const max = Math.max(...prices);
 
           return { min, max };
         },
@@ -91,7 +94,6 @@ export const Products = () => {
           },
         }
       ),
-
       columnHelper.accessor(
         (row) => {
           const variants = row.Variants ?? [];
@@ -123,9 +125,8 @@ export const Products = () => {
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
-                  // setSelectedUser(row.original);
-                  // setActions("view");
-                  // setIsOpen(true);
+                  setSelectedProduct(row.original);
+                  setDialogOpen(true);
                 }}
               >
                 View
@@ -176,9 +177,6 @@ export const Products = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 push("/admin/products/new");
-                // setSelectedUser(null);
-                // setActions("create");
-                // setIsOpen(true);
               }}
               variant={"default"}
             >
@@ -198,6 +196,13 @@ export const Products = () => {
           id={selectedProduct?.id ?? 0}
           setSelectedProduct={setSelectedProduct}
         ></DeleteProduct>
+      )}
+      {dialogOpen && selectedProduct && (
+        <DialogViewProduct
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          product={selectedProduct}
+        ></DialogViewProduct>
       )}
     </>
   );
