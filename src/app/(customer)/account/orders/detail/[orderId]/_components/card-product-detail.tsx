@@ -5,7 +5,6 @@ type CardProductDetailProps = {
   imageUrl: string;
   productName: string;
   price: string;
-  material?: string | null;
   variant?: string | null;
   phoneType?: string | null;
   quantity: number;
