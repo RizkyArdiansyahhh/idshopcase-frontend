@@ -125,7 +125,7 @@ export const CardOrder = (props: CardOrderProps) => {
                   </p>
                   <div className="flex flex-row items-center gap-1">
                     <p className="font-semibold text-md">
-                      {formatCurrency(Number(item.Product.price))}
+                      {formatCurrency(Number(item.Variant.price))}
                     </p>
                     <span className="text-xs font-medium text-foreground/50">
                       x1
@@ -141,13 +141,6 @@ export const CardOrder = (props: CardOrderProps) => {
                       <>
                         <p className="text-xs font-medium text-foreground/70">
                           {item.PhoneType.model}
-                        </p>
-                      </>
-                    )}
-                    {item.Material && (
-                      <>
-                        <p className="text-xs font-medium text-foreground/70">
-                          {item.Material.name}
                         </p>
                       </>
                     )}

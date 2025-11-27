@@ -34,6 +34,7 @@ export const CardProductDetail = (props: CardProductDetailProps) => {
             </span>
             <div className="text-foreground/50 font-medium text-xs flex flex-col gap-0.5 my-1">
               <span>{variant}</span>
+              <span>{phoneType}</span>
             </div>
           </div>
           <div>

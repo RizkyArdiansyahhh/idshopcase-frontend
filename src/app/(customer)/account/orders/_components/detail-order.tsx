@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
-import { ArrowLeft, Mail, Phone } from "lucide-react";
+import { ArrowLeft, ChevronRight, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import {
   Order,
@@ -17,6 +17,7 @@ import { imageUrlPrimary } from "@/utils/image-utils";
 import { formatDate } from "@/lib/format-date";
 
 import { ButtonCopyResi } from "@/components/shared/button-copy-resi";
+import { WhatsAppSupport } from "../detail/[orderId]/_components/whatsapp-support";
 
 export default function OrderDetail({
   order,
@@ -28,7 +29,6 @@ export default function OrderDetail({
   if (!order) return <p>Loading...</p>;
 
   const orderItems = order.OrderItems;
-  const payment = order.Payment;
   const address = order.Address;
   const totalPriceBeforeShipping = orderItems.reduce(
     (total, item) => total + Number(item.price) * item.quantity,
@@ -119,6 +119,18 @@ export default function OrderDetail({
                   {formatCurrency(Number(order.total_price))}
                 </p>
               </div>
+            </div>
+            <div className="border shadow-xs rounded-md my-3 flex flex-col gap-1 p-3">
+              <div className="my-1.5">
+                <p className="font-semibold text-foreground/80">
+                  Butuh Bantuan?
+                </p>
+              </div>
+              <WhatsAppSupport
+                orderId={order.id}
+                username={address.recipient_name}
+                date={order.createdAt}
+              ></WhatsAppSupport>
             </div>
           </div>
           <div className="w-1/3 h-full flex flex-col gap-2">

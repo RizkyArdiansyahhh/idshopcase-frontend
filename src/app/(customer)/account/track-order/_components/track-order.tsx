@@ -189,7 +189,7 @@ export const TrackOrderTimeline = ({
                       ? "bg-red-400"
                       : isActive
                       ? isCurrentStep
-                        ? "bg-blue-500 ring-4 ring-blue-200"
+                        ? "bg-foreground ring-5 ring-foreground/50 "
                         : "bg-green-500"
                       : "bg-gray-300"
                   }`}
@@ -220,7 +220,7 @@ export const TrackOrderTimeline = ({
                         ? "text-red-600"
                         : isActive
                         ? isCurrentStep
-                          ? "text-blue-600"
+                          ? "text-foreground"
                           : "text-green-600"
                         : "text-gray-400"
                     }`}
@@ -324,7 +324,7 @@ export const TrackOrderTimeline = ({
               ? "bg-red-500"
               : item.status_code === 200
               ? "bg-green-500"
-              : "bg-blue-500";
+              : "bg-foreground";
 
             return (
               <div
@@ -372,73 +372,3 @@ export const TrackOrderTimeline = ({
     </div>
   );
 };
-
-// Demo with sample data
-export default function App() {
-  const apiResponse: ApiResponse = {
-    message: "Tracking data retrieved successfully",
-    tracking: {
-      awb: "JO9001418742",
-      orderid: "IDSHOP-4",
-      detail: {
-        actual_amount: 0,
-        delivDriver: {
-          id: "",
-          name: "",
-          phone: "",
-          photo: "",
-        },
-        detail_cost: {
-          add_cost: 0,
-          cod: 0,
-          insurance_cost: 0,
-          return_cost: 0,
-          shipping_cost: 0,
-        },
-        driver: {
-          name: "",
-        },
-        itemname: "Phone Case",
-        note: "Custom Phone Case & Accessories",
-        qty: 2,
-        receiver: {
-          addr: "BUAHBATU, KOTA BANDUNG, JAWA BARAT",
-          city: "BANDUNG",
-          geoloc: "",
-          name: "addressNew",
-          zipcode: "23312",
-        },
-        sender: {
-          addr: "Ciomas Hills Cluster Malabar blok A31/3",
-          city: "CIBINONG",
-          geoloc: "",
-          name: "IDSHOPCASE",
-          zipcode: "",
-        },
-        services_code: "",
-        services_type: "",
-        shipped_date: "",
-        weight: 0,
-      },
-      history: [
-        {
-          agentName: "",
-          city_name: "CIBINONG",
-          date_time: "2025-11-27 19:16:59",
-          driverName: "",
-          driverPhone: "",
-          nextSiteName: "",
-          note: "",
-          presenter: "",
-          presentername: "",
-          receiver: "",
-          status: "Manifes",
-          status_code: 101,
-          storeName: "",
-        },
-      ],
-    },
-  };
-
-  return <TrackOrderTimeline tracking={apiResponse.tracking} />;
-}

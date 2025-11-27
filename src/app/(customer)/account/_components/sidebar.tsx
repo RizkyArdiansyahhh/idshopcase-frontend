@@ -41,7 +41,7 @@ export const Sidebar = () => {
     });
   };
   return (
-    <nav className="h-full w-full flex flex-col bg-transparent  ">
+    <nav className="w-full flex flex-col bg-transparent  ">
       <NavMainAccount></NavMainAccount>
       <Separator></Separator>
       <ul className="flex flex-col gap- p-5">
