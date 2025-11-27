@@ -1,3 +1,4 @@
+"use client";
 import { VerifyEmail } from "./_components/verify";
 
 const VerifyEmailPage = () => {
