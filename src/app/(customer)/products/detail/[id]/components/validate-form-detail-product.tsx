@@ -131,7 +131,7 @@ export const ValidateFormDetailProduct = (
       (p) => p.id === data.phone_type
     );
 
-    if (!selectedVariant || !selectedPhoneType) {
+    if (!selectedVariant) {
       return;
     }
 

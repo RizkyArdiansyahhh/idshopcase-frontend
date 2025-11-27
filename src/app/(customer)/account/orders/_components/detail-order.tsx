@@ -55,9 +55,8 @@ export default function OrderDetail({
                   key={item.id}
                   imageUrl={imageUrlPrimary(item.Product.ProductImages) ?? ""}
                   productName={item.Product.name}
-                  price={item.Product.price}
+                  price={item.Variant.price}
                   quantity={item.quantity}
-                  material={item.Material?.name}
                   variant={item.Variant?.name}
                   phoneType={item.PhoneType?.model}
                 ></CardProductDetail>

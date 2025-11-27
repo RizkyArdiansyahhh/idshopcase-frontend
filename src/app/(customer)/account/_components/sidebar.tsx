@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { SidebarLink } from "./sidebar-link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { NavMainAccount } from "./nav-main-account";
 import { IoLogOut } from "react-icons/io5";
+import { useLogout } from "@/features/auth/api/login";
 
 const sidebarLink: { label: string; path: string }[] = [
   {
@@ -31,6 +32,14 @@ const sidebarLink: { label: string; path: string }[] = [
 
 export const Sidebar = () => {
   const pathName = usePathname();
+  const { replace } = useRouter();
+  const logout = useLogout();
+
+  const handleLogout = () => {
+    logout.mutate(undefined, {
+      onSuccess: () => replace("/login"),
+    });
+  };
   return (
     <nav className="h-full w-full flex flex-col bg-transparent  ">
       <NavMainAccount></NavMainAccount>
@@ -49,8 +58,11 @@ export const Sidebar = () => {
       <Separator></Separator>
       <div className="p-5">
         <Button
-          className="w-full px-8 py-1 font-bold text-md bg-foreground text-background"
-          variant="destructive"
+          className="w-full px-8 py-1 font-bold text-md  text-background hover:bg-background hover:border hover:border-foreground hover:text-foreground transition-colors duration-300 ease-in-out "
+          variant="default"
+          onClick={() => {
+            handleLogout();
+          }}
         >
           <IoLogOut size={32} />
           Keluar

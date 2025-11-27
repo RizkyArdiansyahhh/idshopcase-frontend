@@ -147,58 +147,55 @@ export const useCheckout = () => {
     const formData = new FormData();
     formData.append("addressId", String(selectedAddress?.id ?? 1));
 
-    if (cartItems && cartItems.length) {
-      formData.append(
-        "selectedItemIds",
-        JSON.stringify(cartItems.map((i) => i.cartId))
-      );
-
+    if (cartItems?.length) {
+      const customMapCart: Record<string, { files: number[] }> = {};
       let globalFileIndex = 0;
-      const customMapData: Record<string, { files: number[] }> = {};
 
       cartItems.forEach((item, index) => {
-        const itemImages = customImage[index] || [];
+        const itemImages: (File | undefined)[] = customImage[index] || [];
         const fileIndices: number[] = [];
 
         itemImages.forEach((file) => {
           if (!file) return;
-
           formData.append("custom_images", file);
-
-          fileIndices.push(globalFileIndex);
-          globalFileIndex++;
+          fileIndices.push(globalFileIndex++);
         });
 
-        if (fileIndices.length > 0) {
-          const cartId = String(item.cartId ?? 0);
-          customMapData[cartId] = { files: fileIndices };
+        if (fileIndices.length) {
+          customMapCart[String(item.cartId)] = { files: fileIndices };
         }
       });
 
-      formData.append("customMap", JSON.stringify(customMapData));
+      formData.append(
+        "selectedItemIds",
+        JSON.stringify(cartItems.map((i) => i.cartId))
+      );
+      formData.append("customMap", JSON.stringify(customMapCart));
     }
+    if (dataCheckout) {
+      const buyNowFiles: File[] =
+        customImage[cartItems?.length || 0]?.filter(
+          (file): file is File => file !== undefined
+        ) || [];
+      const filteredFiles = buyNowFiles.filter(Boolean) as File[];
 
-    formData.append(
-      "buyNow",
-      JSON.stringify({
-        productId: dataCheckout?.productId,
-        quantity: dataCheckout?.quantity,
-        variantId: dataCheckout?.variant.id,
-        phoneTypeId: dataCheckout?.phoneTypeId,
-      })
-    );
-    const files: File[] = customImage
-      .flat()
-      .filter((file) => file !== undefined);
-    files.forEach((file) => {
-      formData.append("custom_images", file);
-    });
-    formData.append(
-      "customMap",
-      JSON.stringify({
-        buyNow: files.map((_, index) => index),
-      })
-    );
+      filteredFiles.forEach((file) => formData.append("custom_images", file));
+
+      formData.append(
+        "buyNow",
+        JSON.stringify({
+          productId: dataCheckout.productId,
+          quantity: dataCheckout.quantity,
+          variantId: dataCheckout.variant?.id ?? null,
+          phoneTypeId: dataCheckout.phoneTypeId ?? null,
+        })
+      );
+
+      formData.append(
+        "customMap",
+        JSON.stringify({ buyNow: filteredFiles.map((_, i) => i) })
+      );
+    }
 
     createOrder(formData);
   };

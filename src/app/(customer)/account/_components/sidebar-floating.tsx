@@ -28,9 +28,7 @@ export function SidebarFloating() {
   ];
 
   return (
-    // only mobile
     <div className="md:hidden">
-      {/* small visible toggle when closed */}
       {!open && (
         <button
           aria-label="Open sidebar"
@@ -41,9 +39,7 @@ export function SidebarFloating() {
         </button>
       )}
 
-      {/* full panel when open */}
       <div
-        // panel is fixed to left:0 and vertically centered
         className={`fixed left-0 top-1/2 -translate-y-1/2 z-50
           w-16      /* panel width */
           bg-white rounded-r-3xl p-3 flex flex-col items-center gap-6 shadow-xl
@@ -55,7 +51,6 @@ export function SidebarFloating() {
           }
         `}
       >
-        {/* close button — inside top center of the panel */}
         <button
           aria-label="Close sidebar"
           onClick={() => setOpen(false)}

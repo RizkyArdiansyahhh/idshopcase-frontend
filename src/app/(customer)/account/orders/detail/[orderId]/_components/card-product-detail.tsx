@@ -11,15 +11,7 @@ type CardProductDetailProps = {
   quantity: number;
 };
 export const CardProductDetail = (props: CardProductDetailProps) => {
-  const {
-    imageUrl,
-    productName,
-    price,
-    material,
-    variant,
-    phoneType,
-    quantity,
-  } = props;
+  const { imageUrl, productName, price, variant, phoneType, quantity } = props;
 
   return (
     <>
@@ -41,7 +33,6 @@ export const CardProductDetail = (props: CardProductDetailProps) => {
               {productName}
             </span>
             <div className="text-foreground/50 font-medium text-xs flex flex-col gap-0.5 my-1">
-              <span>{material}</span>
               <span>{variant}</span>
             </div>
           </div>
