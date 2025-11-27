@@ -17,14 +17,14 @@ jobs:
         with:
           node-version: "18"
 
-      # Build Next.js di GitHub agar server kamu ringan
       - name: Install dependencies
         run: npm install
 
       - name: Build Next.js
         run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
-      # Prepare SSH access
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
@@ -35,7 +35,6 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      # Upload the app EXCEPT node_modules
       - name: Upload frontend to server
         run: |
           rsync -avz --delete \
@@ -45,7 +44,6 @@ jobs:
           -e "ssh -i ~/.ssh/id_ed25519" \
           ./  ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
 
-      # Install server dependencies & restart PM2
       - name: Install & Restart PM2
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -55,6 +53,5 @@ jobs:
           script: |
             cd /var/www/idshopcase/frontend/
             npm install --production=false
-            
             pm2 restart idshopcase-frontend || pm2 start npm --name "idshopcase-frontend" -- start
             pm2 save
