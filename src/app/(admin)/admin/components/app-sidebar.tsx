@@ -8,7 +8,6 @@ import {
   IconFileDescription,
   IconHelp,
   IconInnerShadowTop,
-  IconSearch,
   IconSettings,
 } from "@tabler/icons-react";
 
@@ -25,13 +24,10 @@ import { KeyRound, PackageSearch, ShoppingCart, Users } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
 import { NavUser } from "./nav-user";
+import { useGetUser } from "@/features/auth/api/get-user";
+import { User } from "@/types/api";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -122,6 +118,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: user } = useGetUser();
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -144,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user as User} />
       </SidebarFooter>
     </Sidebar>
   );

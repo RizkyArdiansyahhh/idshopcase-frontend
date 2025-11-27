@@ -84,9 +84,12 @@ export const CartList = (props: CartListProps) => {
                 cartId={cartItem.id}
                 productId={cartItem.Product.id}
                 quantity={cartItem.quantity}
-                material={cartItem.Material?.name || null}
                 phoneType={cartItem.PhoneType?.model || null}
                 variant={cartItem.Variant?.name || null}
+                productImages={cartItem.Product.ProductImages}
+                price={cartItem.price}
+                productName={cartItem.Product.name}
+                stok={cartItem.Variant?.stock || 0}
               />
             );
           })

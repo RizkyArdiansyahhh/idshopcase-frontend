@@ -15,27 +15,35 @@ export const AddressesList = () => {
 
   return (
     <>
-      {fetchAddressesLoading
-        ? Array.from({ length: 3 }).map((_, index) => (
-            <Skeleton
-              key={index}
-              className="w-full h-[20%] rounded-sm py-3 px-7 bg-accent/90"
-            />
-          ))
-        : sortedAddresses.map((address) => (
-            <AddressCard
-              key={address.id}
-              id={address.id.toString()}
-              fullname={address.recipient_name}
-              phone={address.phone}
-              detail={address.details || ""}
-              district={address.district}
-              city={address.city}
-              province={address.province}
-              postalCode={address.postal_code}
-              isDefault={address.is_primary}
-            />
-          ))}
+      {fetchAddressesLoading ? (
+        Array.from({ length: 3 }).map((_, index) => (
+          <Skeleton
+            key={index}
+            className="w-full h-[20%] rounded-sm py-3 px-7 bg-accent/90"
+          />
+        ))
+      ) : addresses ? (
+        sortedAddresses.map((address) => (
+          <AddressCard
+            key={address.id}
+            id={address.id.toString()}
+            fullname={address.recipient_name}
+            phone={address.phone}
+            detail={address.details || ""}
+            district={address.district}
+            city={address.city}
+            province={address.province}
+            postalCode={address.postal_code}
+            isDefault={address.is_primary}
+          />
+        ))
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <p className="text-app-light-sm">
+            Tidak ada alamat, silahkan tambah alamat
+          </p>
+        </div>
+      )}
     </>
   );
 };
