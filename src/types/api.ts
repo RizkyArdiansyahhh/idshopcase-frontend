@@ -170,13 +170,13 @@ export type OrderItemAdmin = {
     id: number;
     model: string;
   };
-  Material: {
-    id: number;
-    name: string;
-  };
+
   Variant: {
     id: number;
     name: string;
+    price: string;
+    stock: number;
+    max_images: number;
   };
   CustomImages: Array<{
     id: number;

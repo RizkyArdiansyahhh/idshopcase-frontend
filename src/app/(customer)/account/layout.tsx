@@ -21,7 +21,7 @@ export default function AccountLayout({
       <SidebarFloating />
 
       {/* WRAPPER UTAMA TANPA PADDING */}
-      <div className="relative min-h-screen w-full flex flex-col md:flex-row">
+      <div className="relative h-full w-full flex flex-col md:flex-row">
         {/* AREA YANG PUNYA PADDING */}
         <div className="flex-1 flex flex-col md:flex-row px-5 py-5 gap-5">
           {/* DESKTOP SIDEBAR */}
