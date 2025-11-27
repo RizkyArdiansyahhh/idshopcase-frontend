@@ -12,11 +12,11 @@ export type DetailProduct = {
   image: string;
   productName: string;
   price: number;
-  material: string | null;
   variant: string | null;
   phoneType: string | null;
   quantity: number;
   category: string;
+  slotImage: number;
 };
 
 const SLOT_COUNT = 3;
@@ -28,16 +28,16 @@ export const useCheckout = () => {
   const [previewImage, setPreviewImage] = useState<(string | null)[][]>([]);
   const [selectedAddress, setSelectedAddress] = useState<any>(null);
 
-  // State global
   const dataCheckout = useCheckoutStore((state) => state.data);
   const cartItems = useCheckoutStore((state) => state.selectedCartIds);
   console.log(cartItems, "cartItems");
 
-  // API
+  console.log(dataCheckout, "dataCheckout");
+
   const { data: userAddresses } = useGetAddresses() || [];
+
   const { data: products } = useGetProducts();
 
-  // Build detailProduct
   const detailProduct: DetailProduct[] = [];
 
   if (dataCheckout && (!cartItems || !cartItems.length)) {
@@ -48,23 +48,21 @@ export const useCheckout = () => {
       detailProduct.push({
         image: imageUrlPrimary(productItem?.ProductImages) || "",
         productName: productItem?.name || "",
-        price: Number(productItem?.price),
-        material: dataCheckout.materialName ?? null,
-        variant: dataCheckout.variantName ?? null,
+        price: Number(dataCheckout.variant.price),
+        variant: dataCheckout.variant.name ?? null,
         phoneType: dataCheckout.phoneTypeName ?? null,
         quantity: dataCheckout.quantity,
         category: productItem.category,
+        slotImage: dataCheckout.variant.max_images,
       });
     }
   } else if (cartItems?.length) {
     cartItems.forEach((item) => {
       const productItem = products?.find((p) => p.id === item.productId);
       if (!productItem) return;
-      const material = productItem?.Materials?.find(
-        (m) => m.id === item.materialId
-      );
+
       const variant = productItem?.Variants?.find(
-        (v) => v.id === item.variantId
+        (v) => v.id === item.variant.id
       );
       const phoneType = productItem?.PhoneTypes?.find(
         (p) => p.id === item.phoneTypeId
@@ -72,15 +70,17 @@ export const useCheckout = () => {
       detailProduct.push({
         image: imageUrlPrimary(productItem?.ProductImages) || "",
         productName: productItem?.name || "",
-        price: Number(productItem?.price),
-        material: material?.name ?? null,
+        price: Number(item.variant.price),
         variant: variant?.name ?? null,
         phoneType: phoneType?.model ?? null,
         quantity: item.quantity,
         category: productItem.category,
+        slotImage: item.variant.max_images,
       });
     });
   }
+
+  console.log(detailProduct, "detailProduct");
 
   // Inisialisasi state multi-slot jika belum di-set
   useEffect(() => {
@@ -183,8 +183,7 @@ export const useCheckout = () => {
       JSON.stringify({
         productId: dataCheckout?.productId,
         quantity: dataCheckout?.quantity,
-        variantId: dataCheckout?.variantId,
-        materialId: dataCheckout?.materialId,
+        variantId: dataCheckout?.variant.id,
         phoneTypeId: dataCheckout?.phoneTypeId,
       })
     );

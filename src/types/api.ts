@@ -108,42 +108,41 @@ export type OrdersResponse = {
 };
 
 export type CartItem = {
-  id: number;
-  cartId: number;
-  productId: number;
-  quantity: number;
-  price: string;
-  createdAt: Date;
-  updatedAt: string;
+  PhoneType: PhoneType;
   Product: {
+    PhoneTypes: PhoneType[];
+    ProductImages: ProductImage[];
+    category: string;
+    createdAt: string;
+    description: string;
     id: number;
     name: string;
-    description: string;
-    price: string;
-    stock: number;
-    category: string;
-    material: string | null;
-    variation: string | null;
-    phone_type: string | null;
-    createdAt: string;
     updatedAt: string;
-    image: string;
   };
-  CustomImage: null;
-  Material: Material | null;
-  Variant: Variant | null;
-  PhoneType: PhoneType | null;
+  Variant: Variant;
+  cartId: number;
+  createdAt: string;
+  id: number;
+  phoneTypeId: number;
+  price: string;
+  productId: number;
+  quantity: number;
+  updatedAt: string;
+  variantId: number;
 };
 
 export interface CheckoutData {
   productId: number;
   quantity: number;
-  materialId: number | null;
-  materialName: string | null;
   phoneTypeId: number | null;
   phoneTypeName: string | null;
-  variantId: number | null;
-  variantName: string | null;
+  variant: {
+    id: number;
+    name: string;
+    price: string;
+    stock: number;
+    max_images: number;
+  };
   cartId?: number;
   price?: number;
 }

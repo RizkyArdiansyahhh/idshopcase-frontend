@@ -13,12 +13,19 @@ import {
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Product } from "@/types/api";
-
 export const ListProducts = () => {
   const { push } = useRouter();
   const { data: products, isLoading: fetchProductsIsLoading } =
     useGetProducts();
+
+  const allPrices = products?.flatMap(
+    (p) => p.Variants?.map((v) => parseFloat(v.price)) || []
+  );
+
+  const minPrice =
+    allPrices && allPrices.length > 0 ? Math.min(...allPrices) : 0;
+  const maxPrice =
+    allPrices && allPrices.length > 0 ? Math.max(...allPrices) : 0;
 
   console.log(products);
 
@@ -56,7 +63,6 @@ export const ListProducts = () => {
       >
         <CarouselContent>
           {products?.map((product) => {
-            const price = product.price ?? 0;
             return (
               <CarouselItem
                 key={product.id}
@@ -106,8 +112,12 @@ export const ListProducts = () => {
                     </Badge>
                   </div>
                   <div className="flex flex-row pt-10 justify-between items-center">
-                    <p className="text-lg font-semibold wrap-break-word">
-                      {formatCurrency(Number(price))}
+                    <p className="text-sm font-semibold wrap-break-word">
+                      {minPrice === maxPrice
+                        ? formatCurrency(minPrice)
+                        : formatCurrency(minPrice) +
+                          " - " +
+                          formatCurrency(maxPrice)}
                     </p>
                     <Button
                       variant={"default"}
@@ -133,6 +143,14 @@ export const ListProducts = () => {
 export const ListProductsDetail = () => {
   const { data: products, isLoading: fetchProductsIsLoading } =
     useGetProducts();
+  const allPrices = products?.flatMap(
+    (p) => p.Variants?.map((v) => parseFloat(v.price)) || []
+  );
+
+  const minPrice =
+    allPrices && allPrices.length > 0 ? Math.min(...allPrices) : 0;
+  const maxPrice =
+    allPrices && allPrices.length > 0 ? Math.max(...allPrices) : 0;
   const { push } = useRouter();
   return (
     <div className="w-full mb-15">
@@ -140,8 +158,7 @@ export const ListProductsDetail = () => {
         Produk Yang Mungkin Anda Suka
       </h1>
       <div className="flex flex-row flex-wrap justify-center gap-8">
-        {products?.map((product, index) => {
-          const price = product.price ?? 0;
+        {products?.map((product) => {
           return (
             <div
               key={product.id}
@@ -191,8 +208,12 @@ export const ListProductsDetail = () => {
                 </div>
 
                 <div className="flex flex-row pt-10 justify-between items-center">
-                  <p className="text-lg font-semibold wrap-break-word">
-                    {formatCurrency(Number(price))}
+                  <p className="text-sm font-semibold wrap-break-word">
+                    {minPrice === maxPrice
+                      ? formatCurrency(minPrice)
+                      : formatCurrency(minPrice) +
+                        " - " +
+                        formatCurrency(maxPrice)}
                   </p>
                   <Button
                     variant={"default"}

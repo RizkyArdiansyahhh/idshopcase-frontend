@@ -1,7 +1,5 @@
-import { DataTable } from "@/app/(admin)/admin/components/data-table";
 import { SectionCards } from "@/app/(admin)/admin/components/section-cards";
 
-import data from "./data.json";
 import { ChartAreaOrders } from "../components/chart-area-interactive";
 
 export default function DashboardPage() {
@@ -14,7 +12,6 @@ export default function DashboardPage() {
             <div className="px-4 lg:px-6">
               <ChartAreaOrders />
             </div>
-            <DataTable data={data} />
           </div>
         </div>
       </div>

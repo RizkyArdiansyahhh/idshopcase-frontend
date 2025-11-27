@@ -10,7 +10,6 @@ type CartItemRequest = {
   quantity: number;
   phoneTypeId: number | null;
   variantId: number | null;
-  materialId: number | null;
 };
 
 const createCart = async (data: CartItemRequest) => {

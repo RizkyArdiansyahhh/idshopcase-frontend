@@ -3,6 +3,7 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import z from "zod";
 import { getUserQueryKey } from "./get-user";
+import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({
   email: z.email(),
@@ -49,4 +50,14 @@ export const useLogin = (params: useLoginPrams = {}) => {
   });
 };
 
-
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: () => {
+      localStorage.removeItem("token");
+      return Promise.resolve();
+    },
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: getUserQueryKey() });
+    },
+  });
+};

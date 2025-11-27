@@ -3,8 +3,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import Link from "next/link";
-import { useGetProduct } from "@/features/products/api/get-productById";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdateCartItem } from "../api/update-cart";
 import { useDeleteCartItem } from "../api/delete-cart";
 import { CardQuantity } from "@/components/shared/card-quantity";
@@ -14,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formatCurrency } from "@/lib/format-currency";
 import { useEffect } from "react";
 import { imageUrlPrimary } from "@/utils/image-utils";
+import { ProductImage } from "@/types/api";
 
 type CartCardProps = {
   cartId: number;
@@ -21,28 +20,29 @@ type CartCardProps = {
   quantity: number;
   isSelected: boolean;
   setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
-  material: string | null;
   variant: string | null;
   phoneType: string | null;
+  productImages: ProductImage[];
+  price: string;
+  productName: string;
+  stok: number;
 };
 
 export const CartCard = (props: CartCardProps) => {
   const {
-    productId,
     quantity,
     cartId,
     isSelected,
     setSelectedCartItems,
-    material,
     variant,
     phoneType,
+    productImages,
+    price,
+    productName,
+    stok,
   } = props;
 
   console.log(quantity);
-
-  const { data: product, isLoading: fetchProductLoading } = useGetProduct({
-    id: productId,
-  });
 
   const quantitySchema = z.object({
     quantity,
@@ -104,24 +104,19 @@ export const CartCard = (props: CartCardProps) => {
         />
         <div className="w-full flex flex-row gap-2 ">
           <div className="w-1/4 h-28 relative rounded-md overflow-hidden">
-            {fetchProductLoading ? (
-              <Skeleton />
-            ) : (
-              <Image
-                src={imageUrlPrimary(product?.ProductImages) || ""}
-                alt={product?.name || `product=${product?.id}`}
-                fill
-                className="object-cover"
-              ></Image>
-            )}
+            <Image
+              src={imageUrlPrimary(productImages) || ""}
+              alt="Image Product"
+              fill
+              className="object-cover"
+            ></Image>
           </div>
           <div className="flex-1 flex flex-col gap-1">
             <Link href={"#"} className="text-md font-semibold">
-              {product?.name}
+              {productName}
             </Link>
             <div className="text-sm font-light text-foreground/60 flex flex-col gap-0.5">
               {phoneType && <span className="font-semibold">{phoneType}</span>}
-              {material && <span>{material}</span>}
               {variant && <span>{variant}</span>}
             </div>
           </div>
@@ -130,11 +125,11 @@ export const CartCard = (props: CartCardProps) => {
       <div className="w-4/12  flex flex-col items-center gap-2 ">
         <div className="w-full h-2/3 flex flex-row ">
           <p className="w-1/2 self-center text-center text-md font-medium text-foreground/70">
-            {formatCurrency(Number(product?.price))}
+            {formatCurrency(Number(price))}
           </p>
 
           <p className="w-1/2 self-center text-center text-md font-semibold">
-            {formatCurrency(Number(product?.price) * quantity)}
+            {formatCurrency(Number(price) * quantity)}
           </p>
         </div>
         <div className="w-full h-1/3 justify-end flex flex-row gap-2">
@@ -144,7 +139,7 @@ export const CartCard = (props: CartCardProps) => {
               control={form.control}
               defaultValue={1}
               render={({ field }) => (
-                <CardQuantity field={field} stock={product?.stock ?? 0} />
+                <CardQuantity field={field} stock={stok ?? 0} />
               )}
             />
           </div>

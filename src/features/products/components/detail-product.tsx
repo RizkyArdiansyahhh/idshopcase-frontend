@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useGetProduct } from "../api/get-productById";
 import { FormDetailProduct } from "./form-detail-product";
 import { PreviewImageProduct } from "./preview-image-product";
-import { formatCurrency } from "@/lib/format-currency";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbCustom } from "@/components/shared/breadCrumbCustom";
 import { ListProductsDetail } from "./list-products";
@@ -11,10 +10,9 @@ import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/
 
 type DetailProductProps = {
   id: number;
-  isCustomCase?: boolean;
 };
 export const DetailProduct = (props: DetailProductProps) => {
-  const { id, isCustomCase } = props;
+  const { id } = props;
 
   console.log(id);
   const { data: product, isLoading: fetchProductLoading } = useGetProduct({
@@ -33,18 +31,8 @@ export const DetailProduct = (props: DetailProductProps) => {
   }, [product?.ProductImages]);
 
   if (!product) return null;
-  const variants = product.Variants ?? []; // pastikan selalu array
 
-  const { minPrice, maxPrice } = variants.reduce(
-    (acc, variant) => {
-      const price = Number(variant.price);
-      return {
-        minPrice: price < acc.minPrice ? price : acc.minPrice,
-        maxPrice: price > acc.maxPrice ? price : acc.maxPrice,
-      };
-    },
-    { minPrice: Infinity, maxPrice: -Infinity }
-  );
+  const isCustomCase = product.category === "custom_case";
 
   return (
     <>
@@ -61,17 +49,6 @@ export const DetailProduct = (props: DetailProductProps) => {
           </div>
         </div>
         <div className="w-full lg:w-[50%]  px-8 flex flex-col gap-2.5 ">
-          <div>
-            <h1 className="text-4xl font-semibold text-foreground">
-              {product.name}
-            </h1>
-            <h3 className="text-2xl font-semibold text-foreground/70 my-2">
-              {minPrice === maxPrice
-                ? formatCurrency(minPrice)
-                : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
-            </h3>
-            <Separator></Separator>
-          </div>
           <FormDetailProduct
             productDetail={product}
             image={image ?? ""}
@@ -84,7 +61,9 @@ export const DetailProduct = (props: DetailProductProps) => {
             <TabsTrigger className="font-bol" value="detailProduct">
               Detail
             </TabsTrigger>
-            <TabsTrigger value="previewProduct">Preview</TabsTrigger>
+            {isCustomCase && (
+              <TabsTrigger value="previewProduct">Preview</TabsTrigger>
+            )}
           </TabsList>
           <Separator className="w-full"></Separator>
 
@@ -93,9 +72,11 @@ export const DetailProduct = (props: DetailProductProps) => {
               {product.description}
             </div>
           </TabsContent>
-          <TabsContent value="previewProduct">
-            <PreviewCustomCase></PreviewCustomCase>
-          </TabsContent>
+          {isCustomCase && (
+            <TabsContent value="previewProduct">
+              <PreviewCustomCase></PreviewCustomCase>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
 

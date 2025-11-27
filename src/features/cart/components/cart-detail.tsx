@@ -25,12 +25,16 @@ export const CartDetail = (props: CartDetailProps) => {
     const checkoutPayload = cartItemsSelected.map((item) => ({
       productId: item.productId,
       quantity: item.quantity,
-      materialId: item.Material?.id ?? null,
       materialName: null,
       phoneTypeId: item.PhoneType?.id ?? null,
       phoneTypeName: null,
-      variantId: item.Variant?.id ?? null,
-      variantName: null,
+      variant: {
+        id: item.Variant?.id ?? null,
+        name: item.Variant?.name ?? null,
+        price: item.Variant?.price ?? null,
+        stock: item.Variant?.stock ?? null,
+        max_images: item.Variant?.max_images ?? null,
+      },
       cartId: item.id,
     }));
 

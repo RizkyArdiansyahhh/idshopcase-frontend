@@ -9,16 +9,11 @@ export type DetailProduct = {
   image: string;
   productName: string;
   price: number;
-  material: string | null;
   variant: string | null;
   phoneType: string | null;
   quantity: number;
   category: string;
-};
-const SLOT_MAP: Record<string, number> = {
-  custom_case: 3,
-  keychain: 1,
-  pop_socket: 1,
+  slotImage: number;
 };
 
 type OrderSummaryCardProps = {
@@ -44,7 +39,7 @@ export const OrderSummaryCard = ({
       </CardHeader>
 
       {detailProduct.map((item, productIdx) => {
-        const slotCount = SLOT_MAP[item.category];
+        const slotCount = item.slotImage;
         return (
           <div key={productIdx} className="flex flex-col gap-3">
             {/* Produk Card */}
@@ -63,8 +58,6 @@ export const OrderSummaryCard = ({
                   <p className="font-semibold">{item.productName}</p>
                   <div className="flex flex-row gap-1 items-center text-sm text-foreground/60">
                     {item.phoneType && <p>{item.phoneType}</p>}
-                    <span>|</span>
-                    {item.material && <p>{item.material}</p>}
                   </div>
                   <p className="text-sm text-foreground/60">
                     Quantity : {item.quantity}

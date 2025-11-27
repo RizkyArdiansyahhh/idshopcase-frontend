@@ -7,8 +7,6 @@ import { AddressCard } from "./components/AddressCard";
 import { OrderSummaryCard } from "./components/OrderSummaryCard";
 import { PaymentSummary } from "./components/PaymentSummary";
 import { CheckoutButton } from "./components/CheckoutButton";
-import { useCheckoutStore } from "@/store/checkout-store";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
@@ -22,14 +20,10 @@ export default function CheckoutPage() {
     handleFileSelect,
     handleRemove,
     shippingCost,
-    totalPayment,
     paymentMethod,
     handleCreateOrder,
     createOrderIsLoading,
   } = useCheckout();
-
-  const dataCheckout = useCheckoutStore((state) => state.data);
-  const dataSelected = useCheckoutStore((state) => state.selectedCartIds);
 
   const { replace } = useRouter();
 

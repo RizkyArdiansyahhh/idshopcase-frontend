@@ -15,7 +15,7 @@ import z from "zod";
 import { QuantityInput } from "./input-form-detail-product";
 import { Form } from "@/components/ui/form";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
@@ -35,8 +35,13 @@ type ValidateFormDetailProductProps = {
   data?: any;
   isCheckout?: boolean;
   phoneTypeOptions?: Array<{ id: string; model: string }>;
-  materialOptions?: Array<{ id: string; name: string }>;
-  variantOptions?: Array<{ id: string; name: string }>;
+  variantOptions?: Array<{
+    id: string;
+    name: string;
+    price: string;
+    stock: number;
+    max_images: number;
+  }>;
 };
 export const ValidateFormDetailProduct = (
   props: ValidateFormDetailProductProps
@@ -52,22 +57,16 @@ export const ValidateFormDetailProduct = (
     data,
     isCheckout,
     phoneTypeOptions = [],
-    materialOptions = [],
     variantOptions = [],
   } = props;
+
+  const [open, setOpen] = useState(false);
 
   const formDetailProductSchema = z.object({
     variant:
       variantOptions.length > 0
         ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
             message: "Pilih varian terlebih dahulu",
-          })
-        : z.string().optional(),
-
-    material:
-      materialOptions.length > 0
-        ? z.enum(materialOptions.map((m) => m.id) as [string, ...string[]], {
-            message: "Pilih material terlebih dahulu",
           })
         : z.string().optional(),
 
@@ -89,7 +88,6 @@ export const ValidateFormDetailProduct = (
     resolver: zodResolver(formDetailProductSchema),
     defaultValues: {
       quantity: data?.quantity,
-      material: data?.material,
       phone_type: data?.phone_type,
       variant: data?.variant,
     },
@@ -100,7 +98,6 @@ export const ValidateFormDetailProduct = (
     if (data) {
       form.reset({
         quantity: data.quantity ?? 1,
-        material: data.material ?? "",
         phone_type: data.phone_type ?? "",
         variant: data.variant ?? "",
       });
@@ -112,6 +109,7 @@ export const ValidateFormDetailProduct = (
       onSuccess: () => {
         toast.success("Produk berhasil ditambahkan ke keranjang");
         form.reset();
+        setOpen(false);
       },
     },
   });
@@ -120,7 +118,6 @@ export const ValidateFormDetailProduct = (
     const cartData = {
       productId: productId,
       quantity: Number(data.quantity),
-      materialId: Number(data.material) || null,
       phoneTypeId: Number(data.phone_type) || null,
       variantId: Number(data.variant) || null,
     };
@@ -129,20 +126,25 @@ export const ValidateFormDetailProduct = (
 
   const handleCheckout = (data: FormDetailProductType) => {
     const selectedVariant = variantOptions.find((v) => v.id === data.variant);
-    const selectedMaterial = materialOptions.find(
-      (m) => m.id === data.material
-    );
+
     const selectedPhoneType = phoneTypeOptions.find(
       (p) => p.id === data.phone_type
     );
 
+    if (!selectedVariant || !selectedPhoneType) {
+      return;
+    }
+
     setDataCheckout({
       productId,
       quantity: Number(data.quantity),
-      variantId: data.variant ? Number(data.variant) : null,
-      variantName: selectedVariant?.name || null,
-      materialId: data.material ? Number(data.material) : null,
-      materialName: selectedMaterial?.name || null,
+      variant: {
+        id: Number(selectedVariant.id),
+        name: selectedVariant.name,
+        price: selectedVariant.price,
+        stock: selectedVariant.stock,
+        max_images: selectedVariant.max_images,
+      },
       phoneTypeId: data.phone_type ? Number(data.phone_type) : null,
       phoneTypeName: selectedPhoneType?.model || null,
     });
@@ -150,9 +152,15 @@ export const ValidateFormDetailProduct = (
     push("/order");
   };
 
+  const selectedVariant = variantOptions.find(
+    (v) => v.id === form.watch("variant")
+  );
+  const stockAvailable = selectedVariant?.stock ?? quantityProduct;
+  const price = selectedVariant?.price ?? priceProduct;
+
   console.log(imageProduct, "imageProduct");
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant={variant} className="p-7 rounded-none">
           {children}
@@ -188,11 +196,11 @@ export const ValidateFormDetailProduct = (
                   <h3 className="text-xl font-medium">{nameProduct}</h3>
                   <p className="font-semibold mb-2">
                     <span className="text-lg">
-                      {formatCurrency(Number(priceProduct))}
+                      {formatCurrency(Number(price))}
                     </span>
                   </p>
                   <p className="text-md text-foreground/50 font-medium">
-                    Stok : {quantityProduct}
+                    Stok : {stockAvailable}
                   </p>
                   <Separator
                     orientation="horizontal"
@@ -201,7 +209,6 @@ export const ValidateFormDetailProduct = (
                   <InputsFormProduct
                     control={form.control}
                     variants={variantOptions}
-                    materials={materialOptions}
                     phone_type={phoneTypeOptions}
                     isValidate={true}
                   />
