@@ -44,11 +44,6 @@ export const CardOrderItem = (props: CardOrderItemProps) => {
               <div>
                 <div className="text-xs text-foreground/60 flex flex-col gap-0.5">
                   {item.PhoneType && <span>{item.PhoneType.model}</span>}
-                  {item.Material && (
-                    <>
-                      <span>{item.Material.name}</span>
-                    </>
-                  )}
                 </div>
               </div>
             </div>
