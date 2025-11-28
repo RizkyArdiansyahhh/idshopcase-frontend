@@ -46,27 +46,25 @@ export default function Home() {
                 image="/images/testimoni/speak-1.jpg"
               ></CardTestimoniSpeaker>
               <CardTestimoni imageProfileUrl="2" isDark={false}>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
-                ratione cupiditate accusantium, incidunt voluptas sunt
-                repellendus? Praesentium, dolorum voluptatum! Saepe voluptatibus
-                enim voluptates sed perferendis, corrupti ipsam eaque adipisci
-                quae!
+                Desain case ponselmu sendiri dengan IdShopCase! Unggah hingga 3
+                gambar favoritmu, pilih warna case, dan atur posisi desain
+                sesuai keinginanmu. Buat case unik yang mencerminkan gaya dan
+                kreativitasmu.
               </CardTestimoni>
               <CardTestimoni imageProfileUrl="3" isDark={true}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                animi magni tempore cumque eveniet eligendi harum officia
-                aspernatur fugit. Perferendis!
+                Unggah gambar dan desain case unikmu sendiri di IdShopCase.
+                Kreatif dan personal!
               </CardTestimoni>
             </div>
             <div className="h-full w-full flex-col gap-5">
               <CardTestimoni imageProfileUrl="4" isDark={false}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-                quas id non earum ipsum laboriosam!
+                Desain case impianmu sekarang! Pilih gambar, warna, dan atur
+                desain sesuai selera. Buat case yang benar-benar mencerminkan
+                gaya pribadimu di IdShopCase.
               </CardTestimoni>
               <CardTestimoni imageProfileUrl="5" isDark={true}>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim
-                amet quasi numquam id facere aliquam modi. Esse hic ratione
-                doloremque.
+                Ekspresikan kreativitasmu! Gabungkan gambar favoritmu dan buat
+                case unik yang mencerminkan gaya pribadi di IdShopCase.
               </CardTestimoni>
               <CardTestimoniSpeaker
                 imageProfileUrl="8"
@@ -75,10 +73,9 @@ export default function Home() {
             </div>
             <div className="h-full w-full">
               <CardTestimoni imageProfileUrl="6" isDark={true}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
-                libero, deserunt adipisci, porro iste accusamus ab voluptatum,
-                veritatis error temporibus aliquid qui amet ut perferendis
-                facere quo minus animi saepe!
+                Custom Case IdShopCase memungkinkanmu memilih warna, menambahkan
+                hingga 3 gambar, dan menyesuaikan posisi desain. Hasilnya case
+                keren yang sesuai keinginanmu!
               </CardTestimoni>
               <CardTestimoniSpeaker
                 imageProfileUrl="9"
