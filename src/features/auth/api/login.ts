@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import z from "zod";
 import { getUserQueryKey } from "./get-user";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const loginSchema = z.object({
   email: z.email(),
@@ -46,6 +47,9 @@ export const useLogin = (params: useLoginPrams = {}) => {
         onMutateResult,
         context
       );
+    },
+    onError: (err) => {
+      toast.error("Email atau password salah");
     },
   });
 };
