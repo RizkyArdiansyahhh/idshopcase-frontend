@@ -82,10 +82,8 @@ export default function Home() {
                 image="/images/testimoni/speak-3.jpg"
               ></CardTestimoniSpeaker>
               <CardTestimoni imageProfileUrl="7" isDark={false}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-                earum aliquid, fugit aliquam architecto provident est odio iure
-                nihil assumenda nulla dolore corporis maxime molestiae sequi.
-                Officia distinctio rem libero.
+                Buat case yang unik dan personal di IdShopCase! Unggah gambar
+                favoritmu dan pilih warna sesuai gaya.
               </CardTestimoni>
             </div>
           </div>
