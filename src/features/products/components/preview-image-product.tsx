@@ -64,6 +64,7 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
             src={`${process.env.NEXT_PUBLIC_API_URL}${previewImage}`}
             alt="preview-product"
             fill
+            unoptimized
             className="object-center object-cover transition-all duration-300"
           />
         )}
@@ -85,6 +86,7 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
               src={`${process.env.NEXT_PUBLIC_API_URL}${image}`}
               alt={`thumbnail-${index}`}
               fill
+              unoptimized
               className="object-cover object-center"
             />
           </div>

@@ -92,6 +92,7 @@ export const ListProducts = () => {
                               alt="phone-charm"
                               fill
                               className="object-cover object-center"
+                              unoptimized
                             ></Image>
                           );
                         }
@@ -184,6 +185,7 @@ export const ListProductsDetail = () => {
                           alt="phone-charm"
                           fill
                           className="object-cover object-center"
+                          unoptimized
                         ></Image>
                       );
                     }
