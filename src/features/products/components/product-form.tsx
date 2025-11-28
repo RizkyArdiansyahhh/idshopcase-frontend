@@ -35,6 +35,7 @@ import {
 import { useGetProduct } from "../api/get-productById";
 import { useCreateProduct } from "../api/create-product";
 import { useUpdateProduct } from "../api/update-product";
+import { CreatePhoneType } from "./create-phone-type";
 
 // Helper untuk mengambil imageUrl dari product (edit mode)
 function imageUrlList(images: { imageUrl: string }[]) {
@@ -94,6 +95,7 @@ export const ProductForm = () => {
   const isVariant = form.watch("toggleIsVariant");
   const isPhoneType = form.watch("toggleIsPhoneType");
   const isCreateVariant = form.watch("toggleIsCreateVariant");
+  const isCreatePhoneType = form.watch("toggleIsCreatePhoneType");
 
   const { mutate: createProductMutate, isPending: createProductIsLoading } =
     useCreateProduct({
@@ -146,39 +148,40 @@ export const ProductForm = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="border p-4 rounded-md flex flex-col gap-3">
-            <FormField
-              name="name"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Produk</FormLabel>
-                  <Input {...field} placeholder="Nama produk" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="category"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kategori</FormLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Pilih kategori" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="custom_case">Custom Case</SelectItem>
-                      <SelectItem value="keychain">Keychain</SelectItem>
-                      <SelectItem value="phone_charm">Phone Charm</SelectItem>
-                      <SelectItem value="pop_socket">Pop Socket</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                name="name"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama Produk</FormLabel>
+                    <Input {...field} placeholder="Nama produk" />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="category"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Kategori</FormLabel>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Pilih kategori" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="custom_case">Custom Case</SelectItem>
+                        <SelectItem value="keychain">Keychain</SelectItem>
+                        <SelectItem value="phone_charm">Phone Charm</SelectItem>
+                        <SelectItem value="pop_socket">Pop Socket</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               name="description"
@@ -197,7 +200,7 @@ export const ProductForm = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gambar Produk</FormLabel>
+                  <FormLabel>Gambar Produk (maks 5)</FormLabel>
                   <ImageUploader
                     value={field.value}
                     onChange={field.onChange}
@@ -213,16 +216,24 @@ export const ProductForm = () => {
               label="Apakah produk memiliki tipe handphone?"
             />
             {isPhoneType && (
-              <FormField
-                name="phone_type"
-                control={form.control}
-                render={({ field }) => (
-                  <PhoneTypeOptions
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
+              <>
+                <FormField
+                  name="phone_type"
+                  control={form.control}
+                  render={({ field }) => (
+                    <PhoneTypeOptions
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  )}
+                />
+                <FieldCheckbox
+                  control={form.control}
+                  name="toggleIsCreatePhoneType"
+                  label="Apakah anda ingin menambahkan Tipe Handphone"
+                />
+                {isCreatePhoneType && <CreatePhoneType form={form} />}
+              </>
             )}
           </div>
 

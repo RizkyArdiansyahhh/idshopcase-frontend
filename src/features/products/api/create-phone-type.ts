@@ -3,6 +3,7 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { PhoneType } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { getPhoneTypesQueryKey } from "./get-phone-types";
+import { toast } from "sonner";
 
 type CreatePhoneTypeItemRequest = Omit<PhoneType, "id">;
 
@@ -24,6 +25,7 @@ export const useCreatePhoneType = ({
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: getPhoneTypesQueryKey() });
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+      toast.success("Phone type berhasil ditambahkan");
     },
     onError: (err) => {
       console.error(err);

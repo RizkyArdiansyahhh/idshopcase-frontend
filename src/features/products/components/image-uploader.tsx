@@ -43,10 +43,10 @@ export function ImageUploader({ value = [], onChange }: ImageUploaderProps) {
         {isDragActive ? (
           <p className="text-sm text-gray-700">Lepaskan gambar…</p>
         ) : (
-          <div className="text-sm flex flex-col items-center text-gray-600">
-            <ImageUp size={50} className="text-foreground/50" />
-            <p>Unggah Gambar</p>
+          <div className="text-xs font-light flex flex-col items-center text-gray-600">
+            <ImageUp size={50} className="text-foreground/20" />
             <p>Maksimal 5MB</p>
+            <p>Unggah Gambar .jpg, .png, .webp</p>
             <p>Drag & drop gambar di sini, atau klik untuk pilih file</p>
           </div>
         )}

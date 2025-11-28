@@ -29,7 +29,7 @@ export const PhoneTypeSelector = (props: PhoneTypeSelectorProps) => {
     <div className="flex flex-row gap-2 border h-32 rounded-md">
       <div className="flex w-4/5 flex-wrap gap-2 p-3 overflow-scroll">
         {value.length === 0 && (
-          <div className="w-ful h-full justify-center">
+          <div className="w-full h-full justify-center">
             <span className="text-foreground/50 text-xs">
               Belum ada pilihan, silahkan pilih tipe handphone
             </span>
@@ -62,23 +62,31 @@ export const PhoneTypeSelector = (props: PhoneTypeSelectorProps) => {
           </PopoverTrigger>
 
           <PopoverContent className="w-56 h-56 overflow-scroll p-2" align="end">
-            <div className="flex flex-col gap-1">
-              {options.map((item) => {
-                const selected = value.includes(item.id);
+            <div className="flex flex-col gap-1 h-full">
+              {options.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full p-4 bg-muted/30 rounded-md">
+                  <span className="text-foreground/50 text-xs text-center">
+                    Belum ada pilihan, silahkan tambahkan tipe handphone
+                  </span>
+                </div>
+              ) : (
+                options.map((item) => {
+                  const selected = value.includes(item.id);
 
-                return (
-                  <div key={item.id}>
-                    <div
-                      onClick={() => toggleSelect(item.id)}
-                      className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer text-sm"
-                    >
-                      <span>{item.model}</span>
-                      {selected && <Check size={16} />}
+                  return (
+                    <div key={item.id}>
+                      <div
+                        onClick={() => toggleSelect(item.id)}
+                        className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer text-sm"
+                      >
+                        <span>{item.model}</span>
+                        {selected && <Check size={16} />}
+                      </div>
+                      <Separator />
                     </div>
-                    <Separator></Separator>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </PopoverContent>
         </Popover>
