@@ -12,9 +12,9 @@ export const SectionShowCase = () => {
                 Hero Section
               </h2>
               <p className="text-foreground font-garamond text-lg lg:text-xl w-[90%]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
-                autem! Officia culpa praesentium delectus atque. Est minima
-                iusto vero quidem!
+                Tunjukkan kreativitasmu dengan custom case IdShopCase. Atur
+                desain, gabungkan gambar, dan pilih warna favoritmu untuk hasil
+                yang benar-benar pribadi.
               </p>
             </div>
             <div className="flex justify-end">
@@ -49,17 +49,16 @@ export const SectionShowCase = () => {
                 Hero Section
               </h2>
               <p className="font-garamond hidden md:block text-md lg:text-xl w-[90%]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                est sunt adipisci amet praesentium nostrum tenetur voluptatem
-                inventore dolore corrupti velit similique ipsa, dicta illum
-                facere distinctio ut dolorem, quidem temporibus voluptatibus
-                accusantium laudantium veniam deserunt? Explicabo recusandae
-                laborum fugit quo error, ut cum soluta aspernatur provident,
-                optio mollitia ipsa.
+                IdShopCase hadir untuk kamu yang ingin mengekspresikan
+                kreativitas melalui custom case. Pilih gambar favorit, atur
+                desain, dan pilih warna case sesuai gaya. Hasilnya unik,
+                personal, dan siap membuat ponselmu tampil beda!
               </p>
               <p className="font-garamond block md:hidden text-md w-[90%]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                est sunt adipisci amet praesentium nostrum tenetur voluptatem
+                Di IdShopCase, setiap case dibuat dengan kualitas terbaik dan
+                bisa disesuaikan sepenuhnya. Unggah gambar, pilih warna, dan
+                atur posisi desainmu sendiri. Buat case yang mencerminkan gaya
+                dan kepribadianmu.
               </p>
             </div>
             <div className="flex justify-end">
