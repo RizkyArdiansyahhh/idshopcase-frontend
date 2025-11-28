@@ -136,9 +136,9 @@ export default function CasePreview() {
   const onDragEnd = () => setIsDragging(false);
 
   return (
-    <div className="h-[80vh] w-full flex flex-col md:flex-row gap-10 py-7">
+    <div className="h-fit w-full flex flex-col lg:flex-row gap-10 py-7">
       {/* === LEFT: STEPS === */}
-      <div className="h-full w-2/5 flex flex-col gap-5">
+      <div className="h-full w-full lg:w-2/5 flex flex-col gap-5">
         <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
           <div className="h-30 w-28 relative">
             <Image
@@ -171,9 +171,9 @@ export default function CasePreview() {
       </div>
 
       {/* === RIGHT: PREVIEW === */}
-      <div className="h-full flex gap-7 p-6 font-sans flex-row">
+      <div className="h-full flex gap-7 p-6 font-sans flex-col lg:flex-row items-center">
         <div
-          className={`relative w-[17rem] h-[30.5rem] bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected}`}
+          className={`relative w-[15rem]  lg:w-[17rem] h-[30.5rem] lg:h-[35rem] bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected} flex-shrink-0`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}
@@ -217,8 +217,8 @@ export default function CasePreview() {
         </div>
 
         {/* === CONTROLS === */}
-        <div className="mt-6 w-full max-w-xs space-y-3 border">
-          <div className="flex flex-row gap-3 items-center p-5">
+        <div className="mt-6 w-full max-w-xs space-y-3 ">
+          <div className="flex flex-row gap-3 items-center p-5 border ">
             {colors.map((color, index) => (
               <div
                 key={index}
