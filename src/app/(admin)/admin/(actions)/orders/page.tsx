@@ -122,7 +122,7 @@ const OrdersPage = () => {
               >
                 Detail
               </DropdownMenuItem>
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
                   // setSelectedUser(row.original);
@@ -131,7 +131,7 @@ const OrdersPage = () => {
                 }}
               >
                 Export
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
