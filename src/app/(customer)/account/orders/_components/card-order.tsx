@@ -125,7 +125,7 @@ export const CardOrder = (props: CardOrderProps) => {
                   </p>
                   <div className="flex flex-row items-center gap-1">
                     <p className="font-semibold text-md">
-                      {formatCurrency(Number(item.Variant.price))}
+                      {/* {formatCurrency(Number(item.Variant.price))} */}
                     </p>
                     <span className="text-xs font-medium text-foreground/50">
                       x1
