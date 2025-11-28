@@ -151,19 +151,7 @@ export default function CasePreview() {
           <div>
             <p className="text-lg font-semibold">Step 1 : Tambahkan Gambar</p>
             <p className="text-sm font-medium text-foreground/70">
-              Unggah 1–3 gambar untuk membuat pola casing
-            </p>
-          </div>
-        </div>
-
-        <div className="border rounded-[12px] h-fit flex flex-row gap-4 pr-5 items-center">
-          <div className="h-30 w-28 flex justify-center items-center">
-            <div className="h-16 w-16 rounded-full bg-teal-800" />
-          </div>
-          <div>
-            <p className="text-lg font-semibold">Step 2 : Pilih Warna</p>
-            <p className="text-sm font-medium text-foreground/70">
-              Anda dapat memilih warna casing
+              Silakan unggah foto wajah Anda dengan format PNG
             </p>
           </div>
         </div>
@@ -173,9 +161,10 @@ export default function CasePreview() {
             <SquaresSubtract size={52} className="text-foreground/80" />
           </div>
           <div>
-            <p className="text-lg font-semibold">Step 3 : Atur Pola</p>
+            <p className="text-lg font-semibold">Step 2: Gabungkan Foto</p>
             <p className="text-sm font-medium text-foreground/70">
-              Geser & atur zoom pola sesuai keinginan
+              Pilih 1 hingga 3 foto diri Anda untuk digabungkan dengan gambar
+              utama. Pastikan foto yang dipilih jelas dan sesuai format.
             </p>
           </div>
         </div>
@@ -261,16 +250,6 @@ export default function CasePreview() {
               </div>
             </FieldLabel>
           </Field>
-
-          {/* ZOOM */}
-          <div className="flex gap-3 mt-4">
-            <Button variant={"default"} onClick={handleZoomOut}>
-              −
-            </Button>
-            <Button variant={"outline"} onClick={handleZoomIn}>
-              +
-            </Button>
-          </div>
 
           {/* RESET */}
           <Button variant={"destructive"} onClick={handleReset}>

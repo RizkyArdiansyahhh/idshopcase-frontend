@@ -16,7 +16,11 @@ export const formProductSchema = z.object({
   }),
   toggleIsPhoneType: z.boolean().optional(),
   phone_type: z.array(z.number()).optional(),
+  toggleIsCreatePhoneType: z.boolean().optional(),
   toggleIsCreateVariant: z.boolean().optional(),
+
+  namePhoneType: z.string().nullable().optional(),
+  modelPhoneType: z.string().nullable().optional(),
 
   nameVariant: z.string().nullable().optional(),
   priceVariant: z.string().nullable().optional(),

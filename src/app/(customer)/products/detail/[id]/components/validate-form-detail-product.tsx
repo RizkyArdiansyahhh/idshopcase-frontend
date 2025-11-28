@@ -213,7 +213,7 @@ export const ValidateFormDetailProduct = (
                     isValidate={true}
                   />
                   <QuantityInput
-                    stockProduct={quantityProduct}
+                    stockProduct={stockAvailable}
                     control={form.control}
                   ></QuantityInput>
                 </div>

@@ -60,28 +60,36 @@ export const VariantSelector = (props: VariantSelectorProps) => {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" size="sm" className="w-fit ">
-              + Tipe
+              + Variant
             </Button>
           </PopoverTrigger>
 
           <PopoverContent className="w-56 h-56 overflow-scroll p-2" align="end">
-            <div className="flex flex-col gap-1">
-              {options.map((item) => {
-                const selected = value.includes(item.id);
+            <div className="flex flex-col gap-1 h-full">
+              {options.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full p-4 bg-muted/30 rounded-md">
+                  <span className="text-foreground/50 text-xs text-center">
+                    Belum ada pilihan, silahkan tambahkan tipe handphone
+                  </span>
+                </div>
+              ) : (
+                options.map((item) => {
+                  const selected = value.includes(item.id);
 
-                return (
-                  <div key={item.id}>
-                    <div
-                      onClick={() => toggleSelect(item.id)}
-                      className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer text-sm"
-                    >
-                      <span>{item.name}</span>
-                      {selected && <Check size={16} />}
+                  return (
+                    <div key={item.id}>
+                      <div
+                        onClick={() => toggleSelect(item.id)}
+                        className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer text-sm"
+                      >
+                        <span>{item.name}</span>
+                        {selected && <Check size={16} />}
+                      </div>
+                      <Separator></Separator>
                     </div>
-                    <Separator></Separator>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </PopoverContent>
         </Popover>
