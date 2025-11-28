@@ -85,10 +85,10 @@ export const FormDetailProduct = ({
   return (
     <div className="w-full px-8 flex flex-col gap-2.5">
       <div>
-        <h1 className="text-4xl font-semibold text-foreground">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground">
           {productDetail.name}
         </h1>
-        <h3 className="text-2xl font-semibold text-foreground/70 my-2">
+        <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground/70 my-2">
           {priceDisplay !== undefined
             ? formatCurrency(Number(priceDisplay))
             : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
@@ -106,7 +106,7 @@ export const FormDetailProduct = ({
           <QuantityInput stockProduct={stockProduct} control={form.control} />
         </div>
 
-        <div className="flex-1 flex flex-row gap-3 items-end mt-4">
+        <div className="flex-1 flex flex-col md:flex-row gap-3 items-end mt-4">
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}

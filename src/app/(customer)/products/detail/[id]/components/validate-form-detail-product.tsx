@@ -162,7 +162,7 @@ export const ValidateFormDetailProduct = (
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant={variant} className="p-7 rounded-none">
+        <Button variant={variant} className="p-3 lg:p-7 rounded-none">
           {children}
         </Button>
       </DrawerTrigger>

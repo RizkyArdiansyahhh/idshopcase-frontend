@@ -158,7 +158,7 @@ export const ListProductsDetail = () => {
       <h1 className="text-4xl font-semibold my-7 text-center">
         Produk Yang Mungkin Anda Suka
       </h1>
-      <div className="flex flex-row flex-wrap justify-center gap-8">
+      <div className="flex flex-row overflow-scroll lg:flex-wrap justify-center gap-8">
         {products?.map((product) => {
           return (
             <div

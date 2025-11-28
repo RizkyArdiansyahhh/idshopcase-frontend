@@ -39,7 +39,7 @@ export const DetailProduct = (props: DetailProductProps) => {
       <div className="w-full my-2">
         <BreadcrumbCustom></BreadcrumbCustom>
       </div>
-      <div className="w-full h-full flex md:flex-row flex-col ">
+      <div className="w-full h-full flex lg:flex-row flex-col ">
         <div className="w-full lg:w-[50%] h-full ">
           <div className="w-full h-full lg:h-5/6 flex flex-col">
             <PreviewImageProduct
