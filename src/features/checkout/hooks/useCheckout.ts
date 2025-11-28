@@ -7,6 +7,7 @@ import { useCreateOrder } from "@/features/orders/api/create-order";
 import { useCheckoutStore } from "@/store/checkout-store";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { useGetProducts } from "@/features/products/api/get-ptoducts";
+import { useRouter } from "next/navigation";
 
 export type DetailProduct = {
   image: string;
@@ -27,6 +28,8 @@ export const useCheckout = () => {
   const [customImage, setCustomImage] = useState<(File | undefined)[][]>([]);
   const [previewImage, setPreviewImage] = useState<(string | null)[][]>([]);
   const [selectedAddress, setSelectedAddress] = useState<any>(null);
+
+  const { replace } = useRouter();
 
   const dataCheckout = useCheckoutStore((state) => state.data);
   const cartItems = useCheckoutStore((state) => state.selectedCartIds);
@@ -108,6 +111,7 @@ export const useCheckout = () => {
     useCreateOrder({
       mutationConfig: {
         onSuccess: (data) => {
+          replace("/order/payment");
           window.loadJokulCheckout?.(data);
         },
       },

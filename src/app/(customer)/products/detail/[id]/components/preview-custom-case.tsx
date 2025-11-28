@@ -171,7 +171,7 @@ export default function CasePreview() {
       </div>
 
       {/* === RIGHT: PREVIEW === */}
-      <div className="h-full flex gap-7 p-6 font-sans flex-col lg:flex-row items-center">
+      <div className="h-full flex gap-7 p-6 font-sans flex-col lg:flex-row items-center lg:items-start">
         <div
           className={`relative w-[15rem]  lg:w-[17rem] h-[30.5rem] lg:h-[35rem] bg-black rounded-[2.4rem] overflow-hidden shadow-2xl ${colorSelected} flex-shrink-0`}
           onMouseDown={onDragStart}
@@ -218,7 +218,7 @@ export default function CasePreview() {
 
         {/* === CONTROLS === */}
         <div className="mt-6 w-full max-w-xs space-y-3 ">
-          <div className="flex flex-row gap-3 items-center p-5 border ">
+          {/* <div className="flex flex-row gap-3 items-center p-5  ">
             {colors.map((color, index) => (
               <div
                 key={index}
@@ -230,10 +230,10 @@ export default function CasePreview() {
                 }`}
               ></div>
             ))}
-          </div>
+          </div> */}
 
           {/* UPLOAD */}
-          <Field>
+          <Field className="">
             <Input
               id="imageUploadCustomCase"
               ref={designInputRef}
@@ -244,7 +244,7 @@ export default function CasePreview() {
               onChange={handleDesignUpload}
             />
             <FieldLabel htmlFor="imageUploadCustomCase">
-              <div className="h-20 border-dotted border p-5 rounded-sm flex flex-col items-center justify-center text-foreground/50 cursor-pointer hover:bg-foreground/5 transition-all ease-in duration-100 hover:border-foreground/40">
+              <div className="h-20 w-full border-dotted border p-5 rounded-sm flex flex-col items-center justify-center text-foreground/50 cursor-pointer hover:bg-foreground/5 transition-all ease-in duration-100 hover:border-foreground/40">
                 <ImageUp size={36} />
                 <p>Unggah 1–3 gambar</p>
               </div>
@@ -252,7 +252,7 @@ export default function CasePreview() {
           </Field>
 
           {/* RESET */}
-          <Button variant={"destructive"} onClick={handleReset}>
+          <Button className="w-full" variant={"default"} onClick={handleReset}>
             Reset
           </Button>
         </div>
