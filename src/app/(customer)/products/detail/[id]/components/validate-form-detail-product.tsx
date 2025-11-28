@@ -189,6 +189,7 @@ export const ValidateFormDetailProduct = (
                       alt="banner-detail-product"
                       fill
                       className="object-center object-cover scale-90"
+                      unoptimized
                     ></Image>
                   )}
                 </div>

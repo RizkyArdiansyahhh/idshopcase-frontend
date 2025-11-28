@@ -217,7 +217,7 @@ export default function CasePreview() {
         </div>
 
         {/* === CONTROLS === */}
-        <div className="mt-6 w-full max-w-xs space-y-3">
+        <div className="mt-6 w-full max-w-xs space-y-3 border">
           <div className="flex flex-row gap-3 items-center p-5">
             {colors.map((color, index) => (
               <div
