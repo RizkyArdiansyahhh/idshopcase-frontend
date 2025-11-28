@@ -38,7 +38,7 @@ export const CardOrderItem = (props: CardOrderItemProps) => {
                 </p>
                 <p className="font-semibold">{`${
                   item.quantity
-                } x ${formatCurrency(Number(item.Product.price))}`}</p>
+                } x ${formatCurrency(Number(item.Variant.price))}`}</p>
               </div>
 
               <div>
