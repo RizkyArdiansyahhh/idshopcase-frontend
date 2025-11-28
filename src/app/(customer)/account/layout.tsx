@@ -9,11 +9,19 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import { ProtectedRoute } from "@/features/auth/components/protected-route";
 import { SidebarFloating } from "./_components/sidebar-floating";
+import { useGetUser } from "@/features/auth/api/get-user";
+import { useGetAddresses } from "@/features/address/api/get-address";
 
 export default function AccountLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathName = usePathname();
+
+  const { data: user } = useGetUser();
+  const { data: addrees } = useGetAddresses();
+  const addressUser = addrees?.find((addr) => addr.is_primary === true);
+
+  console.log(addrees);
 
   return (
     <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
@@ -35,14 +43,16 @@ export default function AccountLayout({
             <div className="flex flex-row gap-3 items-center justify-between px-1">
               <div className="flex flex-row gap-3 items-center">
                 <IoPersonOutline />
-                <p className="text-md font-bold text-foreground/70">Username</p>
+                <p className="text-md font-bold text-foreground/70">
+                  {user?.email}
+                </p>
               </div>
 
               <div className="flex flex-row items-center gap-2">
                 <GrLocation />
                 <div className="flex flex-row items-center gap-1 text-xs">
                   <p className="text-foreground/70">Dikirim ke</p>
-                  <p className="font-bold">Pekanbaru</p>
+                  <p className="font-bold">{addressUser?.city}</p>
                   <IoIosArrowDown />
                 </div>
               </div>
