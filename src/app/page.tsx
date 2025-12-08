@@ -10,7 +10,6 @@ import {
   CardTestimoniSpeaker,
 } from "@/components/shared/card-testimoni";
 import { ProtectedRoute } from "@/features/auth/components/protected-route";
-import { TestimoniMobile } from "./_components/testimoni-mobile";
 
 export default function Home() {
   return (
@@ -23,6 +22,7 @@ export default function Home() {
             fill
             alt="hero-section-image"
             className="object-cover object-top"
+            priority
           />
           {/* <div className="font-snell text-white absolute text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <p>Welcome Idshop</p>
