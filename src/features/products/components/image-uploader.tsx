@@ -62,7 +62,6 @@ export function ImageUploader({ value = [], onChange }: ImageUploaderProps) {
                   src={url}
                   alt={`preview-${idx}`}
                   fill
-                  unoptimized
                   className="object-cover"
                 />
                 {idx === 0 && (

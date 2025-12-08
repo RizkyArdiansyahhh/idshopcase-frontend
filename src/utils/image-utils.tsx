@@ -27,6 +27,6 @@ export function imageOpenGraph(images?: ProductImage[]) {
   }
 
   return images.map((img) => ({
-    url: img.imageUrl,
+    url: cleanImageUrl(img.imageUrl) ?? "",
   }));
 }
