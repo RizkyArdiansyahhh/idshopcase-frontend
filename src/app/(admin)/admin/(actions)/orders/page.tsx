@@ -1,8 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { useGetOrders } from "@/features/orders/api/get-orders";
-import { useGetUsers } from "@/features/users/api/get-users";
-import { Order, OrderAdmin } from "@/types/api";
+import { OrderAdmin } from "@/types/api";
 import {
   ColumnFiltersState,
   createColumnHelper,
@@ -14,7 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { TableContent } from "../components/table-content";
-import { CircleCheck, ClipboardClock, Loader, Plus, Truck } from "lucide-react";
+import { CircleCheck, ClipboardClock, Loader, Truck } from "lucide-react";
 import { useGetOrdersAdmin } from "@/features/orders/api/get-orders-admin";
 import { formatCurrency } from "@/lib/format-currency";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

@@ -1,19 +1,14 @@
-"use client";
-import { RegisterForm } from "@/features/auth/components/register-form";
-import { useRouter } from "next/navigation";
+import { Metadata } from "next";
+import { Register } from "./_components/register";
+
+export const metadata: Metadata = {
+  title: "Register",
+};
 
 const RegisterPage = () => {
-  const router = useRouter();
-  const handleRegisterSuccess = (data: { email: string }) => {
-    const params = new URLSearchParams({
-      email: data.email,
-    });
-
-    router.push(`/verify?${params.toString()}`);
-  };
   return (
     <>
-      <RegisterForm onSuccess={handleRegisterSuccess}></RegisterForm>
+      <Register></Register>
     </>
   );
 };

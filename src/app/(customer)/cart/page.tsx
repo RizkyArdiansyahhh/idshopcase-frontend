@@ -1,4 +1,8 @@
+import { Metadata } from "next";
 import { Cart } from "./_components/cart";
+export const metadata: Metadata = {
+  title: "Keranjang",
+};
 
 const CartPage = () => {
   return (

@@ -6,24 +6,12 @@ import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Idshopcase",
+  title: {
+    default: "IDSHOPCASE",
+    template: "%s | IDSHOPCASE",
+  },
   description:
     "IDShopCase menjual case HP premium, custom, keychain, phone charm, dan masih banyak lagi.",
-  openGraph: {
-    title: "IDShopCase — Case HP Premium",
-    description: "Case HP premium dan custom.",
-    url: "https://idshopcase.com",
-    siteName: "IDShopCase",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "id_ID",
-    type: "website",
-  },
 };
 
 export default function RootLayout({

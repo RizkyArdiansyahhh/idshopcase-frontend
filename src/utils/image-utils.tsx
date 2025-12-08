@@ -20,3 +20,13 @@ export const imageUrlList = (imagesUrl: ProductImage[] = []) => {
     .map((img) => cleanImageUrl(img.imageUrl))
     .filter((url): url is string => url !== null);
 };
+
+export function imageOpenGraph(images?: ProductImage[]) {
+  if (!images || images.length === 0) {
+    return [{ url: "/images/login-cover.jpg" }];
+  }
+
+  return images.map((img) => ({
+    url: img.imageUrl,
+  }));
+}

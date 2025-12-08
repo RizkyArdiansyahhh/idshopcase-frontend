@@ -1,17 +1,14 @@
-"use client";
+import { Metadata } from "next";
+import { Login } from "./_components/login";
 
-import { LoginForm } from "../../../features/auth/components/login-form";
-import { useRouter } from "next/navigation";
+export const metadata: Metadata = {
+  title: "Login",
+};
 
 const LoginPage = () => {
-  const router = useRouter();
   return (
     <>
-      <LoginForm
-        onSuccess={() => {
-          router.replace("/");
-        }}
-      />
+      <Login></Login>
     </>
   );
 };
