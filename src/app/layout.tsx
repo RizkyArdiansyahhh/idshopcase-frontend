@@ -26,6 +26,10 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1"
         ></meta>
+        <meta
+          name="google-site-verification"
+          content="oauS460qZk1UrnYvZXPvj61iqN4I7XSzH-LadUqy-ZM"
+        />
 
         {/* // eslint-disable-next-line @next/next/no-sync-scripts */}
         <Script
