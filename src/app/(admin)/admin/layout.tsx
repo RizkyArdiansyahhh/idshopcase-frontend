@@ -2,7 +2,15 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/app-sidebar";
 import { SiteHeader } from "./components/site-header";
 import { ProtectedRoute } from "@/features/auth/components/protected-route";
+import { Metadata } from "next";
 // import { ProtectedRoute } from "@/features/auth/components/protected-route";
+
+export const metadata: Metadata = {
+  title: {
+    default: "IDSHOPCASE",
+    template: "%s | Admin | IDSHOPCASE",
+  },
+};
 
 export default function AdminLayout({
   children,

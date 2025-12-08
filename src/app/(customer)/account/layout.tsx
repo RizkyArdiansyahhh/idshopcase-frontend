@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Sidebar } from "./_components/sidebar";
 
 import { IoPersonOutline } from "react-icons/io5";
@@ -15,13 +14,9 @@ import { useGetAddresses } from "@/features/address/api/get-address";
 export default function AccountLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const pathName = usePathname();
-
   const { data: user } = useGetUser();
   const { data: addrees } = useGetAddresses();
   const addressUser = addrees?.find((addr) => addr.is_primary === true);
-
-  console.log(addrees);
 
   return (
     <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
