@@ -19,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
         "/order/*",
       ],
     },
-    sitemap: process.env.NEXT_PUBLIC_URL + "/sitemap.xml",
+    sitemap: "http://idshopcase.com/sitemap.xml",
   };
 }
