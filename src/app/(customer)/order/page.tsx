@@ -5,9 +5,8 @@ import { useCheckout } from "@/features/checkout/hooks/useCheckout";
 
 import { AddressCard } from "./components/AddressCard";
 import { OrderSummaryCard } from "./components/OrderSummaryCard";
-import { PaymentSummary } from "./components/PaymentSummary";
+import { PaymentSummary } from "../../../features/checkout/components/PaymentSummary";
 import { CheckoutButton } from "./components/CheckoutButton";
-import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
   const {
@@ -19,16 +18,15 @@ export default function CheckoutPage() {
     previewImage,
     handleFileSelect,
     handleRemove,
-    shippingCost,
-    paymentMethod,
     handleCreateOrder,
     createOrderIsLoading,
+    summaryOrderRequest,
+    isImageValid,
+    isAllImageValid,
   } = useCheckout();
 
-  const { replace } = useRouter();
-
   return (
-    <div className="w-full min-h-screen p-6">
+    <div className="w-full min-h-screen p-2.5 md:p-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* LEFT */}
         <div className="lg:col-span-2 flex flex-col gap-6">
@@ -42,6 +40,7 @@ export default function CheckoutPage() {
 
           {/* Order Summary with UploadCard */}
           <OrderSummaryCard
+            isImageValid={isImageValid}
             detailProduct={detailProduct}
             previewImages={previewImage}
             onFilesSelect={handleFileSelect as any}
@@ -53,20 +52,13 @@ export default function CheckoutPage() {
         <div className="lg:col-span-1 flex flex-col gap-4">
           <div className="sticky top-6">
             <PaymentSummary
-              paymentMethod={paymentMethod}
-              subtotal={detailProduct.reduce(
-                (acc, item) => acc + item.price * item.quantity,
-                0
-              )}
-              shippingCost={shippingCost}
+              isAllImageValid={isAllImageValid}
+              addressId={selectedAddress?.id || null}
+              paymentMethod={"DOKU"}
+              dataRequest={summaryOrderRequest}
+              createOrderIsLoading={createOrderIsLoading}
+              handleCreateOrder={handleCreateOrder}
             />
-
-            <div className="mt-4">
-              <CheckoutButton
-                isLoading={createOrderIsLoading}
-                onCreateOrder={handleCreateOrder}
-              />
-            </div>
           </div>
         </div>
       </div>

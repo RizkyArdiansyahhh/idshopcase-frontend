@@ -54,14 +54,16 @@ export const AddressDialog = ({
             >
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                  <p className="font-medium text-foreground">{addr.city}</p>
+                  <p className="text-xs md:text-sm font-medium text-foreground">
+                    {addr.city}
+                  </p>
                   {addr.is_primary && (
                     <span className="text-xs font-medium uppercase tracking-wide bg-foreground/10 text-foreground/70 px-2 py-0.5 rounded-full">
                       Utama
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-foreground/60 leading-snug">
+                <p className="text-xs md:text-sm text-foreground/60 leading-snug">
                   {addr.details} {addr.district}, {addr.city}, {addr.province}
                   {addr.postal_code && ` (${addr.postal_code})`}
                 </p>

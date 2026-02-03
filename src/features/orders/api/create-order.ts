@@ -1,6 +1,5 @@
-import { api, apiUpload } from "@/lib/axios";
+import { apiUpload } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
-import { CheckoutData } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getOrdersAdminQueryKey } from "./get-orders-admin";
@@ -12,7 +11,7 @@ const createOrder = async (data: FormData) => {
     console.log(key, value);
   });
   const response = await apiUpload.post("/order", data);
-  return response.data.checkout.response.payment.url;
+  return response.data;
 };
 
 type UseCreateOrder = {

@@ -113,7 +113,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
       </FieldLegend>
       <Form {...form}>
         <form onSubmit={form.handleSubmit((values) => handleSubmit(values))}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField
               control={form.control}
               name="recipient_name"
@@ -253,7 +253,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               </FormItem>
             )}
           />
-          <Field orientation="horizontal" className="justify-end">
+          <Field orientation="horizontal" className="justify-end mt-1">
             <Button type="submit">
               {addressId ? (
                 updateAddressMutationLoading ? (

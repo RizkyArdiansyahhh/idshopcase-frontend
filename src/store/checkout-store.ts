@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CartItem, CheckoutData } from "@/types/api";
+import { CheckoutData } from "@/types/api";
 
 interface CheckoutStore {
   data: CheckoutData | null;

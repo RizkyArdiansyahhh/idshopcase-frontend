@@ -44,7 +44,7 @@ type ValidateFormDetailProductProps = {
   }>;
 };
 export const ValidateFormDetailProduct = (
-  props: ValidateFormDetailProductProps
+  props: ValidateFormDetailProductProps,
 ) => {
   const {
     productId,
@@ -128,7 +128,7 @@ export const ValidateFormDetailProduct = (
     const selectedVariant = variantOptions.find((v) => v.id === data.variant);
 
     const selectedPhoneType = phoneTypeOptions.find(
-      (p) => p.id === data.phone_type
+      (p) => p.id === data.phone_type,
     );
 
     if (!selectedVariant) {
@@ -153,7 +153,7 @@ export const ValidateFormDetailProduct = (
   };
 
   const selectedVariant = variantOptions.find(
-    (v) => v.id === form.watch("variant")
+    (v) => v.id === form.watch("variant"),
   );
   const stockAvailable = selectedVariant?.stock ?? quantityProduct;
   const price = selectedVariant?.price ?? priceProduct;
@@ -162,13 +162,18 @@ export const ValidateFormDetailProduct = (
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant={variant} className="p-3 lg:p-7 rounded-none">
+        <Button
+          variant={variant}
+          className="p-3 lg:p-7 rounded-none w-[60%] md:w-fit text-xs md:text-sm"
+        >
           {children}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DialogHeader className="flex flex-col items-center my-3">
-          <DialogTitle className="text-3xl">Validasi Produk</DialogTitle>
+          <DialogTitle className="text-lg md:text-xl lg:text-3xl">
+            Validasi Produk
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -180,38 +185,65 @@ export const ValidateFormDetailProduct = (
               }
             })}
           >
-            <div className="mx-auto w-full max-w-4xl">
-              <div className="w-full h-[25rem] flex flex-row">
-                <div className="w-1/3 h-full relative p-2">
-                  {imageProduct && (
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${imageProduct}`}
-                      alt="banner-detail-product"
-                      fill
-                      className="object-center object-cover scale-90"
-                    ></Image>
-                  )}
+            <div className="mx-auto w-full max-w-4xl px-2 lg:px-0">
+              <div className="w-full h-[25rem] flex flex-col md:flex-row">
+                <div className="w-full md:w-1/3 h-full flex flex-row gap-1">
+                  <div className="w-1/2 md:w-full h-full relative">
+                    {imageProduct && (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${imageProduct}`}
+                        alt="banner-detail-product"
+                        fill
+                        className="object-center object-cover scale-90 rounded-sm"
+                      ></Image>
+                    )}
+                  </div>
+                  <div className="md:hidden w-1/2 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-base md:text-lg lg:text-xl font-medium">
+                        {nameProduct}
+                      </h3>
+                      <p className="font-semibold mb-1">
+                        <span className="text-sm">
+                          {formatCurrency(Number(price || 0))}
+                        </span>
+                      </p>
+                      <p className="text-sm text-foreground/50 font-medium">
+                        Stok : {stockAvailable}
+                      </p>
+                    </div>
+                    <Separator
+                      orientation="horizontal"
+                      className="my-2"
+                    ></Separator>
+                  </div>
                 </div>
-                <div className="w-2/3 h-full ">
-                  <h3 className="text-xl font-medium">{nameProduct}</h3>
-                  <p className="font-semibold mb-2">
+
+                <div className="w-full md:w-2/3 h-full  flex flex-col">
+                  <h3 className="hidden md:block text-base md:text-lg lg:text-xl font-medium">
+                    {nameProduct}
+                  </h3>
+                  <p className="hidden md:block font-semibold mb-2">
                     <span className="text-lg">
-                      {formatCurrency(Number(price))}
+                      {formatCurrency(Number(price || 0))}
                     </span>
                   </p>
-                  <p className="text-md text-foreground/50 font-medium">
+                  <p className="hidden md:block text-md text-foreground/50 font-medium">
                     Stok : {stockAvailable}
                   </p>
                   <Separator
                     orientation="horizontal"
-                    className="my-2"
+                    className="my-2 hidden md:block"
                   ></Separator>
-                  <InputsFormProduct
-                    control={form.control}
-                    variants={variantOptions}
-                    phone_type={phoneTypeOptions}
-                    isValidate={true}
-                  />
+                  <div className="flex-1 min-h-0 overflow-y-auto">
+                    <InputsFormProduct
+                      control={form.control}
+                      variants={variantOptions}
+                      phone_type={phoneTypeOptions}
+                      isValidate={true}
+                    />
+                  </div>
+
                   <QuantityInput
                     stockProduct={stockAvailable}
                     control={form.control}
@@ -219,12 +251,14 @@ export const ValidateFormDetailProduct = (
                 </div>
               </div>
 
-              <DrawerFooter>
-                <Button type="submit">{` ${
+              <DrawerFooter className="flex flex-row-reverse md:flex-col">
+                <Button className="w-1/2 md:w-full" type="submit">{` ${
                   isCheckout ? "Lanjut ke Checkout" : "Tambah ke Keranjang"
                 }`}</Button>
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button className="w-1/2 md:w-full" variant="outline">
+                    Cancel
+                  </Button>
                 </DrawerClose>
               </DrawerFooter>
             </div>

@@ -144,7 +144,6 @@ export interface CheckoutData {
     max_images: number;
   };
   cartId?: number;
-  price?: number;
 }
 
 export type OrderItemAdmin = {
@@ -211,4 +210,24 @@ export type OrderAdmin = {
     amount: string;
   };
   Address: Address;
+};
+
+export type OrderSummary = {
+  items: OrderItemSummary[];
+  shipping: {
+    courier: string;
+    service: string;
+    cost: number;
+  };
+  subtotal: number;
+  total: number;
+  buyNow: boolean;
+};
+
+type OrderItemSummary = {
+  id: number;
+  quantity: number;
+  price: number;
+  subtotal: number;
+  variantId: number;
 };

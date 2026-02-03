@@ -1,98 +1,59 @@
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { Check } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { Material, Variant } from "@/types/api";
+import { useGetVariants } from "../api/get-variants";
+import { UseFormReturn } from "react-hook-form";
+import { IoClose } from "react-icons/io5";
+import { Variant } from "@/types/api";
 
 type VariantSelectorProps = {
-  options: Variant[];
-  value?: number[];
-  onChange: (val: number[]) => void;
+  value?: Variant[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: UseFormReturn<any>;
+  setActiveVariant: (id: number) => void;
 };
 
 export const VariantSelector = (props: VariantSelectorProps) => {
-  const { options = [], value = [], onChange } = props;
+  const { value = [], form, setActiveVariant } = props;
 
-  console.log(options, "value");
-  const toggleSelect = (id: number) => {
-    if (value.includes(id)) {
-      onChange(value.filter((v) => v !== id));
-    } else {
-      onChange([...value, id]);
-    }
+  const handleDelete = (id: number) => {
+    const currentVariants = form.getValues("variant") || [];
+    form.setValue(
+      "variant",
+      currentVariants.filter((v: number) => v !== id),
+    );
   };
 
   return (
     <div className="flex flex-row gap-2 border h-32 rounded-md">
-      <div className="flex w-4/5 flex-wrap gap-2 p-3 overflow-scroll">
+      <div className="flex w-full flex-wrap gap-2 p-3 overflow-scroll">
         {value.length === 0 && (
           <div className="w-ful h-full justify-center">
             <span className="text-foreground/50 text-xs">
-              Belum ada pilihan, Anda dapat menambahkan variant yang tersedia
-              atau menambahkan variant baru
+              Belum ada pilihan, anda dapat menambahkan variant baru
             </span>
           </div>
         )}
-        {value.map((id) => {
-          const item = options.find((opt) => opt.id === id);
-          if (!item) return null;
-
+        {value.map((item) => {
           return (
-            <Badge
-              key={id}
-              variant="secondary"
-              className="cursor-pointer h-10"
-              onClick={() => toggleSelect(id)}
+            <div
+              key={item.id}
+              className="flex flex-row justify-center items-center gap-1"
             >
-              {item.name} ✕
-            </Badge>
+              <Badge
+                variant="secondary"
+                className="cursor-pointer h-10"
+                onClick={() => setActiveVariant(item.id)}
+              >
+                {item.name}
+              </Badge>
+              <div
+                className="bg-foreground border rounded-full w-6 h-6 flex justify-center items-center hover:cursor-pointer"
+                onClick={() => handleDelete(item.id)}
+              >
+                <IoClose color="white" />
+              </div>
+            </div>
           );
         })}
-      </div>
-      <Separator orientation="vertical"></Separator>
-
-      <div className="flex w-1/5 justify-center items-center p-2">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="w-fit ">
-              + Variant
-            </Button>
-          </PopoverTrigger>
-
-          <PopoverContent className="w-56 h-56 overflow-scroll p-2" align="end">
-            <div className="flex flex-col gap-1 h-full">
-              {options.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full p-4 bg-muted/30 rounded-md">
-                  <span className="text-foreground/50 text-xs text-center">
-                    Belum ada pilihan, silahkan tambahkan tipe handphone
-                  </span>
-                </div>
-              ) : (
-                options.map((item) => {
-                  const selected = value.includes(item.id);
-
-                  return (
-                    <div key={item.id}>
-                      <div
-                        onClick={() => toggleSelect(item.id)}
-                        className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer text-sm"
-                      >
-                        <span>{item.name}</span>
-                        {selected && <Check size={16} />}
-                      </div>
-                      <Separator></Separator>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </PopoverContent>
-        </Popover>
       </div>
     </div>
   );

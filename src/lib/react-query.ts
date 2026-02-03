@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryClient, UseMutationOptions } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +26,7 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       onError: () => {
-        alert("Sebuah kesalahan terjadi");
+        toast.error("Terjadi Kesalahan");
       },
     },
   },
@@ -40,7 +41,7 @@ export type QueryConfig<T extends (...args: any[]) => any> = Omit<
 >;
 
 export type MutationConfig<
-  MutationFnType extends (...args: any) => Promise<any>
+  MutationFnType extends (...args: any) => Promise<any>,
 > = UseMutationOptions<
   ApiFnReturnType<MutationFnType>,
   Error,

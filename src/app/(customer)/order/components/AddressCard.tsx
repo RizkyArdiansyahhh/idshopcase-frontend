@@ -24,9 +24,14 @@ export const AddressCard = ({
 
   if (!addresses) {
     return (
-      <Card>
+      <Card className="rounded-md">
         <CardHeader className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Alamat Pengiriman</h3>
+          <h3 className="text-sm md:text-base lg:text-lg font-semibold">
+            Alamat Pengiriman
+          </h3>
+          <p className="text-xs md:text-sm lg:text-base text-foreground/70">
+            Alamat pengiriman belum tersedia, silakan tambah alamat
+          </p>
         </CardHeader>
       </Card>
     );
@@ -34,18 +39,24 @@ export const AddressCard = ({
 
   return (
     <>
-      <Card>
+      <Card className="rounded-md">
         <CardHeader className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Alamat Pengiriman</h3>
-          <Button variant="link" onClick={() => setIsAddressModalOpen(true)}>
+          <h3 className="text-sm md:text-base lg:text-lg font-semibold">
+            Alamat Pengiriman
+          </h3>
+          <Button
+            className="text-sm md:text-base"
+            variant="link"
+            onClick={() => setIsAddressModalOpen(true)}
+          >
             Ubah
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="text-xs md:text-base">
           <p className="font-medium">
             {selectedAddress?.province || "Belum ada alamat dipilih"}
           </p>
-          <p className="text-sm text-foreground/70 leading-snug">
+          <p className="text-xs md:text-sm text-foreground/70 leading-snug">
             {selectedAddress ? (
               <>
                 {selectedAddress.details && `${selectedAddress.details}, `}

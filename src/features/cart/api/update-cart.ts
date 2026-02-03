@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { getCartsQueryKey } from "./get-carts";
+import { toast } from "sonner";
 
 type UpdateCartItemRequest = {
   id: number;
@@ -27,8 +28,12 @@ export const useUpdateCartItem = (params: UseUpdateCartItemParams = {}) => {
         data,
         variables,
         onMutateResult,
-        context
+        context,
       );
+    },
+    onError: (err) => {
+      toast.error("Gagal memperbarui keranjang");
+      console.error(err);
     },
   });
 };

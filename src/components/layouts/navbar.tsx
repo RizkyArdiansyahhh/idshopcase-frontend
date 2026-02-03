@@ -66,8 +66,8 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             ? "0.75rem"
             : "1rem"
           : isScrolled
-          ? "0.5rem"
-          : "0.75rem",
+            ? "0.5rem"
+            : "0.75rem",
         boxShadow: isBlur
           ? isScrolled
             ? "0 4px 20px rgba(0,0,0,0.3)"
@@ -75,8 +75,11 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
           : "0 2px 10px rgba(0,0,0,0.4)",
       }}
     >
-      <div className="flex justify-between items-center py-4 px-5">
-        <Link href="/" className="text-2xl font-bold select-none">
+      <div className="flex justify-between items-center py-1 md:py-4 px-5">
+        <Link
+          href="/"
+          className="text-base sm:text-lg md:text-2xl font-bold select-none"
+        >
           idshopcase.
         </Link>
 
@@ -134,18 +137,18 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             transition={{ duration: 0.3 }}
             className="absolute top-full right-0 mt-2 w-1/2 bg-black/70 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden"
           >
-            <div className="flex flex-col py-2 text-white text-center">
+            <div className="flex flex-col py-2 text-white text-start px-4">
               <Link
                 href={"/account/profile"}
                 className="py-2 hover:bg-white/10 transition"
               >
-                Profil
+                <p>Profil</p>
               </Link>
               <Link
                 href={"/cart"}
                 className="py-2 hover:bg-white/10 transition"
               >
-                Keranjang
+                <p>Keranjang</p>
               </Link>
             </div>
           </motion.div>

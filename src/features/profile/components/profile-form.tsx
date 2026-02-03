@@ -18,6 +18,8 @@ import { SpinnerV2 } from "@/components/ui/spinner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Separator } from "@/components/ui/separator";
 import { TbEditCircle } from "react-icons/tb";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { LuPencil } from "react-icons/lu";
 
 type ProfileFormProps = {
   id: number;
@@ -29,6 +31,7 @@ type ProfileFormProps = {
 export const ProfileForm = (props: ProfileFormProps) => {
   const { name, email, phone, imageurl } = props;
 
+  const isMobile = useIsMobile();
   console.log(imageurl, "imageurl");
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(imageurl);
@@ -96,36 +99,62 @@ export const ProfileForm = (props: ProfileFormProps) => {
   console.log(previewImage, "previewImage");
   return (
     <div>
-      <div className="flex flex-row items-center gap-5 px-16">
-        <UserAvatar
-          key={previewImage}
-          name={name}
-          image={previewImage}
-          className={"h-40 w-40 transition-all duration-300 ease-in-out"}
-        ></UserAvatar>
-        <div className="flex flex-col gap-5">
-          <Button
-            variant={"outline"}
-            type="button"
-            disabled={!isEditing}
-            onClick={() => {
-              imageRef.current?.click();
-            }}
-          >
-            Unggah Foto Baru
-          </Button>
-          <div className="text-xs text-foreground/60">
-            <p>Ukuran file maksimal 2MB</p>
-            <p>Format Gambar: .jpg, .jpeg, .png</p>
-          </div>
+      <div
+        className={`flex flex-row items-center  gap-5 px-5 sm:px-16 ${isMobile && "justify-center"}`}
+      >
+        <div className="h-fit w-fit relative">
+          <UserAvatar
+            key={previewImage}
+            name={name}
+            image={previewImage}
+            className={
+              "h-30 w-30 sm:h-40 sm:w-40 transition-all duration-300 ease-in-out"
+            }
+          ></UserAvatar>
+          {isMobile && (
+            <Button
+              variant={"outline"}
+              type="button"
+              disabled={!isEditing}
+              onClick={() => {
+                imageRef.current?.click();
+              }}
+              className="h-8 w-8 absolute top-0 right-0 rounded-full z-10 "
+            >
+              <LuPencil />
+            </Button>
+          )}
         </div>
+        {!isMobile && (
+          <div className="flex flex-col gap-1.5 sm:gap-5">
+            <Button
+              variant={"outline"}
+              type="button"
+              disabled={!isEditing}
+              onClick={() => {
+                imageRef.current?.click();
+              }}
+            >
+              Unggah Foto Baru
+            </Button>
+            <div className="text-xs text-foreground/60">
+              <p>Ukuran file maksimal 2MB</p>
+              <p>Format Gambar: .jpg, .jpeg, .png</p>
+            </div>
+          </div>
+        )}
       </div>
       <Separator className="my-4"></Separator>
       <Form {...form}>
-        <form className="mt-5 px-10" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="mt-5 px-3 sm:px-6 md:px-10"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <div className="border rounded-[12px] px-6 py-4 shadow-xs">
-            <div className="flex flex-row justify-between">
-              <p className="text-foreground font-semibold">Informasi Pribadi</p>
+            <div className="flex flex-row justify-between items-center md:items-start">
+              <p className="text-xs sm:text-sm md:text-base text-foreground font-semibold">
+                Informasi Pribadi
+              </p>
               <Button
                 variant={"outline"}
                 disabled={isEditing}
@@ -133,6 +162,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
                   e.preventDefault();
                   setIsEditing(true);
                 }}
+                className=""
               >
                 <TbEditCircle />
                 Edit
@@ -166,13 +196,15 @@ export const ProfileForm = (props: ProfileFormProps) => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1  sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nama Lengkap</FormLabel>
+                    <FormLabel className="text-xs sm:text-sm md:text-base">
+                      Nama Lengkap
+                    </FormLabel>
                     <FormControl>
                       <Input type="text" {...field} disabled={!isEditing} />
                     </FormControl>
@@ -186,7 +218,9 @@ export const ProfileForm = (props: ProfileFormProps) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-xs sm:text-sm md:text-base">
+                      Email
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="email"
@@ -201,13 +235,15 @@ export const ProfileForm = (props: ProfileFormProps) => {
                 )}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <FormField
                 control={form.control}
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel className="text-xs sm:text-sm md:text-base">
+                      Phone
+                    </FormLabel>
                     <FormControl>
                       <div className="relative w-full">
                         <p className="text-sm text-foreground absolute left-3 top-1/2 -translate-y-1/2">

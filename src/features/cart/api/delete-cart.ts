@@ -23,5 +23,9 @@ export const useDeleteCartItem = (params: UseDeleteCartItemParams = {}) => {
       queryClient.invalidateQueries({ queryKey: getCartsQueryKey() });
       toast.success("Item berhasil dihapus");
     },
+    onError: (err) => {
+      toast.error("Gagal menghapus item");
+      console.error(err);
+    },
   });
 };

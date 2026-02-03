@@ -1,87 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { MapPinHouse, Package2, PackageSearch } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaRegUser } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
 
-import {
-  IoHomeOutline,
-  IoPersonOutline,
-  IoChatbubbleEllipsesOutline,
-  IoCartOutline,
-  IoSettingsOutline,
-  IoStatsChartOutline,
-} from "react-icons/io5";
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
-
-export function SidebarFloating() {
-  const [open, setOpen] = useState(false);
-  const path = usePathname();
+export function BottomNavigation() {
+  const pathname = usePathname();
 
   const menu = [
-    { icon: <IoHomeOutline />, path: "/account/profile" },
-    { icon: <IoPersonOutline />, path: "/account/info" },
-    { icon: <IoChatbubbleEllipsesOutline />, path: "/account/messages" },
-    { icon: <IoStatsChartOutline />, path: "/account/stats" },
-    { icon: <IoCartOutline />, path: "/account/orders" },
-    { icon: <IoSettingsOutline />, path: "/account/settings" },
+    {
+      icon: <FaRegUser size={17} />,
+      path: "/account/profile",
+      label: "Profile",
+    },
+    {
+      icon: <MapPinHouse size={17} />,
+      path: "/account/address",
+      label: "Alamat",
+    },
+    { icon: <Package2 size={17} />, path: "/account/orders", label: "Pesanan" },
+    {
+      icon: <PackageSearch size={17} />,
+      path: "/account/track-order",
+      label: "Lacak",
+    },
+    {
+      icon: <IoSettingsOutline size={17} />,
+      path: "/account/update-password",
+      label: "Password",
+    },
   ];
 
   return (
-    <div className="md:hidden">
-      {!open && (
-        <button
-          aria-label="Open sidebar"
-          onClick={() => setOpen(true)}
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 bg-white shadow-lg rounded-r-full p-2"
-        >
-          <FiChevronRight size={20} />
-        </button>
-      )}
+    <nav
+      className="
+        fixed bottom-2 left-1/2 -translate-x-1/2 px-2
+        w-[95%] h-16 z-50
+        rounded-xl
+        md:hidden
+        flex justify-around items-center
+        backdrop-blur-md bg-foreground
+      "
+    >
+      {menu.map((item, i) => {
+        const active = pathname?.startsWith(item.path);
 
-      <div
-        className={`fixed left-0 top-1/2 -translate-y-1/2 z-50
-          w-16      /* panel width */
-          bg-white rounded-r-3xl p-3 flex flex-col items-center gap-6 shadow-xl
-          transition-transform transition-opacity duration-250 ease-out
-          ${
-            open
-              ? "translate-x-0 opacity-100"
-              : "-translate-x-12 opacity-0 pointer-events-none"
-          }
-        `}
-      >
-        <button
-          aria-label="Close sidebar"
-          onClick={() => setOpen(false)}
-          className="absolute -right-6 top-2 bg-white shadow-md rounded-full p-2"
-        >
-          <FiChevronLeft size={18} />
-        </button>
+        return (
+          <Link
+            key={i}
+            href={item.path}
+            className="flex items-center justify-center"
+          >
+            <div
+              className={`
+                flex items-center gap-2
+                px-3 py-2 rounded-full
+                transition-all duration-300 ease-out
+                ${active ? "bg-background text-foreground" : "text-background"}
+              `}
+            >
+              <div>{item.icon}</div>
 
-        {/* items */}
-        <nav className="mt-6 flex flex-col gap-4">
-          {menu.map((item, i) => {
-            const active = path?.startsWith(item.path);
-            return (
-              <Link
-                key={i}
-                href={item.path}
-                className={`w-10 h-10 flex items-center justify-center rounded-full transition
+              <span
+                className={`
+                  text-xs font-semibold
+                  overflow-hidden whitespace-nowrap
+                  transition-all duration-300 ease-out
                   ${
                     active
-                      ? "bg-green-500 text-white shadow-md"
-                      : "text-gray-600 hover:bg-foreground/5"
+                      ? "opacity-100 max-w-[80px] scale-100"
+                      : "opacity-0 max-w-0 scale-95"
                   }
                 `}
-                aria-current={active ? "page" : undefined}
               >
-                {item.icon}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </div>
+                {item.label}
+              </span>
+            </div>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }

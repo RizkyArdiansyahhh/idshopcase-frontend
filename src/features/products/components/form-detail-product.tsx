@@ -70,10 +70,10 @@ export const FormDetailProduct = ({
 
   // Tentukan harga yang ditampilkan
   const priceDisplay = formValues.variant
-    ? variantOptions.find((v) => v.id === formValues.variant)?.price ?? 0
+    ? (variantOptions.find((v) => v.id === formValues.variant)?.price ?? 0)
     : minPrice === maxPrice
-    ? minPrice
-    : undefined;
+      ? minPrice
+      : undefined;
 
   // Ambil stok sesuai varian yang dipilih
   const selectedVariant =
@@ -83,12 +83,12 @@ export const FormDetailProduct = ({
   const stockProduct = selectedVariant?.stock ?? 0;
 
   return (
-    <div className="w-full px-8 flex flex-col gap-2.5">
+    <div className="w-full px-1.5 md:px-4 lg:px-6 flex flex-col gap-2.5 lg:h-full">
       <div>
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground">
+        <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold text-foreground">
           {productDetail.name}
         </h1>
-        <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground/70 my-2">
+        <h3 className="text-base md:text-xl lg:text-2xl font-semibold text-foreground/70 my-2">
           {priceDisplay !== undefined
             ? formatCurrency(Number(priceDisplay))
             : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
@@ -97,7 +97,7 @@ export const FormDetailProduct = ({
       </div>
 
       <Form {...form}>
-        <div className="flex flex-col gap-6 h-full">
+        <div className="flex flex-col gap-6 h-full justify-between ">
           <InputsFormProduct
             control={form.control}
             variants={variantOptions}
@@ -106,7 +106,7 @@ export const FormDetailProduct = ({
           <QuantityInput stockProduct={stockProduct} control={form.control} />
         </div>
 
-        <div className="flex-1 flex flex-col md:flex-row gap-3 items-end mt-4">
+        <div className="flex flex-col md:flex-row gap-3 items-end mt-4 ">
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}

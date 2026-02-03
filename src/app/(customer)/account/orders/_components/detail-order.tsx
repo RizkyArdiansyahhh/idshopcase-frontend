@@ -5,13 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
 import { ArrowLeft, ChevronRight, Mail, Phone } from "lucide-react";
 import Link from "next/link";
-import {
-  Order,
-  OrderAdmin,
-  OrderItem,
-  OrderItemAdmin,
-  User,
-} from "@/types/api";
+import { OrderAdmin, OrderItemAdmin, User } from "@/types/api";
 import { CardProductDetail } from "../detail/[orderId]/_components/card-product-detail";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { formatDate } from "@/lib/format-date";
@@ -32,7 +26,7 @@ export default function OrderDetail({
   const address = order.Address;
   const totalPriceBeforeShipping = orderItems.reduce(
     (total, item) => total + Number(item.price) * item.quantity,
-    0
+    0,
   );
   const shipping = Number(order.total_price) - totalPriceBeforeShipping;
 

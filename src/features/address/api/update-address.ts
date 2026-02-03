@@ -11,7 +11,7 @@ type UpdateAddressRequest = {
   data: FormAddressSchemaType;
 };
 const updateAddress = async ({ id, data }: UpdateAddressRequest) => {
-  return await api.patch(`/addresses/${id}`, data, {
+  return await api.put(`/addresses/${id}`, data, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -33,11 +33,12 @@ export const UseUpdateAddress = (params: UseUpdateAddressParams = {}) => {
         data,
         variables,
         onMutateResult,
-        context
+        context,
       );
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error("Gagal memperbarui alamat");
+      console.error(err);
     },
   });
 };

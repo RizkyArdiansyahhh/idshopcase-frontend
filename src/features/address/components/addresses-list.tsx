@@ -1,4 +1,3 @@
-import { Address } from "@/types/api";
 import { useGetAddresses } from "../api/get-address";
 import { AddressCard } from "@/app/(customer)/account/address/_components/address-card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,7 +8,7 @@ export const AddressesList = () => {
 
   const sortedAddresses = addresses
     ? [...addresses].sort(
-        (a, b) => (b.is_primary ? 1 : 0) - (a.is_primary ? 1 : 0)
+        (a, b) => (b.is_primary ? 1 : 0) - (a.is_primary ? 1 : 0),
       )
     : [];
 

@@ -14,7 +14,7 @@ export const InputsFormProduct = (props: InputsFormProductProps) => {
   const { control, variants = [], phone_type = [], isValidate = false } = props;
 
   return (
-    <>
+    <div className="py-2 overflow-y-auto">
       {variants.length > 0 && (
         <>
           <VariantInput variants={variants} control={control} />
@@ -26,14 +26,14 @@ export const InputsFormProduct = (props: InputsFormProductProps) => {
       )}
 
       {phone_type.length > 0 && (
-        <>
+        <div className="mt-5">
           <PhoneTypeInput phone_type={phone_type} control={control} />
 
           {isValidate && (
             <Separator orientation="horizontal" className="my-2" />
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };

@@ -31,7 +31,7 @@ export const UserAvatar = (props: AvatarFallbackProps) => {
   const color = randomColor[safeName.charCodeAt(0) % randomColor.length];
 
   const isBlob = image?.startsWith("blob:") || image?.startsWith("data:");
-  const imageSrc = isBlob ? image : cleanImageUrl(image) ?? "";
+  const imageSrc = isBlob ? image : (cleanImageUrl(image) ?? "");
 
   console.log(imageSrc, "image");
 

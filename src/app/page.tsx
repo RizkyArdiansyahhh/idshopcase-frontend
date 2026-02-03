@@ -10,6 +10,7 @@ import {
   CardTestimoniSpeaker,
 } from "@/components/shared/card-testimoni";
 import { ProtectedRoute } from "@/features/auth/components/protected-route";
+import GlareHover from "@/components/GlareHover";
 
 export default function Home() {
   return (
@@ -28,6 +29,27 @@ export default function Home() {
           <p>Welcome Idshop</p>
           <p>Case Phone</p>
         </div> */}
+        </div>
+        <div style={{ height: "600px", position: "relative" }}>
+          <GlareHover
+            glareColor="#ffffff"
+            glareOpacity={0.3}
+            glareAngle={-30}
+            glareSize={300}
+            transitionDuration={800}
+            playOnce={false}
+          >
+            <h2
+              style={{
+                fontSize: "3rem",
+                fontWeight: "900",
+                color: "#333",
+                margin: 0,
+              }}
+            >
+              Hover Me
+            </h2>
+          </GlareHover>
         </div>
         <SectionProducts />
         <SectionHero />
@@ -89,7 +111,6 @@ export default function Home() {
           </div>
         </section>
         {/* <TestimoniMobile></TestimoniMobile> */}
-
         <Footer></Footer>
       </div>
       {/* //{" "} */}

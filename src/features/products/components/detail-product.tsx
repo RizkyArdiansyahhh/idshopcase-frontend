@@ -48,27 +48,25 @@ export const DetailProduct = (props: DetailProductProps) => {
             ></PreviewImageProduct>
           </div>
         </div>
-        <div className="w-full lg:w-[50%]  px-8 flex flex-col gap-2.5 ">
+        <div className="w-full lg:w-[50%] lg:px-8 flex flex-col gap-2.5 ">
           <FormDetailProduct
             productDetail={product}
             image={image ?? ""}
           ></FormDetailProduct>
         </div>
       </div>
-      <div className="w-full mt-20 flex">
+      <div className="w-full mt-5 md:mt-10 lg:mt-16 flex">
         <Tabs defaultValue="detailProduct" className="w-full">
           <TabsList>
-            <TabsTrigger className="font-bol" value="detailProduct">
-              Detail
-            </TabsTrigger>
+            <TabsTrigger value="detailProduct">Detail</TabsTrigger>
             {isCustomCase && (
               <TabsTrigger value="previewProduct">Preview</TabsTrigger>
             )}
           </TabsList>
           <Separator className="w-full"></Separator>
 
-          <TabsContent value="detailProduct" className=" w-full">
-            <div className="py-5 w-full  whitespace-pre-line">
+          <TabsContent value="detailProduct" className="w-full">
+            <div className="py-5 w-full  whitespace-pre-line text-xs md:text-sm">
               {product.description}
             </div>
           </TabsContent>

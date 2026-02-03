@@ -14,7 +14,6 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
   const { images, isLoading } = props;
   const [previewImage, setPreviewImage] = useState<string>("");
 
-  // 🧹 Clean path ke format `/images/...`
   const cleanedImages = useMemo(() => {
     if (!images || images.length === 0) return [];
     return images
@@ -22,11 +21,10 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
         const cleanPath = img.imageUrl?.split("/uploads/")[1] ?? null;
         return cleanPath ? `/images/${cleanPath}` : "";
       })
-      .filter(Boolean); // buang string kosong
+      .filter(Boolean);
   }, [images]);
 
   console.log(cleanedImages, "cleanedImages");
-  // 🖼️ Set gambar pertama sebagai default preview
   useEffect(() => {
     if (cleanedImages.length > 0) {
       setPreviewImage(cleanedImages[0]);
@@ -37,7 +35,6 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
     setPreviewImage(image);
   };
 
-  // ⏳ Skeleton loading
   if (isLoading || cleanedImages.length === 0) {
     return (
       <div className="h-2/3 lg:h-full w-full flex flex-col lg:flex-row gap-4">
@@ -54,9 +51,8 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
     );
   }
 
-  // 🧩 Tampilan utama
   return (
-    <div className="h-[400px] lg:h-[500px] w-full flex flex-col lg:flex-row">
+    <div className="h-[400px] md:h-[460px] lg:h-[500px] w-full flex flex-col lg:flex-row ">
       {/* Gambar utama */}
       <div className="w-full lg:w-4/6 h-full relative rounded-[12px] overflow-hidden">
         {previewImage && (
@@ -70,7 +66,7 @@ export const PreviewImageProduct = (props: PreviewImageProductProps) => {
       </div>
 
       {/* Thumbnail list */}
-      <div className="my-5 lg:my-0 h-1/3 lg:h-full w-full lg:w-2/6 flex flex-row justify-center lg:flex-col gap-2 px-7">
+      <div className="my-5  md:mt-3 lg:my-0 h-1/3 lg:h-full w-full lg:w-2/6 flex flex-row justify-start lg:flex-col gap-2  lg:px-7">
         {cleanedImages.map((image, index) => (
           <div
             key={index}

@@ -4,7 +4,6 @@ import { useMutation } from "@tanstack/react-query";
 import { getAddressesQueryKey } from "./get-address";
 import { toast } from "sonner";
 import { Address } from "@/types/api";
-import { Console } from "console";
 
 type CreateAddressItemRequest = Omit<
   Address,
@@ -30,7 +29,7 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
         data,
         variables,
         onMutateResult,
-        context
+        context,
       );
     },
     onError: (err) => {

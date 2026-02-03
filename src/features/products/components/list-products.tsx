@@ -13,13 +13,17 @@ import {
 import { formatCurrency } from "@/lib/format-currency";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProductRecomandationCard } from "@/app/(customer)/products/detail/[id]/components/product-recomandation-card";
+import { SkeletonProduct } from "@/components/shared/skeleton-product";
+import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 export const ListProducts = () => {
   const { push } = useRouter();
   const { data: products, isLoading: fetchProductsIsLoading } =
     useGetProducts();
 
   const allPrices = products?.flatMap(
-    (p) => p.Variants?.map((v) => parseFloat(v.price)) || []
+    (p) => p.Variants?.map((v) => parseFloat(v.price)) || [],
   );
 
   const minPrice =
@@ -141,94 +145,65 @@ export const ListProducts = () => {
 };
 
 export const ListProductsDetail = () => {
-  const { data: products, isLoading: fetchProductsIsLoading } =
+  const { data: products = [], isLoading: fetchProductsIsLoading } =
     useGetProducts();
-  const allPrices = products?.flatMap(
-    (p) => p.Variants?.map((v) => parseFloat(v.price)) || []
+  const isMobile = useIsMobile();
+  const INITIAL_COUNT = isMobile ? 4 : 5;
+
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_COUNT);
+  }, [INITIAL_COUNT]);
+
+  const visibleProducts = products.slice(0, visibleCount);
+  const hasMore = visibleCount < products.length;
+
+  const allPrices = products.flatMap(
+    (p) => p.Variants?.map((v) => parseFloat(v.price)) || [],
   );
 
-  const minPrice =
-    allPrices && allPrices.length > 0 ? Math.min(...allPrices) : 0;
-  const maxPrice =
-    allPrices && allPrices.length > 0 ? Math.max(...allPrices) : 0;
-  const { push } = useRouter();
+  const minPrice = allPrices.length > 0 ? Math.min(...allPrices) : 0;
+  const maxPrice = allPrices.length > 0 ? Math.max(...allPrices) : 0;
+
   return (
     <div className="w-full mb-15">
-      <h1 className="text-4xl font-semibold my-7 text-center">
+      <h1 className="text-lg md:text-xl lg:text-3xl xl:text-4xl font-semibold my-7 text-center">
         Produk Yang Mungkin Anda Suka
       </h1>
-      <div className="flex flex-row overflow-scroll lg:flex-wrap justify-center gap-8">
-        {products?.map((product) => {
-          return (
-            <div
-              key={product.id}
-              className="w-60 h-[25rem] flex flex-col p-2.5 rounded-[12px] border bg-background group hover:bg-foreground hover:text-background transition-all ease-in-out duration-400 hover:cursor-pointer"
-            >
-              <div className="w-full h-52 relative rounded-[12px] overflow-hidden">
-                {!product.ProductImages ? (
-                  <div className="absolute top-0 right-0 flex justify-center items-center w-full h-full">
-                    <p>No Image</p>
-                  </div>
-                ) : (
-                  product.ProductImages.map((image) => {
-                    if (image.isPrimary) {
-                      const cleanPath =
-                        image.imageUrl?.split("/uploads/")[1] ?? null;
-                      const imageUrl = cleanPath
-                        ? `/images/${cleanPath}`
-                        : null;
-                      return (
-                        <Image
-                          key={image.id}
-                          src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
-                          alt="phone-charm"
-                          fill
-                          className="object-cover object-center"
-                        ></Image>
-                      );
-                    }
-                  })
-                )}
-              </div>
-              <div className="flex-1 flex justify-between flex-col">
-                <div>
-                  <div>
-                    <p className="text-lg font-semibold wrap-break-word my-2">
-                      {product.name}
-                    </p>
-                  </div>
-                  <div>
-                    <Badge
-                      variant="outline"
-                      className="transition-all duration-200 group-hover:bg-background group-hover:text-foreground group-hover:border-background"
-                    >
-                      {product.category.replace("_", " ")}
-                    </Badge>
-                  </div>
-                </div>
 
-                <div className="flex flex-row pt-10 justify-between items-center">
-                  <p className="text-sm font-semibold wrap-break-word">
-                    {minPrice === maxPrice
-                      ? formatCurrency(minPrice)
-                      : formatCurrency(minPrice) +
-                        " - " +
-                        formatCurrency(maxPrice)}
-                  </p>
-                  <Button
-                    variant={"default"}
-                    type="button"
-                    onClick={() => push(`/products/detail/${product.id}`)}
-                    className="transition-all duration-200 group-hover:bg-background group-hover:text-foreground group-hover:border-background hover:bg-background"
-                  >
-                    Beli sekarang
-                  </Button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        {fetchProductsIsLoading &&
+          Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonProduct key={index} />
+          ))}
+
+        {!fetchProductsIsLoading && visibleProducts.length > 0 ? (
+          visibleProducts.map((product) => {
+            return (
+              <ProductRecomandationCard
+                key={product.id}
+                product={product}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+              />
+            );
+          })
+        ) : (
+          <p className="text-center text-lg">Tidak ada Produk yang tersedia</p>
+        )}
       </div>
+      {!fetchProductsIsLoading && products.length > INITIAL_COUNT && (
+        <div className="flex justify-center mt-10">
+          <Button
+            disabled={!hasMore}
+            variant={"outline"}
+            onClick={() => setVisibleCount((prev) => prev + INITIAL_COUNT)}
+          >
+            {hasMore ? "Lihat lainnya" : "Semua produk ditampilkan"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
