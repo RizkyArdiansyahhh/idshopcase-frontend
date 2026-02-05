@@ -14,56 +14,53 @@ import { OrdersList } from "@/features/orders/components/orders-list";
 
 export const Orders = () => {
   return (
-    <>
-      <div className="w-full h-full py-5 ">
-        <Tabs defaultValue="all" className="w-full h-full flex flex-col">
-          <TabsListV2 className="bg-transparent gap-4 px-4 item w-full">
+    <div className="w-full h-full flex flex-col min-h-0 min-w-0">
+      <Tabs defaultValue="all" className="flex flex-col h-full min-h-0 min-w-0">
+        {/* TAB LIST */}
+        <div className="shrink-0 py-2 w-full overflow-x-auto min-w-0">
+          <TabsListV2 className="bg-transparent flex w-max min-w-full">
             <TabsTriggerV2 value="all">All</TabsTriggerV2>
-            <TabsTriggerV2 value="pending" className="">
-              <MdOutlinePendingActions size={24} />
-              Pending
+            <TabsTriggerV2 value="pending">
+              <MdOutlinePendingActions size={20} /> Pending
             </TabsTriggerV2>
             <TabsTriggerV2 value="paid">
-              <CreditCard size={24} />
-              Paid
+              <CreditCard size={20} /> Paid
             </TabsTriggerV2>
             <TabsTriggerV2 value="shipped">
-              <Package size={24} />
-              Shipped
+              <Package size={20} /> Shipped
             </TabsTriggerV2>
             <TabsTriggerV2 value="delivered">
-              <Truck size={24} />
-              Delivered
+              <Truck size={20} /> Delivered
             </TabsTriggerV2>
             <TabsTriggerV2 value="cancelled">
-              <TbClockCancel size={24} />
-              Cancelled
+              <TbClockCancel size={20} /> Cancelled
             </TabsTriggerV2>
           </TabsListV2>
-          <Separator className="my-3 w-full"></Separator>
+        </div>
+        <Separator></Separator>
 
+        {/* CONTENT */}
+        <div className="flex-1 min-h-0 overflow-y-auto">
           <TabsContent value="all" className="h-full">
-            <OrdersList status="all"></OrdersList>
+            <OrdersList status="all" />
           </TabsContent>
           <TabsContent value="pending" className="h-full">
-            <OrdersList status="pending"></OrdersList>
+            <OrdersList status="pending" />
           </TabsContent>
           <TabsContent value="paid" className="h-full">
-            <OrdersList status="paid"></OrdersList>
+            <OrdersList status="paid" />
           </TabsContent>
           <TabsContent value="shipped" className="h-full">
-            <OrdersList status="shipped"></OrdersList>
+            <OrdersList status="shipped" />
           </TabsContent>
           <TabsContent value="delivered" className="h-full">
-            <OrdersList status="delivered"></OrdersList>
+            <OrdersList status="delivered" />
           </TabsContent>
           <TabsContent value="cancelled" className="h-full">
-            <OrdersList status="cancelled"></OrdersList>
+            <OrdersList status="cancelled" />
           </TabsContent>
-
-          <TabsContent value="password">Change your password here.</TabsContent>
-        </Tabs>
-      </div>
-    </>
+        </div>
+      </Tabs>
+    </div>
   );
 };

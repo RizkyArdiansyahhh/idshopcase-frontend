@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { useGetUser } from "@/features/auth/api/get-user";
+import { useAuthStore } from "@/store/profile-store";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -17,7 +18,13 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const router = useRouter();
   const { data: user, isLoading } = useGetUser();
-  console.log(user?.role, "role");
+  const setUser = useAuthStore((state) => state.setUser);
+
+  useEffect(() => {
+    if (user) {
+      setUser(user);
+    }
+  }, [user, setUser]);
 
   useEffect(() => {
     if (isLoading) return;

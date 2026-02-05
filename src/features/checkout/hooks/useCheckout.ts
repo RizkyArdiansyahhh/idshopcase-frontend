@@ -8,6 +8,7 @@ import { useCheckoutStore } from "@/store/checkout-store";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { useGetProducts } from "@/features/products/api/get-ptoducts";
 import { useRouter } from "next/navigation";
+import { ur } from "zod/v4/locales";
 
 export type DetailProduct = {
   image: string;
@@ -35,17 +36,15 @@ export const useCheckout = () => {
   const cartItems = useCheckoutStore((state) => state.selectedCartIds);
   console.log(cartItems, "cartItems");
 
-  console.log(dataCheckout, "dataCheckout");
-
   const { data: userAddresses } = useGetAddresses() || [];
-
   const { data: products } = useGetProducts();
-
   const detailProduct: DetailProduct[] = [];
+
+  const summaryOrderRequest: any = {};
 
   if (dataCheckout && (!cartItems || !cartItems.length)) {
     const productItem = products?.find(
-      (item) => item.id === dataCheckout.productId
+      (item) => item.id === dataCheckout.productId,
     );
     if (productItem) {
       detailProduct.push({
@@ -58,17 +57,24 @@ export const useCheckout = () => {
         category: productItem.category,
         slotImage: dataCheckout.variant.max_images,
       });
+      summaryOrderRequest.buyNow = {
+        variantId: dataCheckout.variant.id,
+        quantity: dataCheckout.quantity,
+        phoneTypeId: dataCheckout.phoneTypeId,
+      };
     }
   } else if (cartItems?.length) {
+    const cartItemIds: number[] = [];
+
     cartItems.forEach((item) => {
       const productItem = products?.find((p) => p.id === item.productId);
       if (!productItem) return;
 
       const variant = productItem?.Variants?.find(
-        (v) => v.id === item.variant.id
+        (v) => v.id === item.variant.id,
       );
       const phoneType = productItem?.PhoneTypes?.find(
-        (p) => p.id === item.phoneTypeId
+        (p) => p.id === item.phoneTypeId,
       );
       detailProduct.push({
         image: imageUrlPrimary(productItem?.ProductImages) || "",
@@ -80,16 +86,21 @@ export const useCheckout = () => {
         category: productItem.category,
         slotImage: item.variant.max_images,
       });
+      if (item.cartId !== undefined) {
+        cartItemIds.push(item.cartId);
+      }
     });
+    summaryOrderRequest.selectedItemIds = cartItemIds;
   }
 
   console.log(detailProduct, "detailProduct");
+  console.log(summaryOrderRequest, "summaryOrderRequest");
 
   // Inisialisasi state multi-slot jika belum di-set
   useEffect(() => {
     if (!customImage.length && detailProduct.length) {
       setCustomImage(
-        detailProduct.map(() => Array(SLOT_COUNT).fill(undefined))
+        detailProduct.map(() => Array(SLOT_COUNT).fill(undefined)),
       );
       setPreviewImage(detailProduct.map(() => Array(SLOT_COUNT).fill(null)));
     }
@@ -99,20 +110,11 @@ export const useCheckout = () => {
     if (userAddresses?.length) setSelectedAddress(userAddresses[0]);
   }, [userAddresses]);
 
-  const quantity = dataCheckout?.quantity ?? 0;
-  const subtotal =
-    detailProduct.reduce((acc, item) => acc + item.price * item.quantity, 0) ??
-    0;
-  const shippingCost = 240;
-  const totalPayment = subtotal + shippingCost;
-  const paymentMethod = "DOKU";
-
   const { mutate: createOrder, isPending: createOrderIsLoading } =
     useCreateOrder({
       mutationConfig: {
         onSuccess: (data) => {
-          replace("/order/payment");
-          window.loadJokulCheckout?.(data);
+          replace(`/order/${data.order.id}/payment`);
         },
       },
     });
@@ -120,7 +122,7 @@ export const useCheckout = () => {
   const handleFileSelect = (
     productIdx: number,
     slotIdx: number,
-    file: File
+    file: File,
   ) => {
     setCustomImage((prev) => {
       const copy = prev.map((arr) => [...arr]);
@@ -172,14 +174,14 @@ export const useCheckout = () => {
 
       formData.append(
         "selectedItemIds",
-        JSON.stringify(cartItems.map((i) => i.cartId))
+        JSON.stringify(cartItems.map((i) => i.cartId)),
       );
       formData.append("customMap", JSON.stringify(customMapCart));
     }
     if (dataCheckout) {
       const buyNowFiles: File[] =
         customImage[cartItems?.length || 0]?.filter(
-          (file): file is File => file !== undefined
+          (file): file is File => file !== undefined,
         ) || [];
       const filteredFiles = buyNowFiles.filter(Boolean) as File[];
 
@@ -192,34 +194,37 @@ export const useCheckout = () => {
           quantity: dataCheckout.quantity,
           variantId: dataCheckout.variant?.id ?? null,
           phoneTypeId: dataCheckout.phoneTypeId ?? null,
-        })
+        }),
       );
 
       formData.append(
         "customMap",
-        JSON.stringify({ buyNow: filteredFiles.map((_, i) => i) })
+        JSON.stringify({ buyNow: filteredFiles.map((_, i) => i) }),
       );
     }
 
     createOrder(formData);
   };
 
+  const isImageValid = (productIdx: number) => {
+    return previewImage[productIdx]?.some(Boolean);
+  };
+
+  const isAllImageValid = detailProduct.every((_, idx) => isImageValid(idx));
+
   return {
     detailProduct,
-    userAddresses,
     selectedAddress,
     setSelectedAddress,
-    shippingCost,
-    totalPayment,
-    paymentMethod,
     isAddressModalOpen,
     setIsAddressModalOpen,
     createOrderIsLoading,
-    quantity,
     handleFileSelect,
     handleRemove,
-    customImage,
     previewImage,
     handleCreateOrder,
+    summaryOrderRequest,
+    isAllImageValid,
+    isImageValid,
   };
 };

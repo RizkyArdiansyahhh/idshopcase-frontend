@@ -71,14 +71,14 @@ export const CartList = (props: CartListProps) => {
         cartItems
           ?.sort(
             (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
           )
-          .map((cartItem, index) => {
+          .map((cartItem) => {
             const isSelected = selectedCartItems.includes(cartItem.id);
 
             return (
               <CartCard
-                key={index}
+                key={cartItem.id}
                 setSelectedCartItems={setSelectedCartItems}
                 isSelected={isSelected}
                 cartId={cartItem.id}
@@ -86,6 +86,7 @@ export const CartList = (props: CartListProps) => {
                 quantity={cartItem.quantity}
                 phoneType={cartItem.PhoneType?.model || null}
                 variant={cartItem.Variant?.name || null}
+                unitPrice={cartItem.Variant.price}
                 productImages={cartItem.Product.ProductImages}
                 price={cartItem.price}
                 productName={cartItem.Product.name}

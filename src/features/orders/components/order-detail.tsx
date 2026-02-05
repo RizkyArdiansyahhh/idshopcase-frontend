@@ -14,8 +14,6 @@ export const OrderDetailById = () => {
   });
 
   const { data: user } = useGetUser();
-  console.log(orderId, "orderId");
-  console.log(order, "order aaaa");
   return (
     <>
       <div className="w-full h-full">

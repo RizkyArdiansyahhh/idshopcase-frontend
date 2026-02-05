@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { formProductSchema, FormProductType } from "@/lib/schemas/product";
 
 import {
@@ -21,8 +20,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 import { ImageUploader } from "./image-uploader";
 import { FieldCheckbox } from "./field-checkbox";
-import { PhoneTypeOptions, VariantOptions } from "./type-options";
-import { CreateVariant } from "./create-variant";
+import { PhoneTypeOptions } from "./type-options";
 
 import {
   Select,
@@ -36,11 +34,7 @@ import { useGetProduct } from "../api/get-productById";
 import { useCreateProduct } from "../api/create-product";
 import { useUpdateProduct } from "../api/update-product";
 import { CreatePhoneType } from "./create-phone-type";
-
-// Helper untuk mengambil imageUrl dari product (edit mode)
-function imageUrlList(images: { imageUrl: string }[]) {
-  return images.map((img) => img.imageUrl);
-}
+import { FormVariant } from "./form-variant";
 
 export const ProductForm = () => {
   const params = useParams();
@@ -52,17 +46,13 @@ export const ProductForm = () => {
     queryConfig: { enabled: !!productId },
   });
 
-  console.log(product, "product");
-
   const form = useForm<FormProductType>({
     resolver: zodResolver(formProductSchema),
     defaultValues: {
       name: "",
       description: "",
       images: [],
-      toggleIsVariant: false,
       toggleIsPhoneType: false,
-      toggleIsCreateVariant: false,
       variant: [],
       phone_type: [],
       nameVariant: "",
@@ -84,17 +74,13 @@ export const ProductForm = () => {
         | "pop_socket",
       description: product.description,
       images: [],
-      toggleIsVariant: (product.Variants?.length ?? 0) > 0,
       toggleIsPhoneType: (product.PhoneTypes?.length ?? 0) > 0,
       variant: product.Variants?.map((v) => v.id) ?? [],
       phone_type: product.PhoneTypes?.map((pt) => pt.id) ?? [],
-      toggleIsCreateVariant: false,
     });
   }, [product, form]);
 
-  const isVariant = form.watch("toggleIsVariant");
   const isPhoneType = form.watch("toggleIsPhoneType");
-  const isCreateVariant = form.watch("toggleIsCreateVariant");
   const isCreatePhoneType = form.watch("toggleIsCreatePhoneType");
 
   const { mutate: createProductMutate, isPending: createProductIsLoading } =
@@ -103,28 +89,48 @@ export const ProductForm = () => {
     });
 
   const { mutate: updateProductMutate, isPending: updateProductIsLoading } =
-    useUpdateProduct();
+    useUpdateProduct({
+      mutationConfig: { onSuccess: () => replace("/admin/products") },
+    });
 
-  const handleSubmit = (data: FormProductType) => {
+  const handleCreateProduct = (data: FormProductType) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("category", data.category);
-
-    if (data.images && data.images.length > 0) {
-      data.images.forEach((file) => formData.append("images", file));
-    }
-
-    formData.append("phoneTypes", JSON.stringify(data.phone_type ?? []));
+    data.images.forEach((file) => {
+      formData.append("images", file);
+    });
     formData.append("variants", JSON.stringify(data.variant ?? []));
-
-    if (product) {
-      updateProductMutate({ id: product.id, data: formData });
-    } else {
-      createProductMutate(formData);
-    }
+    formData.append("phoneTypes", JSON.stringify(data.phone_type ?? []));
+    createProductMutate(formData);
   };
 
+  const handleUpdateProduct = (data: FormProductType) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("category", data.category);
+    data.images?.forEach((file) => {
+      if (file instanceof File) {
+        formData.append("images", file);
+      }
+    });
+    formData.append("variants", JSON.stringify(data.variant ?? []));
+    formData.append("phoneTypes", JSON.stringify(data.phone_type ?? []));
+    updateProductMutate({
+      id: product!.id,
+      data: formData,
+    });
+  };
+
+  const handleSubmit = (data: FormProductType) => {
+    if (product) {
+      handleUpdateProduct(data);
+    } else {
+      handleCreateProduct(data);
+    }
+  };
   return (
     <Form {...form}>
       <form
@@ -238,34 +244,7 @@ export const ProductForm = () => {
           </div>
 
           {/* Kanan: Variants */}
-          <div className="border p-4 rounded-md flex flex-col gap-3">
-            <FieldCheckbox
-              control={form.control}
-              name="toggleIsVariant"
-              label="Apakah produk memiliki variant?"
-            />
-            {isVariant && (
-              <>
-                <FormField
-                  name="variant"
-                  control={form.control}
-                  render={({ field }) => (
-                    <VariantOptions
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  )}
-                />
-
-                <FieldCheckbox
-                  control={form.control}
-                  name="toggleIsCreateVariant"
-                  label="Tambah variant baru"
-                />
-                {isCreateVariant && <CreateVariant form={form} />}
-              </>
-            )}
-          </div>
+          <FormVariant form={form} />
         </div>
       </form>
     </Form>

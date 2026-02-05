@@ -26,6 +26,7 @@ export const useCreateVariant = ({ mutationConfig }: UseCreateVariant = {}) => {
       toast.success("Variant berhasil ditambahkan");
     },
     onError: (err) => {
+      toast.error("Gagal menambahkan variant");
       console.error(err);
     },
   });

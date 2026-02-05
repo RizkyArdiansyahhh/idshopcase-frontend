@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { getVariantsQueryKey } from "./get-variants";
+import { toast } from "sonner";
 
 const deleteVariant = async (id: number) => {
   const response = await api.delete(`/reference/variants/${id}`);
@@ -21,6 +22,7 @@ export const useDeleteVariant = ({ mutationConfig }: UseDeleteVariant = {}) => {
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
     },
     onError: (err) => {
+      toast.error("Terjadi Kesalahan");
       console.error(err);
     },
   });

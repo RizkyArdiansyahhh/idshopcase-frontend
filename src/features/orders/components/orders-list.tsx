@@ -1,6 +1,7 @@
 import { CardOrder } from "@/app/(customer)/account/orders/_components/card-order";
 import { useGetOrders } from "../api/get-orders";
 import { Skeleton } from "@/components/ui/skeleton";
+import { BsHandbagFill } from "react-icons/bs";
 
 export const OrdersList = ({ status }: { status: string }) => {
   const { data: orders, isLoading: isLoadingOrders } = useGetOrders();
@@ -10,7 +11,7 @@ export const OrdersList = ({ status }: { status: string }) => {
     status === "all"
       ? orders
       : orders?.filter(
-          (order) => order.status.toLowerCase() === status.toLowerCase()
+          (order) => order.status.toLowerCase() === status.toLowerCase(),
         );
 
   if (isLoadingOrders) {
@@ -36,7 +37,7 @@ export const OrdersList = ({ status }: { status: string }) => {
     );
   }
   return (
-    <div className="p-3 w-full h-full flex flex-col gap-3">
+    <div className="p-0 md:p-3 w-full flex-1 overflow-y-auto flex flex-col gap-3">
       {filteredOrders && filteredOrders.length > 0 ? (
         filteredOrders.map((order) => (
           <CardOrder
@@ -50,10 +51,13 @@ export const OrdersList = ({ status }: { status: string }) => {
           />
         ))
       ) : (
-        <div className="h-full w-full flex justify-center items-center">
-          <p className="text-center text-muted-foreground">
-            Tidak ada pesanan dengan status {status}
-          </p>
+        <div className="h-full py-10 w-full flex justify-center items-cente">
+          <div className=" h-full w-full flex flex-col gap-2 items-center justify-center">
+            <BsHandbagFill className="text-6xl" />
+            <p className="text-center text-muted-foreground">
+              Belum ada pesanan
+            </p>
+          </div>
         </div>
       )}
     </div>

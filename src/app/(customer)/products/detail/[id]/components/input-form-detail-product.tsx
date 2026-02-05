@@ -27,17 +27,29 @@ export const VariantInput = ({ control, variants }: InputProps) => {
       control={control}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Varian</FormLabel>
+          <div className="flex flex-row justify-between">
+            <FormLabel>Varian</FormLabel>
+            <FormMessage />
+          </div>
 
           <RadioGroup
             onValueChange={field.onChange}
             value={field.value || undefined}
-            className="flex flex-row gap-3"
+            className="flex flex-nowrap flex-row gap-2 overflow-x-auto"
           >
             {variants?.map((item) => (
-              <FieldLabel htmlFor={`variant-${item.id}`} key={item.id}>
-                <Field orientation="horizontal" className="w-fit">
-                  <FieldTitle>{item.name}</FieldTitle>
+              <FieldLabel
+                htmlFor={`variant-${item.id}`}
+                key={item.id}
+                className="inline-flex w-auto"
+              >
+                <Field
+                  orientation="horizontal"
+                  className="inline-flex w-auto shrink-0 px-3 py-2"
+                >
+                  <FieldTitle className="text-xs md:text-sm whitespace-nowrap">
+                    {item.name}
+                  </FieldTitle>
                   <RadioGroupItem
                     value={item.id}
                     id={`variant-${item.id}`}
@@ -47,43 +59,6 @@ export const VariantInput = ({ control, variants }: InputProps) => {
               </FieldLabel>
             ))}
           </RadioGroup>
-
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  );
-};
-
-export const MaterialInput = ({ control, materials }: InputProps) => {
-  return (
-    <FormField
-      name="material"
-      control={control}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Material</FormLabel>
-
-          <RadioGroup
-            onValueChange={field.onChange}
-            value={field.value || undefined}
-            className="flex flex-row gap-3"
-          >
-            {materials?.map((item) => (
-              <FieldLabel htmlFor={`material-${item.id}`} key={item.id}>
-                <Field orientation="horizontal" className="w-fit">
-                  <FieldTitle>{item.name}</FieldTitle>
-                  <RadioGroupItem
-                    value={item.id}
-                    id={`material-${item.id}`}
-                    className="sr-only"
-                  />
-                </Field>
-              </FieldLabel>
-            ))}
-          </RadioGroup>
-
-          <FormMessage />
         </FormItem>
       )}
     />
@@ -103,15 +78,16 @@ export const PhoneTypeInput = ({ control, phone_type }: InputProps) => {
       control={control}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Jenis Handphone</FormLabel>
+          <div className="flex flex-row justify-between">
+            <FormLabel>Varian</FormLabel>
+            <FormMessage />
+          </div>
 
           <Combobox
             field={field}
             data={data}
             className="border-foreground/10"
           />
-
-          <FormMessage />
         </FormItem>
       )}
     />

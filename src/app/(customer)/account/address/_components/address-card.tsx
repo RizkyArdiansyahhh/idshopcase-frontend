@@ -1,4 +1,7 @@
+import { TooltipCustom } from "@/components/shared/tooltip";
+import { DeleteAddress } from "@/features/address/components/delete-address";
 import Link from "next/link";
+import { LuPencil } from "react-icons/lu";
 
 type AddressCardProps = {
   id: string;
@@ -35,8 +38,8 @@ export const AddressCard = (props: AddressCardProps) => {
         <div className="border-r-2 border-foreground"></div>
         <p className="text-app-light-sm">{phone}</p>
       </div>
-      <div className="flex flex-row justify-between items-center">
-        <address className="not-italic text-xs flex  justify-between gap-2">
+      <div className="flex  flex-row justify-between items-center">
+        <address className="not-italic text-xs flex flex-col md:flex-row justify-between gap-2">
           {!!detail && <span className="mr-2">{detail}</span>}
           <span>
             {city} - {district}
@@ -45,12 +48,17 @@ export const AddressCard = (props: AddressCardProps) => {
             {province} - {postalCode}
           </span>
         </address>
-        <Link
-          href={`/account/address/edit/${id}`}
-          className="text-[#003077] text-app-extraBold-sm"
-        >
-          UBAH
-        </Link>
+        <div className="flex flex-row gap-3">
+          <DeleteAddress id={Number(id)}></DeleteAddress>
+          <TooltipCustom message="ubah">
+            <Link
+              href={`/account/address/edit/${id}`}
+              className="text-foreground text-app-extraBold-sm rounded-full bg-background border border-foreground w-7 h-7 flex justify-center items-center hover:bg-foreground hover:text-background transition-all ease-in duration-100"
+            >
+              <LuPencil className="text-lg" />
+            </Link>
+          </TooltipCustom>
+        </div>
       </div>
       {isDefault && (
         <div>

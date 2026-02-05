@@ -18,7 +18,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Control } from "react-hook-form";
 
 type ComboboxProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,13 +37,13 @@ export function Combobox(props: ComboboxProps) {
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "w-[200px] justify-between text-foreground rounded-sm border-foreground mb-4",
-            className
+            "w-[200px] justify-between text-foreground rounded-sm border-foreground mb-4 text-xs md:text-sm ",
+            className,
           )}
         >
           {field.value
             ? data.find((d) => d.value === field.value)?.label
-            : "Select Handphone..."}
+            : "Pilih Handphone..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -67,7 +66,7 @@ export function Combobox(props: ComboboxProps) {
                   <Check
                     className={cn(
                       "ml-auto",
-                      field.value === d.value ? "opacity-100" : "opacity-0"
+                      field.value === d.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>

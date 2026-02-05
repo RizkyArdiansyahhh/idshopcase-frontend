@@ -78,6 +78,9 @@ export type OrderItem = {
   createdAt: string;
   updatedAt: string;
   Product: ProductOrder;
+  Variant: Variant;
+  PhoneType: PhoneType;
+  CustomImage: ProductImage | null;
 };
 
 export type Payment = {
@@ -85,6 +88,12 @@ export type Payment = {
   payment_gateway: string;
   status: string;
   amount: string;
+  createdAt: string;
+  updatedAt: string;
+  request_id: string;
+  transaction_id: string | null;
+  payment_url: string;
+  expired_at: string;
 };
 
 export type Order = {
@@ -144,7 +153,6 @@ export interface CheckoutData {
     max_images: number;
   };
   cartId?: number;
-  price?: number;
 }
 
 export type OrderItemAdmin = {
@@ -211,4 +219,24 @@ export type OrderAdmin = {
     amount: string;
   };
   Address: Address;
+};
+
+export type OrderSummary = {
+  items: OrderItemSummary[];
+  shipping: {
+    courier: string;
+    service: string;
+    cost: number;
+  };
+  subtotal: number;
+  total: number;
+  buyNow: boolean;
+};
+
+type OrderItemSummary = {
+  id: number;
+  quantity: number;
+  price: number;
+  subtotal: number;
+  variantId: number;
 };

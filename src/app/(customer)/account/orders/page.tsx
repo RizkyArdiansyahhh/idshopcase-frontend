@@ -2,9 +2,9 @@ import { Orders } from "./_components/orders";
 
 const OrdersPage = () => {
   return (
-    <>
-      <Orders></Orders>
-    </>
+    <div className="flex flex-col w-full h-full min-h-0">
+      <Orders />
+    </div>
   );
 };
 

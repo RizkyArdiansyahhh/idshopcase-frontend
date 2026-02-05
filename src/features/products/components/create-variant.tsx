@@ -1,24 +1,92 @@
 import { UseFormReturn } from "react-hook-form";
 import { useCreateVariant } from "../api/create-variant";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { formatNumber } from "@/lib/format-currency";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { BrushCleaning } from "lucide-react";
+import { Variant } from "@/types/api";
+import { useEffect } from "react";
+import { useUpdateVariant } from "../api/update-variant";
 
 type CreateVariantProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<any>;
+  activeVariant: Variant | null;
+  setActiveVariant: (id: number | null) => void;
 };
 
-export function CreateVariant({ form }: CreateVariantProps) {
-  // 🔥 ambil function createVariant dari hook API
-  const { mutate: createVariant, isPending } = useCreateVariant();
+export function CreateVariant({
+  form,
+  activeVariant,
+  setActiveVariant,
+}: CreateVariantProps) {
+  // ambil function createVariant dari hook API
+  const { mutate: createVariant, isPending: createVariantIsPending } =
+    useCreateVariant();
+  const { mutate: updateVariant, isPending: updateVariantIsPending } =
+    useUpdateVariant();
+
+  const resetVariantForm = () => {
+    setActiveVariant(null);
+    form.setValue("nameVariant", "");
+    form.setValue("priceVariant", "");
+    form.setValue("stockVariant", "");
+    form.setValue("maxImagesVariant", "");
+  };
+
+  const [name, price, stock, maxImages] = form.watch([
+    "nameVariant",
+    "priceVariant",
+    "stockVariant",
+    "maxImagesVariant",
+  ]);
+  const isVariantFormInvalid = !name || !price || !stock || !maxImages;
+
+  useEffect(() => {
+    if (!activeVariant) return;
+
+    form.setValue("nameVariant", activeVariant.name);
+    form.setValue("priceVariant", String(activeVariant.price));
+    form.setValue("stockVariant", String(activeVariant.stock));
+    form.setValue("maxImagesVariant", String(activeVariant.max_images));
+  }, [activeVariant, form]);
+
+  const handleSubmitVariant = () => {
+    const values = form.getValues();
+
+    if (activeVariant) {
+      updateVariant(
+        {
+          id: activeVariant.id,
+          data: {
+            name: values.nameVariant,
+            price: values.priceVariant,
+            stock: values.stockVariant,
+            max_images: values.maxImagesVariant,
+          },
+        },
+        { onSuccess: () => resetVariantForm() },
+      );
+    } else {
+      createVariant(
+        {
+          name: values.nameVariant,
+          price: values.priceVariant,
+          stock: values.stockVariant,
+          max_images: values.maxImagesVariant,
+        },
+        {
+          onSuccess: (newVariant) => {
+            const currentVariants = form.getValues("variant") || [];
+            form.setValue("variant", [...currentVariants, newVariant.data.id]);
+            resetVariantForm();
+          },
+        },
+      );
+    }
+  };
 
   return (
     <div>
@@ -29,7 +97,19 @@ export function CreateVariant({ form }: CreateVariantProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Label Variant</FormLabel>
+                <div className="flex flex-row justify-between">
+                  <FormLabel>Label Variant</FormLabel>
+                  <Button
+                    className={`p-1 rounded-full border bg-background border-foreground group hover:bg-foreground/80  hover:cursor-pointer hover:shadow-2xl transition-all ease-in duration-100 h-7 w-7`}
+                    disabled={isVariantFormInvalid}
+                    onClick={() => resetVariantForm()}
+                  >
+                    <BrushCleaning
+                      size={16}
+                      className="text-foreground/80 group-hover:text-white"
+                    />
+                  </Button>
+                </div>
                 <Input
                   type="text"
                   placeholder="Label Variant"
@@ -99,9 +179,12 @@ export function CreateVariant({ form }: CreateVariantProps) {
                 <FormLabel>Max Images</FormLabel>
                 <Input
                   type="text"
-                  placeholder="Max Images Variant"
                   {...field}
-                  value={field.value || ""}
+                  value={formatNumber(field.value)}
+                  onChange={(e) =>
+                    field.onChange(Number(e.target.value.replace(/\D/g, "")))
+                  }
+                  placeholder="Max Images"
                 />
               </FormItem>
             )}
@@ -111,29 +194,20 @@ export function CreateVariant({ form }: CreateVariantProps) {
         <div className="flex justify-end">
           <Button
             type="button"
-            disabled={isPending}
-            onClick={() => {
-              const values = form.getValues();
-
-              // 🔥 panggil API create variant
-              createVariant({
-                name: values.nameVariant,
-                price: values.priceVariant,
-                stock: values.stockVariant,
-                max_images: values.maxImagesVariant,
-              });
-
-              // 🔥 reset hanya field variant
-              form.reset({
-                ...form.getValues(),
-                nameVariant: "",
-                priceVariant: "",
-                stockVariant: "",
-                maxImagesVariant: "",
-              });
-            }}
+            onClick={handleSubmitVariant}
+            disabled={
+              isVariantFormInvalid ||
+              createVariantIsPending ||
+              updateVariantIsPending
+            }
           >
-            {isPending ? <Spinner /> : "Tambahkan Variant"}
+            {createVariantIsPending || updateVariantIsPending ? (
+              <Spinner />
+            ) : activeVariant ? (
+              "Update Variant"
+            ) : (
+              "Tambah Variant"
+            )}
           </Button>
         </div>
       </div>
