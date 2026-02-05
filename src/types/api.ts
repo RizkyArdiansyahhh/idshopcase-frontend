@@ -78,6 +78,9 @@ export type OrderItem = {
   createdAt: string;
   updatedAt: string;
   Product: ProductOrder;
+  Variant: Variant;
+  PhoneType: PhoneType;
+  CustomImage: ProductImage | null;
 };
 
 export type Payment = {
@@ -85,6 +88,12 @@ export type Payment = {
   payment_gateway: string;
   status: string;
   amount: string;
+  createdAt: string;
+  updatedAt: string;
+  request_id: string;
+  transaction_id: string | null;
+  payment_url: string;
+  expired_at: string;
 };
 
 export type Order = {

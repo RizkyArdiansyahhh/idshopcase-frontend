@@ -15,11 +15,9 @@ export default function OrderLayout({
 }) {
   const pathname = usePathname();
   const currentStep = getCurrentStep(pathname);
-  const { push } = useRouter();
 
   return (
     <div className="h-screen overflow-hidden flex flex-col">
-      <Button onClick={() => push("order/status")}></Button>
       <div className="w-full px-5">
         <div className="flex flex-row gap-2 items-center py-4">
           <Link href="/">

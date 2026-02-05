@@ -114,10 +114,7 @@ export const useCheckout = () => {
     useCreateOrder({
       mutationConfig: {
         onSuccess: (data) => {
-          const urlDoku = data.checkout.response.payment.url;
-          // console.log(data, "ini data checkout");
-          // replace(`/order/${data.order.id}/payment`);
-          // window.loadJokulCheckout?.(urlDoku);
+          replace(`/order/${data.order.id}/payment`);
         },
       },
     });

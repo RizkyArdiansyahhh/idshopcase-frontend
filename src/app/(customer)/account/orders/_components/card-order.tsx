@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
-import { formatDate } from "@/lib/format-date";
+import { formatDate, timeAgo } from "@/lib/format-date";
 import { OrderItem, OrderItemAdmin } from "@/types/api";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { MapPin, Truck } from "lucide-react";
@@ -62,39 +62,25 @@ export const CardOrder = (props: CardOrderProps) => {
     props;
   const { push } = useRouter();
 
-  const colorsPick: Record<string, string> = {
-    pending: "yellow-200",
-    paid: "green-200 ",
-    shipped: "blue-200 ",
-    delivered: "green-200",
-    cancelled: "red-200 ",
-  };
   return (
     <>
-      <div className="border rounded-[12px] shadow-xs w-full overflow-hidden">
-        <div className="p-4">
-          <div className="flex flex-row justify-between items-center">
-            <div>
+      <div className="border rounded-none md:rounded-md shadow-xs w-full overflow-hidden">
+        <div className="p-1 md:p-2 lg:p-4">
+          <div className="flex px-2 md:px-0 flex-col md:flex-row md:justify-between md:items-center">
+            <div className="">
               <p className="text-xs text-foreground/50">Order ID</p>
-              <div className="flex flex-row gap-3 items-center text-foreground/70">
-                <TbShoppingBag size={28} />
-                <p className="text-md font-semibold">{`INV-${orderId}`}</p>
+              <div className="flex flex-row gap-1 md:gap-1.5 lg:gap-2 items-center text-foreground/70">
+                <TbShoppingBag className="text-base md:text-lg lg:text-xl" />
+                <p className="text-xs md:text-sm font-semibold">{`INV-${orderId}`}</p>
               </div>
             </div>
-            <div className="flex flex-row gap-3">
-              <Badge variant={"outline"}>{formatDate(createdAt)}</Badge>
-              <Badge
-                variant={"outline"}
-                className={`px-4 border-${colorsPick[status]}`}
-              >
-                <span
-                  className={`inline-block h-3 w-3 rounded-full bg-${colorsPick[status]}`}
-                ></span>
-                {status}
+            <div className="flex flex-row gap-3 justify-end">
+              <Badge className="text-xs" variant={"outline"}>
+                {timeAgo(createdAt)}
               </Badge>
             </div>
           </div>
-          <div className="p-2 flex flex-row justify-between items-center">
+          <div className="hidden md:flex p-2  flex-row justify-between items-center">
             <Badge variant={"outline"}>
               <Truck></Truck>
               <span className="ml-2">Jawa Barat</span>
@@ -102,16 +88,16 @@ export const CardOrder = (props: CardOrderProps) => {
             <ArrowCustom></ArrowCustom>
             <Badge>
               <MapPin />
-              <span>{address}</span>
+              <span className="text-xs">{address}</span>
             </Badge>
           </div>
-          <div className="p-2">
+          <div className="px-2 pb-1 pt-1.5">
             {orderItems.map((item) => (
               <div
                 key={item.id}
-                className="h-24 w-full border rounded-[12px] overflow-hidden flex flex-row gap-2 mb-2 "
+                className="h-20 md:h-24 w-full border rounded-sm md:rounded-md overflow-hidden flex flex-row gap-2 mb-0 md:mb-2 "
               >
-                <div className="h-full w-[12%] relative">
+                <div className="h-full w-1/5  lg:w-[12%] relative">
                   <Image
                     src={imageUrlPrimary(item.Product.ProductImages) ?? ""}
                     alt="product-1"
@@ -119,19 +105,19 @@ export const CardOrder = (props: CardOrderProps) => {
                     className="object-center object-cover"
                   ></Image>
                 </div>
-                <div className="h-full w-5/6 flex flex-col justify-center">
-                  <p className="text-sm font-semibold text-foreground/70">
+                <div className="h-full w-3/5 lg:w-5/6 flex flex-col justify-start py-1">
+                  <p className="text-xs md:text-sm font-semibold text-foreground/70">
                     {item.Product.name}
                   </p>
-                  <div className="flex flex-row items-center gap-1">
-                    <p className="font-semibold text-md">
-                      {/* {formatCurrency(Number(item.Variant.price))} */}
+                  <div className="hidden md:flex flex-row items-center gap-1">
+                    <p className="font-semibold text-xs md:text-md">
+                      {formatCurrency(Number(item.Variant.price))}
                     </p>
                     <span className="text-xs font-medium text-foreground/50">
                       x1
                     </span>
                   </div>
-                  <div className="flex flex-row gap-1">
+                  <div className="flex flex-col gap-.5">
                     {item.Variant && (
                       <p className="text-xs font-medium text-foreground/70">
                         {item.Variant.name}
@@ -152,26 +138,28 @@ export const CardOrder = (props: CardOrderProps) => {
           </div>
         </div>
 
-        <div className="w-full h-16 bg-foreground/5 flex flex-row justify-between items-center px-4">
+        <div className="w-full h-fit py-3 lg:py-5 bg-foreground/5 flex flex-col md:flex-row md:justify-between md:items-center px-4">
           <div className="flex flex-row gap-1 items-center">
-            <span className="text-foreground font-semibold text-md">
+            <span className="text-foreground font-semibold text-sm lg:text-base">
               Total:{" "}
             </span>
-            <span className="text-foreground font-semibold text-md">
+            <span className="text-foreground font-semibold text-sm lg:text-base">
               {formatCurrency(total_price)}
             </span>
-            <span className="text-foreground/20 font-medium text-sm">
+            <span className="text-foreground/20 font-medium text-xs lg:text-sm">
               ({orderItems.length} produk)
             </span>
           </div>
-          <Button
-            type="button"
-            variant={"default"}
-            className="rounded-full px-10"
-            onClick={() => push(`/account/orders/detail/${orderId}`)}
-          >
-            Detail
-          </Button>
+          <div className="flex flex-row justify-end ">
+            <Button
+              type="button"
+              variant={"default"}
+              className="rounded-md px-4 md:px-7 lg:px-10 text-xs lg:text-sm w-fit"
+              onClick={() => push(`/account/orders/detail/${orderId}`)}
+            >
+              {status === "pending" ? "Menunggu Pembayaran" : "Detail"}
+            </Button>
+          </div>
         </div>
       </div>
     </>

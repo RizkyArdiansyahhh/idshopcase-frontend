@@ -26,14 +26,14 @@ export const WhatsAppSupport = (props: WhatsAppSupportProps) => {
                     `;
 
     const url = `https://wa.me/6285117453862?text=${encodeURIComponent(
-      message
+      message,
     )}`;
     window.open(url, "_blank");
   };
   return (
     <>
       <div className="flex flex-row justify-between items-center hover:underline transition-all duration-200 ease-in-out">
-        <p className="text-sm text-foreground/50">
+        <p className="text-xs lg:text-sm text-foreground/50">
           Jika ada pertanyaan, silahkan hubungi customer service kami
         </p>
         <Tooltip>

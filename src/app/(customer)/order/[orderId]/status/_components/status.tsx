@@ -15,6 +15,7 @@ export const Status = () => {
           Pesanan Anda telah berhasil dibayar dan akan segera diproses
         </p>
       </div>
+
       <div className="w-1/2 h-fit bg-background rounded-sm">
         <div className="p-8">
           <h3 className="text-lg font-semibold">Detail Pesanan</h3>
@@ -34,9 +35,9 @@ export const Status = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between gap-15 my-5">
+        <div className="flex justify-between gap-15 my-5 items-center">
           <div className="w-6 h-12 rounded-tr-full rounded-br-full bg-foreground/5" />
-          <div className="border-t-2 border-dashed border-foreground" />
+          <div className="border-t-2 flex-1 border-dashed border-foreground" />
           <div className="w-6 h-12 rounded-tl-full rounded-bl-full bg-foreground/5" />
         </div>
         <div className="w-full flex justify-end px-8 pb-8">

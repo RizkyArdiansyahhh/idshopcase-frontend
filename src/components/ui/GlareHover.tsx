@@ -1,4 +1,3 @@
-"use client";
 import React, { useRef } from "react";
 
 interface GlareHoverProps {
@@ -6,7 +5,6 @@ interface GlareHoverProps {
   height?: string;
   background?: string;
   borderRadius?: string;
-  borderColor?: string;
   children?: React.ReactNode;
   glareColor?: string;
   glareOpacity?: number;
@@ -21,9 +19,8 @@ interface GlareHoverProps {
 const GlareHover: React.FC<GlareHoverProps> = ({
   width = "500px",
   height = "500px",
-  background = "#000",
-  borderRadius = "10px",
-  borderColor = "#333",
+  background = "transparent",
+  borderRadius,
   children,
   glareColor = "#ffffff",
   glareOpacity = 0.5,
@@ -88,13 +85,12 @@ const GlareHover: React.FC<GlareHoverProps> = ({
 
   return (
     <div
-      className={`relative grid place-items-center overflow-hidden border cursor-pointer ${className}`}
+      className={`relative grid place-items-center overflow-hidden cursor-pointer ${className}`}
       style={{
         width,
         height,
         background,
         borderRadius,
-        borderColor,
         ...style,
       }}
       onMouseEnter={animateIn}

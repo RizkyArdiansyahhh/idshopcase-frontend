@@ -100,7 +100,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
   return (
     <div>
       <div
-        className={`flex flex-row items-center  gap-5 px-5 sm:px-16 ${isMobile && "justify-center"}`}
+        className={`flex flex-row items-center gap-5 px-5  justify-center lg:justify-start lg:pl-10`}
       >
         <div className="h-fit w-fit relative">
           <UserAvatar
