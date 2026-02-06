@@ -14,7 +14,7 @@ export default function AccountLayout({
   // const addressUser = addrees?.find((addr) => addr.is_primary === true);
 
   return (
-    <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
+    <ProtectedRoute allowedRoles={["customer"]}>
       {/* FLOATING SIDEBAR (HARUS DI LUAR / TIDAK KENA PADDING) */}
       <BottomNavigation />
 

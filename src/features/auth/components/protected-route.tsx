@@ -8,13 +8,11 @@ import { useAuthStore } from "@/store/profile-store";
 type ProtectedRouteProps = {
   children: ReactNode;
   allowedRoles: string[];
-  redirectTo?: string;
 };
 
 export const ProtectedRoute = ({
   children,
   allowedRoles,
-  redirectTo = "/login",
 }: ProtectedRouteProps) => {
   const router = useRouter();
   const { data: user, isLoading } = useGetUser();
@@ -29,18 +27,23 @@ export const ProtectedRoute = ({
   useEffect(() => {
     if (isLoading) return;
 
+    // belum login
     if (!user) {
-      router.replace(redirectTo);
+      router.replace("/login");
       return;
     }
+
+    // SUDAH LOGIN, tapi role salah
     if (!allowedRoles.includes(user.role)) {
-      router.replace(redirectTo);
-      return;
+      if (user.role === "admin") {
+        router.replace("/admin");
+      } else {
+        router.replace("/");
+      }
     }
-  }, [user, isLoading, allowedRoles, router, redirectTo]);
+  }, [user, isLoading, allowedRoles, router]);
 
-  if (isLoading) return <div>Loading...</div>;
-
+  if (isLoading) return null;
   if (!user) return null;
   if (!allowedRoles.includes(user.role)) return null;
 
