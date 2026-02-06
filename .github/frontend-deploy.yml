@@ -28,9 +28,10 @@ jobs:
 
       # Prepare SSH access
       - name: Add server to known_hosts
+        if: ${{ secrets.SERVER_IP != '' }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Setup SSH key
         run: |
