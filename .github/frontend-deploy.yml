@@ -22,6 +22,8 @@ jobs:
         run: npm install
 
       - name: Build Next.js
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: npm run build
 
       # Prepare SSH access
