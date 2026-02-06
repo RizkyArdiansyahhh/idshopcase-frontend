@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useGetOrdersAdmin } from "@/features/orders/api/get-orders-admin";
 import { formatCurrency } from "@/lib/format-currency";
-import { Order } from "@/types/api";
+import { OrderAdmin } from "@/types/api";
 import { IconTrendingUp } from "@tabler/icons-react";
 
 export const TotalRevenue = () => {
@@ -18,9 +18,9 @@ export const TotalRevenue = () => {
 
   if (!orders) return null;
 
-  const getMonthlyRevenue = (orders: Order[]) => {
+  const getMonthlyRevenue = (orders: OrderAdmin[]) => {
     const completedOrders = orders.filter(
-      (order) => order.status === "shipped" // atau "completed" sesuaikan dengan backend
+      (order) => order.status === "shipped", // atau "completed" sesuaikan dengan backend
     );
 
     const monthlyRevenue: Record<string, number> = {};
