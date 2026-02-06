@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Login } from "./_components/login";
+import { GuestRoute } from "@/features/auth/components/guest-route";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
 const LoginPage = () => {
   return (
     <>
-      <Login></Login>
+      <GuestRoute>
+        <Login></Login>
+      </GuestRoute>
     </>
   );
 };

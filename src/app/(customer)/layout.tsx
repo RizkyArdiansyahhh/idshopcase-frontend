@@ -20,7 +20,7 @@ export default function AccountLayout({
   const isProductDetail = pathName.startsWith("/products/detail");
 
   return (
-    <ProtectedRoute allowedRoles={["customer"]} redirectTo="/login">
+    <ProtectedRoute allowedRoles={["customer"]}>
       <div
         className={`w-screen flex flex-col items-center py-2 ${
           !isProductDetail ? "h-screen" : ""
