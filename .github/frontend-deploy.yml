@@ -12,6 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check Node version on server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            node -v
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
