@@ -8,7 +8,7 @@ export const registerSchema = z
   .object({
     name: z
       .string({ message: "Nama wajib diisi" })
-      .min(8, { message: "Nama minimal 8 karakter" }),
+      .min(1, { message: "Nama minimal 1 karakter" }),
 
     email: z
       .string({ message: "Email wajib diisi" })
@@ -16,7 +16,7 @@ export const registerSchema = z
 
     phone: z
       .string({ message: "Nomor telepon wajib diisi" })
-      .min(11, { message: "Nomor telepon minimal 11 digit" }),
+      .min(10, { message: "Nomor telepon minimal 10 digit" }),
 
     password: z
       .string({ message: "Password wajib diisi" })
