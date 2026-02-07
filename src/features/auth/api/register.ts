@@ -6,33 +6,41 @@ import z from "zod";
 
 export const registerSchema = z
   .object({
-    name: z.string({ message: "Name is required" }).min(8, {
-      message: "Name must be at least 8 characters",
-    }),
-    email: z.email(),
-    phone: z.string({ message: "Phone number is required" }).min(12, {
-      message: "Phone number must be at least 12 characters",
-    }),
+    name: z
+      .string({ message: "Nama wajib diisi" })
+      .min(8, { message: "Nama minimal 8 karakter" }),
+
+    email: z
+      .string({ message: "Email wajib diisi" })
+      .email({ message: "Format email tidak valid" }),
+
+    phone: z
+      .string({ message: "Nomor telepon wajib diisi" })
+      .min(11, { message: "Nomor telepon minimal 11 digit" }),
+
     password: z
-      .string({ message: "Password is required" })
-      .min(8, { message: "Password must be at least 8 characters" })
+      .string({ message: "Password wajib diisi" })
+      .min(8, { message: "Password minimal 8 karakter" })
       .regex(/[A-Z]/, {
-        message: "Must contain at least one uppercase letter",
+        message: "Password harus mengandung minimal 1 huruf besar",
       })
       .regex(/[a-z]/, {
-        message: "Must contain at least one lowercase letter",
+        message: "Password harus mengandung minimal 1 huruf kecil",
       })
-      .regex(/\d/, { message: "Must contain at least one number" }),
-    confirmPassword: z.string({ message: "Confirm password is required" }),
+      .regex(/\d/, {
+        message: "Password harus mengandung minimal 1 angka",
+      }),
+
+    confirmPassword: z.string({ message: "Konfirmasi password wajib diisi" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Password and confirm password must match",
+    message: "Password dan konfirmasi password tidak sama",
     path: ["confirmPassword"],
   });
 
 export const updateSchema = z.object({
-  name: z.string({ message: "Name is required" }).min(8, {
-    message: "Name must be at least 8 characters",
+  name: z.string({ message: "Nama wajib diisi" }).min(8, {
+    message: "Nama minimal 8 karakter",
   }),
   role: z.enum(["admin", "customer"]),
 });
@@ -41,7 +49,6 @@ type registerSchemaType = z.infer<typeof registerSchema>;
 
 const register = async (data: registerSchemaType) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  console.log("path URL : ", process.env.NEXT_PUBLIC_API_URL);
   const { confirmPassword, ...payload } = data;
   const response = await api.post("/auth/register", { ...payload });
 
@@ -57,7 +64,8 @@ export const useRegsiter = (params: UseRegisterParams = {}) => {
     mutationFn: register,
     ...params.mutationConfig,
     onError: (err) => {
-      toast.error(err.message);
+      toast.error("Terjadi Kesalahan");
+      console.error(err);
     },
   });
 };

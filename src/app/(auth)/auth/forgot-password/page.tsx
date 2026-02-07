@@ -1,5 +1,4 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
 import { ForgotPasswordForm } from "@/features/auth/components/forgot-password-form";
 import { useState } from "react";
 import { IoIosLock } from "react-icons/io";

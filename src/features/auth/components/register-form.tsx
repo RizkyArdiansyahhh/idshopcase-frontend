@@ -22,6 +22,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
       onSuccess: (data) => {
         form.reset();
         const email = data.email;
+        const expireOtp = Date.now() + 10 * 60 * 1000;
+        localStorage.setItem("otp_expired_at", expireOtp.toString());
         if (email) {
           onSuccess({ email });
         }
