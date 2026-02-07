@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CiGrid2H, CiGrid2V, CiGrid41 } from "react-icons/ci";
 
 const CollectionsPage = () => {
-  const [layoutActive, setLayoutActive] = useState("grid-3");
+  //   const [layoutActive, setLayoutActive] = useState("grid-3");
   return (
     <div className="w-screen h-fit">
       <div className="w-full h-[40vh] relative">
