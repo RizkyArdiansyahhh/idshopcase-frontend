@@ -2,7 +2,7 @@ name: Frontend Deployment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -20,11 +20,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Next.js
-        run: npm run build
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
@@ -41,6 +36,7 @@ jobs:
           --exclude="node_modules" \
           --exclude=".git" \
           --exclude=".env" \
+          --exclude=".next" \
           -e "ssh -i ~/.ssh/id_ed25519" \
           ./  ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
 
@@ -52,6 +48,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/www/idshopcase/frontend/
-            npm install --production=false
+            npm install 
+            npm run build
             pm2 restart idshopcase-frontend || pm2 start npm --name "idshopcase-frontend" -- start
             pm2 save
