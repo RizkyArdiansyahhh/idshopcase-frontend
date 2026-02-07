@@ -10,45 +10,48 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Add server to known_hosts
+      - name: Prepare SSH
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
-
-      - name: Setup SSH key
-        run: |
+          chmod 700 ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
 
-      - name: Upload frontend to server
+      - name: Sync frontend source (NO BUILD ARTIFACT)
         run: |
-          rsync -avz --delete \
-          --exclude="node_modules" \
-          --exclude=".git" \
-          --exclude=".env" \
-          --exclude=".next" \
-          -e "ssh -i ~/.ssh/id_ed25519" \
-          ./  ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
+          rsync -az --delete \
+            --exclude ".git" \
+            --exclude "node_modules" \
+            --exclude ".env" \
+            --exclude ".next" \
+            -e "ssh -i ~/.ssh/id_ed25519" \
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
 
-      - name: Install & Restart PM2
+      - name: Build & Restart on Server
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /var/www/idshopcase/frontend/
-            npm install 
+            set -e
+            cd /var/www/idshopcase/frontend
+
+            # PENTING: bersihin build lama
+            rm -rf .next
+
+            npm install
             npm run build
-            pm2 restart idshopcase-frontend || pm2 start npm --name "idshopcase-frontend" -- start
+
+            pm2 restart idshopcase-frontend \
+              || pm2 start npm --name idshopcase-frontend -- start
+
             pm2 save
