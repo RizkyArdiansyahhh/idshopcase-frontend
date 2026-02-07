@@ -13,7 +13,11 @@ export default function AccountLayout({
   const pathName = usePathname();
 
   const HIDE_NAVBAR_PATHS = ["/cart", "/order"];
+  const HIDE_PADDING_PATHS = ["/products/collections", "/order"];
   const shouldHideNavbar = HIDE_NAVBAR_PATHS.some((path) =>
+    pathName.startsWith(path),
+  );
+  const shouldHidePadding = HIDE_PADDING_PATHS.some((path) =>
     pathName.startsWith(path),
   );
 
@@ -30,14 +34,10 @@ export default function AccountLayout({
 
         <div
           className={`flex h-full w-full justify-center ${
-            shouldHideNavbar ? "pt-0" : "pt-20"
+            shouldHideNavbar || shouldHidePadding ? "pt-0" : "pt-20"
           }`}
         >
-          <div
-            className={`h-full ${
-              pathName.startsWith("/order") ? "w-full" : "w-[93%]"
-            }`}
-          >
+          <div className={`h-full ${shouldHidePadding ? "w-full" : "w-[93%]"}`}>
             {children}
           </div>
         </div>

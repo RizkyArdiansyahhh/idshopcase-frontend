@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        // hostname: "api.idshopcase.com",
-        hostname: "monistically-exopathic-maida.ngrok-free.dev",
+        hostname: "api.idshopcase.com",
+        // hostname: "monistically-exopathic-maida.ngrok-free.dev",
         pathname: "/api/images/**",
       },
     ],

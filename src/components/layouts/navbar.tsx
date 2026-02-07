@@ -6,7 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUser } from "@/features/auth/api/get-user";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CartButton } from "@/features/cart/components/cart-button";
 
 interface NavbarProps {
@@ -14,19 +14,26 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ isBlur = true }: NavbarProps) => {
+  const { data: user } = useGetUser();
   const { push } = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { data: user } = useGetUser();
-  console.log(user?.role);
+  const FULL_WIDTH_PATHS = ["/products/collections"];
+  const pathName = usePathname();
+  const isFullWidth = FULL_WIDTH_PATHS.some((path) =>
+    pathName.startsWith(path),
+  );
 
+  // Scroll effect hanya berlaku jika bukan full width
   useEffect(() => {
+    if (isFullWidth) return; // skip scroll effect
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isFullWidth]);
 
+  // Dropdown mobile
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const dropdown = document.getElementById("mobile-dropdown");
@@ -44,35 +51,58 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isOpen]);
 
-  const backgroundColor = isBlur
-    ? isScrolled
-      ? "rgba(0,0,0,0.6)"
-      : "rgba(255,255,255,0.08)"
-    : "rgb(15,15,15)";
+  // Styling
+  const backgroundColor = isFullWidth
+    ? "rgb(15,15,15)"
+    : isBlur
+      ? isScrolled
+        ? "rgba(0,0,0,0.6)"
+        : "rgba(255,255,255,0.08)"
+      : "rgb(15,15,15)";
 
-  const backdrop = isBlur ? (isScrolled ? "blur(14px)" : "blur(0px)") : "none";
+  const backdrop = isFullWidth
+    ? "none"
+    : isBlur
+      ? isScrolled
+        ? "blur(14px)"
+        : "blur(0px)"
+      : "none";
+
+  const borderRadius = isFullWidth
+    ? "0px"
+    : isBlur
+      ? isScrolled
+        ? "0.75rem"
+        : "1rem"
+      : isScrolled
+        ? "0.5rem"
+        : "0.75rem";
+
+  const topPosition = isFullWidth ? "0" : isScrolled ? "0" : "1.25rem";
 
   return (
     <nav
-      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[93%] border ${
-        isBlur ? "border-white/30" : "border-transparent"
-      } text-white transition-all duration-500`}
+      className={`fixed left-1/2 -translate-x-1/2 z-50 ${
+        isFullWidth ? "w-full" : "w-[93%]"
+      } border text-white transition-all duration-500 ${
+        isFullWidth
+          ? "border-transparent"
+          : isBlur
+            ? "border-white/30"
+            : "border-transparent"
+      }`}
       style={{
-        top: isScrolled ? "0" : "1.25rem",
+        top: topPosition,
         backgroundColor,
         backdropFilter: backdrop,
-        borderRadius: isBlur
-          ? isScrolled
-            ? "0.75rem"
-            : "1rem"
-          : isScrolled
-            ? "0.5rem"
-            : "0.75rem",
-        boxShadow: isBlur
-          ? isScrolled
-            ? "0 4px 20px rgba(0,0,0,0.3)"
-            : "0 0px 0px rgba(0,0,0,0)"
-          : "0 2px 10px rgba(0,0,0,0.4)",
+        borderRadius,
+        boxShadow: isFullWidth
+          ? "0 2px 10px rgba(0,0,0,0.4)"
+          : isBlur
+            ? isScrolled
+              ? "0 4px 20px rgba(0,0,0,0.3)"
+              : "0 0px 0px rgba(0,0,0,0)"
+            : "0 2px 10px rgba(0,0,0,0.4)",
       }}
     >
       <div className="flex justify-between items-center py-1 md:py-4 px-5">
