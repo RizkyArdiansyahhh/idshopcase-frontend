@@ -23,13 +23,8 @@ export default function Home() {
           className="object-cover object-top"
           priority
         />
-        {/* <div className="font-snell text-white absolute text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <p>Welcome Idshop</p>
-          <p>Case Phone</p>
-        </div> */}
       </div>
-      <div className="mb-44"></div>
-      <div className="flex flex-row justify-between items-end w-full px-5 md:px-10 lg:px-16">
+      <div className="flex flex-row justify-between items-end w-full px-5 md:px-10 lg:px-16 mt-10">
         <h1 className="text-xl md:text-2xl lg:text-5xl font-bold text-foreground">
           Produk Kami
         </h1>

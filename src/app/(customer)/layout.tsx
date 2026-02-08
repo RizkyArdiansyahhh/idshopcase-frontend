@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { Footer } from "../_components/footer";
 import { Navbar } from "@/components/layouts/navbar";
-import { ProtectedRoute } from "@/features/auth/components/protected-route";
 
 export default function AccountLayout({
   children,
@@ -24,26 +23,24 @@ export default function AccountLayout({
   const isProductDetail = pathName.startsWith("/products/detail");
 
   return (
-    <ProtectedRoute allowedRoles={["customer"]}>
+    <div
+      className={`w-screen flex flex-col items-center py-2 ${
+        !isProductDetail ? "h-screen" : ""
+      }`}
+    >
+      {!shouldHideNavbar && <Navbar isBlur={false} />}
+
       <div
-        className={`w-screen flex flex-col items-center py-2 ${
-          !isProductDetail ? "h-screen" : ""
+        className={`flex h-full w-full justify-center ${
+          shouldHideNavbar || shouldHidePadding ? "pt-0" : "pt-20"
         }`}
       >
-        {!shouldHideNavbar && <Navbar isBlur={false} />}
-
-        <div
-          className={`flex h-full w-full justify-center ${
-            shouldHideNavbar || shouldHidePadding ? "pt-0" : "pt-20"
-          }`}
-        >
-          <div className={`h-full ${shouldHidePadding ? "w-full" : "w-[93%]"}`}>
-            {children}
-          </div>
+        <div className={`h-full ${shouldHidePadding ? "w-full" : "w-[93%]"}`}>
+          {children}
         </div>
-
-        {isProductDetail && <Footer />}
       </div>
-    </ProtectedRoute>
+
+      {isProductDetail && <Footer />}
+    </div>
   );
 }

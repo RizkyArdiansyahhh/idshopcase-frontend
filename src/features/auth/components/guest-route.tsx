@@ -11,7 +11,6 @@ export const GuestRoute = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (isLoading) return;
 
-    // SUDAH LOGIN → TIDAK BOLEH KE LOGIN PAGE
     if (user) {
       if (user.role === "admin") {
         router.replace("/admin/dashboard");
