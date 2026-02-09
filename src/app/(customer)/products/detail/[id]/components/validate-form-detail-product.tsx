@@ -20,7 +20,6 @@ import { useRouter } from "next/navigation";
 import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
 import { InputsFormProduct } from "./inputs-form-product";
-import { CheckoutData } from "@/types/api";
 import { useCheckoutStore } from "@/store/checkout-store";
 
 type ValidateFormDetailProductProps = {
@@ -62,14 +61,16 @@ export const ValidateFormDetailProduct = (
 
   const [open, setOpen] = useState(false);
 
+  const baseVariant =
+    variantOptions.find((v) => v.name === "-") ?? variantOptions[0];
+
   const formDetailProductSchema = z.object({
     variant:
-      variantOptions.length > 0
+      variantOptions.length && baseVariant.name !== "-"
         ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
             message: "Pilih varian terlebih dahulu",
           })
         : z.string().optional(),
-
     phone_type:
       phoneTypeOptions.length > 0
         ? z.enum(phoneTypeOptions.map((p) => p.id) as [string, ...string[]], {
@@ -115,25 +116,25 @@ export const ValidateFormDetailProduct = (
   });
 
   const handleAddCart = (data: FormDetailProductType) => {
+    const selectedVariant =
+      variantOptions.find((v) => v.id === data.variant) ?? baseVariant;
+
     const cartData = {
       productId: productId,
       quantity: Number(data.quantity),
       phoneTypeId: Number(data.phone_type) || null,
-      variantId: Number(data.variant) || null,
+      variantId: Number(selectedVariant.id),
     };
     createCartItem(cartData);
   };
 
   const handleCheckout = (data: FormDetailProductType) => {
-    const selectedVariant = variantOptions.find((v) => v.id === data.variant);
+    const selectedVariant =
+      variantOptions.find((v) => v.id === data.variant) ?? baseVariant;
 
     const selectedPhoneType = phoneTypeOptions.find(
       (p) => p.id === data.phone_type,
     );
-
-    if (!selectedVariant) {
-      return;
-    }
 
     setDataCheckout({
       productId,
@@ -158,7 +159,6 @@ export const ValidateFormDetailProduct = (
   const stockAvailable = selectedVariant?.stock ?? quantityProduct;
   const price = selectedVariant?.price ?? priceProduct;
 
-  console.log(imageProduct, "imageProduct");
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
@@ -238,7 +238,7 @@ export const ValidateFormDetailProduct = (
                   <div className="flex-1 min-h-0 overflow-y-auto">
                     <InputsFormProduct
                       control={form.control}
-                      variants={variantOptions}
+                      variants={variantOptions.filter((v) => v.name !== "-")}
                       phone_type={phoneTypeOptions}
                       isValidate={true}
                     />

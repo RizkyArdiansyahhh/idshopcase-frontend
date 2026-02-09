@@ -2,7 +2,6 @@ import { ShoppingCart } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/types/api";
@@ -11,6 +10,7 @@ import { formatCurrency } from "@/lib/format-currency";
 import { InputsFormProduct } from "@/app/(customer)/products/detail/[id]/components/inputs-form-product";
 import { QuantityInput } from "@/app/(customer)/products/detail/[id]/components/input-form-detail-product";
 import { ValidateFormDetailProduct } from "@/app/(customer)/products/detail/[id]/components/validate-form-detail-product";
+import { getMinMaxVariantPrice } from "@/utils/price-utils";
 
 type FormDetailProductProps = {
   productDetail: Product;
@@ -27,7 +27,7 @@ export const FormDetailProduct = ({
       model: p.model,
     })) || [];
 
-  const variantOptions =
+  const rawVariantOptions =
     productDetail.Variants?.map((v) => ({
       id: String(v.id),
       name: v.name,
@@ -36,12 +36,19 @@ export const FormDetailProduct = ({
       max_images: Number(v.max_images),
     })) || [];
 
+  const variantOptions = rawVariantOptions.filter(
+    (v) => v.name !== "-" && v.name.trim() !== "",
+  );
+  const baseVariant = rawVariantOptions.find((v) => v.name === "-");
+  const hasVariant = variantOptions.length > 0;
+
   const formSchema = z.object({
-    variant: variantOptions.length
-      ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
-          message: "Pilih varian terlebih dahulu",
-        })
-      : z.string().optional(),
+    variant:
+      variantOptions.length > 0
+        ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
+            message: "Pilih varian terlebih dahulu",
+          })
+        : z.string().optional(),
 
     phone_type: phoneTypeOptions.length
       ? z.enum(phoneTypeOptions.map((p) => p.id) as [string, ...string[]], {
@@ -62,24 +69,12 @@ export const FormDetailProduct = ({
   });
 
   const formValues = form.watch();
+  const selectedVariant = hasVariant
+    ? variantOptions.find((v) => v.id === formValues.variant)
+    : baseVariant;
 
-  // Hitung harga min-max dari semua varian
-  const prices = variantOptions.map((v) => v.price);
-  const minPrice = prices.length ? Math.min(...prices.map(Number)) : 0;
-  const maxPrice = prices.length ? Math.max(...prices.map(Number)) : 0;
-
-  // Tentukan harga yang ditampilkan
-  const priceDisplay = formValues.variant
-    ? (variantOptions.find((v) => v.id === formValues.variant)?.price ?? 0)
-    : minPrice === maxPrice
-      ? minPrice
-      : undefined;
-
-  // Ambil stok sesuai varian yang dipilih
-  const selectedVariant =
-    variantOptions.find((v) => v.id === formValues.variant) ||
-    variantOptions[0];
-
+  const priceDisplay = selectedVariant?.price;
+  const minMaxPrice = getMinMaxVariantPrice(variantOptions);
   const stockProduct = selectedVariant?.stock ?? 0;
 
   return (
@@ -91,7 +86,7 @@ export const FormDetailProduct = ({
         <h3 className="text-base md:text-xl lg:text-2xl font-semibold text-foreground/70 my-2">
           {priceDisplay !== undefined
             ? formatCurrency(Number(priceDisplay))
-            : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
+            : `${formatCurrency(Number(minMaxPrice?.min))} - ${formatCurrency(Number(minMaxPrice?.max))}`}
         </h3>
         <Separator />
       </div>
@@ -110,13 +105,16 @@ export const FormDetailProduct = ({
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}
-            priceProduct={Number(priceDisplay) ?? Number(minPrice)}
+            priceProduct={Number(priceDisplay)}
             imageProduct={image}
             quantityProduct={formValues.quantity}
             variant="outline"
-            data={formValues}
+            data={{
+              ...formValues,
+              variant: selectedVariant?.id,
+            }}
             phoneTypeOptions={phoneTypeOptions}
-            variantOptions={variantOptions}
+            variantOptions={rawVariantOptions}
           >
             <ShoppingCart />
             <span className="mx-2">Masukkan Keranjang</span>
@@ -124,15 +122,18 @@ export const FormDetailProduct = ({
 
           <ValidateFormDetailProduct
             nameProduct={productDetail.name}
-            priceProduct={Number(priceDisplay) ?? Number(minPrice)}
+            priceProduct={Number(priceDisplay)}
             imageProduct={image}
             quantityProduct={formValues.quantity}
             variant="default"
-            data={formValues}
+            data={{
+              ...formValues,
+              variant: selectedVariant?.id,
+            }}
             isCheckout
             productId={productDetail.id}
             phoneTypeOptions={phoneTypeOptions}
-            variantOptions={variantOptions}
+            variantOptions={rawVariantOptions}
           >
             <span className="mx-2">Beli Sekarang</span>
           </ValidateFormDetailProduct>
