@@ -31,7 +31,7 @@ jobs:
             --exclude ".git" \
             --exclude "node_modules" \
             --exclude ".env" \
-            --exclude ".next" \
+            # --exclude ".next" \
             -e "ssh -i ~/.ssh/id_ed25519" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
 
@@ -46,7 +46,7 @@ jobs:
             cd /var/www/idshopcase/frontend
 
             # PENTING: bersihin build lama
-            rm -rf .next
+            # rm -rf .next
 
             npm install
             npm run build
