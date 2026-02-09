@@ -4,7 +4,7 @@ import { CollectionsProduct } from "@/features/products/components/collections-p
 import Image from "next/image";
 import { CiGrid2H, CiGrid2V, CiGrid41 } from "react-icons/ci";
 import { FilterProduct } from "./filter";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 
