@@ -7,7 +7,6 @@ import { getMinMaxVariantPrice } from "@/utils/price-utils";
 import Image from "next/image";
 import Link from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
-import { ca } from "zod/v4/locales";
 
 type ProductCardCollectionProps = {
   id: number;
