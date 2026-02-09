@@ -31,7 +31,6 @@ jobs:
             --exclude ".git" \
             --exclude "node_modules" \
             --exclude ".env" \
-            # --exclude ".next" \
             -e "ssh -i ~/.ssh/id_ed25519" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
 
