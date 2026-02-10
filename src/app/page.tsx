@@ -30,10 +30,7 @@ export default function Home() {
         </h1>
         <Link
           href="/products/collections"
-          className="relative text-sm md:text-base font-medium text-foreground/80
-             after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-foreground 
-             after:w-full after:scale-x-0 after:origin-left after:transition-transform after:duration-300
-             hover:after:scale-x-100"
+          className="animation-link-foreground"
         >
           Lebih Banyak
         </Link>
