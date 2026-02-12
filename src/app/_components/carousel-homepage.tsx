@@ -89,32 +89,38 @@ export const DotProgress = ({ active, progress }: DotProgressProps) => {
       width={radius * 2}
       height={radius * 2}
       className={clsx(
-        "transition-transform",
-        active ? "scale-110" : "opacity-60",
+        "transition-all duration-300",
+        active ? "scale-110" : "opacity-80",
       )}
     >
-      <circle
-        stroke="rgba(255,255,255,0.3)"
-        fill="transparent"
-        strokeWidth={stroke}
-        r={normalizedRadius}
-        cx={radius}
-        cy={radius}
-      />
+      {!active && (
+        <circle fill="white" r={normalizedRadius} cx={radius} cy={radius} />
+      )}
 
       {active && (
-        <circle
-          stroke="white"
-          fill="transparent"
-          strokeWidth={stroke}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-          className="transition-[stroke-dashoffset] duration-75 ease-linear"
-        />
+        <>
+          <circle
+            stroke="rgba(255,255,255,0.25)"
+            fill="transparent"
+            strokeWidth={stroke}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+          />
+
+          <circle
+            stroke="white"
+            fill="transparent"
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+            className="transition-[stroke-dashoffset] duration-75 ease-linear"
+          />
+        </>
       )}
     </svg>
   );
