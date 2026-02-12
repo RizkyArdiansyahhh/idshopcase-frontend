@@ -46,7 +46,7 @@ jobs:
             cd /var/www/idshopcase/frontend
 
             # PENTING: bersihin build lama
-            rm -rf .next
+            # rm -rf .next
 
             npm install
             npm run build
