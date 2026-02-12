@@ -9,13 +9,16 @@ import {
   CardTestimoniSpeaker,
 } from "@/components/shared/card-testimoni";
 import { ListProductsHomePage } from "@/features/products/components/list-products";
-import Link from "next/link";
+import GradientFillButton from "@/components/shared/gradient-fill-button";
+import { BannerVideoHomePage } from "./_components/baner-video-home-page";
+import { Separator } from "@/components/ui/separator";
+import { SectionModelTampilan } from "./_components/section-model-tampilan";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <Navbar isBlur={true} />
-      <div className="relative h-[80vh] w-screen ">
+      <div className="relative h-screen w-screen ">
         <Image
           src={"/images/hero-section.jpeg"}
           fill
@@ -24,23 +27,34 @@ export default function Home() {
           priority
         />
       </div>
-      <div className="flex flex-row justify-between items-end w-full px-5 md:px-10 lg:px-16 mt-10">
-        <h1 className="text-xl md:text-2xl lg:text-5xl font-bold text-foreground">
-          Produk Kami
-        </h1>
-        <Link
-          href="/products/collections"
-          className="animation-link-foreground"
-        >
-          Lebih Banyak
-        </Link>
+      <div className="my-20"></div>
+      <div className="w-full  flex justify-end">
+        <div className="px-10 flex flex-col gap-4 py-6 ">
+          <h1 className="text-5xl font-bold w-4/5 leading-16">
+            Produk Unggulan{" "}
+            <span className="text-foreground/40 text-6xl">Idshopcase</span>.
+          </h1>
+          <div className="flex flex-col gap-5">
+            <p className="w-2/3 font-semibold text-base text-foreground/60">
+              Koleksi produk unggulan Idshopcase yang dipilih berdasarkan
+              kualitas dan kebutuhan pengguna.
+            </p>
+            <GradientFillButton></GradientFillButton>
+          </div>
+        </div>
+        <div className="w-2/3 py-6  overflow-hidden">
+          <ListProductsHomePage></ListProductsHomePage>
+        </div>
       </div>
-      <div className="w-full py-6 pl-5 md:pl-10 lg:pl-16 overflow-hidden">
-        <ListProductsHomePage></ListProductsHomePage>
-      </div>
+      <BannerVideoHomePage></BannerVideoHomePage>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
       {/* <SectionProducts /> */}
       <SectionHero />
+      <Separator className="mt-10"></Separator>
+      <div className="w-screen h-fit bg-muted-foreground/5 py-2">
+        <SectionModelTampilan></SectionModelTampilan>
+      </div>
+      <Separator className="mb-10"></Separator>
       <SectionShowCase />
       <section className="container my-16 px-10 hidden lg:block">
         <div className="w-full flex justify-center items-center ">
