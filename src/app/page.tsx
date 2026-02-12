@@ -13,20 +13,13 @@ import GradientFillButton from "@/components/shared/gradient-fill-button";
 import { BannerVideoHomePage } from "./_components/baner-video-home-page";
 import { Separator } from "@/components/ui/separator";
 import { SectionModelTampilan } from "./_components/section-model-tampilan";
+import { CarouselHomePage } from "./_components/carousel-homepage";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <Navbar isBlur={true} />
-      <div className="relative h-screen w-screen ">
-        <Image
-          src={"/images/hero-section.jpeg"}
-          fill
-          alt="hero-section-image"
-          className="object-cover object-top"
-          priority
-        />
-      </div>
+      <CarouselHomePage></CarouselHomePage>
       <div className="my-20"></div>
       <div className="w-full  flex justify-end">
         <div className="px-10 flex flex-col gap-4 py-6 ">
