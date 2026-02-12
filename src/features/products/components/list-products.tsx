@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ProductCardHomePage } from "@/app/_components/product-card-home-page";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { getMinMaxVariantPrice } from "@/utils/price-utils";
 
 interface ListProductsHomePageProps {
   visibleSlides?: number;
@@ -62,25 +63,29 @@ export const ListProductsHomePage: React.FC<ListProductsHomePageProps> = ({
             transform: `translateX(-${activeIndex * (cardWidthPx + gapPx)}px)`,
           }}
         >
-          {products.map((product, idx) => (
-            <motion.div
-              key={product.id}
-              style={{ minWidth: cardWidth, height: cardHeight }}
-              className="flex-shrink-0"
-              initial={{ opacity: 0, y: 100 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-            >
-              <ProductCardHomePage
+          {products.map((product, idx) => {
+            const price = getMinMaxVariantPrice(product.Variants);
+            return (
+              <motion.div
                 key={product.id}
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                images={product.ProductImages}
-              />
-            </motion.div>
-          ))}
+                style={{ minWidth: cardWidth, height: cardHeight }}
+                className="flex-shrink-0"
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+              >
+                <ProductCardHomePage
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  category={product.category}
+                  images={product.ProductImages}
+                  price={price}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

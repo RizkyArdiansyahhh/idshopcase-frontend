@@ -1,5 +1,6 @@
 "use client";
 import GlareHover from "@/components/ui/GlareHover";
+import { formatCurrency } from "@/lib/format-currency";
 import { ProductImage } from "@/types/api";
 import { cleanImageUrl } from "@/utils/image-utils";
 import Image from "next/image";
@@ -11,10 +12,12 @@ type ProductCardProps = {
   name: string;
   category: string;
   images: ProductImage[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  price: any;
 };
 
 export const ProductCardHomePage = (props: ProductCardProps) => {
-  const { id, name, category, images } = props;
+  const { id, name, category, images, price } = props;
   const mainImage =
     images.find((image) => image.isPrimary)?.imageUrl ??
     images[0]?.imageUrl ??
@@ -75,7 +78,13 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
 
             <p className="text-sm font-medium text-foreground/80">{category}</p>
             <p className="text-sm font-medium text-foreground/60">
-              Rp. 500.000 - Rp. 1.000.000
+              {price
+                ? price.min === price.max
+                  ? formatCurrency(price.min)
+                  : `${formatCurrency(price.min)} – ${formatCurrency(
+                      price.max,
+                    )}`
+                : "Harga tidak tersedia"}
             </p>
           </div>
           <Link

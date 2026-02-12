@@ -3,7 +3,7 @@ import { SectionLayout } from "@/components/layouts/section-layout";
 export const SectionHero = () => {
   return (
     <>
-      <SectionLayout
+      {/* <SectionLayout
         title="Hero Section"
         image="/images/image-section-1.jpg"
         alt="image-section-1"
@@ -12,7 +12,7 @@ export const SectionHero = () => {
         Ciptakan popsocket unik yang mencerminkan dirimu. Clean, personal, dan
         dibuat khusus untuk melengkapi gaya ponselmu yang bikin HP-mu makin
         standout dan personal.
-      </SectionLayout>
+      </SectionLayout> */}
       <SectionLayout
         title="Show Off Your Personality With a Custom Case"
         image="/images/product-3.jpeg"

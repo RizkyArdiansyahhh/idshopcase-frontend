@@ -29,7 +29,6 @@ type ValidateFormDetailProductProps = {
   imageProduct: string;
   nameProduct: string;
   priceProduct: number;
-  quantityProduct: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   isCheckout?: boolean;
@@ -41,6 +40,7 @@ type ValidateFormDetailProductProps = {
     stock: number;
     max_images: number;
   }>;
+  totalStock?: number;
 };
 export const ValidateFormDetailProduct = (
   props: ValidateFormDetailProductProps,
@@ -52,11 +52,11 @@ export const ValidateFormDetailProduct = (
     imageProduct,
     nameProduct,
     priceProduct,
-    quantityProduct,
     data,
     isCheckout,
     phoneTypeOptions = [],
     variantOptions = [],
+    totalStock,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -156,7 +156,7 @@ export const ValidateFormDetailProduct = (
   const selectedVariant = variantOptions.find(
     (v) => v.id === form.watch("variant"),
   );
-  const stockAvailable = selectedVariant?.stock ?? quantityProduct;
+  const stockAvailable = selectedVariant?.stock ?? totalStock;
   const price = selectedVariant?.price ?? priceProduct;
 
   return (

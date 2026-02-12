@@ -11,6 +11,7 @@ import { InputsFormProduct } from "@/app/(customer)/products/detail/[id]/compone
 import { QuantityInput } from "@/app/(customer)/products/detail/[id]/components/input-form-detail-product";
 import { ValidateFormDetailProduct } from "@/app/(customer)/products/detail/[id]/components/validate-form-detail-product";
 import { getMinMaxVariantPrice } from "@/utils/price-utils";
+import { getTotalStock } from "@/utils/stock-utils";
 
 type FormDetailProductProps = {
   productDetail: Product;
@@ -75,7 +76,8 @@ export const FormDetailProduct = ({
 
   const priceDisplay = selectedVariant?.price;
   const minMaxPrice = getMinMaxVariantPrice(variantOptions);
-  const stockProduct = selectedVariant?.stock ?? 0;
+  const stockProduct =
+    selectedVariant?.stock ?? getTotalStock(productDetail.Variants);
 
   return (
     <div className="w-full px-1.5 md:px-4 lg:px-6 flex flex-col gap-2.5 lg:h-full">
@@ -107,7 +109,6 @@ export const FormDetailProduct = ({
             nameProduct={productDetail.name}
             priceProduct={Number(priceDisplay)}
             imageProduct={image}
-            quantityProduct={formValues.quantity}
             variant="outline"
             data={{
               ...formValues,
@@ -115,6 +116,7 @@ export const FormDetailProduct = ({
             }}
             phoneTypeOptions={phoneTypeOptions}
             variantOptions={rawVariantOptions}
+            totalStock={stockProduct}
           >
             <ShoppingCart />
             <span className="mx-2">Masukkan Keranjang</span>
@@ -124,7 +126,6 @@ export const FormDetailProduct = ({
             nameProduct={productDetail.name}
             priceProduct={Number(priceDisplay)}
             imageProduct={image}
-            quantityProduct={formValues.quantity}
             variant="default"
             data={{
               ...formValues,
@@ -134,6 +135,7 @@ export const FormDetailProduct = ({
             productId={productDetail.id}
             phoneTypeOptions={phoneTypeOptions}
             variantOptions={rawVariantOptions}
+            totalStock={stockProduct}
           >
             <span className="mx-2">Beli Sekarang</span>
           </ValidateFormDetailProduct>
