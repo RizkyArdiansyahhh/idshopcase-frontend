@@ -46,7 +46,9 @@ export default function Home() {
           <ListProductsHomePage></ListProductsHomePage>
         </div>
       </div>
-      <BannerVideoHomePage></BannerVideoHomePage>
+      <div className="h-[80vh] flex items-center">
+        <BannerVideoHomePage></BannerVideoHomePage>
+      </div>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
       {/* <SectionProducts /> */}
       <SectionHero />
