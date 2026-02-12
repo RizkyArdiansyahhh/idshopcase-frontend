@@ -1,0 +1,121 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
+
+const SLIDES = [
+  "/images/banner-1.jpeg",
+  "/images/banner-2.jpeg",
+  "/images/banner-3.jpeg",
+];
+
+const DURATION = 5000;
+const TICK = 50;
+
+export const CarouselHomePage = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  /* PROGRESS */
+  useEffect(() => {
+    setProgress(0);
+
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => Math.min(prev + (TICK / DURATION) * 100, 100));
+    }, TICK);
+
+    const slideTimeout = setTimeout(() => {
+      setActiveIndex((i) => (i + 1) % SLIDES.length);
+    }, DURATION);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(slideTimeout);
+    };
+  }, [activeIndex]);
+
+  return (
+    <section className="relative h-screen w-full overflow-hidden bg-foreground">
+      <AnimatePresence>
+        <motion.div
+          key={activeIndex}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={SLIDES[activeIndex]}
+            fill
+            alt="hero-banner"
+            className="object-cover"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+        {SLIDES.map((_, index) => (
+          <button key={index} onClick={() => setActiveIndex(index)}>
+            <DotProgress
+              active={index === activeIndex}
+              progress={index === activeIndex ? progress : 0}
+            />
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+type DotProgressProps = {
+  active: boolean;
+  progress: number;
+};
+
+export const DotProgress = ({ active, progress }: DotProgressProps) => {
+  const radius = 8;
+  const stroke = 2;
+  const normalizedRadius = radius - stroke * 0.5;
+  const circumference = normalizedRadius * 2 * Math.PI;
+
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <svg
+      width={radius * 2}
+      height={radius * 2}
+      className={clsx(
+        "transition-transform",
+        active ? "scale-110" : "opacity-60",
+      )}
+    >
+      <circle
+        stroke="rgba(255,255,255,0.3)"
+        fill="transparent"
+        strokeWidth={stroke}
+        r={normalizedRadius}
+        cx={radius}
+        cy={radius}
+      />
+
+      {active && (
+        <circle
+          stroke="white"
+          fill="transparent"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+          className="transition-[stroke-dashoffset] duration-75 ease-linear"
+        />
+      )}
+    </svg>
+  );
+};
