@@ -15,7 +15,7 @@ export const CardTestimoni = ({
       <div
         className={`w-full  ${
           isDark ? "bg-foreground/5 h-3/12" : "bg-background h-4/12"
-        } border shadow-xs rounded-md my-3 p-3`}
+        } border shadow-xs rounded-sm my-3 p-3`}
       >
         <div className="flex flex-row gap-3 items-center mb-3 ">
           <div className="h-10 w-10 bg-yellow-700 rounded-full relative overflow-hidden">
@@ -66,7 +66,7 @@ export const CardTestimoniSpeaker = ({
 }) => {
   return (
     <>
-      <div className="w-full h-5/12 shadow-xs rounded-md my-3 relative overflow-hidden border">
+      <div className="w-full h-5/12 shadow-xs rounded-sm my-3 relative overflow-hidden border">
         <Image
           src={image}
           alt="speak-1"

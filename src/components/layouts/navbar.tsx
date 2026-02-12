@@ -25,7 +25,6 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
     pathName.startsWith(path),
   );
 
-  // Scroll effect hanya berlaku jika bukan full width
   useEffect(() => {
     if (isFullWidth) return; // skip scroll effect
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -108,9 +107,9 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
       <div className="flex justify-between items-center py-1 md:py-4 px-5">
         <Link
           href="/"
-          className="text-base sm:text-lg md:text-2xl font-bold select-none"
+          className="text-base sm:text-lg md:text-2xl font-semibold select-none"
         >
-          idshopcase.
+          IDSHOP<span className="font-black">CASE</span>
         </Link>
 
         <button

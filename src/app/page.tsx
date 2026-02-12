@@ -14,6 +14,9 @@ import { BannerVideoHomePage } from "./_components/baner-video-home-page";
 import { Separator } from "@/components/ui/separator";
 import { SectionModelTampilan } from "./_components/section-model-tampilan";
 import { CarouselHomePage } from "./_components/carousel-homepage";
+import { StickyScrollHomePage } from "./_components/sticky-scroll-homepage";
+import { SectionCategories } from "./_components/section-categories";
+import { WhatsAppWidget } from "@/components/shared/whatsapp-widget";
 
 export default function Home() {
   return (
@@ -39,18 +42,22 @@ export default function Home() {
           <ListProductsHomePage></ListProductsHomePage>
         </div>
       </div>
-      <div className="h-[80vh] flex items-center">
+      <div className="h-[80vh] w-screen flex items-center px-5">
         <BannerVideoHomePage></BannerVideoHomePage>
       </div>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
       {/* <SectionProducts /> */}
       <SectionHero />
+      <div className="h-[70vh] w-screen flex justify-center items-end pb-10">
+        <SectionCategories></SectionCategories>
+      </div>
+      <StickyScrollHomePage></StickyScrollHomePage>
+      <SectionShowCase />
       <Separator className="mt-10"></Separator>
       <div className="w-screen h-fit bg-muted-foreground/5 py-2">
         <SectionModelTampilan></SectionModelTampilan>
       </div>
       <Separator className="mb-10"></Separator>
-      <SectionShowCase />
       <section className="container my-16 px-10 hidden lg:block">
         <div className="w-full flex justify-center items-center ">
           <h1 className="text-3xl w-1/2 font-semibold text-center text-foreground mb-5">
@@ -109,6 +116,7 @@ export default function Home() {
       </section>
       {/* <TestimoniMobile></TestimoniMobile> */}
       <Footer></Footer>
+      <WhatsAppWidget />
     </div>
   );
 }

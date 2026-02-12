@@ -2,7 +2,7 @@
 
 export const BannerVideoHomePage = () => {
   return (
-    <div className="w-[90vw] h-[50vh] overflow-hidden rounded-xs ">
+    <div className="w-full h-[65vh] overflow-hidden rounded-xs ">
       <video
         autoPlay
         muted
