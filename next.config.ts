@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -9,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "api.idshopcase.com",
         // hostname: "monistically-exopathic-maida.ngrok-free.dev",
         pathname: "/api/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
   },
