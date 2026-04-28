@@ -17,18 +17,24 @@ import { CarouselHomePage } from "./_components/carousel-homepage";
 import { StickyScrollHomePage } from "./_components/sticky-scroll-homepage";
 import { SectionCategories } from "./_components/section-categories";
 import { WhatsAppWidget } from "@/components/shared/whatsapp-widget";
+import { SectionInstagram } from "./_components/section-instagram";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <Navbar isBlur={true} />
       <CarouselHomePage></CarouselHomePage>
-      <div className="my-20"></div>
+      <div className="h-[70vh] w-screen flex justify-center items-center">
+        <SectionCategories></SectionCategories>
+      </div>
       <div className="w-full  flex justify-end">
-        <div className="px-10 flex flex-col gap-4 py-6 ">
+        <div className="px-10 flex flex-col gap-2 py-6 ">
           <h1 className="text-5xl font-bold w-4/5 leading-16">
-            Produk Unggulan{" "}
-            <span className="text-foreground/40 text-6xl">Idshopcase</span>.
+            PRODUK UNGGULAN{" "}
+            <span className="text-foreground/40 font-black text-5xl">
+              IDSHOPCASE
+            </span>
+            .
           </h1>
           <div className="flex flex-col gap-5">
             <p className="w-2/3 font-semibold text-base text-foreground/60">
@@ -42,15 +48,11 @@ export default function Home() {
           <ListProductsHomePage></ListProductsHomePage>
         </div>
       </div>
-      <div className="h-[80vh] w-screen flex items-center px-5">
-        <BannerVideoHomePage></BannerVideoHomePage>
-      </div>
+      <BannerVideoHomePage></BannerVideoHomePage>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
       {/* <SectionProducts /> */}
       <SectionHero />
-      <div className="h-[70vh] w-screen flex justify-center items-end pb-10">
-        <SectionCategories></SectionCategories>
-      </div>
+
       <StickyScrollHomePage></StickyScrollHomePage>
       <SectionShowCase />
       <Separator className="mt-10"></Separator>
@@ -114,6 +116,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Separator className="mt-10"></Separator>
+      <div className="h-[90vh] w-screen flex flex-col justify-center gap-3">
+        <h1 className="text-center text-4xl font-semibold">
+          Ikuti{" "}
+          <a
+            href="https://www.instagram.com/idshopcase/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground/40 underline font-bold"
+          >
+            Instagram
+          </a>{" "}
+          Kami
+        </h1>
+        <div className="w-full px-5 flex justify-center items-center bg-muted-foreground/5">
+          <SectionInstagram></SectionInstagram>
+        </div>
+      </div>
+
+      <Separator></Separator>
       {/* <TestimoniMobile></TestimoniMobile> */}
       <Footer></Footer>
       <WhatsAppWidget />

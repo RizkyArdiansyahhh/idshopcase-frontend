@@ -67,34 +67,36 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
         : "blur(0px)"
       : "none";
 
-  const borderRadius = isFullWidth
-    ? "0px"
-    : isBlur
-      ? isScrolled
-        ? "0.75rem"
-        : "1rem"
-      : isScrolled
-        ? "0.5rem"
-        : "0.75rem";
+  const borderRadius =
+    isFullWidth || isScrolled
+      ? "0px"
+      : isBlur
+        ? isScrolled
+          ? "0.75rem"
+          : "1rem"
+        : isScrolled
+          ? "0.5rem"
+          : "0.75rem";
 
   const topPosition = isFullWidth ? "0" : isScrolled ? "0" : "1.25rem";
 
   return (
     <nav
-      className={`fixed left-1/2 -translate-x-1/2 z-50 ${
-        isFullWidth ? "w-full" : "w-[93%]"
-      } border text-white transition-all duration-500 ${
-        isFullWidth
-          ? "border-transparent"
+      className={`fixed z-50 w-full border text-white transition-[max-width,margin,border-radius,box-shadow,top] duration-500 ${
+        isFullWidth || isScrolled
+          ? "border-transparent border-b-white/30"
           : isBlur
             ? "border-white/30"
             : "border-transparent"
       }`}
       style={{
         top: topPosition,
-        backgroundColor,
-        backdropFilter: backdrop,
+        maxWidth: isFullWidth || isScrolled ? "100%" : "93%",
+        marginLeft: isFullWidth || isScrolled ? "0" : "auto",
+        marginRight: isFullWidth || isScrolled ? "0" : "auto",
         borderRadius,
+        backdropFilter: backdrop,
+        backgroundColor,
         boxShadow: isFullWidth
           ? "0 2px 10px rgba(0,0,0,0.4)"
           : isBlur
