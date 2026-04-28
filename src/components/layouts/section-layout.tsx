@@ -15,7 +15,7 @@ export const SectionLayout = (props: SectionLayoutPropsType) => {
     <section className="h-[70vh] lg:h-screen w-screen py-6 px-5 md:px-10 lg:px-16">
       <div
         className="
-         relative bg-foreground h-full rounded-2xl overflow-hidden"
+         relative bg-foreground h-full rounded-sm overflow-hidden"
       >
         <div
           className={`${
