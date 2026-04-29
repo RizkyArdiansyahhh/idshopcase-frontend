@@ -20,6 +20,7 @@ import { WhatsAppWidget } from "@/components/shared/whatsapp-widget";
 import { SectionInstagram } from "./_components/section-instagram";
 
 export default function Home() {
+  console.log("BASE URL:", process.env.NEXT_PUBLIC_API_URL);
   return (
     <div className="flex flex-col items-center">
       <Navbar isBlur={true} />
