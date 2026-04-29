@@ -12,11 +12,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-
       - name: Prepare SSH
         run: |
           mkdir -p ~/.ssh
@@ -25,17 +20,19 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
 
-      - name: Sync frontend source (NO BUILD ARTIFACT)
+      - name: Sync frontend source to server
         run: |
           rsync -az --delete \
             --exclude ".git" \
+            --exclude ".github" \
             --exclude "node_modules" \
-            --exclude ".env.local" \
             --exclude ".next" \
+            --exclude "coverage" \
+            --exclude ".env.local" \
             -e "ssh -i ~/.ssh/id_ed25519" \
-            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/idshopcase/frontend/
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/opt/idshopcase/idshopcase-frontend/
 
-      - name: Build & Restart on Server
+      - name: Build & Deploy via Docker
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -43,15 +40,16 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             set -e
-            cd /var/www/idshopcase/frontend
+            cd /opt/idshopcase
 
-            # PENTING: bersihin build lama
-            rm -rf .next
+            # Rebuild and restart only the frontend container
+            docker compose build --no-cache frontend
+            docker compose up -d --no-deps frontend
 
-            npm install
-            npm run build
+            # Reload nginx
+            docker compose exec nginx nginx -s reload || true
 
-            pm2 restart idshopcase-frontend \
-              || pm2 start npm --name idshopcase-frontend -- start
+            # Cleanup
+            docker image prune -f
 
-            pm2 save
+            echo "✅ Frontend deployed successfully"
