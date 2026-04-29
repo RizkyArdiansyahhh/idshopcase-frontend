@@ -11,7 +11,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build argument for API URL — injected at build time
-ARG NEXT_PUBLIC_API_URL=https://api.idshopcase.com
+ARG NEXT_PUBLIC_API_URL=https://api.idshopcase.com/api
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 # Enable Next.js standalone output for smaller Docker images
