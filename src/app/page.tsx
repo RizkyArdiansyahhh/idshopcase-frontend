@@ -53,7 +53,7 @@ export default function Home() {
       {/* <SectionProducts /> */}
       <SectionHero />
 
-      <StickyScrollHomePage></StickyScrollHomePage>
+      {/* <StickyScrollHomePage></StickyScrollHomePage> */}
       <SectionShowCase />
       <Separator className="mt-10"></Separator>
       <div className="w-screen h-fit bg-muted-foreground/5 py-2">
