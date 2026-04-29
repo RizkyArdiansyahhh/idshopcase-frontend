@@ -72,8 +72,8 @@ export const ListProductsHomePage: React.FC<ListProductsHomePageProps> = ({
                 className="flex-shrink-0"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.5, delay: idx * 0.2 }}
               >
                 <ProductCardHomePage
                   key={product.id}
