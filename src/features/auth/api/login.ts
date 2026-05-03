@@ -27,6 +27,11 @@ const loginWithEmailAndPassword = async (data: loginSchemaType) => {
   return response.data;
 };
 
+const logout = async () => {
+  const response = await api.post("user/logout");
+  return response.data;
+};
+
 type useLoginPrams = {
   mutationConfig?: MutationConfig<typeof loginWithEmailAndPassword>;
 };
@@ -45,7 +50,7 @@ export const useLogin = (params: useLoginPrams = {}) => {
         data,
         variables,
         onMutateResult,
-        context
+        context,
       );
     },
     onError: (err) => {
@@ -56,11 +61,9 @@ export const useLogin = (params: useLoginPrams = {}) => {
 
 export const useLogout = () => {
   return useMutation({
-    mutationFn: () => {
-      localStorage.removeItem("token");
-      return Promise.resolve();
-    },
+    mutationFn: logout,
     onSuccess: () => {
+      localStorage.removeItem("token");
       queryClient.removeQueries({ queryKey: getUserQueryKey() });
     },
   });
