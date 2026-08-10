@@ -1,12 +1,14 @@
-import { api } from "@/lib/axios";
+import { authClient } from "@/lib/auth-client";
 import { QueryConfig } from "@/lib/react-query";
-import { User } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export const getUser = async () => {
-  const response = await api.get<User>(`/user/profile`);
-
-  return response.data;
+  const res = await authClient.getSession();
+  if (res.error || !res.data?.user) {
+    return null;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return res.data.user as any;
 };
 
 export const getUserQueryKey = () => ["user"];
@@ -15,6 +17,7 @@ export const getUserQueryOptions = () => {
   return queryOptions({
     queryKey: getUserQueryKey(),
     queryFn: () => getUser(),
+    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -28,3 +31,4 @@ export const useGetUser = (params: UseGetUserParams = {}) => {
     ...params.queryConfig,
   });
 };
+

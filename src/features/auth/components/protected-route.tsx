@@ -34,8 +34,9 @@ export const ProtectedRoute = ({
     }
 
     // SUDAH LOGIN, tapi role salah
-    if (!allowedRoles.includes(user.role)) {
-      if (user.role === "admin") {
+    const userRole = user.role || "customer";
+    if (!allowedRoles.includes(userRole)) {
+      if (userRole === "admin") {
         router.replace("/admin");
       } else {
         router.replace("/");
@@ -45,7 +46,8 @@ export const ProtectedRoute = ({
 
   if (isLoading) return null;
   if (!user) return null;
-  if (!allowedRoles.includes(user.role)) return null;
+  const userRole = user.role || "customer";
+  if (!allowedRoles.includes(userRole)) return null;
 
   return <>{children}</>;
 };

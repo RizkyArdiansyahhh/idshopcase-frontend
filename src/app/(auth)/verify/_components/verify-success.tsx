@@ -1,9 +1,19 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useRouter } from "next/navigation";
 
 export const VerifySuccess = () => {
   const { replace } = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      replace("/");
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [replace]);
+
   return (
     <>
       <div className="flex flex-col items-center gap-5">
@@ -13,20 +23,20 @@ export const VerifySuccess = () => {
           autoplay
           style={{ width: 200, height: 200 }}
         />
-        <div className="flex flex-col gap-3 items-center">
+        <div className="flex flex-col gap-3 items-center text-center">
           <h1 className="text-2xl font-semibold text-primary">
             Email Anda Berhasil Diverifikasi
           </h1>
           <p className="text-md font-light text-muted-foreground">
-            Silahkan login menggunakan akun anda
+            Selamat datang! Anda akan diarah secara otomatis ke halaman utama...
           </p>
           <Button
             variant={"default"}
             className="w-full"
             type="button"
-            onClick={() => replace("/login")}
+            onClick={() => replace("/")}
           >
-            Login
+            Mulai Berbelanja Sekarang
           </Button>
         </div>
       </div>

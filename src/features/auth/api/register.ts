@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios";
+import { authClient } from "@/lib/auth-client";
 import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -16,7 +16,15 @@ export const registerSchema = z
 
     phone: z
       .string({ message: "Nomor telepon wajib diisi" })
-      .min(10, { message: "Nomor telepon minimal 10 digit" }),
+      .min(1, { message: "Nomor telepon wajib diisi" })
+      .refine(
+        (val) => {
+          // Hitung total digit angka (termasuk kode negara)
+          const digits = val.replace(/\D/g, "");
+          return digits.length >= 10 && digits.length <= 15;
+        },
+        { message: "Nomor telepon harus antara 10 hingga 15 digit angka" }
+      ),
 
     password: z
       .string({ message: "Password wajib diisi" })
@@ -48,11 +56,17 @@ export const updateSchema = z.object({
 type registerSchemaType = z.infer<typeof registerSchema>;
 
 const register = async (data: registerSchemaType) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { confirmPassword, ...payload } = data;
-  const response = await api.post("/auth/register", { ...payload });
+  const res = await authClient.signUp.email({
+    email: data.email,
+    password: data.password,
+    name: data.name,
+  });
 
-  return response.data;
+  if (res.error) {
+    throw new Error(res.error.message || "Gagal melakukan pendaftaran");
+  }
+
+  return res.data;
 };
 
 type UseRegisterParams = {
@@ -63,9 +77,11 @@ export const useRegsiter = (params: UseRegisterParams = {}) => {
   return useMutation({
     mutationFn: register,
     ...params.mutationConfig,
-    onError: (err) => {
-      toast.error("Terjadi Kesalahan");
+    onError: (err: Error, ...args) => {
+      toast.error(err.message || "Terjadi kesalahan saat registrasi");
       console.error(err);
+      params.mutationConfig?.onError?.(err, ...args);
     },
   });
 };
+

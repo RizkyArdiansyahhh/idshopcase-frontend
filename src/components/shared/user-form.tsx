@@ -1,3 +1,4 @@
+import { PhoneInput } from "../ui/phone-input";
 import { Eye, EyeClosed } from "lucide-react";
 import {
   FormControl,
@@ -74,14 +75,13 @@ export const UserForm = <T extends FieldValues>(props: UserFormProps<T>) => {
           <FormItem>
             <FormLabel>No Handphone</FormLabel>
             <FormControl>
-              <Input
-                type="text"
+              <PhoneInput
                 id="phone"
                 disabled={isEdit}
-                placeholder="+62 XXX"
-                {...field}
+                placeholder="81234567890"
                 value={field.value || ""}
-              ></Input>
+                onChange={field.onChange}
+              />
             </FormControl>
             <FormMessage></FormMessage>
           </FormItem>
