@@ -8,13 +8,12 @@ export const Profile = () => {
     return null;
   }
 
-  if (!user) return null;
   return (
     <>
       <div className="py-7">
         <ProfileForm
           {...user}
-          imageurl={user.profile_picture ?? ""}
+          imageurl={user.profile_picture ?? user.image ?? ""}
         ></ProfileForm>
       </div>
     </>

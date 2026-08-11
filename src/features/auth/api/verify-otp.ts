@@ -1,7 +1,8 @@
 import { api } from "@/lib/axios";
-import { MutationConfig } from "@/lib/react-query";
+import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { getUserQueryKey } from "./get-user";
 
 type verifyOtpRequest = {
   email: string;
@@ -14,7 +15,7 @@ const verifyOtp = async (data: verifyOtpRequest) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.response?.status === 400) {
-      throw new Error("Kode OTP salah atau expired");
+      throw new Error(error.response?.data?.message || "Kode OTP salah atau expired");
     }
     throw error;
   }
@@ -28,6 +29,13 @@ export const useVerifyOtp = ({ mutationConfig }: useVerifyOtpParams = {}) => {
   return useMutation({
     mutationFn: verifyOtp,
     ...mutationConfig,
+    onSuccess: (data, variables, onMutateResult, context) => {
+      if (data?.token && typeof window !== "undefined") {
+        localStorage.setItem("better-auth.session_token", data.token);
+      }
+      queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
+      mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+    },
     onError: (error) => {
       toast.error(error.message || "Terjadi Kesalahan");
       console.error(error);

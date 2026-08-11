@@ -11,6 +11,8 @@ import { VerifySuccess } from "./verify-success";
 import { OtpGroup } from "./otp-group";
 import Countdown from "react-countdown";
 
+import { useResendOtp } from "@/features/auth/api/resend-otp";
+
 export const VerifyEmail = () => {
   const [otp, setOtp] = useState<string>("");
   const [expired, setExpired] = useState<number | null>(null);
@@ -23,6 +25,17 @@ export const VerifyEmail = () => {
     mutationConfig: {
       onSuccess: () => {
         setEmailVerified(true);
+      },
+    },
+  });
+
+  const { mutate: resendOtp, isPending: resendLoading } = useResendOtp({
+    mutationConfig: {
+      onSuccess: () => {
+        const expireOtp = Date.now() + 10 * 60 * 1000;
+        localStorage.setItem("otp_expired_at", expireOtp.toString());
+        setExpired(expireOtp);
+        setIsExpired(false);
       },
     },
   });
@@ -96,13 +109,20 @@ export const VerifyEmail = () => {
               </Button>
             </div>
 
-            <div className="flex flex-row justify-center  items-center gap-2">
+            <div className="flex flex-row justify-center items-center gap-2">
               <p className="text-xs md:text-sm text-foreground/70">
                 Belum menerima kode?
               </p>
-              <p className="text-xs md:text-sm text-foreground/70 underline">
-                Minta Kode Baru
-              </p>
+              <button
+                type="button"
+                disabled={!email || resendLoading}
+                onClick={() => {
+                  if (email) resendOtp({ email });
+                }}
+                className="text-xs md:text-sm text-foreground/70 underline hover:text-primary disabled:opacity-50 font-semibold cursor-pointer"
+              >
+                {resendLoading ? "Mengirim..." : "Minta Kode Baru"}
+              </button>
             </div>
           </div>
         )}

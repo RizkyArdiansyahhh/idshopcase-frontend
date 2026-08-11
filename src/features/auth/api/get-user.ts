@@ -1,8 +1,29 @@
+import { api } from "@/lib/axios";
 import { authClient } from "@/lib/auth-client";
 import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export const getUser = async () => {
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("better-auth.session_token")
+      : null;
+
+  if (token) {
+    try {
+      const res = await api.get("/auth/get-session", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data?.user) {
+        return res.data.user;
+      }
+    } catch {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("better-auth.session_token");
+      }
+    }
+  }
+
   const res = await authClient.getSession();
   if (res.error || !res.data?.user) {
     return null;

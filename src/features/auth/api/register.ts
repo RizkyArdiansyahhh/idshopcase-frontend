@@ -1,4 +1,4 @@
-import { authClient } from "@/lib/auth-client";
+import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -56,17 +56,14 @@ export const updateSchema = z.object({
 type registerSchemaType = z.infer<typeof registerSchema>;
 
 const register = async (data: registerSchemaType) => {
-  const res = await authClient.signUp.email({
+  const response = await api.post("/auth/register", {
     email: data.email,
     password: data.password,
     name: data.name,
+    phone: data.phone,
   });
 
-  if (res.error) {
-    throw new Error(res.error.message || "Gagal melakukan pendaftaran");
-  }
-
-  return res.data;
+  return response.data;
 };
 
 type UseRegisterParams = {
@@ -77,8 +74,13 @@ export const useRegsiter = (params: UseRegisterParams = {}) => {
   return useMutation({
     mutationFn: register,
     ...params.mutationConfig,
-    onError: (err: Error, ...args) => {
-      toast.error(err.message || "Terjadi kesalahan saat registrasi");
+    onError: (err: any, ...args) => {
+      const msg =
+        err.response?.data?.details?.join(", ") ||
+        err.response?.data?.message ||
+        err.message ||
+        "Terjadi kesalahan saat registrasi";
+      toast.error(msg);
       console.error(err);
       params.mutationConfig?.onError?.(err, ...args);
     },

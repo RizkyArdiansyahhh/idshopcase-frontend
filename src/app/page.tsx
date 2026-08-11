@@ -52,14 +52,14 @@ export default function Home() {
       <BannerVideoHomePage></BannerVideoHomePage>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
       {/* <SectionProducts /> */}
-      <SectionHero />
+      {/* <SectionHero /> */}
 
       {/* <StickyScrollHomePage></StickyScrollHomePage> */}
-      <SectionShowCase />
-      <Separator className="mt-10"></Separator>
-      <div className="w-screen h-fit bg-muted-foreground/5 py-2">
+      {/* <SectionShowCase /> */}
+      {/* <Separator className="mt-10"></Separator> */}
+      {/* <div className="w-screen h-fit bg-muted-foreground/5 py-2">
         <SectionModelTampilan></SectionModelTampilan>
-      </div>
+      </div> */}
       <Separator className="mb-10"></Separator>
       <section className="container my-16 px-10 hidden lg:block">
         <div className="w-full flex justify-center items-center ">

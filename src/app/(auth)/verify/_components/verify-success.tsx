@@ -28,11 +28,11 @@ export const VerifySuccess = () => {
             Email Anda Berhasil Diverifikasi
           </h1>
           <p className="text-md font-light text-muted-foreground">
-            Selamat datang! Anda akan diarah secara otomatis ke halaman utama...
+            Selamat datang! Anda akan diarahkan secara otomatis ke halaman utama...
           </p>
           <Button
             variant={"default"}
-            className="w-full"
+            className="w-full font-bold"
             type="button"
             onClick={() => replace("/")}
           >
