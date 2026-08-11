@@ -59,11 +59,7 @@ export const WhatsAppWidget = () => {
               </p>
             </div>
             <div className="absolute top-0 right-0 bottom-0 left-0 bg-black z-40">
-              <Image
-                fill
-                src="https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770889405/Free_download_Whatsapp_Background_Wallpaper_Seni_Foto_Abstrak_Objek_Gambar_on_WallpaperSafari_xer0pb.jpg"
-                alt=""
-              />
+              <Image fill src="/images/main-assets/whatsapp-bg.jpg" alt="" />
             </div>
           </div>
 
