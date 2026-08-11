@@ -1,7 +1,6 @@
 import { cleanImageUrl } from "@/utils/image-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
-import { useGetUser } from "@/features/auth/api/get-user";
 import Image from "next/image";
 
 type AvatarFallbackProps = {

@@ -20,8 +20,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const { mutate: register, isPending: regsiterIsLoading } = useRegsiter({
     mutationConfig: {
       onSuccess: (data) => {
+        const email = data?.email || data?.user?.email || form.getValues("email");
         form.reset();
-        const email = data?.user?.email || form.getValues("email");
         const expireOtp = Date.now() + 10 * 60 * 1000;
         localStorage.setItem("otp_expired_at", expireOtp.toString());
         if (email) {

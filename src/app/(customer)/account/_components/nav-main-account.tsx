@@ -1,23 +1,24 @@
 import { UserAvatar } from "@/components/shared/user-avatar";
-import { Badge } from "@/components/ui/badge";
 import { useGetUser } from "@/features/auth/api/get-user";
 
 export const NavMainAccount = () => {
   const { data: user } = useGetUser();
 
-  console.log(user);
-
   if (!user) return null;
   return (
-    <div className="flex flex-row gap-4 p-5 items-center">
+    <div className="flex items-center gap-3.5 p-4 border-b border-border/60">
       <UserAvatar
-        name={user?.name}
-        image={user.profile_picture ?? ""}
-        className="h-10 w-10"
-      ></UserAvatar>
-      <div>
-        <p className="text-xs font-semibold">{user?.name || "Anonymous"}</p>
-        <Badge variant={"outline"}>{user?.role}</Badge>
+        name={user?.name || "User"}
+        image={user.profile_picture ?? user.image ?? ""}
+        className="h-11 w-11 border border-border"
+      />
+      <div className="flex flex-col min-w-0">
+        <p className="text-sm font-bold text-foreground truncate">
+          {user?.name || "Pelanggan"}
+        </p>
+        <p className="text-xs text-muted-foreground truncate">
+          {user?.email}
+        </p>
       </div>
     </div>
   );

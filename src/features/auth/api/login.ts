@@ -1,3 +1,4 @@
+import { api } from "@/lib/axios";
 import { authClient } from "@/lib/auth-client";
 import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
@@ -15,16 +16,11 @@ export const loginSchema = z.object({
 type loginSchemaType = z.infer<typeof loginSchema>;
 
 const loginWithEmailAndPassword = async (data: loginSchemaType) => {
-  const res = await authClient.signIn.email({
+  const response = await api.post("/auth/login", {
     email: data.email,
     password: data.password,
   });
-
-  if (res.error) {
-    throw new Error(res.error.message || "Email atau password salah");
-  }
-
-  return res.data;
+  return response.data;
 };
 
 const logout = async () => {
@@ -44,6 +40,9 @@ export const useLogin = (params: useLoginPrams = {}) => {
     mutationFn: loginWithEmailAndPassword,
     ...params.mutationConfig,
     onSuccess: (data, variables, onMutateResult, context) => {
+      if (data?.token && typeof window !== "undefined") {
+        localStorage.setItem("better-auth.session_token", data.token);
+      }
       queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
       params.mutationConfig?.onSuccess?.(
         data,
@@ -63,6 +62,9 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("better-auth.session_token");
+      }
       queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
       queryClient.clear();
     },
