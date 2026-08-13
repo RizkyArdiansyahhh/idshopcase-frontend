@@ -6,9 +6,9 @@ import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SLIDES = [
-  "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770874692/banner-2_hzumlx.jpg",
-  "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770874698/banner-3_d4y8li.png",
-  "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770874687/banner-1_t5bjir.jpg",
+  "/images/main-assets/carousel-2.jpeg",
+  "/images/main-assets/carousel-1.jpeg",
+  "/images/main-assets/carousel-3.jpeg",
 ];
 
 const DURATION = 5000;

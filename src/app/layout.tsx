@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Fredoka } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
+
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-fredoka",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={fredoka.variable}>
       <head>
         <meta
           name="viewport"

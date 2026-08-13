@@ -30,10 +30,7 @@ export const BannerVideoHomePage = () => {
             preload="metadata"
             className="w-full h-full object-cover"
           >
-            <source
-              src="https://res.cloudinary.com/dy9gtwsh7/video/upload/f_auto,q_auto/baner_1.mp4"
-              type="video/mp4"
-            />
+            <source src="/videos/video-1.mp4" type="video/mp4" />
           </video>
         </motion.div>
 
