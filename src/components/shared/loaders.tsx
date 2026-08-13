@@ -1,11 +1,5 @@
 "use client";
-import { Fredoka } from "next/font/google";
 
-const fredoka = Fredoka({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-fredoka",
-});
 export default function Loader() {
   const text = "IDSHOPCASE";
 
@@ -15,7 +9,7 @@ export default function Loader() {
       {text.split("").map((char, index) => (
         <span
           key={index}
-          className={`char ${fredoka.className}`}
+          className="char font-[family-name:var(--font-fredoka)]"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           {char}
