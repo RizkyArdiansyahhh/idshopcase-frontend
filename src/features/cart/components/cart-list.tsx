@@ -2,6 +2,7 @@
 import { CartCard } from "./cart-card";
 import { useGetCarts } from "../api/get-carts";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CartItem } from "@/types/api";
@@ -63,7 +64,9 @@ export const CartList = (props: CartListProps) => {
               <p className="font-light text-md text-foreground/50">
                 Yuk, isi dengan barang-barang impianmu!
               </p>
-              <Button>Mulai Belanja</Button>
+              <Button asChild className="w-fit mt-2">
+                <Link href="/products/collections">Mulai Belanja</Link>
+              </Button>
             </div>
           </div>
         </div>

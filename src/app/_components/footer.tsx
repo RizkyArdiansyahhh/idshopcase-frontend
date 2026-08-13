@@ -12,11 +12,11 @@ export const Footer = () => {
         <div className="h-[85%] pb-9 w-full px-5  md:px-10 lg:px-16 flex flex-row flex-wrap gap-5">
           <div className="w-full md:w-[30%] h-full flex flex-col">
             <div className="w-full h-fit">
-              <h2 className="text-2xl lg:text-4xl font-bold text-background">
+              <h2 className="text-2xl lg:text-4xl font-extrabold text-background tracking-tight">
                 IDSHOPCASE.
               </h2>
-              <p className="text-sm md:text-base lg:text-lg font-semibold text-background/75">
-                Ekspresikan Dirimu Lewat Case
+              <p className="text-sm md:text-base lg:text-lg font-medium text-background/80 mt-1 leading-snug">
+                Ekspresikan Gaya & Uniknya Dirimu Lewat Custom Case Premium
               </p>
             </div>
             <div className="w-full flex-1 flex items-end">
@@ -105,32 +105,40 @@ export const Footer = () => {
               orientation="vertical"
               className="hidden lg:block"
             ></Separator>
-            <div className="flex-1 flex flex-col md:flex-row lg:flex-col gap-3 md:gap-7 md:justify-between lg:justify-start">
-              <div className="flex flex-col md:gap-1.5 lg:gap-3">
+            <div className="flex-1 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-7 md:justify-between lg:justify-start">
+              <div className="flex flex-col md:gap-1.5 lg:gap-2">
                 <h3 className="text-sm lg:text-lg font-semibold text-background">
-                  Telepon Kami
+                  Telepon / WhatsApp
                 </h3>
-                <p className="text-sm lg:text-base font-medium text-background">
-                  +62 812 3456 7891
-                </p>
+                <a
+                  href="https://wa.me/message/UGIJPSGHHWKHL1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm lg:text-base font-medium text-background hover:text-white/80 transition-colors"
+                >
+                  +62 851-1745-3862
+                </a>
               </div>
-              <div className="flex flex-col md:gap-1.5 lg:gap-3">
+              <div className="flex flex-col md:gap-1.5 lg:gap-2">
                 <h3 className="text-sm lg:text-lg font-semibold text-background">
                   Email Kami
                 </h3>
-                <p className="text-sm lg:text-base font-medium text-background">
-                  idshopcase@example.com
-                </p>
+                <a
+                  href="mailto:idshopcase.id@gmail.com"
+                  className="text-sm lg:text-base font-medium text-background hover:text-white/80 transition-colors"
+                >
+                  idshopcase.id@gmail.com
+                </a>
               </div>
-              <div className="flex flex-col md:gap-1.5 lg:gap-3">
+              <div className="flex flex-col md:gap-1.5 lg:gap-2">
                 <h3 className="text-sm lg:text-lg font-semibold text-background">
-                  Lokasi Kami
+                  Lokasi Toko
                 </h3>
                 <a
                   href="https://maps.app.goo.gl/U8q1VCrTGxTXAFcx9"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm lg:text-base font-medium text-background underline"
+                  className="text-sm lg:text-base font-medium text-background underline hover:text-white/80 transition-colors"
                 >
                   Temukan Toko Kami
                 </a>

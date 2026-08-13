@@ -37,8 +37,11 @@ export const FormDetailProduct = ({
       max_images: Number(v.max_images),
     })) || [];
 
-  const variantOptions = rawVariantOptions.filter(
+  const filteredVariants = rawVariantOptions.filter(
     (v) => v.name !== "-" && v.name.trim() !== "",
+  );
+  const variantOptions = Array.from(
+    new Map(filteredVariants.map((v) => [v.name.trim(), v])).values()
   );
   const baseVariant = rawVariantOptions.find((v) => v.name === "-");
   const hasVariant = variantOptions.length > 0;
@@ -103,7 +106,7 @@ export const FormDetailProduct = ({
           <QuantityInput stockProduct={stockProduct} control={form.control} />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-3 items-end mt-4 ">
+        <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full items-stretch sm:items-center">
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}

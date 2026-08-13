@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -30,30 +31,30 @@ export const BreadcrumbCustom = () => {
           <BreadcrumbLink asChild>
             <Link href="/">Home</Link>
           </BreadcrumbLink>
-          {paths.length > 0 && <BreadcrumbSeparator />}
         </BreadcrumbItem>
+        {paths.length > 0 && <BreadcrumbSeparator />}
 
         {paths.map((path, index) => {
           const isLast = index === paths.length - 1;
           const href = "/" + paths.slice(0, index + 1).join("/");
 
           return (
-            <BreadcrumbItem key={index}>
-              {isLast ? (
-                <BreadcrumbPage className="capitalize">
-                  {decodeURIComponent(path.replace(/[-_]/g, " "))}
-                </BreadcrumbPage>
-              ) : (
-                <>
+            <Fragment key={index}>
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage className="capitalize">
+                    {decodeURIComponent(path.replace(/[-_]/g, " "))}
+                  </BreadcrumbPage>
+                ) : (
                   <BreadcrumbLink asChild>
                     <Link href={href} className="capitalize">
                       {path.replace(/[-_]/g, " ")}
                     </Link>
                   </BreadcrumbLink>
-                  <BreadcrumbSeparator />
-                </>
-              )}
-            </BreadcrumbItem>
+                )}
+              </BreadcrumbItem>
+              {!isLast && <BreadcrumbSeparator />}
+            </Fragment>
           );
         })}
       </BreadcrumbList>

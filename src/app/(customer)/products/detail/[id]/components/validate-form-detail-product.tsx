@@ -164,7 +164,7 @@ export const ValidateFormDetailProduct = (
       <DrawerTrigger asChild>
         <Button
           variant={variant}
-          className="p-3 lg:p-7 rounded-none w-[60%] md:w-fit text-xs md:text-sm"
+          className="w-full sm:w-auto flex-1 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-xs"
         >
           {children}
         </Button>

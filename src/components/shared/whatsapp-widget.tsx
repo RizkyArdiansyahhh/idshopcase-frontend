@@ -11,10 +11,10 @@ export const WhatsAppWidget = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  const phoneNumber = "628123456";
-  const waLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    message || "Halo, saya mau tanya",
-  )}`;
+  const phoneNumber = "6285117453862";
+  const waLink = message.trim()
+    ? `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+    : "https://wa.me/message/UGIJPSGHHWKHL1";
 
   return (
     <>

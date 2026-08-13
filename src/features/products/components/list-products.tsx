@@ -157,7 +157,7 @@ export const ListProductsDetail = () => {
         Produk Yang Mungkin Anda Suka
       </h1>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
         {fetchProductsIsLoading &&
           Array.from({ length: 6 }).map((_, index) => (
             <SkeletonProduct key={index} />
