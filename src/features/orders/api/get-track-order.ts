@@ -2,17 +2,16 @@ import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getTrackOrder = async (orderId: number) => {
+const getTrackOrder = async (orderId: string | number) => {
   const response = await api.get(`/order/${orderId}/tracking`);
-  console.log(orderId, "response");
   return response.data.tracking;
 };
 
-export const getTrackOrderQueryKey = (orderId: number) => [
+export const getTrackOrderQueryKey = (orderId: string | number) => [
   "track-order",
-  orderId,
+  String(orderId),
 ];
-export const getTrackOrderQueryOptions = (orderId: number) => {
+export const getTrackOrderQueryOptions = (orderId: string | number) => {
   return queryOptions({
     queryKey: getTrackOrderQueryKey(orderId),
     queryFn: () => getTrackOrder(orderId),
@@ -21,7 +20,7 @@ export const getTrackOrderQueryOptions = (orderId: number) => {
 
 type UseGetTrackOrderParams = {
   queryConfig?: QueryConfig<typeof getTrackOrderQueryOptions>;
-  orderId: number;
+  orderId: string | number;
 };
 
 export const useGetTrackOrder = ({

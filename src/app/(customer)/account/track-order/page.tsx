@@ -25,7 +25,7 @@ export const TrackOrderPage = () => {
   const searchParams = useSearchParams();
   const initialOrderId = searchParams.get("order_id") || "";
 
-  const [orderId, setOrderId] = useState<number>(Number(initialOrderId) || 0);
+  const [searchQuery, setSearchQuery] = useState<string>(initialOrderId.trim());
 
   const form = useForm<SearchTrackingSchema>({
     resolver: zodResolver(searchTrackingSchema),
@@ -34,11 +34,8 @@ export const TrackOrderPage = () => {
 
   useEffect(() => {
     if (initialOrderId) {
-      const parsed = Number(initialOrderId);
-      if (parsed > 0) {
-        setOrderId(parsed);
-        form.setValue("trackingNumber", initialOrderId);
-      }
+      setSearchQuery(initialOrderId.trim());
+      form.setValue("trackingNumber", initialOrderId.trim());
     }
   }, [initialOrderId, form]);
 
@@ -47,14 +44,14 @@ export const TrackOrderPage = () => {
     isLoading,
     isError,
   } = useGetTrackOrder({
-    orderId,
-    queryConfig: { enabled: orderId > 0 },
+    orderId: searchQuery,
+    queryConfig: { enabled: searchQuery.length > 0 },
   });
 
   const handleSearch = form.handleSubmit(({ trackingNumber }) => {
-    const id = Number(trackingNumber.replace(/\D/g, ""));
-    if (!id) return;
-    setOrderId(id);
+    const trimmed = trackingNumber.trim();
+    if (!trimmed) return;
+    setSearchQuery(trimmed);
   });
 
   return (
@@ -100,11 +97,11 @@ export const TrackOrderPage = () => {
         </div>
       ) : tracking ? (
         <TrackOrderTimeline tracking={tracking} />
-      ) : orderId > 0 && isError ? (
+      ) : searchQuery.length > 0 && isError ? (
         <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
           <p className="font-semibold text-foreground">Data Pengiriman Belum Tersedia</p>
           <p className="text-xs md:text-sm text-muted-foreground max-w-md mt-1">
-            Pesanan #{orderId} belum memiliki nomor resi pengiriman atau masih dipersiapkan oleh penjual.
+            Pesanan atau resi &quot;{searchQuery}&quot; belum memiliki data pelacakan atau nomor resi belum aktif di sistem J&amp;T Express.
           </p>
         </div>
       ) : (

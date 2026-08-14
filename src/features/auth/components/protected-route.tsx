@@ -37,7 +37,7 @@ export const ProtectedRoute = ({
     const userRole = user.role || "customer";
     if (!allowedRoles.includes(userRole)) {
       if (userRole === "admin") {
-        router.replace("/admin");
+        router.replace("/admin/dashboard");
       } else {
         router.replace("/");
       }

@@ -149,10 +149,13 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             </div>
           ) : (
             <>
-              <Link href={"/account/profile"}>
+              <Link
+                href={user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
+                title={user.role === "admin" ? "Dashboard Admin" : "Profil Saya"}
+              >
                 <FaUser size={24} color="white" />
               </Link>
-              <CartButton></CartButton>
+              {user.role !== "admin" && <CartButton />}
             </>
           )}
         </div>
@@ -170,17 +173,19 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
           >
             <div className="flex flex-col py-2 text-white text-start px-4">
               <Link
-                href={"/account/profile"}
+                href={user?.role === "admin" ? "/admin/dashboard" : "/account/profile"}
                 className="py-2 hover:bg-white/10 transition"
               >
-                <p>Profil</p>
+                <p>{user?.role === "admin" ? "Dashboard Admin" : "Profil"}</p>
               </Link>
-              <Link
-                href={"/cart"}
-                className="py-2 hover:bg-white/10 transition"
-              >
-                <p>Keranjang</p>
-              </Link>
+              {user?.role !== "admin" && (
+                <Link
+                  href={"/cart"}
+                  className="py-2 hover:bg-white/10 transition"
+                >
+                  <p>Keranjang</p>
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
