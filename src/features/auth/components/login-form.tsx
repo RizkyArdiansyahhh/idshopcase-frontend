@@ -30,12 +30,34 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       onSuccess: onSuccess,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (err: any) => {
-        const errorMsg =
-          err.response?.data?.message ||
-          (typeof err.response?.data === "string" ? err.response.data : null) ||
-          err.message ||
-          "Email atau password salah. Silakan coba lagi.";
-        toast.error(errorMsg);
+        const rawMsg = err.response?.data?.message || err.message || "";
+        let friendlyMsg = "Email atau password salah. Silakan coba lagi.";
+
+        if (
+          rawMsg.toLowerCase().includes("user not found") ||
+          rawMsg.toLowerCase().includes("email tidak ditemukan")
+        ) {
+          friendlyMsg = "Email tidak ditemukan";
+        } else if (
+          rawMsg.toLowerCase().includes("wrong password") ||
+          rawMsg.toLowerCase().includes("password salah")
+        ) {
+          friendlyMsg = "Password salah. Silakan coba lagi.";
+        } else if (
+          rawMsg.toLowerCase().includes("not verified") ||
+          rawMsg.toLowerCase().includes("belum terverifikasi")
+        ) {
+          friendlyMsg =
+            "Akun belum terverifikasi. Silakan verifikasi OTP terlebih dahulu.";
+        } else if (
+          typeof rawMsg === "string" &&
+          !rawMsg.includes("status code") &&
+          rawMsg.trim().length > 0
+        ) {
+          friendlyMsg = rawMsg;
+        }
+
+        toast.error(friendlyMsg);
       },
     },
   });
