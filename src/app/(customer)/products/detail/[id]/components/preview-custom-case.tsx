@@ -159,7 +159,7 @@ export default function CasePreview() {
           <div className="p-3 bg-muted/60 border rounded-lg text-xs flex items-start gap-2.5">
             <Scissors className="w-4 h-4 text-foreground shrink-0 mt-0.5" />
             <div className="space-y-0.5">
-              <p className="font-semibold text-foreground">Format Foto Custom Case</p>
+              <p className="font-semibold text-foreground">Format Preview Custom Case</p>
               <p className="text-muted-foreground leading-relaxed">
                 Gunakan foto <strong>PNG transparan (tanpa background)</strong> agar hasil cetak menyatu rapi. Anda bisa menghapus background foto secara gratis (misal di{" "}
                 <a
