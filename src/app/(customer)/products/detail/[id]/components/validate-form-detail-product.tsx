@@ -21,6 +21,7 @@ import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
 import { InputsFormProduct } from "./inputs-form-product";
 import { useCheckoutStore } from "@/store/checkout-store";
+import { cleanImageUrl } from "@/utils/image-utils";
 
 type ValidateFormDetailProductProps = {
   productId: number;
@@ -164,7 +165,7 @@ export const ValidateFormDetailProduct = (
       <DrawerTrigger asChild>
         <Button
           variant={variant}
-          className="p-3 lg:p-7 rounded-none w-[60%] md:w-fit text-xs md:text-sm"
+          className="w-full sm:w-auto flex-1 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-xs"
         >
           {children}
         </Button>
@@ -191,7 +192,7 @@ export const ValidateFormDetailProduct = (
                   <div className="w-1/2 md:w-full h-full relative">
                     {imageProduct && (
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${imageProduct}`}
+                        src={cleanImageUrl(imageProduct)}
                         alt="banner-detail-product"
                         fill
                         className="object-center object-cover scale-90 rounded-sm"
@@ -238,7 +239,13 @@ export const ValidateFormDetailProduct = (
                   <div className="flex-1 min-h-0 overflow-y-auto">
                     <InputsFormProduct
                       control={form.control}
-                      variants={variantOptions.filter((v) => v.name !== "-")}
+                      variants={Array.from(
+                        new Map(
+                          variantOptions
+                            .filter((v) => v.name !== "-" && v.name.trim() !== "")
+                            .map((v) => [v.name.trim(), v])
+                        ).values()
+                      )}
                       phone_type={phoneTypeOptions}
                       isValidate={true}
                     />

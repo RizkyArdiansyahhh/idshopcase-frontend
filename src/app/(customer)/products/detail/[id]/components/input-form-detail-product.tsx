@@ -27,37 +27,37 @@ export const VariantInput = ({ control, variants }: InputProps) => {
       control={control}
       render={({ field }) => (
         <FormItem>
-          <div className="flex flex-row justify-between">
-            <FormLabel>Varian</FormLabel>
+          <div className="flex flex-row justify-between items-center mb-1">
+            <FormLabel className="text-sm font-semibold">Varian</FormLabel>
             <FormMessage />
           </div>
 
           <RadioGroup
             onValueChange={field.onChange}
             value={field.value || undefined}
-            className="flex flex-nowrap flex-row gap-2 overflow-x-auto"
+            className="flex flex-wrap gap-2 w-full max-w-full py-1"
           >
-            {variants?.map((item) => (
-              <FieldLabel
-                htmlFor={`variant-${item.id}`}
-                key={item.id}
-                className="inline-flex w-auto"
-              >
-                <Field
-                  orientation="horizontal"
-                  className="inline-flex w-auto shrink-0 px-3 py-2"
+            {variants?.map((item) => {
+              const isSelected = field.value === item.id;
+              return (
+                <label
+                  key={item.id}
+                  htmlFor={`variant-${item.id}`}
+                  className={`inline-flex items-center justify-center cursor-pointer border rounded-lg px-3.5 py-2 text-xs md:text-sm font-medium transition-all duration-150 select-none ${
+                    isSelected
+                      ? "border-foreground bg-foreground text-background font-semibold shadow-xs"
+                      : "border-input bg-background hover:bg-muted/70 text-foreground"
+                  }`}
                 >
-                  <FieldTitle className="text-xs md:text-sm whitespace-nowrap">
-                    {item.name}
-                  </FieldTitle>
                   <RadioGroupItem
                     value={item.id}
                     id={`variant-${item.id}`}
                     className="sr-only"
                   />
-                </Field>
-              </FieldLabel>
-            ))}
+                  <span>{item.name}</span>
+                </label>
+              );
+            })}
           </RadioGroup>
         </FormItem>
       )}
@@ -78,8 +78,8 @@ export const PhoneTypeInput = ({ control, phone_type }: InputProps) => {
       control={control}
       render={({ field }) => (
         <FormItem>
-          <div className="flex flex-row justify-between">
-            <FormLabel>Varian</FormLabel>
+          <div className="flex flex-row justify-between items-center mb-1">
+            <FormLabel className="text-sm font-semibold">Tipe HP</FormLabel>
             <FormMessage />
           </div>
 

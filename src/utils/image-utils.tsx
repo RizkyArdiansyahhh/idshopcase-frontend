@@ -1,18 +1,43 @@
 import { ProductImage } from "@/types/api";
 
-export const cleanImageUrl = (imageUrl: string) => {
-  if (!imageUrl) return null;
+export const cleanImageUrl = (imageUrl?: string | null): string => {
+  if (
+    !imageUrl ||
+    typeof imageUrl !== "string" ||
+    imageUrl.trim() === "" ||
+    imageUrl === "null" ||
+    imageUrl === "undefined"
+  ) {
+    return "/images/product-1.jpeg";
+  }
 
-  const cleanPath = imageUrl.split("/uploads/")[1];
-  if (!cleanPath) return null;
+  if (
+    imageUrl.startsWith("/") ||
+    imageUrl.startsWith("http://") ||
+    imageUrl.startsWith("https://")
+  ) {
+    return imageUrl;
+  }
 
-  return `${process.env.NEXT_PUBLIC_API_URL}/images/${cleanPath}`;
+  const cleanPath = imageUrl.includes("/uploads/")
+    ? imageUrl.split("/uploads/")[1]
+    : imageUrl.includes("/images/")
+    ? imageUrl.split("/images/")[1]
+    : imageUrl;
+
+  if (!cleanPath || cleanPath === "null" || cleanPath === "undefined") {
+    return "/images/product-1.jpeg";
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const apiOrigin = baseUrl.replace(/\/api\/?$/, "");
+  return `${apiOrigin}/uploads/${cleanPath}`;
 };
 
-export const imageUrlPrimary = (imagesUrl: ProductImage[] = []) => {
-  if (!imagesUrl.length) return null;
+export const imageUrlPrimary = (imagesUrl: ProductImage[] = []): string => {
+  if (!imagesUrl || !imagesUrl.length) return "/images/product-1.jpeg";
   const imagePrimary = imagesUrl.find((image) => image.isPrimary);
-  return cleanImageUrl(imagePrimary?.imageUrl ?? "");
+  return cleanImageUrl(imagePrimary?.imageUrl || imagesUrl[0]?.imageUrl);
 };
 
 export const imageUrlList = (imagesUrl: ProductImage[] = []) => {

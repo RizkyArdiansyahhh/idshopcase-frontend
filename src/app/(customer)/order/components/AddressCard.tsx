@@ -7,6 +7,9 @@ import { AddressDialog } from "./AddressDialog";
 import { Address } from "@/types/api";
 import { useGetAddresses } from "@/features/address/api/get-address";
 
+import { Plus } from "lucide-react";
+import Link from "next/link";
+
 type AddressCardProps = {
   selectedAddress?: Address;
   setSelectedAddress: (a: Address) => void;
@@ -22,16 +25,29 @@ export const AddressCard = ({
 }: AddressCardProps) => {
   const { data: addresses } = useGetAddresses();
 
-  if (!addresses) {
+  const hasAddresses = addresses && addresses.length > 0;
+
+  if (!hasAddresses) {
     return (
-      <Card className="rounded-md">
-        <CardHeader className="flex justify-between items-center">
-          <h3 className="text-sm md:text-base lg:text-lg font-semibold">
-            Alamat Pengiriman
-          </h3>
-          <p className="text-xs md:text-sm lg:text-base text-foreground/70">
-            Alamat pengiriman belum tersedia, silakan tambah alamat
-          </p>
+      <Card className="rounded-xl border shadow-xs">
+        <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h3 className="text-base md:text-lg font-semibold text-foreground">
+              Alamat Pengiriman
+            </h3>
+            <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+              Alamat pengiriman belum tersedia. Silakan tambah alamat untuk melanjutkan order.
+            </p>
+          </div>
+          <Button
+            asChild
+            variant="default"
+            className="w-full sm:w-auto text-xs md:text-sm font-semibold rounded-lg shrink-0"
+          >
+            <Link href="/account/address/new">
+              <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat
+            </Link>
+          </Button>
         </CardHeader>
       </Card>
     );

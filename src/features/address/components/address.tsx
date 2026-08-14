@@ -26,22 +26,52 @@ import { useRouter } from "next/navigation";
 const formAddressSchema = z.object({
   recipient_name: z
     .string()
-    .min(8, { message: "Name must be at least 8 characters" })
-    .nonempty("Name is required"),
-  phone: z.string().min(12, {
-    message: "Phone number must be at least 12 characters",
-  }),
-  province: z.string().nonempty("Province is required"),
-  city: z.string().nonempty("City is required"),
-  district: z.string().nonempty("District is required"),
-  postal_code: z.string().length(5, "Postal code must be 5 characters"),
-  detail: z.string().optional(),
+    .trim()
+    .min(2, { message: "Nama penerima minimal 2 karakter" })
+    .max(100, { message: "Nama penerima maksimal 100 karakter" }),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^[0-9+\-\s]{8,20}$/, {
+      message: "Nomor handphone harus 8–20 digit angka",
+    }),
+  province: z
+    .string()
+    .trim()
+    .min(2, { message: "Provinsi wajib dipilih" })
+    .max(100),
+  city: z
+    .string()
+    .trim()
+    .min(2, { message: "Kota/Kabupaten wajib dipilih" })
+    .max(100),
+  district: z
+    .string()
+    .trim()
+    .min(2, { message: "Kecamatan wajib dipilih" })
+    .max(100),
+  postal_code: z
+    .string()
+    .trim()
+    .regex(/^\d{5}$/, {
+      message: "Kode pos harus 5 digit angka",
+    }),
+  detail: z
+    .string()
+    .trim()
+    .min(5, { message: "Detail alamat minimal 5 karakter" })
+    .max(100, { message: "Detail alamat maksimal 100 karakter" }),
   is_primary: z.boolean().optional(),
 });
+
+import { useGetAddresses } from "../api/get-address";
+import { AlertCircle } from "lucide-react";
 
 export type FormAddressSchemaType = z.infer<typeof formAddressSchema>;
 export const Address = ({ addressId }: { addressId?: number }) => {
   const router = useRouter();
+  const { data: addresses } = useGetAddresses();
+  const isMaxReached = !addressId && (addresses?.length || 0) >= 5;
 
   const { data: address, isLoading: fetchAddressLoading } = useGetAddressById({
     id: Number(addressId),
@@ -88,29 +118,49 @@ export const Address = ({ addressId }: { addressId?: number }) => {
       },
     });
   const handleSubmit = (data: FormAddressSchemaType) => {
+    const payload = {
+      recipient_name: data.recipient_name,
+      phone: data.phone,
+      province: data.province,
+      city: data.city,
+      district: data.district,
+      postal_code: data.postal_code,
+      details: data.detail,
+      is_primary: data.is_primary || false,
+    };
     if (addressId) {
-      updateAddress({ id: addressId, data });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      updateAddress({ id: addressId, data: payload as any });
     } else {
-      const payload = {
-        recipient_name: data.recipient_name,
-        phone: data.phone,
-        province: data.province,
-        city: data.city,
-        district: data.district,
-        postal_code: data.postal_code,
-        details: data.detail || "",
-        is_primary: data.is_primary || false,
-      };
-      console.log(payload);
       createAddress(payload);
     }
   };
 
   return (
     <div className="p-5">
-      <FieldLegend className="font-semibold">
-        {addressId ? "Ubah Alamat" : "Tambah Alamat"}
-      </FieldLegend>
+      <div className="flex items-center justify-between mb-2">
+        <FieldLegend className="font-semibold">
+          {addressId ? "Ubah Alamat" : "Tambah Alamat"}
+        </FieldLegend>
+        {!addressId && (
+          <span className="text-xs text-muted-foreground font-medium">
+            Jumlah Alamat: {addresses?.length || 0}/5
+          </span>
+        )}
+      </div>
+
+      {isMaxReached && (
+        <div className="mb-5 p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 flex items-start gap-2.5 text-amber-800 dark:text-amber-300">
+          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-sm">
+            <p className="font-semibold">Batas Maksimal Alamat Tercapai</p>
+            <p className="text-amber-700 dark:text-amber-400 mt-0.5">
+              Anda telah memiliki 5 alamat pengiriman. Silakan hapus atau ubah salah satu alamat yang ada untuk menambahkan alamat baru.
+            </p>
+          </div>
+        </div>
+      )}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit((values) => handleSubmit(values))}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -223,8 +273,9 @@ export const Address = ({ addressId }: { addressId?: number }) => {
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan"
+                    placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan)"
                   ></Input>
+                  <FormMessage></FormMessage>
                 </FormItem>
               )}
             />
@@ -254,7 +305,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
             )}
           />
           <Field orientation="horizontal" className="justify-end mt-1">
-            <Button type="submit">
+            <Button type="submit" disabled={isMaxReached}>
               {addressId ? (
                 updateAddressMutationLoading ? (
                   <Spinner className="text-background size-6"></Spinner>

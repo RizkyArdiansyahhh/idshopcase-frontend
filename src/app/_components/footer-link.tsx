@@ -23,23 +23,23 @@ export const FooterLink = () => {
           </h3>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
-                Bantuan
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background text-sm text-background/90 hover:text-white"
+              >
+                Pusat Bantuan
+              </a>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/cart" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Metode Pembayaran
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/account/track-order" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Lacak Pemesanan
-              </Link>
-            </li>
-            <li>
-              <Link href="" className="animation-link-background">
-                Hubungi Kami
               </Link>
             </li>
           </ul>
@@ -50,24 +50,29 @@ export const FooterLink = () => {
           </h3>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/about" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Tentang Kami
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
-                Kebijakan
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background text-sm text-background/90 hover:text-white"
+              >
+                Garansi & Kebijakan
+              </a>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
-                Koleksi
-              </Link>
-            </li>
-            <li>
-              <Link href="" className="animation-link-background">
-                FAQ
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background text-sm text-background/90 hover:text-white"
+              >
+                Tanya Jawab (FAQ)
+              </a>
             </li>
           </ul>
         </div>
@@ -77,22 +82,22 @@ export const FooterLink = () => {
           </h3>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=custom_case" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Kategori Custom Case
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=keychain" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Kategori Keychain
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=phone_charm" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Kategori Phone Charm
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=pop_socket" className="animation-link-background text-sm text-background/90 hover:text-white">
                 Kategori Pop Socket
               </Link>
             </li>
@@ -120,7 +125,7 @@ export const FooterLink = () => {
             </div>
             <div className="flex flex-col gap-3">
               <h3 className="text-sm lg:text-lg font-semibold text-background">
-                Metode Pembayaran
+                Payment Gateway
               </h3>
               <div>
                 <PaymentGateway></PaymentGateway>
@@ -144,23 +149,23 @@ export function FooterAccordionMobile() {
         <AccordionContent>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
-                Bantuan
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background"
+              >
+                Pusat Bantuan
+              </a>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/cart" className="animation-link-background">
                 Metode Pembayaran
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/account/track-order" className="animation-link-background">
                 Lacak Pemesanan
-              </Link>
-            </li>
-            <li>
-              <Link href="" className="animation-link-background">
-                Hubungi Kami
               </Link>
             </li>
           </ul>
@@ -175,24 +180,29 @@ export function FooterAccordionMobile() {
         <AccordionContent>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/about" className="animation-link-background">
                 Tentang Kami
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
-                Kebijakan
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background"
+              >
+                Garansi & Kebijakan
+              </a>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
-                Koleksi
-              </Link>
-            </li>
-            <li>
-              <Link href="" className="animation-link-background">
-                FAQ
-              </Link>
+              <a
+                href="https://wa.me/message/UGIJPSGHHWKHL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animation-link-background"
+              >
+                Tanya Jawab (FAQ)
+              </a>
             </li>
           </ul>
         </AccordionContent>
@@ -206,22 +216,22 @@ export function FooterAccordionMobile() {
         <AccordionContent>
           <ul className="flex flex-col gap-2">
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=custom_case" className="animation-link-background">
                 Kategori Custom Case
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=keychain" className="animation-link-background">
                 Kategori Keychain
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=phone_charm" className="animation-link-background">
                 Kategori Phone Charm
               </Link>
             </li>
             <li>
-              <Link href="" className="animation-link-background">
+              <Link href="/products/collections?category=pop_socket" className="animation-link-background">
                 Kategori Pop Socket
               </Link>
             </li>
