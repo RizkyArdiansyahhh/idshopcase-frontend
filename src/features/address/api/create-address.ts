@@ -32,8 +32,13 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
         context,
       );
     },
-    onError: (err) => {
-      toast.error("Gagal menambahkan alamat");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (err: any) => {
+      const errorMsg =
+        err?.response?.data?.message ||
+        err?.response?.data?.details?.[0] ||
+        "Gagal menambahkan alamat";
+      toast.error(errorMsg);
       console.error(err);
     },
   });

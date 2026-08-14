@@ -21,6 +21,7 @@ import { useCreateCart } from "@/features/cart/api/create-cart";
 import { toast } from "sonner";
 import { InputsFormProduct } from "./inputs-form-product";
 import { useCheckoutStore } from "@/store/checkout-store";
+import { cleanImageUrl } from "@/utils/image-utils";
 
 type ValidateFormDetailProductProps = {
   productId: number;
@@ -191,7 +192,7 @@ export const ValidateFormDetailProduct = (
                   <div className="w-1/2 md:w-full h-full relative">
                     {imageProduct && (
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${imageProduct}`}
+                        src={cleanImageUrl(imageProduct)}
                         alt="banner-detail-product"
                         fill
                         className="object-center object-cover scale-90 rounded-sm"
@@ -238,7 +239,13 @@ export const ValidateFormDetailProduct = (
                   <div className="flex-1 min-h-0 overflow-y-auto">
                     <InputsFormProduct
                       control={form.control}
-                      variants={variantOptions.filter((v) => v.name !== "-")}
+                      variants={Array.from(
+                        new Map(
+                          variantOptions
+                            .filter((v) => v.name !== "-" && v.name.trim() !== "")
+                            .map((v) => [v.name.trim(), v])
+                        ).values()
+                      )}
                       phone_type={phoneTypeOptions}
                       isValidate={true}
                     />
