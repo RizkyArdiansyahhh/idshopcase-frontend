@@ -84,11 +84,17 @@ export const AddressDialog = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Batal
           </Button>
-          <Button asChild variant="default" onClick={() => onOpenChange(false)}>
-            <Link href="/account/address/new">
-              <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat Baru
-            </Link>
-          </Button>
+          {addresses.length < 5 ? (
+            <Button asChild variant="default" onClick={() => onOpenChange(false)}>
+              <Link href="/account/address/new">
+                <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat Baru
+              </Link>
+            </Button>
+          ) : (
+            <span className="text-xs text-muted-foreground self-center">
+              (Maksimal 5 alamat tercapai)
+            </span>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -64,9 +64,14 @@ const formAddressSchema = z.object({
   is_primary: z.boolean().optional(),
 });
 
+import { useGetAddresses } from "../api/get-address";
+import { AlertCircle } from "lucide-react";
+
 export type FormAddressSchemaType = z.infer<typeof formAddressSchema>;
 export const Address = ({ addressId }: { addressId?: number }) => {
   const router = useRouter();
+  const { data: addresses } = useGetAddresses();
+  const isMaxReached = !addressId && (addresses?.length || 0) >= 5;
 
   const { data: address, isLoading: fetchAddressLoading } = useGetAddressById({
     id: Number(addressId),
@@ -133,9 +138,29 @@ export const Address = ({ addressId }: { addressId?: number }) => {
 
   return (
     <div className="p-5">
-      <FieldLegend className="font-semibold">
-        {addressId ? "Ubah Alamat" : "Tambah Alamat"}
-      </FieldLegend>
+      <div className="flex items-center justify-between mb-2">
+        <FieldLegend className="font-semibold">
+          {addressId ? "Ubah Alamat" : "Tambah Alamat"}
+        </FieldLegend>
+        {!addressId && (
+          <span className="text-xs text-muted-foreground font-medium">
+            Jumlah Alamat: {addresses?.length || 0}/5
+          </span>
+        )}
+      </div>
+
+      {isMaxReached && (
+        <div className="mb-5 p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 flex items-start gap-2.5 text-amber-800 dark:text-amber-300">
+          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-sm">
+            <p className="font-semibold">Batas Maksimal Alamat Tercapai</p>
+            <p className="text-amber-700 dark:text-amber-400 mt-0.5">
+              Anda telah memiliki 5 alamat pengiriman. Silakan hapus atau ubah salah satu alamat yang ada untuk menambahkan alamat baru.
+            </p>
+          </div>
+        </div>
+      )}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit((values) => handleSubmit(values))}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -280,7 +305,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
             )}
           />
           <Field orientation="horizontal" className="justify-end mt-1">
-            <Button type="submit">
+            <Button type="submit" disabled={isMaxReached}>
               {addressId ? (
                 updateAddressMutationLoading ? (
                   <Spinner className="text-background size-6"></Spinner>
