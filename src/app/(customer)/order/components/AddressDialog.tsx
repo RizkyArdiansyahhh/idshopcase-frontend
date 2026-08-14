@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Address } from "@/types/api";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 type AddressDialogProps = {
   open: boolean;
@@ -78,10 +80,21 @@ export const AddressDialog = ({
           ))}
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Batal
           </Button>
+          {addresses.length < 5 ? (
+            <Button asChild variant="default" onClick={() => onOpenChange(false)}>
+              <Link href="/account/address/new">
+                <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat Baru
+              </Link>
+            </Button>
+          ) : (
+            <span className="text-xs text-muted-foreground self-center">
+              (Maksimal 5 alamat tercapai)
+            </span>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

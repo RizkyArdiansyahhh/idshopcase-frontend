@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fredoka.variable}>
+    <html lang="en" className={fredoka.variable} suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -45,7 +45,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className={`  antialiased`}>
+      <body className="antialiased" suppressHydrationWarning>
         <NextTopLoader
           color="#003077"
           showSpinner={false}

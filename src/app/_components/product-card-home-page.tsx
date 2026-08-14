@@ -19,9 +19,9 @@ type ProductCardProps = {
 export const ProductCardHomePage = (props: ProductCardProps) => {
   const { id, name, category, images, price } = props;
   const mainImage =
-    images.find((image) => image.isPrimary)?.imageUrl ??
-    images[0]?.imageUrl ??
-    "";
+    images?.find((image) => image.isPrimary)?.imageUrl ??
+    images?.[0]?.imageUrl ??
+    "/images/product-1.jpeg";
   const [activeImage, setActiveImage] = useState(mainImage);
 
   return (
@@ -30,9 +30,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
         <div className="relative w-[18rem] h-[40vh] rounded-xs overflow-hidden cursor-pointer">
           <Image
             key={activeImage}
-            src={cleanImageUrl(activeImage) ?? ""}
+            src={cleanImageUrl(activeImage)}
             fill
-            alt=""
+            alt={name || "Product"}
             className="object-cover object-center"
           />
           <GlareHover
@@ -60,9 +60,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
                   } hover:border-foreground transition-all`}
                 >
                   <Image
-                    src={cleanImageUrl(image.imageUrl) ?? ""}
+                    src={cleanImageUrl(image.imageUrl)}
                     fill
-                    alt=""
+                    alt={name || "Thumbnail"}
                     className="object-cover animate-fade object-center"
                   />
                 </div>
