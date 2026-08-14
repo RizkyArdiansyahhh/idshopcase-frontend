@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { InputsFormProduct } from "./inputs-form-product";
 import { useCheckoutStore } from "@/store/checkout-store";
 import { cleanImageUrl } from "@/utils/image-utils";
+import { useGetUser } from "@/features/auth/api/get-user";
 
 type ValidateFormDetailProductProps = {
   productId: number;
@@ -106,19 +107,33 @@ export const ValidateFormDetailProduct = (
     }
   }, [data, form]);
 
-  const { mutate: createCartItem } = useCreateCart({
-    mutationConfig: {
-      onSuccess: () => {
-        toast.success("Produk berhasil ditambahkan ke keranjang");
-        form.reset();
-        setOpen(false);
+  const { data: user } = useGetUser();
+
+  const { mutate: createCartItem, isPending: createCartIsLoading } =
+    useCreateCart({
+      mutationConfig: {
+        onSuccess: () => {
+          toast.success("Produk berhasil ditambahkan ke keranjang");
+          form.reset();
+          setOpen(false);
+        },
       },
-    },
-  });
+    });
 
   const handleAddCart = (data: FormDetailProductType) => {
+    if (!user) {
+      toast.error("Silakan masuk terlebih dahulu untuk menambahkan produk ke keranjang");
+      push("/login");
+      return;
+    }
+
     const selectedVariant =
       variantOptions.find((v) => v.id === data.variant) ?? baseVariant;
+
+    if (!selectedVariant || !selectedVariant.id) {
+      toast.error("Varian produk tidak valid atau belum dipilih");
+      return;
+    }
 
     const cartData = {
       productId: productId,
@@ -259,9 +274,17 @@ export const ValidateFormDetailProduct = (
               </div>
 
               <DrawerFooter className="flex flex-row-reverse md:flex-col">
-                <Button className="w-1/2 md:w-full" type="submit">{` ${
-                  isCheckout ? "Lanjut ke Checkout" : "Tambah ke Keranjang"
-                }`}</Button>
+                <Button
+                  className="w-1/2 md:w-full"
+                  type="submit"
+                  disabled={!isCheckout && createCartIsLoading}
+                >
+                  {!isCheckout && createCartIsLoading
+                    ? "Menambahkan..."
+                    : isCheckout
+                      ? "Lanjut ke Checkout"
+                      : "Tambah ke Keranjang"}
+                </Button>
                 <DrawerClose asChild>
                   <Button className="w-1/2 md:w-full" variant="outline">
                     Cancel

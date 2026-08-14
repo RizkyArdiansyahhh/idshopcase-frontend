@@ -17,3 +17,18 @@ export const apiUpload = axios.create({
   },
 });
 
+const attachAuthToken = (config: any) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("better-auth.session_token");
+    if (token) {
+      config.headers = config.headers || {};
+      if (!config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+  }
+  return config;
+};
+
+api.interceptors.request.use(attachAuthToken, (error) => Promise.reject(error));
+apiUpload.interceptors.request.use(attachAuthToken, (error) => Promise.reject(error));
