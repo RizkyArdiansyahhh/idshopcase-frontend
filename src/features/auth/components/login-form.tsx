@@ -30,10 +30,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       onSuccess: onSuccess,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (err: any) => {
-        if (err.response?.data) {
-          toast.error(err.response?.data);
-        }
-        toast.error("Terjadi Kesalahan");
+        const errorMsg =
+          err.response?.data?.message ||
+          (typeof err.response?.data === "string" ? err.response.data : null) ||
+          err.message ||
+          "Email atau password salah. Silakan coba lagi.";
+        toast.error(errorMsg);
       },
     },
   });
