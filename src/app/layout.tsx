@@ -15,11 +15,18 @@ const fredoka = Fredoka({
 
 export const metadata: Metadata = {
   title: {
-    default: "IDSHOPCASE",
-    template: "%s | IDSHOPCASE",
+    default: "Idshopcase",
+    template: "%s | Idshopcase",
   },
   description:
-    "IDShopCase menjual case HP premium, custom, keychain, phone charm, dan masih banyak lagi.",
+    "Idshopcase menjual case HP premium, custom, keychain, phone charm, dan masih banyak lagi.",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/images/idshopcase_circle_image.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

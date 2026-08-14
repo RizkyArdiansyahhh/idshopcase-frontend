@@ -3,8 +3,8 @@ import { AuthLayout as AuthLayoutComponent } from "./_components/auth-layout";
 
 export const metadata: Metadata = {
   title: {
-    default: "IDSHOPCASE",
-    template: "%s | Masuk / Daftar | IDShopCase",
+    default: "Idshopcase",
+    template: "%s | Masuk / Daftar | Idshopcase",
   },
 };
 

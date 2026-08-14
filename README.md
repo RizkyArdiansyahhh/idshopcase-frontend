@@ -1,5 +1,5 @@
 ````markdown
-# IDShopCase
+# Idshopcase
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Next.js](https://img.shields.io/badge/Next.js-13-blue)
@@ -8,7 +8,7 @@
 ![ShadCN](https://img.shields.io/badge/ShadCN-UI-purple)
 ![Build](https://img.shields.io/github/actions/workflow/status/username/idshopcase/ci.yml?branch=main)
 
-IDShopCase adalah aplikasi web **toko online** berbasis **Next.js**
+Idshopcase adalah aplikasi web **toko online** berbasis **Next.js**
 
 ---
 
@@ -16,7 +16,7 @@ IDShopCase adalah aplikasi web **toko online** berbasis **Next.js**
 
 > GIF demo interaktif:
 
-![IDShopCase Demo](./public/demo/demo.gif)
+![Idshopcase Demo](./public/demo/demo.gif)
 
 > Live Demo: [https://idshopcase.vercel.app](https://idshopcase.vercel.app)
 
