@@ -75,13 +75,13 @@ export default function Home() {
               image="/images/testimoni/speak-1.jpg"
             ></CardTestimoniSpeaker>
             <CardTestimoni imageProfileUrl="2" isDark={false}>
-              Desain case ponselmu sendiri dengan IdShopCase! Unggah hingga 3
+              Desain case ponselmu sendiri dengan Idshopcase! Unggah hingga 3
               gambar favoritmu, pilih warna case, dan atur posisi desain sesuai
               keinginanmu. Buat case unik yang mencerminkan gaya dan
               kreativitasmu.
             </CardTestimoni>
             <CardTestimoni imageProfileUrl="3" isDark={true}>
-              Unggah gambar dan desain case unikmu sendiri di IdShopCase.
+              Unggah gambar dan desain case unikmu sendiri di Idshopcase.
               Kreatif dan personal!
             </CardTestimoni>
           </div>
@@ -89,11 +89,11 @@ export default function Home() {
             <CardTestimoni imageProfileUrl="4" isDark={false}>
               Desain case impianmu sekarang! Pilih gambar, warna, dan atur
               desain sesuai selera. Buat case yang benar-benar mencerminkan gaya
-              pribadimu di IdShopCase.
+              pribadimu di Idshopcase.
             </CardTestimoni>
             <CardTestimoni imageProfileUrl="5" isDark={true}>
               Ekspresikan kreativitasmu! Gabungkan gambar favoritmu dan buat
-              case unik yang mencerminkan gaya pribadi di IdShopCase.
+              case unik yang mencerminkan gaya pribadi di Idshopcase.
             </CardTestimoni>
             <CardTestimoniSpeaker
               imageProfileUrl="8"
@@ -102,7 +102,7 @@ export default function Home() {
           </div>
           <div className="h-full w-full">
             <CardTestimoni imageProfileUrl="6" isDark={true}>
-              Custom Case IdShopCase memungkinkanmu memilih warna, menambahkan
+              Custom Case Idshopcase memungkinkanmu memilih warna, menambahkan
               hingga 3 gambar, dan menyesuaikan posisi desain. Hasilnya case
               keren yang sesuai keinginanmu!
             </CardTestimoni>
@@ -111,7 +111,7 @@ export default function Home() {
               image="/images/testimoni/speak-3.jpg"
             ></CardTestimoniSpeaker>
             <CardTestimoni imageProfileUrl="7" isDark={false}>
-              Buat case yang unik dan personal di IdShopCase! Unggah gambar
+              Buat case yang unik dan personal di Idshopcase! Unggah gambar
               favoritmu dan pilih warna sesuai gaya.
             </CardTestimoni>
           </div>

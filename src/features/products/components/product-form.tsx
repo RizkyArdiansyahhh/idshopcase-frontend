@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formProductSchema, FormProductType } from "@/lib/schemas/product";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -18,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
-import { ImageUploader } from "./image-uploader";
+import { ImageUploader, ExistingImageItem } from "./image-uploader";
 import { FieldCheckbox } from "./field-checkbox";
 import { PhoneTypeOptions } from "./type-options";
 
@@ -40,6 +41,9 @@ export const ProductForm = () => {
   const params = useParams();
   const { replace } = useRouter();
   const productId = params.id;
+
+  const [existingImages, setExistingImages] = useState<ExistingImageItem[]>([]);
+  const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
 
   const { data: product } = useGetProduct({
     id: Number(productId),
@@ -78,6 +82,11 @@ export const ProductForm = () => {
       variant: product.Variants?.map((v) => v.id) ?? [],
       phone_type: product.PhoneTypes?.map((pt) => pt.id) ?? [],
     });
+
+    if (product.ProductImages) {
+      setExistingImages(product.ProductImages);
+      setDeletedImageIds([]);
+    }
   }, [product, form]);
 
   const isPhoneType = form.watch("toggleIsPhoneType");
@@ -85,15 +94,35 @@ export const ProductForm = () => {
 
   const { mutate: createProductMutate, isPending: createProductIsLoading } =
     useCreateProduct({
-      mutationConfig: { onSuccess: () => replace("/admin/products") },
+      mutationConfig: {
+        onSuccess: () => {
+          toast.success("Produk berhasil ditambahkan");
+          replace("/admin/products");
+        },
+      },
     });
 
   const { mutate: updateProductMutate, isPending: updateProductIsLoading } =
     useUpdateProduct({
-      mutationConfig: { onSuccess: () => replace("/admin/products") },
+      mutationConfig: {
+        onSuccess: () => {
+          toast.success("Produk berhasil diperbarui");
+          replace("/admin/products");
+        },
+      },
     });
 
+  const handleRemoveExistingImage = (id: number) => {
+    setExistingImages((prev) => prev.filter((img) => img.id !== id));
+    setDeletedImageIds((prev) => [...prev, id]);
+  };
+
   const handleCreateProduct = (data: FormProductType) => {
+    if (!data.images || data.images.length === 0) {
+      toast.error("Minimal 1 gambar produk wajib diunggah");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
@@ -107,10 +136,21 @@ export const ProductForm = () => {
   };
 
   const handleUpdateProduct = (data: FormProductType) => {
+    const totalRemaining = existingImages.length + (data.images?.length ?? 0);
+    if (totalRemaining === 0) {
+      toast.error("Minimal 1 gambar produk wajib terpasang");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("category", data.category);
+
+    if (deletedImageIds.length > 0) {
+      formData.append("deletedImageIds", JSON.stringify(deletedImageIds));
+    }
+
     data.images?.forEach((file) => {
       if (file instanceof File) {
         formData.append("images", file);
@@ -131,6 +171,7 @@ export const ProductForm = () => {
       handleCreateProduct(data);
     }
   };
+
   return (
     <Form {...form}>
       <form
@@ -206,10 +247,13 @@ export const ProductForm = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gambar Produk (maks 5)</FormLabel>
+                  <FormLabel>Gambar Produk (Maksimal 5)</FormLabel>
                   <ImageUploader
-                    value={field.value}
+                    existingImages={existingImages}
+                    onRemoveExisting={product ? handleRemoveExistingImage : undefined}
+                    value={field.value ?? []}
                     onChange={field.onChange}
+                    maxImages={5}
                   />
                   <FormMessage />
                 </FormItem>
