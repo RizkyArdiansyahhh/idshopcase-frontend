@@ -32,23 +32,13 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
         context,
       );
     },
-<<<<<<< HEAD
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (err: any) => {
-      const errorMsg =
-        err?.response?.data?.message ||
-        err?.response?.data?.details?.[0] ||
-        "Gagal menambahkan alamat";
-      toast.error(errorMsg);
-      console.error(err);
-=======
     onError: (err: any) => {
       const serverMessage = err?.response?.data?.message;
       toast.error(
         serverMessage || "Gagal menambahkan alamat. Silakan periksa kelengkapan data Anda."
       );
       console.error("[CreateAddress Error]", err);
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
     },
   });
 };

@@ -80,33 +80,28 @@ export const AddressDialog = ({
           ))}
         </div>
 
-<<<<<<< HEAD
-        <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Batal
-=======
         <DialogFooter className="flex flex-col sm:flex-row items-center justify-between gap-2">
           <Link href="/account/address" className="w-full sm:w-auto">
             <Button variant="ghost" className="w-full text-xs font-semibold gap-1.5 text-primary">
-              <Plus className="w-3.5 h-3.5" />
-              Kelola / Tambah Alamat Baru
+              Kelola Alamat
             </Button>
           </Link>
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
-            Tutup
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
-          </Button>
-          {addresses.length < 5 ? (
-            <Button asChild variant="default" onClick={() => onOpenChange(false)}>
-              <Link href="/account/address/new">
-                <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat Baru
-              </Link>
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <Button variant="outline" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
+              Tutup
             </Button>
-          ) : (
-            <span className="text-xs text-muted-foreground self-center">
-              (Maksimal 5 alamat tercapai)
-            </span>
-          )}
+            {addresses.length < 5 ? (
+              <Button asChild variant="default" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
+                <Link href="/account/address/new">
+                  <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat Baru
+                </Link>
+              </Button>
+            ) : (
+              <span className="text-xs text-muted-foreground self-center">
+                (Maksimal 5 alamat)
+              </span>
+            )}
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -18,8 +18,6 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-<<<<<<< HEAD
-=======
         protocol: "http",
         hostname: "localhost",
         port: "5000",
@@ -32,7 +30,6 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
         protocol: "https",
         hostname: "api.idshopcase.com",
         pathname: "/**",

@@ -9,9 +9,6 @@ import { useGetAddresses } from "@/features/address/api/get-address";
 import { Plus, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { Plus } from "lucide-react";
-import Link from "next/link";
-
 type AddressCardProps = {
   selectedAddress?: Address;
   setSelectedAddress: (a: Address) => void;
@@ -31,28 +28,6 @@ export const AddressCard = ({
 
   if (!hasAddresses) {
     return (
-<<<<<<< HEAD
-      <Card className="rounded-xl border shadow-xs">
-        <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <div>
-            <h3 className="text-base md:text-lg font-semibold text-foreground">
-              Alamat Pengiriman
-            </h3>
-            <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-              Alamat pengiriman belum tersedia. Silakan tambah alamat untuk melanjutkan order.
-            </p>
-          </div>
-          <Button
-            asChild
-            variant="default"
-            className="w-full sm:w-auto text-xs md:text-sm font-semibold rounded-lg shrink-0"
-          >
-            <Link href="/account/address/new">
-              <Plus className="w-4 h-4 mr-1.5" /> Tambah Alamat
-            </Link>
-          </Button>
-        </CardHeader>
-=======
       <Card className="rounded-xl border border-dashed border-border p-5 bg-muted/20">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -75,7 +50,6 @@ export const AddressCard = ({
             </Button>
           </Link>
         </div>
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
       </Card>
     );
   }

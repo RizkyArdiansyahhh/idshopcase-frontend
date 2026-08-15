@@ -209,10 +209,13 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             </div>
           ) : (
             <>
-              <Link href={"/account/profile"}>
+              <Link
+                href={user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
+                title={user.role === "admin" ? "Dashboard Admin" : "Profil Saya"}
+              >
                 <FaUser size={20} color="white" />
               </Link>
-              <CartButton />
+              {user.role !== "admin" && <CartButton />}
             </>
           )}
         </div>
@@ -242,29 +245,6 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             className="w-6 h-[2px] bg-white rounded-sm"
           />
         </button>
-<<<<<<< HEAD
-
-        <div className="hidden md:flex gap-6 items-center">
-          {!user ? (
-            <div>
-              <Button variant={"secondary"} onClick={() => push("/login")}>
-                Login
-              </Button>
-            </div>
-          ) : (
-            <>
-              <Link
-                href={user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
-                title={user.role === "admin" ? "Dashboard Admin" : "Profil Saya"}
-              >
-                <FaUser size={24} color="white" />
-              </Link>
-              {user.role !== "admin" && <CartButton />}
-            </>
-          )}
-        </div>
-=======
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
       </div>
 
       <AnimatePresence>
@@ -277,22 +257,6 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             transition={{ duration: 0.3 }}
             className="absolute top-full right-0 mt-2 w-1/2 bg-black/80 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden p-3"
           >
-<<<<<<< HEAD
-            <div className="flex flex-col py-2 text-white text-start px-4">
-              <Link
-                href={user?.role === "admin" ? "/admin/dashboard" : "/account/profile"}
-                className="py-2 hover:bg-white/10 transition"
-              >
-                <p>{user?.role === "admin" ? "Dashboard Admin" : "Profil"}</p>
-              </Link>
-              {user?.role !== "admin" && (
-                <Link
-                  href={"/cart"}
-                  className="py-2 hover:bg-white/10 transition"
-                >
-                  <p>Keranjang</p>
-                </Link>
-=======
             <div className="flex flex-col gap-2 text-white text-start">
               {/* Language Switcher Mobile */}
               <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-1 px-1">
@@ -338,19 +302,22 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
               ) : (
                 <>
                   <Link
-                    href={"/account/profile"}
+                    href={user?.role === "admin" ? "/admin/dashboard" : "/account/profile"}
                     className="py-2 hover:bg-white/10 transition px-2 rounded-md"
+                    onClick={() => setIsOpen(false)}
                   >
-                    <p>Profil</p>
+                    <p>{user?.role === "admin" ? "Dashboard Admin" : "Profil"}</p>
                   </Link>
-                  <Link
-                    href={"/cart"}
-                    className="py-2 hover:bg-white/10 transition px-2 rounded-md"
-                  >
-                    <p>Keranjang</p>
-                  </Link>
+                  {user?.role !== "admin" && (
+                    <Link
+                      href={"/cart"}
+                      className="py-2 hover:bg-white/10 transition px-2 rounded-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <p>Keranjang</p>
+                    </Link>
+                  )}
                 </>
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
               )}
             </div>
           </motion.div>

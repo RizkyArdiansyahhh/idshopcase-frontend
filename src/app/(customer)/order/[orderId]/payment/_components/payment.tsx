@@ -39,76 +39,7 @@ export const Payment = () => {
     }
   }, [paymentStatus, orderId, router]);
 
-  // 2. Real-time Server-Sent Events (SSE) listener
-  useEffect(() => {
-    if (!orderId) return;
 
-    const envUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
-    const baseUrl = envUrl.replace(/\/+$/, "");
-    const streamUrl = `${baseUrl}/order/${orderId}/payment-stream`;
-
-    let eventSource: EventSource | null = null;
-    try {
-      eventSource = new EventSource(streamUrl);
-
-      eventSource.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data?.paymentStatus && data.paymentStatus !== "pending") {
-            eventSource?.close();
-            toast.success("Pembayaran berhasil dikonfirmasi!");
-            router.replace(`/order/${orderId}/status`);
-          }
-        } catch (err) {
-          console.error("[SSE JSON Parse Error]:", err);
-        }
-      };
-
-      eventSource.onerror = () => {
-        // Fallback: tutup stream jika ada error jaringan (polling di bawah tetap aktif)
-        eventSource?.close();
-      };
-    } catch (err) {
-      console.error("[SSE Init Error]:", err);
-    }
-
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-      }
-    };
-  }, [orderId, router]);
-
-  // 3. Auto Polling ringan setiap 3 detik sebagai cadangan
-  useEffect(() => {
-    if (!orderId) return;
-
-    const envUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
-    const baseUrl = envUrl.replace(/\/+$/, "");
-    const statusUrl = `${baseUrl}/order/${orderId}/payment-status`;
-
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(statusUrl, { cache: "no-store" });
-        if (res.ok) {
-          const json = await res.json();
-          if (
-            json.success &&
-            json.data?.paymentStatus &&
-            json.data.paymentStatus !== "pending"
-          ) {
-            clearInterval(interval);
-            toast.success("Pembayaran berhasil dikonfirmasi!");
-            router.replace(`/order/${orderId}/status`);
-          }
-        }
-      } catch {
-        // silent error saat background polling
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [orderId, router]);
 
   const goToPayment = useCallback(() => {
     if (!paymentUrl) return;
@@ -151,17 +82,9 @@ export const Payment = () => {
         </h1>
 
         <p className="text-md font-light text-muted-foreground">
-<<<<<<< HEAD
-          Silakan selesaikan pembayaran Anda di halaman DOKU Checkout. Halaman ini akan{" "}
-          <span className="font-medium text-foreground">
-            otomatis beralih ke halaman sukses
-          </span>{" "}
-          setelah pembayaran terverifikasi.
-=======
           Pembayaran akan dibuka di tab baru. Setelah selesai, status akan
           diperiksa secara otomatis atau Anda dapat mengeklik
           <span className="font-medium"> “Periksa Status Pembayaran”</span>.
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
         </p>
 
         <div className="flex flex-col gap-2 w-full mt-2">

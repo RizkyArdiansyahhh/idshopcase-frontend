@@ -43,11 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-<<<<<<< HEAD
-    <html lang="en" className={fredoka.variable} suppressHydrationWarning>
-=======
-    <html lang="en" className={`${poppins.variable}`}>
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
+    <html lang="en" className={`${poppins.variable} ${fredoka.variable}`} suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -64,11 +60,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-<<<<<<< HEAD
-      <body className="antialiased" suppressHydrationWarning>
-=======
-      <body className={`${poppins.className} font-sans antialiased`}>
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
+      <body className={`${poppins.className} font-sans antialiased`} suppressHydrationWarning>
         <NextTopLoader
           color="#003077"
           showSpinner={false}

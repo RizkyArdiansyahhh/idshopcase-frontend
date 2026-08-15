@@ -25,44 +25,6 @@ import { useRouter } from "next/navigation";
 
 const formAddressSchema = z.object({
   recipient_name: z
-<<<<<<< HEAD
-    .string()
-    .trim()
-    .min(2, { message: "Nama penerima minimal 2 karakter" })
-    .max(100, { message: "Nama penerima maksimal 100 karakter" }),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^[0-9+\-\s]{8,20}$/, {
-      message: "Nomor handphone harus 8–20 digit angka",
-    }),
-  province: z
-    .string()
-    .trim()
-    .min(2, { message: "Provinsi wajib dipilih" })
-    .max(100),
-  city: z
-    .string()
-    .trim()
-    .min(2, { message: "Kota/Kabupaten wajib dipilih" })
-    .max(100),
-  district: z
-    .string()
-    .trim()
-    .min(2, { message: "Kecamatan wajib dipilih" })
-    .max(100),
-  postal_code: z
-    .string()
-    .trim()
-    .regex(/^\d{5}$/, {
-      message: "Kode pos harus 5 digit angka",
-    }),
-  detail: z
-    .string()
-    .trim()
-    .min(5, { message: "Detail alamat minimal 5 karakter" })
-    .max(100, { message: "Detail alamat maksimal 100 karakter" }),
-=======
     .string({ message: "Nama penerima wajib diisi" })
     .min(3, { message: "Nama penerima minimal 3 karakter (contoh: Budi Santoso)" })
     .max(100, { message: "Nama penerima maksimal 100 karakter" }),
@@ -86,7 +48,6 @@ const formAddressSchema = z.object({
   detail: z
     .string({ message: "Alamat lengkap (nama jalan, RT/RW, nomor rumah) wajib diisi" })
     .min(5, { message: "Alamat lengkap minimal 5 karakter (contoh: Jl. Mawar No. 12, RT 01/RW 02)" }),
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
   is_primary: z.boolean().optional(),
 });
 
@@ -309,14 +270,6 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               name="detail"
               render={({ field }) => (
                 <FormItem>
-<<<<<<< HEAD
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan)"
-                  ></Input>
-                  <FormMessage></FormMessage>
-=======
                   <FormControl>
                     <Input
                       {...field}
@@ -325,7 +278,6 @@ export const Address = ({ addressId }: { addressId?: number }) => {
                     />
                   </FormControl>
                   <FormMessage />
->>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
                 </FormItem>
               )}
             />
