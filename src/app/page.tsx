@@ -18,6 +18,7 @@ import { StickyScrollHomePage } from "./_components/sticky-scroll-homepage";
 import { SectionCategories } from "./_components/section-categories";
 import { WhatsAppWidget } from "@/components/shared/whatsapp-widget";
 import { SectionInstagram } from "./_components/section-instagram";
+import { SectionFaqHome } from "./_components/section-faq-home";
 
 export default function Home() {
   console.log("BASE URL:", process.env.NEXT_PUBLIC_API_URL);
@@ -51,15 +52,7 @@ export default function Home() {
       </div>
       <BannerVideoHomePage></BannerVideoHomePage>
       <div className="w-full h-fit py-4 px-4 flex flex-row gap-4"></div>
-      {/* <SectionProducts /> */}
-      {/* <SectionHero /> */}
 
-      {/* <StickyScrollHomePage></StickyScrollHomePage> */}
-      {/* <SectionShowCase /> */}
-      {/* <Separator className="mt-10"></Separator> */}
-      {/* <div className="w-screen h-fit bg-muted-foreground/5 py-2">
-        <SectionModelTampilan></SectionModelTampilan>
-      </div> */}
       <Separator className="mb-10"></Separator>
       <section className="container my-16 px-10 hidden lg:block">
         <div className="w-full flex justify-center items-center ">
@@ -136,8 +129,11 @@ export default function Home() {
         </div>
       </div>
 
-      <Separator></Separator>
-      {/* <TestimoniMobile></TestimoniMobile> */}
+      <Separator />
+      {/* FAQ Section */}
+      <SectionFaqHome />
+
+      <Separator />
       <Footer></Footer>
       <WhatsAppWidget />
     </div>

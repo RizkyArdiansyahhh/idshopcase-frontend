@@ -65,6 +65,7 @@ export const FooterLink = () => {
               </a>
             </li>
             <li>
+<<<<<<< HEAD
               <a
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
@@ -73,6 +74,16 @@ export const FooterLink = () => {
               >
                 Tanya Jawab (FAQ)
               </a>
+=======
+              <Link href="" className="animation-link-background">
+                Koleksi
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="animation-link-background">
+                FAQ
+              </Link>
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
             </li>
           </ul>
         </div>
@@ -195,6 +206,7 @@ export function FooterAccordionMobile() {
               </a>
             </li>
             <li>
+<<<<<<< HEAD
               <a
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
@@ -203,6 +215,16 @@ export function FooterAccordionMobile() {
               >
                 Tanya Jawab (FAQ)
               </a>
+=======
+              <Link href="" className="animation-link-background">
+                Koleksi
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="animation-link-background">
+                FAQ
+              </Link>
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
             </li>
           </ul>
         </AccordionContent>

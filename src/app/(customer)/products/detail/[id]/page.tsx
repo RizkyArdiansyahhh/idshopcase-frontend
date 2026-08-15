@@ -9,6 +9,7 @@ interface ProductPageProps {
   }>;
 }
 
+<<<<<<< HEAD
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
@@ -28,6 +29,15 @@ export async function generateMetadata({
 
     const json = await res.json();
     const product: Product = json.data;
+=======
+export async function generateMetadata(
+  props: ProductPageProps
+): Promise<Metadata> {
+  const { id } = await props.params;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/${id}`, {
+    next: { revalidate: 60 },
+  });
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
 
     return {
       title: product.name,

@@ -5,6 +5,14 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -35,7 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+<<<<<<< HEAD
     <html lang="en" className={fredoka.variable} suppressHydrationWarning>
+=======
+    <html lang="en" className={`${poppins.variable}`}>
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
       <head>
         <meta
           name="viewport"
@@ -52,7 +64,11 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
+<<<<<<< HEAD
       <body className="antialiased" suppressHydrationWarning>
+=======
+      <body className={`${poppins.className} font-sans antialiased`}>
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
         <NextTopLoader
           color="#003077"
           showSpinner={false}

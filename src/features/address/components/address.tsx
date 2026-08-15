@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 
 const formAddressSchema = z.object({
   recipient_name: z
+<<<<<<< HEAD
     .string()
     .trim()
     .min(2, { message: "Nama penerima minimal 2 karakter" })
@@ -61,6 +62,31 @@ const formAddressSchema = z.object({
     .trim()
     .min(5, { message: "Detail alamat minimal 5 karakter" })
     .max(100, { message: "Detail alamat maksimal 100 karakter" }),
+=======
+    .string({ message: "Nama penerima wajib diisi" })
+    .min(3, { message: "Nama penerima minimal 3 karakter (contoh: Budi Santoso)" })
+    .max(100, { message: "Nama penerima maksimal 100 karakter" }),
+  phone: z
+    .string({ message: "Nomor telepon wajib diisi" })
+    .min(10, { message: "Nomor telepon minimal 10 digit (contoh: 08123456789)" })
+    .max(15, { message: "Nomor telepon maksimal 15 digit" })
+    .regex(/^[0-9+]+$/, { message: "Nomor telepon hanya boleh berisi angka" }),
+  province: z
+    .string({ message: "Mohon pilih provinsi pengiriman" })
+    .min(1, { message: "Mohon pilih provinsi pengiriman" }),
+  city: z
+    .string({ message: "Mohon pilih kota/kabupaten pengiriman" })
+    .min(1, { message: "Mohon pilih kota/kabupaten pengiriman" }),
+  district: z
+    .string({ message: "Mohon pilih kecamatan pengiriman" })
+    .min(1, { message: "Mohon pilih kecamatan pengiriman" }),
+  postal_code: z
+    .string({ message: "Kode pos wajib diisi (5 digit)" })
+    .regex(/^[0-9]{5}$/, { message: "Kode pos harus 5 digit angka (misal: 12345)" }),
+  detail: z
+    .string({ message: "Alamat lengkap (nama jalan, RT/RW, nomor rumah) wajib diisi" })
+    .min(5, { message: "Alamat lengkap minimal 5 karakter (contoh: Jl. Mawar No. 12, RT 01/RW 02)" }),
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
   is_primary: z.boolean().optional(),
 });
 
@@ -83,6 +109,16 @@ export const Address = ({ addressId }: { addressId?: number }) => {
 
   const form = useForm<FormAddressSchemaType>({
     resolver: zodResolver(formAddressSchema),
+    defaultValues: {
+      recipient_name: "",
+      phone: "",
+      province: "",
+      city: "",
+      district: "",
+      postal_code: "",
+      detail: "",
+      is_primary: false,
+    },
   });
 
   useEffect(() => {
@@ -207,6 +243,8 @@ export const Address = ({ addressId }: { addressId?: number }) => {
                     value={field.value || ""}
                     onValueChange={(value: string) => {
                       field.onChange(value);
+                      form.setValue("city", "");
+                      form.setValue("district", "");
                     }}
                   />
                   <FormMessage></FormMessage>
@@ -223,6 +261,7 @@ export const Address = ({ addressId }: { addressId?: number }) => {
                     value={field.value || ""}
                     onValueChange={(value: string) => {
                       field.onChange(value);
+                      form.setValue("district", "");
                     }}
                   />
                   <FormMessage></FormMessage>
@@ -270,12 +309,23 @@ export const Address = ({ addressId }: { addressId?: number }) => {
               name="detail"
               render={({ field }) => (
                 <FormItem>
+<<<<<<< HEAD
                   <Input
                     {...field}
                     value={field.value || ""}
                     placeholder="Detail Lainnya (nama Jalan, Blok/Unit no., Patokan)"
                   ></Input>
                   <FormMessage></FormMessage>
+=======
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      placeholder="Detail Lainnya (Nama Jalan, RT/RW, No. Rumah, Patokan)"
+                    />
+                  </FormControl>
+                  <FormMessage />
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
                 </FormItem>
               )}
             />

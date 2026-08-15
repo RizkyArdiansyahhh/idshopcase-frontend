@@ -19,6 +19,12 @@ export const Payment = () => {
     refetch,
   } = useGetOrder({
     id: Number(orderId),
+    queryConfig: {
+      refetchInterval: (query) => {
+        const status = query.state.data?.Payment?.status;
+        return status === "pending" ? 5000 : false;
+      },
+    },
   });
 
   const paymentUrl = order?.Payment?.payment_url;
@@ -145,11 +151,17 @@ export const Payment = () => {
         </h1>
 
         <p className="text-md font-light text-muted-foreground">
+<<<<<<< HEAD
           Silakan selesaikan pembayaran Anda di halaman DOKU Checkout. Halaman ini akan{" "}
           <span className="font-medium text-foreground">
             otomatis beralih ke halaman sukses
           </span>{" "}
           setelah pembayaran terverifikasi.
+=======
+          Pembayaran akan dibuka di tab baru. Setelah selesai, status akan
+          diperiksa secara otomatis atau Anda dapat mengeklik
+          <span className="font-medium"> “Periksa Status Pembayaran”</span>.
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
         </p>
 
         <div className="flex flex-col gap-2 w-full mt-2">

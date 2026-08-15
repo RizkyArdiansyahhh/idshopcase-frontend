@@ -28,7 +28,7 @@ export const UseUpdateAddress = (params: UseUpdateAddressParams = {}) => {
     ...params.mutationConfig,
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: getAddressesQueryKey() });
-      toast.success("Address updated");
+      toast.success("Alamat berhasil diperbarui!");
       params.mutationConfig?.onSuccess?.(
         data,
         variables,
@@ -36,9 +36,12 @@ export const UseUpdateAddress = (params: UseUpdateAddressParams = {}) => {
         context,
       );
     },
-    onError: (err) => {
-      toast.error("Gagal memperbarui alamat");
-      console.error(err);
+    onError: (err: any) => {
+      const serverMessage = err?.response?.data?.message;
+      toast.error(
+        serverMessage || "Gagal memperbarui alamat. Silakan periksa kelengkapan data Anda."
+      );
+      console.error("[UpdateAddress Error]", err);
     },
   });
 };

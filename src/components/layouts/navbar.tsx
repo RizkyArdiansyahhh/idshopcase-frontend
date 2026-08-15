@@ -8,6 +8,7 @@ import { useGetUser } from "@/features/auth/api/get-user";
 import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { CartButton } from "@/features/cart/components/cart-button";
+import { Globe, ChevronDown } from "lucide-react";
 
 interface NavbarProps {
   isBlur?: boolean;
@@ -18,6 +19,8 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
   const { push } = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [language, setLanguage] = useState<"ID" | "EN">("ID");
+  const [isLangOpen, setIsLangOpen] = useState(false);
 
   const FULL_WIDTH_PATHS = ["/products/collections"];
   const pathName = usePathname();
@@ -26,17 +29,20 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
   );
 
   useEffect(() => {
-    if (isFullWidth) return; // skip scroll effect
+    if (isFullWidth) return;
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFullWidth]);
 
-  // Dropdown mobile
+  // Dropdown mobile & Language click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const dropdown = document.getElementById("mobile-dropdown");
       const button = document.getElementById("hamburger-btn");
+      const langDropdown = document.getElementById("lang-dropdown");
+      const langBtn = document.getElementById("lang-btn");
+
       if (
         dropdown &&
         !dropdown.contains(e.target as Node) &&
@@ -45,10 +51,19 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
       ) {
         setIsOpen(false);
       }
+
+      if (
+        langDropdown &&
+        !langDropdown.contains(e.target as Node) &&
+        langBtn &&
+        !langBtn.contains(e.target as Node)
+      ) {
+        setIsLangOpen(false);
+      }
     };
-    if (isOpen) document.addEventListener("click", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, [isOpen]);
+  }, []);
 
   // Styling
   const backgroundColor = isFullWidth
@@ -114,6 +129,94 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
           IDSHOP<span className="font-black">CASE</span>
         </Link>
 
+        {/* Right: Actions (Language Switcher, Sign In, Sign Up / User Profile) */}
+        <div className="hidden md:flex gap-6 items-center">
+          
+          {/* Language Switcher (Borderless text + Globe + Chevron) */}
+          <div className="relative">
+            <button
+              id="lang-btn"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsLangOpen(!isLangOpen);
+              }}
+              className="flex items-center gap-2 text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors cursor-pointer select-none"
+            >
+              <Globe className="w-4 h-4 text-white/80" />
+              <span>{language === "ID" ? "Indonesia" : "English"}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 ${isLangOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            <AnimatePresence>
+              {isLangOpen && (
+                <motion.div
+                  id="lang-dropdown"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-2 w-32 bg-black/90 backdrop-blur-md border border-white/20 rounded-lg shadow-xl p-1 z-50 overflow-hidden text-white"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLanguage("ID");
+                      setIsLangOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
+                      language === "ID" ? "bg-white/20 font-semibold text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <span>🇮🇩 Indonesia</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLanguage("EN");
+                      setIsLangOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
+                      language === "EN" ? "bg-white/20 font-semibold text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <span>🇬🇧 English</span>
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Auth Actions / Profile & Cart */}
+          {!user ? (
+            <div className="flex items-center gap-5">
+              {/* Sign In - Plain Text Link */}
+              <Link
+                href="/login"
+                className="text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors"
+              >
+                Sign In
+              </Link>
+
+              {/* Sign Up - Solid Rounded Button */}
+              <Button
+                size="sm"
+                className="text-xs md:text-sm font-semibold rounded-lg bg-white text-black hover:bg-white/90 px-4 py-2"
+                onClick={() => push("/register")}
+              >
+                Sign Up
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Link href={"/account/profile"}>
+                <FaUser size={20} color="white" />
+              </Link>
+              <CartButton />
+            </>
+          )}
+        </div>
+
         <button
           id="hamburger-btn"
           onClick={(e) => {
@@ -139,6 +242,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             className="w-6 h-[2px] bg-white rounded-sm"
           />
         </button>
+<<<<<<< HEAD
 
         <div className="hidden md:flex gap-6 items-center">
           {!user ? (
@@ -159,6 +263,8 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             </>
           )}
         </div>
+=======
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
       </div>
 
       <AnimatePresence>
@@ -169,8 +275,9 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="absolute top-full right-0 mt-2 w-1/2 bg-black/70 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden"
+            className="absolute top-full right-0 mt-2 w-1/2 bg-black/80 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden p-3"
           >
+<<<<<<< HEAD
             <div className="flex flex-col py-2 text-white text-start px-4">
               <Link
                 href={user?.role === "admin" ? "/admin/dashboard" : "/account/profile"}
@@ -185,6 +292,65 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                 >
                   <p>Keranjang</p>
                 </Link>
+=======
+            <div className="flex flex-col gap-2 text-white text-start">
+              {/* Language Switcher Mobile */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-1 px-1">
+                <span className="text-xs text-white/70">Language</span>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setLanguage("ID")}
+                    className={`px-2 py-0.5 rounded text-xs ${language === "ID" ? "bg-white text-black font-bold" : "text-white/70"}`}
+                  >
+                    ID
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLanguage("EN")}
+                    className={`px-2 py-0.5 rounded text-xs ${language === "EN" ? "bg-white text-black font-bold" : "text-white/70"}`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+
+              {!user ? (
+                <div className="flex flex-col gap-2 pt-1">
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="py-1 px-2 text-xs font-medium text-white/90 hover:text-white transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Button
+                    size="sm"
+                    className="w-full text-xs font-semibold rounded-lg bg-white text-black hover:bg-white/90"
+                    onClick={() => {
+                      setIsOpen(false);
+                      push("/register");
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    href={"/account/profile"}
+                    className="py-2 hover:bg-white/10 transition px-2 rounded-md"
+                  >
+                    <p>Profil</p>
+                  </Link>
+                  <Link
+                    href={"/cart"}
+                    className="py-2 hover:bg-white/10 transition px-2 rounded-md"
+                  >
+                    <p>Keranjang</p>
+                  </Link>
+                </>
+>>>>>>> 26c651c (refactor: improve address validation, implement payment status polling, update global font to Poppins, and add FAQ page support)
               )}
             </div>
           </motion.div>
