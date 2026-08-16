@@ -39,6 +39,7 @@ export const getUserQueryOptions = () => {
     queryKey: getUserQueryKey(),
     queryFn: () => getUser(),
     staleTime: 5 * 60 * 1000,
+    retry: false,
   });
 };
 

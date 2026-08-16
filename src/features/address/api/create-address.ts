@@ -24,7 +24,7 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
     ...params.mutationConfig,
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: getAddressesQueryKey() });
-      toast.success("Address created");
+      toast.success("Alamat berhasil ditambahkan!");
       params.mutationConfig?.onSuccess?.(
         data,
         variables,
@@ -32,9 +32,13 @@ export const useCreateAddress = (params: UseCreateAddressParams = {}) => {
         context,
       );
     },
-    onError: (err) => {
-      toast.error("Gagal menambahkan alamat");
-      console.error(err);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (err: any) => {
+      const serverMessage = err?.response?.data?.message;
+      toast.error(
+        serverMessage || "Gagal menambahkan alamat. Silakan periksa kelengkapan data Anda."
+      );
+      console.error("[CreateAddress Error]", err);
     },
   });
 };

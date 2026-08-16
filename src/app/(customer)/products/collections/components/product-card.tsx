@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/format-currency";
 import { ProductImage, Variant } from "@/types/api";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { getMinMaxVariantPrice } from "@/utils/price-utils";
+import { formatCategoryName } from "@/utils/category-utils";
 import Image from "next/image";
 import Link from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
@@ -20,7 +21,7 @@ type ProductCardCollectionProps = {
 export const ProductCardCollection = (props: ProductCardCollectionProps) => {
   const { id, images, name, variant, category, layoutActive } = props;
 
-  const cleanCategory = category.replace("_", " ").toUpperCase();
+  const cleanCategory = formatCategoryName(category);
 
   const priceRange = getMinMaxVariantPrice(variant);
   return (

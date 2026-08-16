@@ -48,7 +48,7 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           <p className="text-md mb-2">
             {pathName === "/login"
               ? "Masuk ke akun Anda untuk mengakses layanan kami."
-              : "Selamat datang! Buat akun IDShopCase kamu sekarang"}
+              : "Selamat datang! Buat akun Idshopcase kamu sekarang"}
           </p>
         </div>
         <div className="w-3/5 h-full md:h-3/5 md:w-4/5 lg:w-3/5">

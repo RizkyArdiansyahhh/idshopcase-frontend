@@ -1,0 +1,15 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "loading": "Loading...",
+    "search": "Search",
+    "back": "Back",
+    "continue": "Continue",
+    "currency": "IDR"
+  }
+}

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: {
     default: "Kelola Produk",
-    template: "%s | Admin | IDShopCase",
+    template: "%s | Admin | Idshopcase",
   },
 };
 

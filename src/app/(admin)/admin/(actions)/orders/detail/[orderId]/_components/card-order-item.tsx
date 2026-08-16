@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
 import { OrderItemAdmin } from "@/types/api";
 import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
+import { formatCategoryName } from "@/utils/category-utils";
 import Image from "next/image";
 import { format } from "path";
 import CustomImages from "./custom-images";
@@ -31,7 +32,7 @@ export const CardOrderItem = (props: CardOrderItemProps) => {
               ></Image>
             </div>
             <div className="w-full">
-              <Badge variant={"outline"}>{item.Product.category}</Badge>
+              <Badge variant={"outline"}>{formatCategoryName(item.Product.category)}</Badge>
               <div className="flex flex-row justify-between items-center">
                 <p className="text-sm text-foreground/80 font-medium">
                   {item.Product.name}

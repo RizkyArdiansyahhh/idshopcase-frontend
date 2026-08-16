@@ -9,7 +9,7 @@ export const formProductSchema = z.object({
   category: z.enum(["custom_case", "keychain", "phone_charm", "pop_socket"], {
     message: "Silahkan pilih kategori produk",
   }),
-  images: z.array(z.instanceof(File)).min(1, "Minimal 1 gambar wajib diupload"),
+  images: z.array(z.instanceof(File)),
   variant: z.array(z.number(), {
     message: "Variant tidak boleh kosong, minimal 1 variant",
   }),
