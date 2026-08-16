@@ -10,7 +10,7 @@ export const OrderDetailById = () => {
   const { orderId } = useParams();
 
   const { data: order, isLoading: isLoadingOrder } = useGetOrder({
-    id: Number(orderId),
+    id: String(orderId),
   });
 
   const { data: user } = useGetUser();

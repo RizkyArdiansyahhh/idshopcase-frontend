@@ -3,7 +3,7 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { getMaterialsQueryKey } from "./get-materials";
 
-const deleteMaterial = async (id: number) => {
+const deleteMaterial = async (id: string | number) => {
   return await api.delete(`/reference/materials/${id}`);
 };
 

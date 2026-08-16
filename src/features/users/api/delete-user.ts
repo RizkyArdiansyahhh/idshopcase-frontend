@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getUsersQueryKey } from "./get-users";
 
-const deleteUser = async (id: number) => {
+const deleteUser = async (id: string | number) => {
   return await api.delete(`/user/${id}`, {});
 };
 

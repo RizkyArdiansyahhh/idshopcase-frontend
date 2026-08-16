@@ -4,10 +4,9 @@ import { useParams } from "next/navigation";
 
 const EditAddressPage = () => {
   const { id } = useParams();
-  console.log(id);
   return (
     <>
-      <Address addressId={Number(id)}></Address>
+      <Address addressId={String(id)}></Address>
     </>
   );
 };

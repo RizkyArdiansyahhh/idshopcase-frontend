@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getAddressesQueryKey } from "./get-address";
 
-const deleteAddress = (id: number) => {
+const deleteAddress = (id: string | number) => {
   return api.delete(`/user/addresses/${id}`);
 };
 

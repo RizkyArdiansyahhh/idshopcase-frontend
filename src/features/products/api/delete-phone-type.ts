@@ -3,7 +3,7 @@ import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { getPhoneTypesQueryKey } from "./get-phone-types";
 
-const deletePhoneType = (id: number) => {
+const deletePhoneType = (id: string | number) => {
   return api.delete(`/reference/phone-type/${id}`);
 };
 

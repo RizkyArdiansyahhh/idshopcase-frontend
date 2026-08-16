@@ -3,7 +3,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 export type ReviewItem = {
-  id: number;
+  id: string | number;
   shopee_rating_id: string;
   username: string;
   user_avatar: string | null;

@@ -7,15 +7,11 @@ import { toast } from "sonner";
 import { FormAddressSchemaType } from "../components/address";
 
 type UpdateAddressRequest = {
-  id: number;
+  id: string | number;
   data: FormAddressSchemaType;
 };
 const updateAddress = async ({ id, data }: UpdateAddressRequest) => {
-  return await api.put(`/addresses/${id}`, data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  return await api.put(`/user/addresses/${id}`, data);
 };
 
 type UseUpdateAddressParams = {
