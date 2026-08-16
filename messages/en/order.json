@@ -1,0 +1,16 @@
+{
+  "order": {
+    "title": "My Orders",
+    "trackOrder": "Track Order",
+    "paymentWaiting": "Awaiting Payment",
+    "paymentSuccess": "Payment Successful",
+    "deliveryAddress": "Delivery Address",
+    "changeAddress": "Change Address",
+    "noAddress": "No Delivery Address Added",
+    "selectAddress": "Select Address",
+    "summary": "Order Summary",
+    "subtotal": "Product Subtotal",
+    "shippingCost": "Shipping Cost",
+    "totalPayment": "Total Payment"
+  }
+}

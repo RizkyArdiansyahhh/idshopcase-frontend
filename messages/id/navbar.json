@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "brand": "IDSHOPCASE",
+    "language": "Bahasa",
+    "signIn": "Masuk",
+    "signUp": "Daftar",
+    "profile": "Profil Saya",
+    "cart": "Keranjang",
+    "adminDashboard": "Dashboard Admin"
+  }
+}

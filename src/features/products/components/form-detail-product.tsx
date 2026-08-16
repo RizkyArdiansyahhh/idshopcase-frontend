@@ -72,6 +72,12 @@ export const FormDetailProduct = ({
     },
   });
 
+  const handleSyncParent = (values: { variant?: string; phone_type?: string; quantity?: number }) => {
+    if (values.variant !== undefined) form.setValue("variant", values.variant);
+    if (values.phone_type !== undefined) form.setValue("phone_type", values.phone_type);
+    if (values.quantity !== undefined) form.setValue("quantity", values.quantity);
+  };
+
   const formValues = form.watch();
   const selectedVariant = hasVariant
     ? variantOptions.find((v) => v.id === formValues.variant)
@@ -117,6 +123,7 @@ export const FormDetailProduct = ({
               ...formValues,
               variant: selectedVariant?.id,
             }}
+            onSyncParent={handleSyncParent}
             phoneTypeOptions={phoneTypeOptions}
             variantOptions={rawVariantOptions}
             totalStock={stockProduct}
@@ -134,6 +141,7 @@ export const FormDetailProduct = ({
               ...formValues,
               variant: selectedVariant?.id,
             }}
+            onSyncParent={handleSyncParent}
             isCheckout
             productId={productDetail.id}
             phoneTypeOptions={phoneTypeOptions}

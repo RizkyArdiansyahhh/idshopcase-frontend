@@ -7,85 +7,79 @@ import {
   AccordionItem,
   AccordionTrigger2,
 } from "@/components/ui/accordion";
-
-const faqCategories = [
-  {
-    category: "Pemesanan & Custom Case",
-    items: [
-      {
-        id: "custom-1",
-        question: "Bagaimana cara melakukan pemesanan Custom Case?",
-        answer:
-          "Pilih produk Custom Case di katalog, klik tombol 'Custom Sekarang', upload gambar favorit Anda, sesuaikan posisi foto, dan ikuti langkah checkout hingga pembayaran selesai.",
-      },
-      {
-        id: "custom-2",
-        question: "Berapa lama estimasi proses pembuatan (Pre-Order)?",
-        answer:
-          "Proses cetak HD dan Quality Control memerlukan waktu 3-7 hari kerja tergantung jumlah antrean pesanan.",
-      },
-      {
-        id: "custom-3",
-        question: "Tipe HP apa saja yang tersedia?",
-        answer:
-          "Kami mendukung lebih dari 500+ tipe HP dari brand iPhone, Samsung, Xiaomi, Poco, Oppo, Vivo, Realme, dan Infinix. Jika tipe HP Anda tidak tercantum, hubungi Customer Service kami.",
-      },
-    ],
-  },
-  {
-    category: "Shipping",
-    items: [
-      {
-        id: "shipping-1",
-        question: "Kapan pesanan akan dikirim?",
-        answer:
-          "Pesanan akan dikirimkan segera setelah proses produksi pre-order selesai (3-7 hari kerja) melalui ekspedisi yang Anda pilih saat checkout.",
-      },
-      {
-        id: "shipping-2",
-        question: "Berapa ongkirnya?",
-        answer:
-          "Ongkos kirim dihitung secara otomatis berdasarkan lokasi tujuan dan ekspedisi pengiriman saat Anda melakukan checkout.",
-      },
-      {
-        id: "shipping-3",
-        question: "Bisakah pengiriman overseas / luar negeri?",
-        answer:
-          "Saat ini kami melayani pengiriman ke seluruh pelosok Indonesia. Untuk pengiriman mancanegara, harap hubungi Customer Service kami terlebih dahulu.",
-      },
-    ],
-  },
-  {
-    category: "Garansi & Retur",
-    items: [
-      {
-        id: "guarantee-1",
-        question: "Apakah ada garansi jika casing yang diterima salah tipe atau rusak?",
-        answer:
-          "Ya! Kami memberikan Garansi 100% Retur atau Cetak Ulang Gratis apabila terdapat kesalahan cetak/tipe HP dari pihak kami atau barang rusak saat pengiriman.",
-      },
-      {
-        id: "guarantee-2",
-        question: "Bagaimana cara mengklaim garansi?",
-        answer:
-          "Kirimkan video unboxing tanpa terputus dan foto barang yang diterima ke WhatsApp Customer Service kami dalam waktu maksimal 2x24 jam setelah barang diterima.",
-      },
-    ],
-  },
-  {
-    category: "Pembayaran",
-    items: [
-      {
-        id: "payment-1",
-        question: "Metode pembayaran apa saja yang tersedia?",
-        answer:
-          "Kami menerima pembayaran via Transfer Bank (BCA, Mandiri, BRI, BNI), QRIS, E-Wallet (ShopeePay, Dana, OVO, GoPay), serta Indomaret & Alfamart.",
-      },
-    ],
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function FAQPage() {
+  const t = useTranslations("faq");
+
+  const faqCategories = [
+    {
+      category: t("categories.orderCustom"),
+      items: [
+        {
+          id: "custom-1",
+          question: t("items.custom1_q"),
+          answer: t("items.custom1_a"),
+        },
+        {
+          id: "custom-2",
+          question: t("items.custom2_q"),
+          answer: t("items.custom2_a"),
+        },
+        {
+          id: "custom-3",
+          question: t("items.custom3_q"),
+          answer: t("items.custom3_a"),
+        },
+      ],
+    },
+    {
+      category: t("categories.shipping"),
+      items: [
+        {
+          id: "shipping-1",
+          question: t("items.shipping1_q"),
+          answer: t("items.shipping1_a"),
+        },
+        {
+          id: "shipping-2",
+          question: t("items.shipping2_q"),
+          answer: t("items.shipping2_a"),
+        },
+        {
+          id: "shipping-3",
+          question: t("items.shipping3_q"),
+          answer: t("items.shipping3_a"),
+        },
+      ],
+    },
+    {
+      category: t("categories.warranty"),
+      items: [
+        {
+          id: "guarantee-1",
+          question: t("items.warranty1_q"),
+          answer: t("items.warranty1_a"),
+        },
+        {
+          id: "guarantee-2",
+          question: t("items.warranty2_q"),
+          answer: t("items.warranty2_a"),
+        },
+      ],
+    },
+    {
+      category: t("categories.payment"),
+      items: [
+        {
+          id: "payment-1",
+          question: t("items.payment1_q"),
+          answer: t("items.payment1_a"),
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground w-full">
       {/* Hero Banner Area (THENBLANK Style) */}
@@ -99,7 +93,7 @@ export default function FAQPage() {
         />
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-light tracking-wide text-white drop-shadow-md">
-            FAQs
+            {t("title")}
           </h1>
         </div>
       </div>

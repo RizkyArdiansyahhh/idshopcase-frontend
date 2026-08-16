@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 const GradientFillButton = () => {
+  const t = useTranslations("home");
+
   return (
     <Link
       href={"/products/collections"}
@@ -8,7 +13,7 @@ const GradientFillButton = () => {
     >
       <span className="absolute bottom-0 left-0 z-0 h-0 w-full bg-gradient-to-t from-foreground to-foreground/80 transition-all duration-500 group-hover/button:h-full" />
       <span className="relative z-10 transition-all duration-500 group-hover/button:text-white">
-        Lihat Lebih Banyak
+        {t("viewMore")}
       </span>
     </Link>
   );

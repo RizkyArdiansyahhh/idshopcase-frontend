@@ -3,6 +3,7 @@ import GlareHover from "@/components/ui/GlareHover";
 import { formatCurrency } from "@/lib/format-currency";
 import { ProductImage } from "@/types/api";
 import { cleanImageUrl } from "@/utils/image-utils";
+import { formatCategoryName } from "@/utils/category-utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -76,7 +77,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
               {name}
             </p>
 
-            <p className="text-sm font-medium text-foreground/80">{category}</p>
+            <p className="text-sm font-medium text-foreground/80">
+              {formatCategoryName(category)}
+            </p>
             <p className="text-sm font-medium text-foreground/60">
               {price
                 ? price.min === price.max

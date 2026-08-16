@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/format-currency";
 import { Product } from "@/types/api";
 import { cleanImageUrl } from "@/utils/image-utils";
+import { formatCategoryName } from "@/utils/category-utils";
 import { getMinMaxVariantPrice } from "@/utils/price-utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -61,7 +62,7 @@ export const ProductRecomandationCard = (
                 variant="outline"
                 className="transition-all duration-200 capitalize group-hover:bg-background group-hover:text-foreground group-hover:border-background"
               >
-                {product.category?.replace(/_/g, " ")}
+                {formatCategoryName(product.category)}
               </Badge>
             </div>
           </div>

@@ -1,141 +1,184 @@
+"use client";
+
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 
 const instagramPhotos = [
   {
     id: 0,
     images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903225/Get_spoiled_by_nyiiit_s_collection_-_Shop_now_on_your_favorite_e-commerce_mxeifa.jpg",
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903225/Get_spoiled_by_nyiiit_s_collection_-_Shop_now_on_your_favorite_e-commerce_1_m7sybt.jpg",
+      "/images/katalog-instagram/1.jpg",
+      "/images/katalog-instagram/2.jpg",
     ],
   },
   {
     id: 1,
-    images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903226/it_s_past_working_hours_but_this_was_too_cute_not_to_post_uihazo.jpg",
-    ],
+    images: ["/images/katalog-instagram/3.jpg"],
   },
   {
     id: 2,
     images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903227/Me_Mini_me_paxtonjaury_.._paxtonjaury_5monthsold_cutebaby_babyboy_1_suyf40.jpg",
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903226/Me_Mini_me_paxtonjaury_.._paxtonjaury_5monthsold_cutebaby_babyboy_wxfqjh.jpg",
+      "/images/katalog-instagram/4.jpg",
+      "/images/katalog-instagram/5.jpg",
     ],
   },
   {
     id: 3,
-    images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903225/I_think_someone_is_peeping._oh_it_s_our_Facegrid_Case_thsjaj.jpg",
-    ],
+    images: ["/images/katalog-instagram/6.jpg"],
   },
   {
     id: 4,
     images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770904684/SnapInsta.to_470919034_1120616686443885_2590512095233953591_n_s7gxf2.jpg",
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770904684/SnapInsta.to_470937794_1128760572110210_7115421089464733897_n_l4e84b.jpg",
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770904684/SnapInsta.to_470901262_2173278613073485_1378731344008912565_n_aybd3p.jpg",
+      "/images/katalog-instagram/7.jpg",
+      "/images/katalog-instagram/8.jpg",
+      "/images/katalog-instagram/9.jpg",
     ],
   },
   {
     id: 5,
     images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903227/not_just_a_custom.it_s_a_memory_you_can_hold_baby_gemas_belsfoodies_bellywardhani_fydq9r.jpg",
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770905158/SnapInsta.to_626455846_18073172555575465_450816634720407945_n_lqfx72.jpg",
+      "/images/katalog-instagram/10.jpg",
+      "/images/katalog-instagram/11.jpg",
     ],
   },
   {
     id: 6,
-    images: [
-      "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770903225/Essentials_things_can_be_different_for_each_person_what_about_youSpotted_our_Bumper_Impact_prin_cvhxwb.jpg",
-    ],
+    images: ["/images/katalog-instagram/12.jpg"],
   },
 ];
 
 export const SectionInstagram = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll > 0) {
+      const progress = Math.min(Math.max((scrollLeft / maxScroll) * 100, 0), 100);
+      setScrollProgress(progress);
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+  }, []);
+
   return (
-    <div className="h-[60vh] w-screen flex gap-1 overflow-x-auto">
-      <div className="flex-shrink-0 w-1/3 h-full flex flex-col">
-        {instagramPhotos[0].images.map((image, index) => (
-          <div key={index} className="w-full h-1/2 relative">
-            <Image
-              src={image}
-              alt={`Instagram Photo`}
-              className="w-full h-full object-cover"
-              fill
-            />
-          </div>
-        ))}
+    <div className="w-full flex flex-col items-center">
+      {/* Scrollable Gallery without default browser scrollbars */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="w-screen h-[55vh] md:h-[60vh] flex gap-1.5 overflow-x-auto select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden px-2 sm:px-4 cursor-grab active:cursor-grabbing"
+      >
+        <div className="flex-shrink-0 w-3/4 sm:w-1/2 md:w-1/3 h-full flex flex-col gap-1.5">
+          {instagramPhotos[0].images.map((image, index) => (
+            <div key={index} className="w-full h-1/2 relative overflow-hidden">
+              <Image
+                src={image}
+                alt="Instagram Photo"
+                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 75vw, 33vw"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 h-full relative overflow-hidden">
+          <Image
+            src={instagramPhotos[1].images[0]}
+            alt="Instagram Photo"
+            fill
+            sizes="(max-width: 768px) 75vw, 33vw"
+            className="object-center object-cover"
+          />
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 h-full flex gap-1.5">
+          {instagramPhotos[2].images.map((image, index) => (
+            <div key={index} className="w-1/2 h-full relative overflow-hidden">
+              <Image
+                src={image}
+                alt="Instagram Photo"
+                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 38vw, 17vw"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 h-full flex flex-wrap gap-1.5">
+          {instagramPhotos[4].images.map((image, index) => (
+            <div
+              key={index}
+              className={`relative overflow-hidden ${
+                index === 2 ? "w-full h-[calc(50%-0.375rem)]" : "w-[calc(50%-0.375rem)] h-[calc(50%-0.375rem)]"
+              }`}
+            >
+              <Image
+                src={image}
+                alt="Instagram Photo"
+                fill
+                sizes="(max-width: 768px) 75vw, 33vw"
+                className="object-cover object-center"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 h-full relative overflow-hidden">
+          <Image
+            src={instagramPhotos[3].images[0]}
+            alt="Instagram Photo"
+            fill
+            sizes="(max-width: 768px) 75vw, 33vw"
+            className="object-center object-cover"
+          />
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 h-full flex gap-1.5">
+          {instagramPhotos[5].images.map((image, index) => (
+            <div key={index} className="w-1/2 h-full relative overflow-hidden">
+              <Image
+                src={image}
+                alt="Instagram Photo"
+                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 38vw, 17vw"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-3/4 sm:w-1/2 md:w-1/3 shrink-0 relative overflow-hidden">
+          <Image
+            src={instagramPhotos[6].images[0]}
+            alt="Instagram Photo"
+            fill
+            sizes="(max-width: 768px) 75vw, 33vw"
+            className="object-center object-cover"
+          />
+        </div>
       </div>
-      <div className="w-1/3 shrink-0 h-full relative">
-        <Image
-          src={instagramPhotos[1].images[0]}
-          alt="Instagram Photo"
-          fill
-          className="object-center object-cover"
-        ></Image>
-      </div>
-      <div className="w-1/3 shrink-0 h-full flex">
-        {instagramPhotos[2].images.map((image, index) => (
+
+      {/* Custom Centered Progress Scrollbar under the section */}
+      <div className="w-full flex justify-center items-center pt-5 pb-2">
+        <div className="relative w-44 sm:w-60 h-1 bg-border/60 rounded-full overflow-hidden">
           <div
-            key={index}
-            className={`w-1/2 h-full relative ${index === 1 && "grayscale"}`}
-          >
-            <Image
-              src={image}
-              alt={`Instagram Photo`}
-              className="w-full h-full object-cover"
-              fill
-            />
-          </div>
-        ))}
-      </div>
-      <div className="w-1/3 shrink-0 h-full flex flex-wrap">
-        {instagramPhotos[4].images.map((image, index) => (
-          <div
-            key={index}
-            className={`relative ${
-              index === 2 ? "w-full h-1/2" : "w-1/2 h-1/2"
-            } ${index === 1 && "grayscale"}`}
-          >
-            <Image
-              src={image}
-              alt={`Instagram Photo`}
-              fill
-              className="object-cover object-center"
-            />
-          </div>
-        ))}
-      </div>
-      <div className="w-1/3 shrink-0 h-full relative">
-        <Image
-          src={instagramPhotos[3].images[0]}
-          alt="Instagram Photo"
-          fill
-          className="object-center object-cover"
-        ></Image>
-      </div>
-      <div className="w-1/3 shrink-0 h-full flex">
-        {instagramPhotos[5].images.map((image, index) => (
-          <div
-            key={index}
-            className={`w-1/2 h-full relative ${index === 1 && "grayscale"}`}
-          >
-            <Image
-              src={image}
-              alt={`Instagram Photo`}
-              className="w-full h-full object-cover"
-              fill
-            />
-          </div>
-        ))}
-      </div>
-      <div className="w-1/3 shrink-0 relative">
-        <Image
-          src={instagramPhotos[6].images[0]}
-          alt="Instagram Photo"
-          fill
-          className="object-center object-cover"
-        ></Image>
+            className="h-full bg-foreground rounded-full transition-all duration-100 ease-out"
+            style={{
+              width: "30%",
+              transform: `translateX(${scrollProgress * 2.33}%)`,
+            }}
+          />
+        </div>
       </div>
     </div>
   );
 };
+
+export default SectionInstagram;

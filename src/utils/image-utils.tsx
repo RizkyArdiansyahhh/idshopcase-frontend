@@ -11,19 +11,18 @@ export const cleanImageUrl = (imageUrl?: string | null): string => {
     return "/images/product-1.jpeg";
   }
 
-  if (
-    imageUrl.startsWith("/") ||
-    imageUrl.startsWith("http://") ||
-    imageUrl.startsWith("https://")
-  ) {
+  // If already a full URL with protocol
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
     return imageUrl;
   }
 
-  const cleanPath = imageUrl.includes("/uploads/")
-    ? imageUrl.split("/uploads/")[1]
-    : imageUrl.includes("/images/")
-    ? imageUrl.split("/images/")[1]
-    : imageUrl;
+  // If it's a frontend public asset (e.g. /images/...)
+  if (imageUrl.startsWith("/images/")) {
+    return imageUrl;
+  }
+
+  // Clean /uploads/ or uploads/ prefix
+  const cleanPath = imageUrl.replace(/^\/?uploads\/?/, "");
 
   if (!cleanPath || cleanPath === "null" || cleanPath === "undefined") {
     return "/images/product-1.jpeg";

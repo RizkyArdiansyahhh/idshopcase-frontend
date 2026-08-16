@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { useGetUser } from "@/features/auth/api/get-user";
 import { useAuthStore } from "@/store/profile-store";
+import { useAuthModalStore } from "@/stores/auth-modal-store";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -29,7 +30,12 @@ export const ProtectedRoute = ({
 
     // belum login
     if (!user) {
-      router.replace("/login");
+      const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+      useAuthModalStore.getState().openModal({
+        reason: "login_required",
+        redirectUrl: currentPath,
+      });
+      router.replace("/");
       return;
     }
 

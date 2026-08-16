@@ -1,14 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useTransition, useEffect, useState } from "react";
+import { setUserLocale } from "@/i18n/locale";
 import { FaUser } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUser } from "@/features/auth/api/get-user";
 import { Button } from "../ui/button";
-import { usePathname, useRouter } from "next/navigation";
 import { CartButton } from "@/features/cart/components/cart-button";
 import { Globe, ChevronDown } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 interface NavbarProps {
   isBlur?: boolean;
@@ -16,16 +17,18 @@ interface NavbarProps {
 
 export const Navbar = ({ isBlur = true }: NavbarProps) => {
   const { data: user } = useGetUser();
-  const { push } = useRouter();
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("navbar");
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [language, setLanguage] = useState<"ID" | "EN">("ID");
   const [isLangOpen, setIsLangOpen] = useState(false);
 
   const FULL_WIDTH_PATHS = ["/products/collections"];
-  const pathName = usePathname();
   const isFullWidth = FULL_WIDTH_PATHS.some((path) =>
-    pathName.startsWith(path),
+    pathname.startsWith(path),
   );
 
   useEffect(() => {
@@ -64,6 +67,17 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  const [, startTransition] = useTransition();
+
+  const handleLocaleChange = (newLocale: "id" | "en") => {
+    setIsLangOpen(false);
+    setIsOpen(false);
+    startTransition(async () => {
+      await setUserLocale(newLocale);
+      router.refresh();
+    });
+  };
 
   // Styling
   const backgroundColor = isFullWidth
@@ -131,8 +145,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
 
         {/* Right: Actions (Language Switcher, Sign In, Sign Up / User Profile) */}
         <div className="hidden md:flex gap-6 items-center">
-          
-          {/* Language Switcher (Borderless text + Globe + Chevron) */}
+          {/* Language Switcher */}
           <div className="relative">
             <button
               id="lang-btn"
@@ -144,8 +157,10 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
               className="flex items-center gap-2 text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors cursor-pointer select-none"
             >
               <Globe className="w-4 h-4 text-white/80" />
-              <span>{language === "ID" ? "Indonesia" : "English"}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 ${isLangOpen ? "rotate-180" : ""}`} />
+              <span>{locale === "en" ? "English" : "Indonesia"}</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 ${isLangOpen ? "rotate-180" : ""}`}
+              />
             </button>
 
             <AnimatePresence>
@@ -160,24 +175,22 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                 >
                   <button
                     type="button"
-                    onClick={() => {
-                      setLanguage("ID");
-                      setIsLangOpen(false);
-                    }}
+                    onClick={() => handleLocaleChange("id")}
                     className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
-                      language === "ID" ? "bg-white/20 font-semibold text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                      locale === "id"
+                        ? "bg-white/20 font-semibold text-white"
+                        : "text-white/80 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     <span>🇮🇩 Indonesia</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setLanguage("EN");
-                      setIsLangOpen(false);
-                    }}
+                    onClick={() => handleLocaleChange("en")}
                     className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
-                      language === "EN" ? "bg-white/20 font-semibold text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                      locale === "en"
+                        ? "bg-white/20 font-semibold text-white"
+                        : "text-white/80 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     <span>🇬🇧 English</span>
@@ -190,28 +203,26 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
           {/* Auth Actions / Profile & Cart */}
           {!user ? (
             <div className="flex items-center gap-5">
-              {/* Sign In - Plain Text Link */}
               <Link
                 href="/login"
                 className="text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors"
               >
-                Sign In
+                {t("signIn")}
               </Link>
 
-              {/* Sign Up - Solid Rounded Button */}
               <Button
                 size="sm"
                 className="text-xs md:text-sm font-semibold rounded-lg bg-white text-black hover:bg-white/90 px-4 py-2"
-                onClick={() => push("/register")}
+                onClick={() => router.push("/register")}
               >
-                Sign Up
+                {t("signUp")}
               </Button>
             </div>
           ) : (
             <>
               <Link
                 href={user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
-                title={user.role === "admin" ? "Dashboard Admin" : "Profil Saya"}
+                title={user.role === "admin" ? t("adminDashboard") : t("profile")}
               >
                 <FaUser size={20} color="white" />
               </Link>
@@ -260,19 +271,19 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             <div className="flex flex-col gap-2 text-white text-start">
               {/* Language Switcher Mobile */}
               <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-1 px-1">
-                <span className="text-xs text-white/70">Language</span>
+                <span className="text-xs text-white/70">{t("language")}</span>
                 <div className="flex gap-1">
                   <button
                     type="button"
-                    onClick={() => setLanguage("ID")}
-                    className={`px-2 py-0.5 rounded text-xs ${language === "ID" ? "bg-white text-black font-bold" : "text-white/70"}`}
+                    onClick={() => handleLocaleChange("id")}
+                    className={`px-2 py-0.5 rounded text-xs ${locale === "id" ? "bg-white text-black font-bold" : "text-white/70"}`}
                   >
                     ID
                   </button>
                   <button
                     type="button"
-                    onClick={() => setLanguage("EN")}
-                    className={`px-2 py-0.5 rounded text-xs ${language === "EN" ? "bg-white text-black font-bold" : "text-white/70"}`}
+                    onClick={() => handleLocaleChange("en")}
+                    className={`px-2 py-0.5 rounded text-xs ${locale === "en" ? "bg-white text-black font-bold" : "text-white/70"}`}
                   >
                     EN
                   </button>
@@ -286,17 +297,17 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                     onClick={() => setIsOpen(false)}
                     className="py-1 px-2 text-xs font-medium text-white/90 hover:text-white transition-colors"
                   >
-                    Sign In
+                    {t("signIn")}
                   </Link>
                   <Button
                     size="sm"
                     className="w-full text-xs font-semibold rounded-lg bg-white text-black hover:bg-white/90"
                     onClick={() => {
                       setIsOpen(false);
-                      push("/register");
+                      router.push("/register");
                     }}
                   >
-                    Sign Up
+                    {t("signUp")}
                   </Button>
                 </div>
               ) : (
@@ -306,7 +317,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                     className="py-2 hover:bg-white/10 transition px-2 rounded-md"
                     onClick={() => setIsOpen(false)}
                   >
-                    <p>{user?.role === "admin" ? "Dashboard Admin" : "Profil"}</p>
+                    <p>{user?.role === "admin" ? t("adminDashboard") : t("profile")}</p>
                   </Link>
                   {user?.role !== "admin" && (
                     <Link
@@ -314,7 +325,7 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                       className="py-2 hover:bg-white/10 transition px-2 rounded-md"
                       onClick={() => setIsOpen(false)}
                     >
-                      <p>Keranjang</p>
+                      <p>{t("cart")}</p>
                     </Link>
                   )}
                 </>

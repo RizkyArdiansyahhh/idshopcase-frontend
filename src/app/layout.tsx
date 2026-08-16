@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Fredoka } from "next/font/google";
+import { Fredoka, Poppins } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
-import { Poppins } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getLocale } from "next-intl/server";
+import { UnauthorizedModal } from "@/components/shared/unauthorized-modal";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,20 +32,31 @@ export const metadata: Metadata = {
     "Idshopcase menjual case HP premium, custom, keychain, phone charm, dan masih banyak lagi.",
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png" },
       { url: "/images/idshopcase_circle_image.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
     ],
-    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+    shortcut: "/images/idshopcase_circle_image.png",
+    apple: [
+      { url: "/images/idshopcase_circle_image.png", type: "image/png" },
+      { url: "/apple-icon.png", type: "image/png" },
+    ],
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={`${poppins.variable} ${fredoka.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${poppins.variable} ${fredoka.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <meta
           name="viewport"
@@ -53,6 +66,22 @@ export default function RootLayout({
           name="google-site-verification"
           content="oauS460qZk1UrnYvZXPvj61iqN4I7XSzH-LadUqy-ZM"
         />
+        <link
+          rel="icon"
+          href="/images/idshopcase_circle_image.png"
+          type="image/png"
+          sizes="any"
+        />
+        <link
+          rel="shortcut icon"
+          href="/images/idshopcase_circle_image.png"
+          type="image/png"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/images/idshopcase_circle_image.png"
+          type="image/png"
+        />
 
         {/* // eslint-disable-next-line @next/next/no-sync-scripts */}
         <Script
@@ -60,7 +89,10 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${poppins.className} font-sans antialiased`} suppressHydrationWarning>
+      <body
+        className={`${poppins.className} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <NextTopLoader
           color="#003077"
           showSpinner={false}
@@ -68,7 +100,12 @@ export default function RootLayout({
           shadow={false}
           speed={200}
         ></NextTopLoader>
-        <QueryProvider>{children}</QueryProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <QueryProvider>
+            {children}
+            <UnauthorizedModal />
+          </QueryProvider>
+        </NextIntlClientProvider>
         <Toaster position="top-center"></Toaster>
       </body>
     </html>
