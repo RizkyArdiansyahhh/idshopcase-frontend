@@ -1,7 +1,13 @@
 import { ProductImage } from "@/types/api";
 
 const getApiOrigin = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    (typeof window !== "undefined" &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1"
+      ? "https://api.idshopcase.com/api"
+      : "http://localhost:5001/api");
   return baseUrl.replace(/\/api\/?$/, "");
 };
 
@@ -44,12 +50,6 @@ export const cleanImageUrl = (imageUrl?: string | null): string => {
     return "/images/product-1.jpeg";
   }
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_URL ||
-    (typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1"
-      ? "https://api.idshopcase.com/api"
-      : "http://localhost:5001/api");
-  const apiOrigin = baseUrl.replace(/\/api\/?$/, "");
   return `${apiOrigin}/uploads/${cleanPath}`;
 };
 
