@@ -6,15 +6,15 @@ import { useState } from "react";
 export default function CustomImages({
   images,
 }: {
-  images: { id: number; image_url: string }[];
+  images: { id: string | number; image_url: string }[];
 }) {
   const [loadingImages, setLoadingImages] = useState<{
-    [key: number]: boolean;
+    [key: string | number]: boolean;
   }>(() =>
     images.reduce((acc, img) => {
       acc[img.id] = true;
       return acc;
-    }, {} as { [key: number]: boolean })
+    }, {} as { [key: string | number]: boolean })
   );
 
   return (

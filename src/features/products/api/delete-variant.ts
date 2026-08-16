@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getVariantsQueryKey } from "./get-variants";
 import { toast } from "sonner";
 
-const deleteVariant = async (id: number) => {
+const deleteVariant = async (id: string | number) => {
   const response = await api.delete(`/reference/variants/${id}`);
   return response.data;
 };

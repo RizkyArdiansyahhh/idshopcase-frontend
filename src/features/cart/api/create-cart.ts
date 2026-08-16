@@ -4,12 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { getCartsQueryKey } from "./get-carts";
 
 type CartItemRequest = {
-  productId: number;
+  productId: string | number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customImageId?: any;
   quantity: number;
-  phoneTypeId: number | null;
-  variantId: number | null;
+  phoneTypeId: string | number | null;
+  variantId: string | number | null;
 };
 
 const createCart = async (data: CartItemRequest) => {

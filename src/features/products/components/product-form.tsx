@@ -43,10 +43,10 @@ export const ProductForm = () => {
   const productId = params.id;
 
   const [existingImages, setExistingImages] = useState<ExistingImageItem[]>([]);
-  const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
+  const [deletedImageIds, setDeletedImageIds] = useState<(string | number)[]>([]);
 
   const { data: product } = useGetProduct({
-    id: Number(productId),
+    id: String(productId || ""),
     queryConfig: { enabled: !!productId },
   });
 
@@ -112,8 +112,8 @@ export const ProductForm = () => {
       },
     });
 
-  const handleRemoveExistingImage = (id: number) => {
-    setExistingImages((prev) => prev.filter((img) => img.id !== id));
+  const handleRemoveExistingImage = (id: string | number) => {
+    setExistingImages((prev) => prev.filter((img) => String(img.id) !== String(id)));
     setDeletedImageIds((prev) => [...prev, id]);
   };
 

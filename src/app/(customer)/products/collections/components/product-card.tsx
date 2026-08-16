@@ -10,7 +10,7 @@ import Link from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
 
 type ProductCardCollectionProps = {
-  id: number;
+  id: string | number;
   images: ProductImage[];
   name: string;
   variant: Variant[] | undefined;

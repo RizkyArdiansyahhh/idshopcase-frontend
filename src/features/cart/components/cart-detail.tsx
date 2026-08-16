@@ -7,7 +7,7 @@ import { useCheckoutStore } from "@/store/checkout-store";
 import { CartItem } from "@/types/api";
 
 type CartDetailProps = {
-  selectedCartItems: number[];
+  selectedCartItems: string[];
   cartItems: CartItem[];
 };
 export const CartDetail = (props: CartDetailProps) => {

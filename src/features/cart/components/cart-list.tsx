@@ -8,8 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CartItem } from "@/types/api";
 
 type CartListProps = {
-  selectedCartItems: number[];
-  setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedCartItems: string[];
+  setSelectedCartItems: React.Dispatch<React.SetStateAction<string[]>>;
   cartItems: CartItem[];
   fetchCartsLoading: boolean;
 };

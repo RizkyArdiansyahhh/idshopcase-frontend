@@ -11,7 +11,7 @@ const updateVariant = async ({
   id,
   data,
 }: {
-  id: number;
+  id: string | number;
   data: UpdateVariantItemRequest;
 }) => {
   const response = await api.put(`/reference/variants/${id}`, data);

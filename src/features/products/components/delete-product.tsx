@@ -3,7 +3,7 @@ import { useDeleteProduct } from "../api/delete-product";
 import { CustomDialog } from "@/app/(admin)/admin/(actions)/components/custom-dialog";
 
 type DeleteProductProps = {
-  id: number;
+  id: string | number;
   isOpen: boolean;
   setIsOpen: (v: boolean) => void;
   setSelectedProduct: (v: Product | null) => void;

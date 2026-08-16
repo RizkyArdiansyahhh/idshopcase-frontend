@@ -1,5 +1,5 @@
 export type User = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -10,7 +10,7 @@ export type User = {
 };
 
 export type Address = {
-  id: number;
+  id: string;
   recipient_name: string;
   phone: string;
   province: string;
@@ -22,7 +22,7 @@ export type Address = {
 };
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   category: string;
@@ -34,19 +34,19 @@ export type Product = {
 };
 
 export type PhoneType = {
-  id: number;
+  id: string;
   brand: string;
   model: string;
 };
 
 export type Material = {
-  id: number;
+  id: string;
   name: string;
   description: string;
 };
 
 export type Variant = {
-  id: number;
+  id: string;
   name: string;
   price: string;
   stock: number;
@@ -56,23 +56,23 @@ export type Variant = {
 };
 
 export type ProductImage = {
-  id: number;
+  id: string;
   imageUrl: string;
   isPrimary: boolean;
 };
 
 export type ProductOrder = {
-  id: number;
+  id: string;
   name: string;
   price: string;
   ProductImages: ProductImage[];
 };
 
 export type OrderItem = {
-  id: number;
-  orderId: number;
-  productId: number;
-  customImageId: number | null;
+  id: string;
+  orderId: string;
+  productId: string;
+  customImageId: string | null;
   quantity: number;
   price: string;
   createdAt: string;
@@ -84,7 +84,7 @@ export type OrderItem = {
 };
 
 export type Payment = {
-  id: number;
+  id: string;
   payment_gateway: string;
   status: string;
   amount: string;
@@ -97,9 +97,9 @@ export type Payment = {
 };
 
 export type Order = {
-  id: number;
-  userId: number;
-  addressId: number;
+  id: string;
+  userId: string;
+  addressId: string;
   status: string;
   total_price: string;
   payment_method: string;
@@ -124,70 +124,70 @@ export type CartItem = {
     category: string;
     createdAt: string;
     description: string;
-    id: number;
+    id: string;
     name: string;
     updatedAt: string;
   };
   Variant: Variant;
-  cartId: number;
+  cartId: string;
   createdAt: string;
-  id: number;
-  phoneTypeId: number;
+  id: string;
+  phoneTypeId: string;
   price: string;
-  productId: number;
+  productId: string;
   quantity: number;
   updatedAt: string;
-  variantId: number;
+  variantId: string;
 };
 
 export interface CheckoutData {
-  productId: number;
+  productId: string;
   quantity: number;
-  phoneTypeId: number | null;
+  phoneTypeId: string | null;
   phoneTypeName: string | null;
   variant: {
-    id: number;
+    id: string;
     name: string;
     price: string;
     stock: number;
     max_images: number;
   };
-  cartId?: number;
+  cartId?: string;
 }
 
 export type OrderItemAdmin = {
-  id: number;
-  orderId: number;
-  productId: number;
-  customImageId: number | null;
+  id: string;
+  orderId: string;
+  productId: string;
+  customImageId: string | null;
   quantity: number;
   price: string;
-  phoneTypeId: number | null;
-  materialId: number | null;
-  variantId: number | null;
+  phoneTypeId: string | null;
+  materialId: string | null;
+  variantId: string | null;
   createdAt: string;
   updatedAt: string;
   Product: {
-    id: number;
+    id: string;
     name: string;
     price: string;
     category: string;
     ProductImages: ProductImage[];
   };
   PhoneType: {
-    id: number;
+    id: string;
     model: string;
   };
 
   Variant: {
-    id: number;
+    id: string;
     name: string;
     price: string;
     stock: number;
     max_images: number;
   };
   CustomImages: Array<{
-    id: number;
+    id: string;
     image_url: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     processed_url: any;
@@ -195,9 +195,9 @@ export type OrderItemAdmin = {
 };
 
 export type OrderAdmin = {
-  id: number;
-  userId: number;
-  addressId: number;
+  id: string;
+  userId: string;
+  addressId: string;
   status: string;
   total_price: string;
   payment_method: string;
@@ -206,14 +206,14 @@ export type OrderAdmin = {
   createdAt: string;
   updatedAt: string;
   User: {
-    id: number;
+    id: string;
     name: string;
     email: string;
     phone: string;
   };
   OrderItems: OrderItemAdmin[];
   Payment: {
-    id: number;
+    id: string;
     payment_gateway: string;
     status: string;
     amount: string;
@@ -234,9 +234,9 @@ export type OrderSummary = {
 };
 
 type OrderItemSummary = {
-  id: number;
+  id: string;
   quantity: number;
   price: number;
   subtotal: number;
-  variantId: number;
+  variantId: string;
 };

@@ -193,7 +193,7 @@ export const Products = () => {
         <DeleteProduct
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          id={selectedProduct?.id ?? 0}
+          id={selectedProduct?.id ?? ""}
           setSelectedProduct={setSelectedProduct}
         ></DeleteProduct>
       )}

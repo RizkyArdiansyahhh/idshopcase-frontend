@@ -18,7 +18,7 @@ import Image from "next/image";
 type PreviewImageProps = {
   children: React.ReactNode;
   imageUrl: string;
-  imageId: number;
+  imageId: string | number;
 };
 export const PreviewImage = (props: PreviewImageProps) => {
   const { children, imageUrl, imageId } = props;

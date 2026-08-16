@@ -14,7 +14,7 @@ type FormVariantProps = {
 export const FormVariant = (props: FormVariantProps) => {
   const { form } = props;
 
-  const [activeVariantId, setActiveVariantId] = useState<number | null>(null);
+  const [activeVariantId, setActiveVariantId] = useState<string | number | null>(null);
   console.log(activeVariantId, "ini active variant");
 
   const { data: variants = [] } = useGetVariants();
@@ -23,18 +23,18 @@ export const FormVariant = (props: FormVariantProps) => {
   console.log(variantValue, "ini variant value");
 
   const variantMap = useMemo(() => {
-    return new Map(variants.map((v) => [v.id, v]));
+    return new Map(variants.map((v) => [String(v.id), v]));
   }, [variants]);
 
   const selectedVariants = useMemo(() => {
     return (variantValue ?? [])
-      .map((id: number) => variantMap.get(id))
+      .map((id: string | number) => variantMap.get(String(id)))
       .filter(Boolean);
   }, [variantValue, variantMap]);
 
   const activeVariant = useMemo(() => {
     if (!activeVariantId) return null;
-    return variantMap.get(activeVariantId) ?? null;
+    return variantMap.get(String(activeVariantId)) ?? null;
   }, [activeVariantId, variantMap]);
 
   return (

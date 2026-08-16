@@ -106,7 +106,7 @@ export const AddressCard = ({
         open={isAddressModalOpen}
         onOpenChange={setIsAddressModalOpen}
         addresses={addresses || []}
-        selectedAddressId={selectedAddress?.id || 0}
+        selectedAddressId={selectedAddress?.id || ""}
         onSelectAddress={setSelectedAddress}
       />
     </>

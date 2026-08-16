@@ -10,11 +10,11 @@ export const formProductSchema = z.object({
     message: "Silahkan pilih kategori produk",
   }),
   images: z.array(z.instanceof(File)),
-  variant: z.array(z.number(), {
+  variant: z.array(z.string(), {
     message: "Variant tidak boleh kosong, minimal 1 variant",
   }),
   toggleIsPhoneType: z.boolean().optional(),
-  phone_type: z.array(z.number()).optional(),
+  phone_type: z.array(z.string()).optional(),
   toggleIsCreatePhoneType: z.boolean().optional(),
 
   namePhoneType: z.string().nullable().optional(),

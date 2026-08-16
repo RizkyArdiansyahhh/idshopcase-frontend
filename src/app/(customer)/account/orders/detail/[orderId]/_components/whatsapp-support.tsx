@@ -8,7 +8,7 @@ import { ChevronRight } from "lucide-react";
 import { RiCustomerServiceFill } from "react-icons/ri";
 
 type WhatsAppSupportProps = {
-  orderId: number;
+  orderId: string | number;
   username: string;
   date: string;
 };

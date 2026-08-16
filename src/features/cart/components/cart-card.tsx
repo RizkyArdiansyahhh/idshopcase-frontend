@@ -18,11 +18,11 @@ import { IoCloseOutline } from "react-icons/io5";
 import { LoadingDialog } from "@/components/shared/loading-dialog";
 
 type CartCardProps = {
-  cartId: number;
-  productId: number;
+  cartId: string;
+  productId: string;
   quantity: number;
   isSelected: boolean;
-  setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelectedCartItems: React.Dispatch<React.SetStateAction<string[]>>;
   variant: string | null;
   phoneType: string | null;
   productImages: ProductImage[];

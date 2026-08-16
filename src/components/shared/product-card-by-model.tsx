@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type ProductCardByModelProps = {
-  id: number;
+  id: string | number;
   name: string;
   image: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
