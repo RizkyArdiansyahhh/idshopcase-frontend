@@ -5,8 +5,7 @@ import { useParams } from "next/navigation";
 
 export const ProductDetail = () => {
   const params = useParams();
-  const productId = Number(params.id ?? 0);
-  console.log(productId);
+  const productId = String(params.id ?? "");
   return (
     <>
       <DetailProduct id={productId}></DetailProduct>

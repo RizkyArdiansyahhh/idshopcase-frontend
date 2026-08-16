@@ -14,7 +14,7 @@ import { OrderTimeline } from "@/components/shared/order-timeline";
 
 export const DetailOrderAdmin = () => {
   const params = useParams();
-  const orderId = Number(params.orderId);
+  const orderId = String(params.orderId);
   const [infoStatusMessage, setInfoStatusMessage] = useState<string>("");
 
   const { data: order } = useGetOrderAdmin({ id: orderId });

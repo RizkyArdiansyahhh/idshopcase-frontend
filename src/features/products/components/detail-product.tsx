@@ -10,7 +10,7 @@ import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/
 import Loader from "@/components/shared/loaders";
 
 type DetailProductProps = {
-  id: number;
+  id: string | number;
 };
 export const DetailProduct = (props: DetailProductProps) => {
   const { id } = props;
