@@ -1,5 +1,10 @@
 import { ProductImage } from "@/types/api";
 
+const getApiOrigin = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+  return baseUrl.replace(/\/api\/?$/, "");
+};
+
 export const cleanImageUrl = (imageUrl?: string | null): string => {
   if (
     !imageUrl ||
@@ -11,26 +16,83 @@ export const cleanImageUrl = (imageUrl?: string | null): string => {
     return "/images/product-1.jpeg";
   }
 
-  // If already a full URL with protocol
-  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+  // If blob or data URL
+  if (imageUrl.startsWith("blob:") || imageUrl.startsWith("data:")) {
     return imageUrl;
   }
 
-  // If it's a frontend public asset (e.g. /images/...)
+  // If frontend public asset (e.g. /images/...)
   if (imageUrl.startsWith("/images/")) {
     return imageUrl;
   }
 
-  // Clean /uploads/ or uploads/ prefix
-  const cleanPath = imageUrl.replace(/^\/?uploads\/?/, "");
+  const apiOrigin = getApiOrigin();
 
+  // If localhost was saved in DB, replace with current environment API origin
+  if (imageUrl.includes("localhost:") || imageUrl.includes("127.0.0.1:")) {
+    const cleanPath = imageUrl.replace(/^https?:\/\/[^/]+/, "");
+    return `${apiOrigin}${cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`}`;
+  }
+
+  // If external absolute URL (Cloudinary, Shopee, Tokopedia, etc.)
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  const cleanPath = imageUrl.replace(/^\/?uploads\/?/, "");
   if (!cleanPath || cleanPath === "null" || cleanPath === "undefined") {
     return "/images/product-1.jpeg";
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
-  const apiOrigin = baseUrl.replace(/\/api\/?$/, "");
   return `${apiOrigin}/uploads/${cleanPath}`;
+};
+
+export const cleanProfileImageUrl = (imageUrl?: string | null): string | null => {
+  if (
+    !imageUrl ||
+    typeof imageUrl !== "string" ||
+    imageUrl.trim() === "" ||
+    imageUrl === "null" ||
+    imageUrl === "undefined" ||
+    imageUrl.includes("product-1.jpeg")
+  ) {
+    return null;
+  }
+
+  if (imageUrl.startsWith("blob:") || imageUrl.startsWith("data:")) {
+    return imageUrl;
+  }
+
+  if (imageUrl.startsWith("/images/")) {
+    return imageUrl;
+  }
+
+  const apiOrigin = getApiOrigin();
+
+  // If localhost was saved in DB, replace with current environment API origin
+  if (imageUrl.includes("localhost:") || imageUrl.includes("127.0.0.1:")) {
+    const cleanPath = imageUrl.replace(/^https?:\/\/[^/]+/, "");
+    return `${apiOrigin}${cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`}`;
+  }
+
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  const normalized = imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`;
+  if (normalized.startsWith("/uploads/")) {
+    return `${apiOrigin}${normalized}`;
+  }
+
+  if (normalized.startsWith("/profile_pictures/")) {
+    return `${apiOrigin}/uploads${normalized}`;
+  }
+
+  if (imageUrl.startsWith("profile_")) {
+    return `${apiOrigin}/uploads/profile_pictures/${imageUrl}`;
+  }
+
+  return `${apiOrigin}/uploads/${imageUrl.replace(/^\/+/, "")}`;
 };
 
 export const imageUrlPrimary = (imagesUrl: ProductImage[] = []): string => {

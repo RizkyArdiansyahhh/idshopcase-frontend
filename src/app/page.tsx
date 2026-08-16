@@ -20,7 +20,7 @@ export default async function Home() {
     <div className="flex flex-col items-center">
       <Navbar isBlur={true} />
       <CarouselHomePage />
-      <div className="h-[70vh] w-screen flex justify-center items-center">
+      <div className="w-screen py-4 sm:py-6 md:py-8 flex justify-center items-center">
         <SectionCategories />
       </div>
       <div className="w-full flex justify-end">
