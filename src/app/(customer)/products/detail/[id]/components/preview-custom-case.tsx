@@ -193,7 +193,7 @@ export default function CasePreview() {
       {/* === RIGHT: PREVIEW === */}
       <div className="h-full flex gap-7 p-2 sm:p-6 font-sans flex-col lg:flex-row items-center lg:items-start justify-center">
         <div
-          className={`relative w-[15rem] lg:w-[17rem] h-[30.5rem] lg:h-[35rem] bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl ${colorSelected} flex-shrink-0 flex items-center justify-center border-4 border-foreground/10`}
+          className={`relative w-[15rem] lg:w-[17rem] h-[30.5rem] lg:h-[35rem] bg-transparent rounded-[2.5rem] overflow-hidden drop-shadow-xl ${colorSelected} flex-shrink-0 flex items-center justify-center select-none`}
           onMouseDown={onDragStart}
           onMouseMove={onDragMove}
           onMouseUp={onDragEnd}

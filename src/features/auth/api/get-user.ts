@@ -10,6 +10,12 @@ export const getUser = async () => {
       : null;
 
   if (token) {
+    // Auto-sync cookie for Next.js middleware if missing
+    if (typeof document !== "undefined" && !document.cookie.includes("better-auth.session_token")) {
+      const isSecure = window.location.protocol === "https:";
+      document.cookie = `better-auth.session_token=${token}; path=/; max-age=604800; SameSite=Lax${isSecure ? "; Secure" : ""}`;
+    }
+
     try {
       const res = await api.get("/auth/get-session", {
         headers: { Authorization: `Bearer ${token}` },
@@ -20,6 +26,7 @@ export const getUser = async () => {
     } catch {
       if (typeof window !== "undefined") {
         localStorage.removeItem("better-auth.session_token");
+        document.cookie = "better-auth.session_token=; path=/; max-age=0; SameSite=Lax";
       }
     }
   }
