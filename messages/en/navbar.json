@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "brand": "IDSHOPCASE",
+    "language": "Language",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "profile": "My Profile",
+    "cart": "Cart",
+    "adminDashboard": "Admin Dashboard"
+  }
+}

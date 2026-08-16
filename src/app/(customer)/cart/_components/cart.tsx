@@ -35,7 +35,7 @@ export const Cart = () => {
         </div>
         <div className="flex flex-row gap-4">
           <Badge variant={"outline"} className="px-3 font-semibold">
-            {cartItems?.length != 0 ? cartItems?.length : 0} Barang
+            {cartItems?.length ?? 0} Barang
           </Badge>
           <Link href={"account/profile"}>
             <UserAvatar

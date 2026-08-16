@@ -1,31 +1,35 @@
 "use client";
+
 import Image from "next/image";
 import { motion } from "framer-motion";
-
-const categories = [
-  {
-    id: 0,
-    title: "Custom Case",
-    img: "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770885590/clean_cute_in_every_moments._qiztpy.jpg",
-  },
-  {
-    id: 1,
-    title: "Pop Socket",
-    img: "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770885590/looks_cute_all_wrapped_in_our_Magsafe_Collection_vlo81k.jpg",
-  },
-  {
-    id: 2,
-    title: "Keychain",
-    img: "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770885590/Introducing_our_Facegrid_Collection_-_Acrylic_Keychain._bmlkps.jpg",
-  },
-  {
-    id: 3,
-    title: "Phone Charm",
-    img: "https://res.cloudinary.com/dy9gtwsh7/image/upload/v1770885590/A_phone_charm_for_your_bag_or_should_we_call_it_a_bag_charm_lknj9g.jpg",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export const SectionCategories = () => {
+  const t = useTranslations("home");
+
+  const categories = [
+    {
+      id: 0,
+      title: t("categoryCustomCase"),
+      img: "/images/main-assets/category-1.jpg",
+    },
+    {
+      id: 1,
+      title: t("categoryPopSocket"),
+      img: "/images/main-assets/category-2.jpg",
+    },
+    {
+      id: 2,
+      title: t("categoryKeychain"),
+      img: "/images/main-assets/category-3.jpg",
+    },
+    {
+      id: 3,
+      title: t("categoryPhoneCharm"),
+      img: "/images/main-assets/category-4.jpg",
+    },
+  ];
+
   return (
     <>
       <div className="h-[46vh] w-screen grid grid-cols-4 gap-2 px-5">

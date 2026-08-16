@@ -1,0 +1,31 @@
+{
+  "faq": {
+    "title": "FAQs",
+    "categories": {
+      "orderCustom": "Orders & Custom Case",
+      "shipping": "Shipping",
+      "warranty": "Warranty & Return",
+      "payment": "Payment"
+    },
+    "items": {
+      "custom1_q": "How do I place an order for a Custom Case?",
+      "custom1_a": "Select a Custom Case product in the catalog, click 'Custom Now', upload your favorite image, adjust the photo position, and proceed through checkout until payment is complete.",
+      "custom2_q": "How long does the production process (Pre-Order) take?",
+      "custom2_a": "HD printing and Quality Control take 3-7 business days depending on the order queue.",
+      "custom3_q": "Which phone models are supported?",
+      "custom3_a": "We support over 500+ phone models from brands like iPhone, Samsung, Xiaomi, Poco, Oppo, Vivo, Realme, and Infinix. If your model isn't listed, contact our Customer Service.",
+      "shipping1_q": "When will my order be shipped?",
+      "shipping1_a": "Orders will be shipped immediately once pre-order production is completed (3-7 business days) via the courier service chosen during checkout.",
+      "shipping2_q": "How much is the shipping cost?",
+      "shipping2_a": "Shipping costs are automatically calculated based on the destination address and selected courier at checkout.",
+      "shipping3_q": "Do you offer international / overseas shipping?",
+      "shipping3_a": "Currently we ship across all regions in Indonesia. For overseas shipments, please contact our Customer Service first.",
+      "warranty1_q": "Is there a warranty if the received case is the wrong model or damaged?",
+      "warranty1_a": "Yes! We provide a 100% Return or Free Reprint Warranty if there are printing/model errors on our part or physical damage during delivery.",
+      "warranty2_q": "How do I claim a warranty?",
+      "warranty2_a": "Send an uncut unboxing video and photos of the received item to our WhatsApp Customer Service within 2x24 hours after delivery.",
+      "payment1_q": "What payment methods are accepted?",
+      "payment1_a": "We accept Bank Transfer (BCA, Mandiri, BRI, BNI), QRIS, E-Wallets (ShopeePay, Dana, OVO, GoPay), as well as Indomaret & Alfamart."
+    }
+  }
+}

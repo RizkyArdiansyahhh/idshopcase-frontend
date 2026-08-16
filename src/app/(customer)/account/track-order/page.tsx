@@ -1,4 +1,5 @@
 "use client";
+
 import { useGetTrackOrder } from "@/features/orders/api/get-track-order";
 import z from "zod";
 import { useForm } from "react-hook-form";
@@ -9,41 +10,60 @@ import { Button } from "@/components/ui/button";
 import { IoSearch } from "react-icons/io5";
 import { Separator } from "@/components/ui/separator";
 import { TrackOrderTimeline } from "./_components/track-order";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useSearchParams } from "next/navigation";
+import { PackageSearch } from "lucide-react";
 
 const searchTrackingSchema = z.object({
-  trackingNumber: z.string().min(1, { message: "Tracking number is required" }),
+  trackingNumber: z.string().min(1, { message: "ID Order wajib diisi" }),
 });
 
 type SearchTrackingSchema = z.infer<typeof searchTrackingSchema>;
 
 export const TrackOrderPage = () => {
-  const [orderId, setOrderId] = useState<number>(0);
+  const searchParams = useSearchParams();
+  const initialOrderId = searchParams.get("order_id") || "";
+
+  const [searchQuery, setSearchQuery] = useState<string>(initialOrderId.trim());
+
   const form = useForm<SearchTrackingSchema>({
     resolver: zodResolver(searchTrackingSchema),
-    defaultValues: { trackingNumber: "" },
+    defaultValues: { trackingNumber: initialOrderId },
   });
+
+  useEffect(() => {
+    if (initialOrderId) {
+      setSearchQuery(initialOrderId.trim());
+      form.setValue("trackingNumber", initialOrderId.trim());
+    }
+  }, [initialOrderId, form]);
 
   const {
     data: tracking,
-    refetch,
     isLoading,
-    error,
+    isError,
   } = useGetTrackOrder({
-    orderId,
-    queryConfig: { enabled: orderId > 0 },
+    orderId: searchQuery,
+    queryConfig: { enabled: searchQuery.length > 0 },
   });
 
   const handleSearch = form.handleSubmit(({ trackingNumber }) => {
-    const id = Number(trackingNumber);
-    if (!id) return;
-    setOrderId(id); // orderId > 0 → query aktif
+    const trimmed = trackingNumber.trim();
+    if (!trimmed) return;
+    setSearchQuery(trimmed);
   });
 
   return (
-    <div className="p-6 h-full max-w-4xl mx-auto flex flex-col">
-      <form onSubmit={handleSearch} className="flex gap-4 w-full items-center">
+    <div className="p-4 md:p-6 h-full max-w-4xl mx-auto flex flex-col">
+      <div className="mb-4">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground">Lacak Pengiriman Paket</h1>
+        <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+          Pantau status pengiriman pesanan Anda secara real-time via ekspedisi J&T Express
+        </p>
+      </div>
+
+      <form onSubmit={handleSearch} className="flex gap-3 w-full items-center">
         <div className="flex-1">
           <FormField
             name="trackingNumber"
@@ -52,7 +72,7 @@ export const TrackOrderPage = () => {
               <FormItem>
                 <Input
                   {...field}
-                  placeholder="Masukkan ID Order Pesanan Anda"
+                  placeholder="Masukkan Nomor / ID Order (Contoh: 2 atau ORD-2)"
                   autoComplete="off"
                 />
               </FormItem>
@@ -61,24 +81,38 @@ export const TrackOrderPage = () => {
         </div>
         <Button
           type="submit"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 font-semibold"
           disabled={isLoading}
         >
-          <IoSearch /> Cari
+          <IoSearch size={18} /> Cari
         </Button>
       </form>
 
       <Separator className="my-5" />
 
       {isLoading ? (
-        <div className="flex-1 flex items-center justify-center">
-          <Spinner className="size-10 text-foreground" />
+        <div className="flex-1 flex flex-col items-center justify-center py-16 gap-3">
+          <Spinner className="size-10 text-primary" />
+          <p className="text-sm text-muted-foreground">Menghubungi server pelacakan J&T...</p>
         </div>
       ) : tracking ? (
         <TrackOrderTimeline tracking={tracking} />
+      ) : searchQuery.length > 0 && isError ? (
+        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
+          <p className="font-semibold text-foreground">Data Pengiriman Belum Tersedia</p>
+          <p className="text-xs md:text-sm text-muted-foreground max-w-md mt-1">
+            Pesanan atau resi &quot;{searchQuery}&quot; belum memiliki data pelacakan atau nomor resi belum aktif di sistem J&amp;T Express.
+          </p>
+        </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center">
-          <p className="text-muted-foreground">Order tidak ditemukan</p>
+        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
+          <div className="p-4 rounded-full bg-muted text-muted-foreground mb-3">
+            <PackageSearch size={48} />
+          </div>
+          <p className="font-semibold text-foreground">Masukkan ID Pesanan Anda</p>
+          <p className="text-xs md:text-sm text-muted-foreground max-w-sm mt-1">
+            Ketik nomor pesanan pada kolom pencarian di atas untuk melihat rute perjalanan paket.
+          </p>
         </div>
       )}
     </div>

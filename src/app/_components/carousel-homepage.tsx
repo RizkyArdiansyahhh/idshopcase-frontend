@@ -57,9 +57,15 @@ export const CarouselHomePage = () => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+      {/* Right Center: Dot Progress Indicators */}
+      <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20">
         {SLIDES.map((_, index) => (
-          <button key={index} onClick={() => setActiveIndex(index)}>
+          <button
+            key={index}
+            onClick={() => setActiveIndex(index)}
+            className="p-1 hover:scale-110 transition-transform"
+            title={`Slide ${index + 1}`}
+          >
             <DotProgress
               active={index === activeIndex}
               progress={index === activeIndex ? progress : 0}
@@ -67,9 +73,53 @@ export const CarouselHomePage = () => {
           </button>
         ))}
       </div>
+
+      {/* Bottom Center: Glowing Vertical Fill-Down Animation */}
+      <CarouselScrollDown />
     </section>
   );
 };
+
+export function CarouselScrollDown() {
+  const handleScrollDown = () => {
+    window.scrollTo({
+      top: window.innerHeight - 20,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
+      <button
+        onClick={handleScrollDown}
+        className="group flex flex-col items-center gap-1 text-white/80 hover:text-white transition-colors cursor-pointer"
+        aria-label="Scroll Down"
+      >
+        {/* Teks Label Uppercase */}
+        <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/80 group-hover:text-white transition-colors">
+          SCROLL DOWN
+        </span>
+
+        {/* Animasi Garis Vertikal (Continuous Fill-Down Loop) */}
+        <div className="w-0.5 h-12 bg-white/20 relative overflow-hidden rounded-t-full">
+          <motion.div
+            animate={{
+              top: ["0%", "0%", "100%", "0%"],
+              bottom: ["100%", "0%", "0%", "100%"],
+            }}
+            transition={{
+              duration: 2.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.45, 0.9, 1],
+            }}
+            className="absolute left-0 w-full bg-white shadow-[0_0_8px_rgba(255,255,255,1)]"
+          />
+        </div>
+      </button>
+    </div>
+  );
+}
 
 type DotProgressProps = {
   active: boolean;

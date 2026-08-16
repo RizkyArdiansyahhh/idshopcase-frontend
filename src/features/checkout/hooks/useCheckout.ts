@@ -8,7 +8,6 @@ import { useCheckoutStore } from "@/store/checkout-store";
 import { imageUrlPrimary } from "@/utils/image-utils";
 import { useGetProducts } from "@/features/products/api/get-ptoducts";
 import { useRouter } from "next/navigation";
-import { ur } from "zod/v4/locales";
 
 export type DetailProduct = {
   image: string;
@@ -114,6 +113,8 @@ export const useCheckout = () => {
     useCreateOrder({
       mutationConfig: {
         onSuccess: (data) => {
+          useCheckoutStore.getState().clearCheckoutData();
+          useCheckoutStore.getState().clearSelectedCartIds();
           replace(`/order/${data.order.id}/payment`);
         },
       },

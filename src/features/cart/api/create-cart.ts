@@ -22,6 +22,8 @@ type UseCreateCart = {
   mutationConfig?: MutationConfig<typeof createCart>;
 };
 
+import { toast } from "sonner";
+
 export const useCreateCart = ({ mutationConfig }: UseCreateCart = {}) => {
   return useMutation({
     mutationFn: createCart,
@@ -29,6 +31,16 @@ export const useCreateCart = ({ mutationConfig }: UseCreateCart = {}) => {
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: getCartsQueryKey() });
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
+    },
+    onError: (err: any, ...args) => {
+      const msg =
+        err.response?.data?.message ||
+        err.message ||
+        "Gagal menambahkan produk ke keranjang";
+      if (!mutationConfig?.onError) {
+        toast.error(msg);
+      }
+      mutationConfig?.onError?.(err, ...args);
     },
   });
 };

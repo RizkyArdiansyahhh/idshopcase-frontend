@@ -12,7 +12,7 @@ export const SectionShowCase = () => {
                 Hero Section
               </h2>
               <p className="text-foreground font-garamond text-lg lg:text-xl w-[90%]">
-                Tunjukkan kreativitasmu dengan custom case IdShopCase. Atur
+                Tunjukkan kreativitasmu dengan custom case Idshopcase. Atur
                 desain, gabungkan gambar, dan pilih warna favoritmu untuk hasil
                 yang benar-benar pribadi.
               </p>
@@ -49,13 +49,13 @@ export const SectionShowCase = () => {
                 Hero Section
               </h2>
               <p className="font-garamond hidden md:block text-md lg:text-xl w-[90%]">
-                IdShopCase hadir untuk kamu yang ingin mengekspresikan
+                Idshopcase hadir untuk kamu yang ingin mengekspresikan
                 kreativitas melalui custom case. Pilih gambar favorit, atur
                 desain, dan pilih warna case sesuai gaya. Hasilnya unik,
                 personal, dan siap membuat ponselmu tampil beda!
               </p>
               <p className="font-garamond block md:hidden text-md w-[90%]">
-                Di IdShopCase, setiap case dibuat dengan kualitas terbaik dan
+                Di Idshopcase, setiap case dibuat dengan kualitas terbaik dan
                 bisa disesuaikan sepenuhnya. Unggah gambar, pilih warna, dan
                 atur posisi desainmu sendiri. Buat case yang mencerminkan gaya
                 dan kepribadianmu.

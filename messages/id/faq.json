@@ -1,0 +1,31 @@
+{
+  "faq": {
+    "title": "FAQs",
+    "categories": {
+      "orderCustom": "Pemesanan & Custom Case",
+      "shipping": "Pengiriman",
+      "warranty": "Garansi & Retur",
+      "payment": "Pembayaran"
+    },
+    "items": {
+      "custom1_q": "Bagaimana cara melakukan pemesanan Custom Case?",
+      "custom1_a": "Pilih produk Custom Case di katalog, klik tombol 'Custom Sekarang', upload gambar favorit Anda, sesuaikan posisi foto, dan ikuti langkah checkout hingga pembayaran selesai.",
+      "custom2_q": "Berapa lama estimasi proses pembuatan (Pre-Order)?",
+      "custom2_a": "Proses cetak HD dan Quality Control memerlukan waktu 3-7 hari kerja tergantung jumlah antrean pesanan.",
+      "custom3_q": "Tipe HP apa saja yang tersedia?",
+      "custom3_a": "Kami mendukung lebih dari 500+ tipe HP dari brand iPhone, Samsung, Xiaomi, Poco, Oppo, Vivo, Realme, dan Infinix. Jika tipe HP Anda tidak tercantum, hubungi Customer Service kami.",
+      "shipping1_q": "Kapan pesanan akan dikirim?",
+      "shipping1_a": "Pesanan akan dikirimkan segera setelah proses produksi pre-order selesai (3-7 hari kerja) melalui ekspedisi yang Anda pilih saat checkout.",
+      "shipping2_q": "Berapa ongkirnya?",
+      "shipping2_a": "Ongkos kirim dihitung secara otomatis berdasarkan lokasi tujuan dan ekspedisi pengiriman saat Anda melakukan checkout.",
+      "shipping3_q": "Bisakah pengiriman overseas / luar negeri?",
+      "shipping3_a": "Saat ini kami melayani pengiriman ke seluruh pelosok Indonesia. Untuk pengiriman mancanegara, harap hubungi Customer Service kami terlebih dahulu.",
+      "warranty1_q": "Apakah ada garansi jika casing yang diterima salah tipe atau rusak?",
+      "warranty1_a": "Ya! Kami memberikan Garansi 100% Retur atau Cetak Ulang Gratis apabila terdapat kesalahan cetak/tipe HP dari pihak kami atau barang rusak saat pengiriman.",
+      "warranty2_q": "Bagaimana cara mengklaim garansi?",
+      "warranty2_a": "Kirimkan video unboxing tanpa terputus dan foto barang yang diterima ke WhatsApp Customer Service kami dalam waktu maksimal 2x24 jam setelah barang diterima.",
+      "payment1_q": "Metode pembayaran apa saja yang tersedia?",
+      "payment1_a": "Kami menerima pembayaran via Transfer Bank (BCA, Mandiri, BRI, BNI), QRIS, E-Wallet (ShopeePay, Dana, OVO, GoPay), serta Indomaret & Alfamart."
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { CheckoutData } from "@/types/api";
 
 interface CheckoutStore {
@@ -10,19 +11,27 @@ interface CheckoutStore {
   clearSelectedCartIds: () => void;
 }
 
-export const useCheckoutStore = create<CheckoutStore>((set) => ({
-  data: null,
-  selectedCartIds: [],
-  setCheckoutData: (data) =>
-    set({
-      data: data,
-      selectedCartIds: [],
-    }),
-  setSelectedCartIds: (ids) =>
-    set({
-      selectedCartIds: ids,
+export const useCheckoutStore = create<CheckoutStore>()(
+  persist(
+    (set) => ({
       data: null,
+      selectedCartIds: [],
+      setCheckoutData: (data) =>
+        set({
+          data: data,
+          selectedCartIds: [],
+        }),
+      setSelectedCartIds: (ids) =>
+        set({
+          selectedCartIds: ids,
+          data: null,
+        }),
+      clearCheckoutData: () => set({ data: null }),
+      clearSelectedCartIds: () => set({ selectedCartIds: [] }),
     }),
-  clearCheckoutData: () => set({ data: null }),
-  clearSelectedCartIds: () => set({ selectedCartIds: [] }),
-}));
+    {
+      name: "idshopcase-checkout-storage",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

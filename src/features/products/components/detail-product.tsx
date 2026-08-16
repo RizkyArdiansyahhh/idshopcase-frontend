@@ -7,6 +7,7 @@ import { BreadcrumbCustom } from "@/components/shared/breadCrumbCustom";
 import { ListProductsDetail } from "./list-products";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/preview-custom-case";
+import Loader from "@/components/shared/loaders";
 
 type DetailProductProps = {
   id: number;
@@ -14,41 +15,55 @@ type DetailProductProps = {
 export const DetailProduct = (props: DetailProductProps) => {
   const { id } = props;
 
-  console.log(id);
   const { data: product, isLoading: fetchProductLoading } = useGetProduct({
     id,
     queryConfig: {
       enabled: !!id,
     },
   });
-  console.log(product, "product");
 
   const image = useMemo(() => {
-    if (!product?.ProductImages) return null;
-    const defaultImage = product.ProductImages.find((image) => image.isPrimary);
-    const cleanPath = defaultImage?.imageUrl?.split("/uploads/")[1] ?? null;
-    return cleanPath ? `/images/${cleanPath}` : null;
+    if (!product?.ProductImages || product.ProductImages.length === 0) return null;
+    const defaultImage =
+      product.ProductImages.find((img) => img.isPrimary) ??
+      product.ProductImages[0];
+    return defaultImage?.imageUrl ?? null;
   }, [product?.ProductImages]);
 
-  if (!product) return null;
+  if (fetchProductLoading) {
+    return (
+      <div className="w-full flex justify-center items-center h-[50vh]">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center py-20 gap-4">
+        <h2 className="text-xl font-semibold text-foreground">Produk Tidak Ditemukan</h2>
+        <p className="text-sm text-muted-foreground">Produk ini mungkin telah dihapus atau tidak tersedia.</p>
+      </div>
+    );
+  }
 
   const isCustomCase = product.category === "custom_case";
 
   return (
-    <>
+    <div className="w-full max-w-full overflow-x-hidden">
       <div className="w-full my-2">
         <BreadcrumbCustom></BreadcrumbCustom>
       </div>
-      <div className="w-full h-full flex lg:flex-row flex-col ">
-        <div className="w-full lg:w-[50%] h-full ">
-          <div className="w-full h-full lg:h-5/6 flex flex-col">
+      <div className="w-full h-full flex lg:flex-row flex-col gap-6 min-w-0">
+        <div className="w-full lg:w-[50%] h-full min-w-0">
+          <div className="w-full h-full lg:h-5/6 flex flex-col min-w-0">
             <PreviewImageProduct
               isLoading={fetchProductLoading}
               images={product.ProductImages}
             ></PreviewImageProduct>
           </div>
         </div>
-        <div className="w-full lg:w-[50%] lg:px-8 flex flex-col gap-2.5 ">
+        <div className="w-full lg:w-[50%] lg:px-8 flex flex-col gap-2.5 min-w-0">
           <FormDetailProduct
             productDetail={product}
             image={image ?? ""}
@@ -80,6 +95,6 @@ export const DetailProduct = (props: DetailProductProps) => {
 
       <Separator></Separator>
       <ListProductsDetail></ListProductsDetail>
-    </>
+    </div>
   );
 };

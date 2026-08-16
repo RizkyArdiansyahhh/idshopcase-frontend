@@ -3,6 +3,7 @@ import GlareHover from "@/components/ui/GlareHover";
 import { formatCurrency } from "@/lib/format-currency";
 import { ProductImage } from "@/types/api";
 import { cleanImageUrl } from "@/utils/image-utils";
+import { formatCategoryName } from "@/utils/category-utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,9 +20,9 @@ type ProductCardProps = {
 export const ProductCardHomePage = (props: ProductCardProps) => {
   const { id, name, category, images, price } = props;
   const mainImage =
-    images.find((image) => image.isPrimary)?.imageUrl ??
-    images[0]?.imageUrl ??
-    "";
+    images?.find((image) => image.isPrimary)?.imageUrl ??
+    images?.[0]?.imageUrl ??
+    "/images/product-1.jpeg";
   const [activeImage, setActiveImage] = useState(mainImage);
 
   return (
@@ -30,9 +31,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
         <div className="relative w-[18rem] h-[40vh] rounded-xs overflow-hidden cursor-pointer">
           <Image
             key={activeImage}
-            src={cleanImageUrl(activeImage) ?? ""}
+            src={cleanImageUrl(activeImage)}
             fill
-            alt=""
+            alt={name || "Product"}
             className="object-cover object-center"
           />
           <GlareHover
@@ -60,9 +61,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
                   } hover:border-foreground transition-all`}
                 >
                   <Image
-                    src={cleanImageUrl(image.imageUrl) ?? ""}
+                    src={cleanImageUrl(image.imageUrl)}
                     fill
-                    alt=""
+                    alt={name || "Thumbnail"}
                     className="object-cover animate-fade object-center"
                   />
                 </div>
@@ -76,7 +77,9 @@ export const ProductCardHomePage = (props: ProductCardProps) => {
               {name}
             </p>
 
-            <p className="text-sm font-medium text-foreground/80">{category}</p>
+            <p className="text-sm font-medium text-foreground/80">
+              {formatCategoryName(category)}
+            </p>
             <p className="text-sm font-medium text-foreground/60">
               {price
                 ? price.min === price.max

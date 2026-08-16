@@ -51,9 +51,40 @@ export const useLogin = (params: useLoginPrams = {}) => {
         context,
       );
     },
-    onError: (err: Error, ...args) => {
-      toast.error(err.message || "Email atau password salah");
-      params.mutationConfig?.onError?.(err, ...args);
+    onError: (err: any, ...args) => {
+      // Jika caller menyediakan onError sendiri (seperti LoginForm), serahkan padanya
+      if (params.mutationConfig?.onError) {
+        return params.mutationConfig.onError(err, ...args);
+      }
+
+      const rawMsg = err.response?.data?.message || err.message || "";
+      let friendlyMsg = "Email atau password salah. Silakan coba lagi.";
+
+      if (
+        rawMsg.toLowerCase().includes("user not found") ||
+        rawMsg.toLowerCase().includes("email tidak ditemukan")
+      ) {
+        friendlyMsg = "Email tidak ditemukan";
+      } else if (
+        rawMsg.toLowerCase().includes("wrong password") ||
+        rawMsg.toLowerCase().includes("password salah")
+      ) {
+        friendlyMsg = "Password salah. Silakan coba lagi.";
+      } else if (
+        rawMsg.toLowerCase().includes("not verified") ||
+        rawMsg.toLowerCase().includes("belum terverifikasi")
+      ) {
+        friendlyMsg =
+          "Akun belum terverifikasi. Silakan verifikasi OTP terlebih dahulu.";
+      } else if (
+        typeof rawMsg === "string" &&
+        !rawMsg.includes("status code") &&
+        rawMsg.trim().length > 0
+      ) {
+        friendlyMsg = rawMsg;
+      }
+
+      toast.error(friendlyMsg);
     },
   });
 };

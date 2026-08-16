@@ -1,0 +1,16 @@
+{
+  "order": {
+    "title": "Pesanan Saya",
+    "trackOrder": "Lacak Pesanan",
+    "paymentWaiting": "Menunggu Pembayaran",
+    "paymentSuccess": "Pembayaran Berhasil",
+    "deliveryAddress": "Alamat Pengiriman",
+    "changeAddress": "Ubah Alamat",
+    "noAddress": "Alamat Pengiriman Belum Ada",
+    "selectAddress": "Pilih Alamat",
+    "summary": "Ringkasan Pesanan",
+    "subtotal": "Subtotal Produk",
+    "shippingCost": "Ongkos Kirim",
+    "totalPayment": "Total Pembayaran"
+  }
+}
