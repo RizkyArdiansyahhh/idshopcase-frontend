@@ -42,6 +42,31 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**.susercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.shopee.co.id",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.shopeemobile.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.tokopedia.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.tokopedia.com",
+        pathname: "/**",
+      },
     ],
   },
 };
