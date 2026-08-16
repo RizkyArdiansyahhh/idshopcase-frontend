@@ -1,8 +1,16 @@
 import axios from "axios";
 import { useAuthModalStore } from "@/stores/auth-modal-store";
 
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+    return "https://api.idshopcase.com/api";
+  }
+  return "http://localhost:5001/api";
+};
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: getApiBaseUrl(),
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -11,7 +19,7 @@ export const api = axios.create({
 });
 
 export const apiUpload = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: getApiBaseUrl(),
   withCredentials: true,
   headers: {
     "ngrok-skip-browser-warning": "true",
