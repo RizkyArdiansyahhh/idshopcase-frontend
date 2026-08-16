@@ -11,7 +11,7 @@ type PaymentSummaryProps = {
   paymentMethod: string;
   createOrderIsLoading: boolean;
   handleCreateOrder: () => void;
-  addressId?: number;
+  addressId?: string | number | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dataRequest?: any; // buyNow atau selectedItemIds
   isAllImageValid?: boolean;
