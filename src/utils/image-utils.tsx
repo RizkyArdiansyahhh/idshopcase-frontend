@@ -1,13 +1,19 @@
 import { ProductImage } from "@/types/api";
 
 const getApiOrigin = () => {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_URL ||
-    (typeof window !== "undefined" &&
+  let baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (
+    typeof window !== "undefined" &&
     window.location.hostname !== "localhost" &&
-    window.location.hostname !== "127.0.0.1"
-      ? "https://api.idshopcase.com/api"
-      : "http://localhost:5001/api");
+    window.location.hostname !== "127.0.0.1" &&
+    !window.location.hostname.startsWith("192.168.") &&
+    !window.location.hostname.startsWith("10.")
+  ) {
+    if (!baseUrl || baseUrl.includes("localhost") || baseUrl.includes("127.0.0.1")) {
+      baseUrl = "https://api.idshopcase.com/api";
+    }
+  }
+  baseUrl = baseUrl || "http://localhost:5001/api";
   return baseUrl.replace(/\/api\/?$/, "");
 };
 
