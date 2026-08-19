@@ -19,19 +19,19 @@ export const FooterLink = () => {
 
   return (
     <>
-      <div className="w-full h-fit grid grid-cols-3 gap-6">
+      <div className="w-full h-fit grid grid-cols-3 gap-6 font-sans">
         {/* Customer Service */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
             {t("customerService")}
           </h3>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 text-xs">
             <li>
               <a
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("helpCenter")}
               </a>
@@ -39,7 +39,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/cart"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("paymentMethods")}
               </Link>
@@ -47,7 +47,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/account/track-order"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("trackOrder")}
               </Link>
@@ -57,14 +57,14 @@ export const FooterLink = () => {
 
         {/* Explore */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
             {t("exploreIdshopcase")}
           </h3>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 text-xs">
             <li>
               <Link
                 href="/about"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("aboutUs")}
               </Link>
@@ -74,7 +74,7 @@ export const FooterLink = () => {
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("warrantyPolicy")}
               </a>
@@ -82,7 +82,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/faq"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("faq")}
               </Link>
@@ -92,14 +92,14 @@ export const FooterLink = () => {
 
         {/* Collections */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
             {t("collections")}
           </h3>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 text-xs">
             <li>
               <Link
                 href="/products/collections?category=custom_case"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("customCase")}
               </Link>
@@ -107,7 +107,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/products/collections?category=keychain"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("keychain")}
               </Link>
@@ -115,7 +115,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/products/collections?category=phone_charm"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("phoneCharm")}
               </Link>
@@ -123,7 +123,7 @@ export const FooterLink = () => {
             <li>
               <Link
                 href="/products/collections?category=pop_socket"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("popSocket")}
               </Link>
@@ -136,7 +136,7 @@ export const FooterLink = () => {
       <div className="flex-1 w-full flex items-end mt-6">
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-2.5">
-            <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+            <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
               {t("paymentMethods")}
             </h3>
             <div>
@@ -145,7 +145,7 @@ export const FooterLink = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                 {t("shippingMethods")}
               </h3>
               <div>
@@ -153,7 +153,7 @@ export const FooterLink = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                 Payment Gateway
               </h3>
               <div>
@@ -171,20 +171,24 @@ export function FooterAccordionMobile() {
   const t = useTranslations("footer");
 
   return (
-    <Accordion type="single" collapsible className="w-full md:hidden">
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full md:hidden divide-y divide-neutral-200"
+    >
       {/* Layanan Pelanggan */}
-      <AccordionItem2 value="customer">
-        <AccordionTrigger2 className="text-background text-xs font-semibold uppercase tracking-wider">
+      <AccordionItem2 value="customer" className="border-b-neutral-200">
+        <AccordionTrigger2 className="text-neutral-900 text-xs font-bold uppercase tracking-wider py-3">
           {t("customerService")}
         </AccordionTrigger2>
         <AccordionContent>
-          <ul className="flex flex-col gap-2 pt-1">
+          <ul className="flex flex-col gap-2 pt-1 pb-3 text-xs">
             <li>
               <a
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("helpCenter")}
               </a>
@@ -192,7 +196,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/cart"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("paymentMethods")}
               </Link>
@@ -200,7 +204,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/account/track-order"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("trackOrder")}
               </Link>
@@ -210,16 +214,16 @@ export function FooterAccordionMobile() {
       </AccordionItem2>
 
       {/* Jelajah */}
-      <AccordionItem2 value="explore">
-        <AccordionTrigger2 className="text-background text-xs font-semibold uppercase tracking-wider">
+      <AccordionItem2 value="explore" className="border-b-neutral-200">
+        <AccordionTrigger2 className="text-neutral-900 text-xs font-bold uppercase tracking-wider py-3">
           {t("exploreIdshopcase")}
         </AccordionTrigger2>
         <AccordionContent>
-          <ul className="flex flex-col gap-2 pt-1">
+          <ul className="flex flex-col gap-2 pt-1 pb-3 text-xs">
             <li>
               <Link
                 href="/about"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("aboutUs")}
               </Link>
@@ -229,7 +233,7 @@ export function FooterAccordionMobile() {
                 href="https://wa.me/message/UGIJPSGHHWKHL1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("warrantyPolicy")}
               </a>
@@ -237,7 +241,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/faq"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("faq")}
               </Link>
@@ -247,16 +251,16 @@ export function FooterAccordionMobile() {
       </AccordionItem2>
 
       {/* Koleksi */}
-      <AccordionItem2 value="collection">
-        <AccordionTrigger2 className="text-background text-xs font-semibold uppercase tracking-wider">
+      <AccordionItem2 value="collection" className="border-b-neutral-200">
+        <AccordionTrigger2 className="text-neutral-900 text-xs font-bold uppercase tracking-wider py-3">
           {t("collections")}
         </AccordionTrigger2>
         <AccordionContent>
-          <ul className="flex flex-col gap-2 pt-1">
+          <ul className="flex flex-col gap-2 pt-1 pb-3 text-xs">
             <li>
               <Link
                 href="/products/collections?category=custom_case"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("customCase")}
               </Link>
@@ -264,7 +268,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/products/collections?category=keychain"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("keychain")}
               </Link>
@@ -272,7 +276,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/products/collections?category=phone_charm"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("phoneCharm")}
               </Link>
@@ -280,7 +284,7 @@ export function FooterAccordionMobile() {
             <li>
               <Link
                 href="/products/collections?category=pop_socket"
-                className="animation-link-background w-fit inline-block"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
                 {t("popSocket")}
               </Link>
@@ -291,3 +295,5 @@ export function FooterAccordionMobile() {
     </Accordion>
   );
 }
+
+export default FooterLink;

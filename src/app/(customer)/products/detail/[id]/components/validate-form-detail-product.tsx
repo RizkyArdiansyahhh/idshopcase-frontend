@@ -49,6 +49,7 @@ type ValidateFormDetailProductProps = {
     max_images: number;
   }>;
   totalStock?: number;
+  className?: string;
 };
 
 export const ValidateFormDetailProduct = (
@@ -67,6 +68,7 @@ export const ValidateFormDetailProduct = (
     phoneTypeOptions = [],
     variantOptions = [],
     totalStock,
+    className,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -255,7 +257,7 @@ export const ValidateFormDetailProduct = (
       <Button
         variant={variant}
         onClick={handleMainTriggerClick}
-        className="w-full sm:w-auto flex-1 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-xs"
+        className={className || "w-full sm:w-auto flex-1 h-11 sm:h-12 rounded-none text-xs sm:text-sm font-semibold transition-all shadow-xs"}
       >
         {children}
       </Button>

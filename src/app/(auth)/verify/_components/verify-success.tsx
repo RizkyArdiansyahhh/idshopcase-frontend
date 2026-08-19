@@ -32,11 +32,11 @@ export const VerifySuccess = () => {
           </p>
           <Button
             variant={"default"}
-            className="w-full font-bold"
+            className="w-full h-12 bg-black hover:bg-neutral-800 text-white rounded-none uppercase tracking-widest text-xs font-semibold"
             type="button"
             onClick={() => replace("/")}
           >
-            Mulai Berbelanja Sekarang
+            MULAI BERBELANJA SEKARANG
           </Button>
         </div>
       </div>

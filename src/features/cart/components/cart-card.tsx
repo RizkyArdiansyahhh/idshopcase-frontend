@@ -1,20 +1,18 @@
 "use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
-import { FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import { useUpdateCartItem } from "../api/update-cart";
 import { useDeleteCartItem } from "../api/delete-cart";
-import { CardQuantity } from "@/components/shared/card-quantity";
 import z from "zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatCurrency } from "@/lib/format-currency";
 import { useEffect, useRef } from "react";
-import { imageUrlPrimary } from "@/utils/image-utils";
+import { cleanImageUrl, imageUrlPrimary } from "@/utils/image-utils";
 import { ProductImage } from "@/types/api";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { IoCloseOutline } from "react-icons/io5";
+import { X, Minus, Plus } from "lucide-react";
 import { LoadingDialog } from "@/components/shared/loading-dialog";
 
 type CartCardProps = {
@@ -36,6 +34,7 @@ export const CartCard = (props: CartCardProps) => {
   const {
     quantity,
     cartId,
+    productId,
     isSelected,
     setSelectedCartItems,
     variant,
@@ -47,16 +46,13 @@ export const CartCard = (props: CartCardProps) => {
     unitPrice,
   } = props;
 
-  console.log(quantity);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
-  const isMobile = useIsMobile();
 
   const quantitySchema = z.object({
     quantity: z.number().min(1),
   });
   type QuantityType = z.infer<typeof quantitySchema>;
 
-  // FORM
   const form = useForm<QuantityType>({
     resolver: zodResolver(quantitySchema),
     defaultValues: {
@@ -67,13 +63,8 @@ export const CartCard = (props: CartCardProps) => {
   const {
     mutate: updateCartItemMutation,
     isPending: updateCartItemMutationLoading,
-  } = useUpdateCartItem({
-    mutationOptions: {
-      onSuccess: () => {
-        console.log("success");
-      },
-    },
-  });
+  } = useUpdateCartItem();
+
   const {
     mutate: deleteCartItemMutation,
     isPending: deleteCartItemMutationLoading,
@@ -87,11 +78,10 @@ export const CartCard = (props: CartCardProps) => {
       shouldTouch: false,
       shouldValidate: false,
     });
-  }, [quantity]);
+  }, [quantity, form]);
 
   useEffect(() => {
-    if (deleteCartItemMutationLoading) return;
-    if (updateCartItemMutationLoading) return;
+    if (deleteCartItemMutationLoading || updateCartItemMutationLoading) return;
     if (quantityVariable === quantity) return;
 
     if (debounceRef.current) {
@@ -115,13 +105,50 @@ export const CartCard = (props: CartCardProps) => {
     quantity,
     cartId,
     deleteCartItemMutationLoading,
+    updateCartItemMutationLoading,
     updateCartItemMutation,
   ]);
 
+  const handleDecrease = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (quantityVariable > 1) {
+      form.setValue("quantity", quantityVariable - 1);
+    }
+  };
+
+  const handleIncrease = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (quantityVariable < (stok || 99)) {
+      form.setValue("quantity", quantityVariable + 1);
+    }
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    deleteCartItemMutation({ cartId });
+  };
+
+  const rawImg = imageUrlPrimary(productImages) || "";
+  const validImage = cleanImageUrl(rawImg || "/images/product-1.jpeg");
+  const subtotalItem = Number(unitPrice || price || 0) * quantityVariable;
+
   return (
-    <div className="w-full border rounded-sm py-3  flex flex-row justify-around ">
-      <LoadingDialog loading={deleteCartItemMutationLoading}></LoadingDialog>
-      <div className="w-full md:w-6/12 flex flex-row items-center gap-2 ">
+    <div className="w-full py-3.5 sm:py-4 border-b border-neutral-200/80 flex items-center justify-between gap-3 sm:gap-4 font-sans select-none group">
+      <LoadingDialog loading={deleteCartItemMutationLoading} />
+
+      {/* Left Section: Delete Button (X) + Checkbox + Image + Details */}
+      <div className="flex items-center gap-2.5 sm:gap-4 flex-1 min-w-0">
+        {/* Delete (X) Button (Bamboo Blonde Minimalist Style) */}
+        <button
+          type="button"
+          onClick={handleDelete}
+          className="text-neutral-400 hover:text-neutral-900 transition-colors p-1 cursor-pointer shrink-0"
+          title="Hapus Produk"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* Checkbox */}
         <Checkbox
           id={cartId.toString()}
           value={cartId.toString()}
@@ -131,105 +158,85 @@ export const CartCard = (props: CartCardProps) => {
               setSelectedCartItems((prev) => [...prev, cartId]);
             } else {
               setSelectedCartItems((prev) =>
-                prev.filter((id) => id !== cartId),
+                prev.filter((id) => id !== cartId)
               );
             }
           }}
+          className="rounded-none border-neutral-300 data-[state=checked]:bg-black data-[state=checked]:border-black shrink-0"
         />
-        <div className="w-full flex flex-row gap-2 ">
-          <div className="w-1/4 h-20 md:h-24 lg:h-28 relative rounded-md overflow-hidden">
-            <Image
-              src={imageUrlPrimary(productImages) || ""}
-              alt="Image Product"
-              fill
-              className="object-cover"
-            ></Image>
-          </div>
-          <div className="flex-1 flex flex-col gap-1 ">
-            <div className="flex flex-row gap-2 justify-between items-center">
-              <Link
-                href={"#"}
-                className="block flex-1 text-xs md:text-base font-semibold break-words"
-              >
-                {productName}
-              </Link>
 
-              <div
-                className="block md:hidden mr-1 p-.5 bg-foreground rounded-full"
-                onClick={() => {
-                  if (debounceRef.current) clearTimeout(debounceRef.current);
-                  deleteCartItemMutation({ cartId });
-                }}
-              >
-                <IoCloseOutline className="cursor-pointer text-background text-base" />
-              </div>
-            </div>
+        {/* Product Thumbnail (Portrait Aspect) */}
+        <Link
+          href={`/products/detail/${productId}`}
+          className="relative w-16 h-20 sm:w-20 sm:h-24 bg-neutral-50 rounded-none overflow-hidden shrink-0 border border-neutral-200/80"
+        >
+          <Image
+            src={validImage}
+            alt={productName}
+            fill
+            sizes="80px"
+            className="object-cover object-center group-hover:scale-105 transition-transform duration-200"
+          />
+        </Link>
 
-            <div className="text-xs md:text-sm font-light text-foreground/60 flex flex-col md:gap-0.5">
-              {phoneType && <span className="font-semibold">{phoneType}</span>}
-              {variant && <span>{variant}</span>}
-            </div>
-            <div className="flex md:hidden justify-between items-center flex-row">
-              <p className=" text-xs md:text-base font-semibold text-foreground/70">
-                {formatCurrency(Number(unitPrice ?? 0))}
-              </p>
-              <div className="pr-1">
-                <Controller
-                  name="quantity"
-                  control={form.control}
-                  render={({ field }) => (
-                    <CardQuantity
-                      field={field}
-                      stock={stok ?? 0}
-                      size={isMobile ? "5" : "10"}
-                    />
-                  )}
-                />
-              </div>
-            </div>
-          </div>
+        {/* Product Text Details */}
+        <div className="flex flex-col gap-0.5 sm:gap-1 min-w-0 pr-1">
+          <Link
+            href={`/products/detail/${productId}`}
+            className="text-xs sm:text-sm font-semibold text-neutral-900 hover:underline uppercase tracking-tight truncate leading-tight"
+            title={productName}
+          >
+            {productName}
+          </Link>
+          <p className="text-[11px] sm:text-xs text-neutral-500 font-normal truncate">
+            {[variant !== "-" ? variant : null, phoneType].filter(Boolean).join(" • ") ||
+              "Custom Case"}
+          </p>
+          <p className="text-xs font-medium text-neutral-800 sm:hidden mt-0.5">
+            {formatCurrency(Number(unitPrice || price || 0))}
+          </p>
         </div>
       </div>
-      <div className="hidden  w-4/12 md:flex flex-col items-center gap-2 ">
-        <div className="hidden  w-full h-2/3 md:flex flex-row ">
-          <p className="w-1/2 self-center text-center text-xs md:text-base font-medium text-foreground/70">
-            {formatCurrency(Number(unitPrice ?? 0))}
-          </p>
 
-          <p className="w-1/2 self-center text-center text-xs md:text-base font-semibold">
-            {formatCurrency(Number(price ?? 0))}
-          </p>
+      {/* Right Section: Unit Price + Stepper (- 1 +) + Subtotal */}
+      <div className="flex items-center gap-3 sm:gap-6 shrink-0">
+        {/* Unit Price (Desktop Only) */}
+        <div className="hidden md:flex items-center text-xs sm:text-sm font-medium text-neutral-700">
+          {formatCurrency(Number(unitPrice || price || 0))}
         </div>
-        <div className="w-full h-1/3 justify-end flex flex-row gap-2">
-          <div className="w-4/5 flex flex-row justify-end    ">
-            <Controller
-              name="quantity"
-              control={form.control}
-              render={({ field }) => (
-                <CardQuantity
-                  field={field}
-                  stock={stok ?? 0}
-                  size={isMobile ? "5" : "10"}
-                />
-              )}
-            />
-          </div>
-          <div
-            className="w-1/5 flex-row-center"
-            onClick={() => {
-              if (debounceRef.current) {
-                clearTimeout(debounceRef.current);
-              }
-              deleteCartItemMutation({ cartId });
-            }}
+
+        {/* Quantity Stepper (Exact Bamboo Blonde Minimalist Box) */}
+        <div className="flex items-center border border-neutral-200 rounded-none bg-white h-8 sm:h-9 shrink-0">
+          <button
+            type="button"
+            onClick={handleDecrease}
+            disabled={quantityVariable <= 1}
+            className="w-7 h-full flex items-center justify-center text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
           >
-            <FaTrash
-              // size={24}
-              className="cursor-pointer text-foreground/70 text-sm md:text-2xl"
-            />
-          </div>
+            <Minus className="w-3 h-3" />
+          </button>
+          <span className="w-7 text-center text-xs font-semibold text-neutral-900">
+            {quantityVariable}
+          </span>
+          <button
+            type="button"
+            onClick={handleIncrease}
+            disabled={quantityVariable >= (stok || 99)}
+            className="w-7 h-full flex items-center justify-center text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+          >
+            <Plus className="w-3 h-3" />
+          </button>
+        </div>
+
+        {/* Subtotal Item Price */}
+        <div className="text-right min-w-[75px] sm:min-w-[90px]">
+          <span className="text-xs sm:text-sm font-bold text-neutral-900">
+            {formatCurrency(subtotalItem)}
+          </span>
         </div>
       </div>
     </div>
   );
 };
+
+export default CartCard;

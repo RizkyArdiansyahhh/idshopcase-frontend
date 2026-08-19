@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fredoka, Poppins } from "next/font/google";
+import { Fredoka, Poppins, Fustat } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
@@ -8,6 +8,13 @@ import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
 import { UnauthorizedModal } from "@/components/shared/unauthorized-modal";
+
+const fustat = Fustat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-fustat",
+  display: "swap",
+});
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -54,7 +61,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${poppins.variable} ${fredoka.variable}`}
+      className={`${fustat.variable} ${poppins.variable} ${fredoka.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -90,7 +97,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${poppins.className} font-sans antialiased`}
+        className={`${fustat.className} font-sans antialiased`}
         suppressHydrationWarning
       >
         <NextTopLoader

@@ -3,6 +3,8 @@ import Loader from "@/components/shared/loaders";
 import { ProductCardCollection } from "@/app/(customer)/products/collections/components/product-card";
 import { useMemo } from "react";
 
+import { useSearchParams } from "next/navigation";
+
 type CollectionsProductProps = {
   layoutActive: "small" | "medium" | "large";
   categories: string[];
@@ -13,12 +15,27 @@ export const CollectionsProduct = ({
   categories,
 }: CollectionsProductProps) => {
   const { data: products = [], isLoading } = useGetProducts();
+  const searchParams = useSearchParams();
+  const searchQuery = (searchParams.get("search") || "").trim().toLowerCase();
 
   const filteredProducts = useMemo(() => {
-    if (categories.length === 0) return products;
+    let result = products;
 
-    return products.filter((product) => categories.includes(product.category));
-  }, [products, categories]);
+    if (categories.length > 0) {
+      result = result.filter((product) => categories.includes(product.category));
+    }
+
+    if (searchQuery) {
+      result = result.filter(
+        (product) =>
+          product.name?.toLowerCase().includes(searchQuery) ||
+          product.category?.toLowerCase().includes(searchQuery) ||
+          product.description?.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    return result;
+  }, [products, categories, searchQuery]);
 
   if (isLoading) {
     return (

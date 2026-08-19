@@ -8,58 +8,62 @@ import { FooterAccordionMobile, FooterLink } from "./footer-link";
 export const Footer = () => {
   return (
     <>
-      <footer className="w-full pt-10 pb-4 md:h-fit lg:h-[60vh] bg-foreground text-background flex flex-col justify-between">
+      <footer className="w-full pt-10 pb-4 md:h-fit lg:min-h-[50vh] bg-white border-t border-neutral-200 text-neutral-900 flex flex-col justify-between font-sans select-none">
         <div className="w-full px-5 md:px-10 lg:px-16 flex flex-row flex-wrap gap-8 lg:gap-10">
           {/* Brand Info & Socials */}
           <div className="w-full md:w-[30%] h-full flex flex-col justify-between">
             <div className="w-full h-fit">
-              <h2 className="text-2xl lg:text-3xl font-bold text-background tracking-tight">
+              <h2 className="text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight font-sans">
                 IDSHOPCASE.
               </h2>
-              <p className="text-xs md:text-sm font-normal text-background/70 mt-1.5 leading-relaxed">
+              <p className="text-xs md:text-sm font-normal text-neutral-500 mt-1.5 leading-relaxed">
                 Ekspresikan Gaya & Uniknya Dirimu Lewat Custom Case Premium
               </p>
             </div>
 
             <div className="w-full mt-6">
-              <Separator className="border-1 my-5 opacity-20" />
+              <Separator className="my-5 border-neutral-200" />
               <div className="flex flex-col gap-4">
                 <div className="flex justify-center md:justify-start">
                   <div className="flex flex-row gap-3">
-                    <div className="p-0.5 bg-transparent border border-background/30 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-background hover:border-background transition-all duration-150 ease-in-out">
+                    {/* TikTok */}
+                    <div className="p-0.5 bg-transparent border border-neutral-300 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-neutral-900 hover:border-neutral-900 transition-all duration-150 ease-in-out cursor-pointer">
                       <a
                         href="https://www.tiktok.com/@idshopcase"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="TikTok Idshopcase"
                       >
-                        <PiTiktokLogo className="text-background text-lg group-hover:fill-foreground transition-all duration-150 ease-in-out" />
+                        <PiTiktokLogo className="text-neutral-700 text-lg group-hover:text-white transition-colors duration-150" />
                       </a>
                     </div>
 
-                    <div className="p-0.5 bg-transparent border border-background/30 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-background hover:border-background transition-all duration-150 ease-in-out">
+                    {/* Instagram */}
+                    <div className="p-0.5 bg-transparent border border-neutral-300 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-neutral-900 hover:border-neutral-900 transition-all duration-150 ease-in-out cursor-pointer">
                       <a
                         href="https://www.instagram.com/idshopcase/"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Instagram Idshopcase"
                       >
-                        <FaInstagram className="text-background text-lg group-hover:fill-foreground transition-all duration-150 ease-in-out" />
+                        <FaInstagram className="text-neutral-700 text-lg group-hover:text-white transition-colors duration-150" />
                       </a>
                     </div>
 
-                    <div className="p-0.5 bg-transparent border border-background/30 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-background hover:border-background transition-all duration-150 ease-in-out">
+                    {/* Shopee */}
+                    <div className="p-0.5 bg-transparent border border-neutral-300 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-neutral-900 hover:border-neutral-900 transition-all duration-150 ease-in-out cursor-pointer">
                       <a
                         href="https://shopee.co.id/idshopcase"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Shopee Idshopcase"
                       >
-                        <TbBrandShopee className="text-background text-lg group-hover:fill-foreground transition-all duration-150 ease-in-out" />
+                        <TbBrandShopee className="text-neutral-700 text-lg group-hover:text-white transition-colors duration-150" />
                       </a>
                     </div>
 
-                    <div className="p-0.5 bg-transparent border border-background/30 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-background hover:border-background transition-all duration-150 ease-in-out">
+                    {/* Tokopedia */}
+                    <div className="p-0.5 bg-transparent border border-neutral-300 h-9 w-9 rounded-full flex justify-center items-center group hover:bg-neutral-900 hover:border-neutral-900 transition-all duration-150 ease-in-out cursor-pointer">
                       <a
                         href="https://www.tokopedia.com/idshopcase"
                         target="_blank"
@@ -70,7 +74,7 @@ export const Footer = () => {
                           viewBox="0 0 192 192"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
-                          className="h-[18px] text-background group-hover:text-foreground transition-all duration-150 ease-in-out"
+                          className="h-[18px] text-neutral-700 group-hover:text-white transition-colors duration-150"
                         >
                           <path
                             fill="currentColor"
@@ -84,7 +88,7 @@ export const Footer = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs text-background/60 font-normal leading-relaxed">
+                  <p className="text-xs text-neutral-500 font-normal leading-relaxed">
                     Ikuti kami di media sosial dan e-commerce resmi untuk
                     update produk terbaru dan promo menarik.
                   </p>
@@ -94,7 +98,7 @@ export const Footer = () => {
           </div>
 
           {/* Links Section */}
-          <div className="hidden md:flex-1 lg:w-[48%] h-full text-background md:flex flex-col pl-0 lg:pl-6">
+          <div className="hidden md:flex-1 lg:w-[48%] h-full text-neutral-900 md:flex flex-col pl-0 lg:pl-6">
             <FooterLink />
           </div>
 
@@ -107,46 +111,46 @@ export const Footer = () => {
           <div className="w-full md:w-[100%] lg:w-[22%] h-full flex flex-col lg:flex-row gap-4 lg:gap-8">
             <Separator
               orientation="horizontal"
-              className="block lg:hidden opacity-20"
+              className="block lg:hidden border-neutral-200"
             />
             <Separator
               orientation="vertical"
-              className="hidden lg:block opacity-20"
+              className="hidden lg:block border-neutral-200"
             />
             <div className="flex-1 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-6 md:justify-between lg:justify-start">
               <div className="flex flex-col gap-1">
-                <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                   Telepon / WhatsApp
                 </h3>
                 <a
                   href="https://wa.me/message/UGIJPSGHHWKHL1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="animation-link-background w-fit inline-block"
+                  className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
                 >
                   +62 851-1745-3862
                 </a>
               </div>
               <div className="flex flex-col gap-1">
-                <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                   Email Kami
                 </h3>
                 <a
                   href="mailto:idshopcase.id@gmail.com"
-                  className="animation-link-background w-fit inline-block"
+                  className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
                 >
                   idshopcase.id@gmail.com
                 </a>
               </div>
               <div className="flex flex-col gap-1">
-                <h3 className="text-xs font-semibold text-background/90 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                   Lokasi Toko
                 </h3>
                 <a
                   href="https://maps.app.goo.gl/U8q1VCrTGxTXAFcx9"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="animation-link-background w-fit inline-block"
+                  className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
                 >
                   Temukan Toko Kami
                 </a>
@@ -157,9 +161,9 @@ export const Footer = () => {
 
         {/* Bottom Copyright */}
         <div className="w-full pt-6 mt-6">
-          <Separator className="opacity-15" />
+          <Separator className="border-neutral-200" />
           <div className="w-full px-5 md:px-10 lg:px-16 flex items-center justify-center md:justify-start py-4">
-            <p className="text-background/50 text-xs font-normal">
+            <p className="text-neutral-400 text-xs font-normal">
               © 2026 Idshopcase. All rights reserved.
             </p>
           </div>
@@ -168,3 +172,5 @@ export const Footer = () => {
     </>
   );
 };
+
+export default Footer;

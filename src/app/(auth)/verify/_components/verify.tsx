@@ -1,30 +1,49 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
-import { Button } from "@/components/ui/button";
-import { BsEnvelopePaperFill } from "react-icons/bs";
+import React, { useState, useRef } from "react";
 import { useVerifyOtp } from "@/features/auth/api/verify-otp";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { SpinnerV2 } from "@/components/ui/spinner";
 import { VerifySuccess } from "./verify-success";
 import { OtpGroup } from "./otp-group";
-import Countdown from "react-countdown";
-
+import Link from "next/link";
 import { useResendOtp } from "@/features/auth/api/resend-otp";
+import { toast } from "sonner";
 
 export const VerifyEmail = () => {
   const [otp, setOtp] = useState<string>("");
-  const [expired, setExpired] = useState<number | null>(null);
-  const [isExpired, setIsExpired] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [shakeKey, setShakeKey] = useState<number>(0);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [emailVerified, setEmailVerified] = useState(false);
   const email = searchParams.get("email");
+  const lastSubmittedOtpRef = useRef<string>("");
+
+  const triggerShake = () => {
+    setShakeKey((prev) => prev + 1);
+    if (typeof window !== "undefined" && "vibrate" in navigator) {
+      try {
+        navigator.vibrate([100, 50, 100]);
+      } catch {
+        // Ignore devices without vibration support
+      }
+    }
+  };
 
   const { mutate: verify, isPending: verifyLoading } = useVerifyOtp({
     mutationConfig: {
       onSuccess: () => {
         setEmailVerified(true);
+        setErrorMessage(null);
+      },
+      onError: (error: any) => {
+        const cleanMsg =
+          error?.message?.includes("429")
+            ? "Terlalu banyak percobaan. Harap tunggu beberapa saat."
+            : error?.message || "Kode OTP salah atau telah kedaluwarsa";
+        setErrorMessage(cleanMsg);
+        triggerShake();
       },
     },
   });
@@ -32,101 +51,125 @@ export const VerifyEmail = () => {
   const { mutate: resendOtp, isPending: resendLoading } = useResendOtp({
     mutationConfig: {
       onSuccess: () => {
-        const expireOtp = Date.now() + 10 * 60 * 1000;
-        localStorage.setItem("otp_expired_at", expireOtp.toString());
-        setExpired(expireOtp);
-        setIsExpired(false);
+        setErrorMessage(null);
+        lastSubmittedOtpRef.current = "";
+        toast.success("Kode OTP baru telah dikirim ke email Anda");
+      },
+      onError: (error: any) => {
+        const cleanMsg =
+          error?.message?.includes("429")
+            ? "Terlalu sering meminta kode. Harap tunggu sebentar."
+            : error?.message || "Gagal mengirim ulang kode OTP";
+        toast.error(cleanMsg);
       },
     },
   });
-  useEffect(() => {
-    const saved = localStorage.getItem("otp_expired_at");
-    if (!saved) {
-    }
-    setExpired(Number(saved));
-  }, []);
 
-  useEffect(() => {
-    if (isExpired) {
-      localStorage.removeItem("otp_expired_at");
+  // Explicit handler triggered on OTP change - ONLY triggers once per unique 6-digit input
+  const handleOtpChange = (value: string) => {
+    setOtp(value);
+    if (errorMessage) {
+      setErrorMessage(null);
     }
-  }, [isExpired]);
+
+    if (value.length === 6 && value !== lastSubmittedOtpRef.current && email && !verifyLoading) {
+      lastSubmittedOtpRef.current = value;
+      verify({ otp: value, email });
+    }
+  };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-background md:bg-foreground/5">
-      <div className="w-full md:w-1/2 h-fit md:border p-6 rounded-lg flex justify-center items-center   md:shadow-sm  md:bg-background py-10 ">
+    <div className="min-h-screen w-full bg-background flex flex-col justify-between items-center py-12 sm:py-16 px-4 font-sans select-none">
+      {/* 1. TOP: Centered Bold Brand Logo (Large with CASE font-black) */}
+      <div className="w-full flex justify-center pt-4 sm:pt-8">
+        <Link
+          href="/"
+          className="text-3xl sm:text-4xl lg:text-[40px] tracking-wide uppercase text-neutral-900 font-sans hover:opacity-85 transition-opacity leading-none"
+        >
+          <span className="font-semibold">IDSHOP</span>
+          <span className="font-black">CASE</span>
+        </Link>
+      </div>
+
+      {/* 2. CENTER: Exact THENBLANK / Shopify "Enter code" Form */}
+      <div className="w-full max-w-[340px] sm:max-w-[410px] mx-auto my-auto py-8">
         {emailVerified ? (
-          <VerifySuccess></VerifySuccess>
+          <VerifySuccess />
         ) : (
-          <div className="flex flex-col gap-8">
-            <div className="text-center flex flex-col items-center">
-              <BsEnvelopePaperFill size={80} className="mb-4" />
-
-              <p className="text-xl md:text-2xl font-semibold text-foreground">
-                Masukkan Kode Verifikasi
+          <div className="flex flex-col items-start text-left space-y-4 w-full">
+            {/* Main Title & Subtitle */}
+            <div className="space-y-1.5 w-full">
+              <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight font-sans">
+                Enter code
+              </h1>
+              <p className="text-xs sm:text-sm text-neutral-500 font-normal flex items-center gap-1.5 flex-wrap">
+                <span>Sent to {email || "your email"}</span>
+                <button
+                  type="button"
+                  onClick={() => router.push("/register")}
+                  className="text-neutral-900 hover:underline font-medium cursor-pointer"
+                >
+                  Change
+                </button>
               </p>
-              <p className="text-sm md:text-base font-light">
-                Kode Verifikasi akan dikirim melalui email Anda
-              </p>
-              {expired && !isExpired && (
-                <Countdown
-                  date={expired}
-                  onComplete={() => setIsExpired(true)}
-                  renderer={({ hours, minutes, seconds, completed }) => {
-                    if (completed) {
-                      return (
-                        <span className="text-xs text-destructive">
-                          Kode verifikasi telah kadaluarsa
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <div className="px-3 py-2 text-xs md:text-sm flex flex-col items-center gap-2">
-                        <p>Kode verifikasi akan kadaluarsa dalam</p>
-                        <div className="font-semibold text-sm">
-                          {String(hours).padStart(2, "0")}:
-                          {String(minutes).padStart(2, "0")}:
-                          {String(seconds).padStart(2, "0")}
-                        </div>
-                      </div>
-                    );
-                  }}
-                />
-              )}
-            </div>
-            <div className="flex flex-col items-center gap-6">
-              <OtpGroup setOtp={setOtp}></OtpGroup>
-              <Button
-                disabled={!email || otp.length < 6 || verifyLoading}
-                onClick={() => {
-                  if (email === null) return;
-                  verify({ otp, email });
-                }}
-                className="w-full"
-              >
-                {verifyLoading ? <SpinnerV2></SpinnerV2> : "Verifikasi"}
-              </Button>
             </div>
 
-            <div className="flex flex-row justify-center items-center gap-2">
-              <p className="text-xs md:text-sm text-foreground/70">
-                Belum menerima kode?
+            {/* 6 OTP Input Boxes with Key-Based Shake Motion */}
+            <div className="pt-2 w-full flex justify-center">
+              <OtpGroup
+                setOtp={handleOtpChange}
+                disabled={verifyLoading}
+                shakeKey={shakeKey}
+                isError={!!errorMessage}
+              />
+            </div>
+
+            {/* Error Message if OTP is incorrect */}
+            {errorMessage && (
+              <p className="text-xs text-red-600 font-medium animate-fade-in">
+                {errorMessage}
               </p>
+            )}
+
+            {/* Loading / Resend State (Perfect Horizontal Alignment) */}
+            <div className="flex items-center justify-between w-full pt-2 text-xs sm:text-sm text-neutral-500">
+              <div>
+                {verifyLoading ? (
+                  <span className="flex items-center gap-1.5 text-neutral-900 font-medium">
+                    <SpinnerV2 className="w-3.5 h-3.5" />
+                    <span>Verifying...</span>
+                  </span>
+                ) : (
+                  <span>Didn't get a code?</span>
+                )}
+              </div>
+
               <button
                 type="button"
-                disabled={!email || resendLoading}
+                disabled={!email || resendLoading || verifyLoading}
                 onClick={() => {
                   if (email) resendOtp({ email });
                 }}
-                className="text-xs md:text-sm text-foreground/70 underline hover:text-primary disabled:opacity-50 font-semibold cursor-pointer"
+                className="text-neutral-900 hover:underline font-medium disabled:opacity-40 cursor-pointer text-xs sm:text-sm"
               >
-                {resendLoading ? "Mengirim..." : "Minta Kode Baru"}
+                {resendLoading ? "Sending..." : "Resend code"}
               </button>
             </div>
           </div>
         )}
       </div>
+
+      {/* 3. BOTTOM: Privacy Policy Link (Exact Shopify Footer) */}
+      <div className="w-full flex justify-center pb-2">
+        <Link
+          href="/privacy"
+          className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors font-sans"
+        >
+          Privacy policy
+        </Link>
+      </div>
     </div>
   );
 };
+
+export default VerifyEmail;

@@ -2,20 +2,20 @@
 
 import { useTransition, useEffect, useState } from "react";
 import { setUserLocale } from "@/i18n/locale";
-import { FaUser } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUser } from "@/features/auth/api/get-user";
-import { Button } from "../ui/button";
 import { CartButton } from "@/features/cart/components/cart-button";
-import { Globe, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, Sparkles, X, Globe } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { HiOutlineUser } from "react-icons/hi2";
+import { SearchModal } from "./search-modal";
 
 interface NavbarProps {
-  isBlur?: boolean;
+  isTransparentOnTop?: boolean;
 }
 
-export const Navbar = ({ isBlur = true }: NavbarProps) => {
+export const Navbar = ({ isTransparentOnTop = false }: NavbarProps) => {
   const { data: user } = useGetUser();
   const router = useRouter();
   const pathname = usePathname();
@@ -25,20 +25,38 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const FULL_WIDTH_PATHS = ["/products/collections"];
-  const isFullWidth = FULL_WIDTH_PATHS.some((path) =>
-    pathname.startsWith(path),
-  );
+  const [, startTransition] = useTransition();
 
+  // Scroll listener for dynamic homepage navbar
   useEffect(() => {
-    if (isFullWidth) return;
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isFullWidth]);
+  }, []);
 
-  // Dropdown mobile & Language click outside
+  const handleLocaleChange = (newLocale: "id" | "en") => {
+    setIsLangOpen(false);
+    setIsOpen(false);
+    startTransition(async () => {
+      await setUserLocale(newLocale);
+      router.refresh();
+    });
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    setIsSearchOpen(false);
+    router.push(`/products/collections?search=${encodeURIComponent(searchQuery.trim())}`);
+  };
+
+  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const dropdown = document.getElementById("mobile-dropdown");
@@ -68,85 +86,75 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const [, startTransition] = useTransition();
+  // Determine current active visual state:
+  // Is this the homepage in transparent state (at the very top before scrolling)?
+  const isCurrentlyTransparent = isTransparentOnTop && !isScrolled;
 
-  const handleLocaleChange = (newLocale: "id" | "en") => {
-    setIsLangOpen(false);
-    setIsOpen(false);
-    startTransition(async () => {
-      await setUserLocale(newLocale);
-      router.refresh();
-    });
-  };
+  const headerBg = isCurrentlyTransparent
+    ? "bg-transparent border-transparent"
+    : "bg-white/95 backdrop-blur-md border-b border-neutral-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)]";
 
-  // Styling
-  const backgroundColor = isFullWidth
-    ? "rgb(15,15,15)"
-    : isBlur
-      ? isScrolled
-        ? "rgba(0,0,0,0.6)"
-        : "rgba(255,255,255,0.08)"
-      : "rgb(15,15,15)";
-
-  const backdrop = isFullWidth
-    ? "none"
-    : isBlur
-      ? isScrolled
-        ? "blur(14px)"
-        : "blur(0px)"
-      : "none";
-
-  const borderRadius =
-    isFullWidth || isScrolled
-      ? "0px"
-      : isBlur
-        ? isScrolled
-          ? "0.75rem"
-          : "1rem"
-        : isScrolled
-          ? "0.5rem"
-          : "0.75rem";
-
-  const topPosition = isFullWidth ? "0" : isScrolled ? "0" : "1.25rem";
+  const textColor = isCurrentlyTransparent ? "text-white" : "text-neutral-900";
+  const textMutedColor = isCurrentlyTransparent ? "text-white/80 hover:text-white" : "text-neutral-700 hover:text-neutral-900";
+  const customStudioBadge = isCurrentlyTransparent
+    ? "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+    : "bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-200";
 
   return (
-    <nav
-      className={`fixed z-50 w-full border text-white transition-[max-width,margin,border-radius,box-shadow,top] duration-500 ${
-        isFullWidth || isScrolled
-          ? "border-transparent border-b-white/30"
-          : isBlur
-            ? "border-white/30"
-            : "border-transparent"
-      }`}
-      style={{
-        top: topPosition,
-        maxWidth: isFullWidth || isScrolled ? "100%" : "93%",
-        marginLeft: isFullWidth || isScrolled ? "0" : "auto",
-        marginRight: isFullWidth || isScrolled ? "0" : "auto",
-        borderRadius,
-        backdropFilter: backdrop,
-        backgroundColor,
-        boxShadow: isFullWidth
-          ? "0 2px 10px rgba(0,0,0,0.4)"
-          : isBlur
-            ? isScrolled
-              ? "0 4px 20px rgba(0,0,0,0.3)"
-              : "0 0px 0px rgba(0,0,0,0)"
-            : "0 2px 10px rgba(0,0,0,0.4)",
-      }}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 font-sans select-none ${headerBg} ${textColor}`}
     >
-      <div className="flex justify-between items-center py-1 md:py-4 px-5">
-        <Link
-          href="/"
-          className="text-base sm:text-lg md:text-2xl font-semibold select-none"
-        >
-          IDSHOP<span className="font-black">CASE</span>
-        </Link>
+      <div className="w-full max-w-[1400px] mx-auto h-16 sm:h-18 px-4 sm:px-8 lg:px-12 flex items-center justify-between">
+        
+        {/* 1. LEFT: Brand Logo (IDSHOP font-semibold, CASE font-black) */}
+        <div className="flex items-center">
+          <Link
+            href="/"
+            className="text-xl sm:text-2xl lg:text-[26px] tracking-wide uppercase font-sans hover:opacity-85 transition-opacity leading-none text-current"
+          >
+            <span className="font-semibold">IDSHOP</span>
+            <span className="font-black">CASE</span>
+          </Link>
+        </div>
 
-        {/* Right: Actions (Language Switcher, Sign In, Sign Up / User Profile) */}
-        <div className="hidden md:flex gap-6 items-center">
-          {/* Language Switcher */}
-          <div className="relative">
+        {/* 2. CENTER: Clean Minimalist Nav Links (PERSONALIZE, SHOP, ABOUT) */}
+        <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+          <Link
+            href="/customizer"
+            className={`text-xs lg:text-[13px] font-semibold uppercase tracking-widest transition-all hover:underline underline-offset-4 decoration-1 decoration-current ${textMutedColor}`}
+          >
+            PERSONALIZE
+          </Link>
+
+          <Link
+            href="/products/collections"
+            className={`text-xs lg:text-[13px] font-semibold uppercase tracking-widest transition-all hover:underline underline-offset-4 decoration-1 decoration-current ${textMutedColor}`}
+          >
+            SHOP
+          </Link>
+
+          <Link
+            href="/about"
+            className={`text-xs lg:text-[13px] font-semibold uppercase tracking-widest transition-all hover:underline underline-offset-4 decoration-1 decoration-current ${textMutedColor}`}
+          >
+            ABOUT
+          </Link>
+        </nav>
+
+        {/* 3. RIGHT: Actions (account, Globe, Search, Cart) */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* Account Text Link (Exact THENBLANK "account" style) */}
+          <div className="hidden sm:flex items-center pr-1 sm:pr-1.5">
+            <Link
+              href={!user ? "/login" : user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
+              className={`text-xs lg:text-[13px] font-medium lowercase tracking-wider transition-all hover:underline underline-offset-4 decoration-1 decoration-current ${textMutedColor}`}
+            >
+              account
+            </Link>
+          </div>
+
+          {/* Language Switcher Dropdown (Globe Icon Only, No Flag Emojis) */}
+          <div className="relative hidden md:block">
             <button
               id="lang-btn"
               type="button"
@@ -154,13 +162,10 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                 e.stopPropagation();
                 setIsLangOpen(!isLangOpen);
               }}
-              className="flex items-center gap-2 text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors cursor-pointer select-none"
+              className={`p-1 flex items-center justify-center cursor-pointer transition-colors ${textMutedColor}`}
+              title="Ganti Bahasa"
             >
-              <Globe className="w-4 h-4 text-white/80" />
-              <span>{locale === "en" ? "English" : "Indonesia"}</span>
-              <ChevronDown
-                className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 ${isLangOpen ? "rotate-180" : ""}`}
-              />
+              <Globe className="w-5 h-5 stroke-[1.5]" />
             </button>
 
             <AnimatePresence>
@@ -171,93 +176,80 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 mt-2 w-32 bg-black/90 backdrop-blur-md border border-white/20 rounded-lg shadow-xl p-1 z-50 overflow-hidden text-white"
+                  className={`absolute right-0 mt-2 w-32 p-1.5 z-50 rounded-none shadow-xl ${
+                    isCurrentlyTransparent
+                      ? "bg-black/95 text-white border border-white/20"
+                      : "bg-white text-neutral-900 border border-neutral-200"
+                  }`}
                 >
                   <button
                     type="button"
                     onClick={() => handleLocaleChange("id")}
-                    className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
+                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold uppercase tracking-widest flex items-center justify-between ${
                       locale === "id"
-                        ? "bg-white/20 font-semibold text-white"
-                        : "text-white/80 hover:bg-white/10 hover:text-white"
+                        ? isCurrentlyTransparent ? "bg-white/20 text-white font-bold" : "bg-neutral-100 text-neutral-900 font-bold"
+                        : isCurrentlyTransparent ? "hover:bg-white/10 text-white/80" : "hover:bg-neutral-50 text-neutral-600"
                     }`}
                   >
-                    <span>🇮🇩 Indonesia</span>
+                    <span>INDONESIA</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleLocaleChange("en")}
-                    className={`w-full text-left px-3 py-2 text-xs rounded-md flex items-center justify-between transition-colors ${
+                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold uppercase tracking-widest flex items-center justify-between ${
                       locale === "en"
-                        ? "bg-white/20 font-semibold text-white"
-                        : "text-white/80 hover:bg-white/10 hover:text-white"
+                        ? isCurrentlyTransparent ? "bg-white/20 text-white font-bold" : "bg-neutral-100 text-neutral-900 font-bold"
+                        : isCurrentlyTransparent ? "hover:bg-white/10 text-white/80" : "hover:bg-neutral-50 text-neutral-600"
                     }`}
                   >
-                    <span>🇬🇧 English</span>
+                    <span>ENGLISH</span>
                   </button>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* Auth Actions / Profile & Cart */}
-          {!user ? (
-            <div className="flex items-center gap-5">
-              <Link
-                href="/login"
-                className="text-xs md:text-sm font-medium text-white/90 hover:text-white transition-colors"
-              >
-                {t("signIn")}
-              </Link>
+          {/* Search Icon Trigger */}
+          <button
+            type="button"
+            onClick={() => setIsSearchOpen(true)}
+            className={`p-1 flex items-center justify-center cursor-pointer transition-colors ${textMutedColor}`}
+            title="Cari Produk"
+          >
+            <Search className="w-5 h-5 stroke-[1.5]" />
+          </button>
 
-              <Button
-                size="sm"
-                className="text-xs md:text-sm font-semibold rounded-lg bg-white text-black hover:bg-white/90 px-4 py-2"
-                onClick={() => router.push("/register")}
-              >
-                {t("signUp")}
-              </Button>
+          {/* Cart Icon */}
+          <div className="text-current flex items-center justify-center p-1">
+            <CartButton className="text-current" />
+          </div>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            id="hamburger-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(!isOpen);
+            }}
+            type="button"
+            className="md:hidden p-1 cursor-pointer"
+          >
+            <div className="w-5 flex flex-col gap-1.5">
+              <span className={`block h-[1.5px] w-full transition-all ${isCurrentlyTransparent ? "bg-white" : "bg-neutral-900"} ${isOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block h-[1.5px] w-full transition-all ${isCurrentlyTransparent ? "bg-white" : "bg-neutral-900"} ${isOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-[1.5px] w-full transition-all ${isCurrentlyTransparent ? "bg-white" : "bg-neutral-900"} ${isOpen ? "-rotate-45 -translate-y-2" : ""}`} />
             </div>
-          ) : (
-            <>
-              <Link
-                href={user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
-                title={user.role === "admin" ? t("adminDashboard") : t("profile")}
-              >
-                <FaUser size={20} color="white" />
-              </Link>
-              {user.role !== "admin" && <CartButton />}
-            </>
-          )}
+          </button>
         </div>
-
-        <button
-          id="hamburger-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen(!isOpen);
-          }}
-          type="button"
-          className="relative z-[60] inline-flex flex-col items-center justify-center w-10 h-10 md:hidden"
-        >
-          <motion.span
-            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-6 h-[2px] bg-white rounded-sm"
-          />
-          <motion.span
-            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="w-6 h-[2px] bg-white rounded-sm my-1"
-          />
-          <motion.span
-            animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-6 h-[2px] bg-white rounded-sm"
-          />
-        </button>
       </div>
 
+      {/* Bamboo Blonde Style Top Slide-Down Search Modal */}
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
+
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -265,75 +257,80 @@ export const Navbar = ({ isBlur = true }: NavbarProps) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="absolute top-full right-0 mt-2 w-1/2 bg-black/80 backdrop-blur-xl border border-white/20 rounded-[12px] shadow-lg md:hidden overflow-hidden p-3"
+            transition={{ duration: 0.2 }}
+            className={`w-full border-t md:hidden p-5 space-y-4 shadow-xl ${
+              isCurrentlyTransparent
+                ? "bg-black/95 border-white/20 text-white"
+                : "bg-white border-neutral-200 text-neutral-900"
+            }`}
           >
-            <div className="flex flex-col gap-2 text-white text-start">
-              {/* Language Switcher Mobile */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-1 px-1">
-                <span className="text-xs text-white/70">{t("language")}</span>
-                <div className="flex gap-1">
-                  <button
-                    type="button"
-                    onClick={() => handleLocaleChange("id")}
-                    className={`px-2 py-0.5 rounded text-xs ${locale === "id" ? "bg-white text-black font-bold" : "text-white/70"}`}
-                  >
-                    ID
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleLocaleChange("en")}
-                    className={`px-2 py-0.5 rounded text-xs ${locale === "en" ? "bg-white text-black font-bold" : "text-white/70"}`}
-                  >
-                    EN
-                  </button>
-                </div>
+            <nav className="flex flex-col gap-3.5 text-xs font-semibold uppercase tracking-widest">
+              <Link
+                href="/customizer"
+                onClick={() => setIsOpen(false)}
+                className="py-1 text-neutral-900 font-bold"
+              >
+                PERSONALIZE
+              </Link>
+              <Link
+                href="/products/collections"
+                onClick={() => setIsOpen(false)}
+                className="py-1 opacity-90 hover:opacity-100"
+              >
+                SHOP
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setIsOpen(false)}
+                className="py-1 opacity-90 hover:opacity-100"
+              >
+                ABOUT
+              </Link>
+              <Link
+                href="/account/track-order"
+                onClick={() => setIsOpen(false)}
+                className="py-1 opacity-90 hover:opacity-100"
+              >
+                LACAK PESANAN
+              </Link>
+            </nav>
+
+            <div className={`border-t pt-3 flex items-center justify-between text-xs ${
+              isCurrentlyTransparent ? "border-white/20" : "border-neutral-200"
+            }`}>
+              <div className="flex items-center gap-3">
+                <Link
+                  href={!user ? "/login" : user.role === "admin" ? "/admin/dashboard" : "/account/profile"}
+                  onClick={() => setIsOpen(false)}
+                  className="font-semibold uppercase tracking-wider"
+                >
+                  ACCOUNT
+                </Link>
               </div>
 
-              {!user ? (
-                <div className="flex flex-col gap-2 pt-1">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="py-1 px-2 text-xs font-medium text-white/90 hover:text-white transition-colors"
-                  >
-                    {t("signIn")}
-                  </Link>
-                  <Button
-                    size="sm"
-                    className="w-full text-xs font-semibold rounded-lg bg-white text-black hover:bg-white/90"
-                    onClick={() => {
-                      setIsOpen(false);
-                      router.push("/register");
-                    }}
-                  >
-                    {t("signUp")}
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <Link
-                    href={user?.role === "admin" ? "/admin/dashboard" : "/account/profile"}
-                    className="py-2 hover:bg-white/10 transition px-2 rounded-md"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <p>{user?.role === "admin" ? t("adminDashboard") : t("profile")}</p>
-                  </Link>
-                  {user?.role !== "admin" && (
-                    <Link
-                      href={"/cart"}
-                      className="py-2 hover:bg-white/10 transition px-2 rounded-md"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <p>{t("cart")}</p>
-                    </Link>
-                  )}
-                </>
-              )}
+              {/* Mobile Language Switcher */}
+              <div className="flex gap-2 text-[11px] font-bold">
+                <button
+                  type="button"
+                  onClick={() => handleLocaleChange("id")}
+                  className={`px-1.5 py-0.5 ${locale === "id" ? (isCurrentlyTransparent ? "bg-white text-black" : "bg-black text-white") : "opacity-60"}`}
+                >
+                  ID
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleLocaleChange("en")}
+                  className={`px-1.5 py-0.5 ${locale === "en" ? (isCurrentlyTransparent ? "bg-white text-black" : "bg-black text-white") : "opacity-60"}`}
+                >
+                  EN
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 };
+
+export default Navbar;

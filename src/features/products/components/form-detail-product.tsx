@@ -12,6 +12,8 @@ import { QuantityInput } from "@/app/(customer)/products/detail/[id]/components/
 import { ValidateFormDetailProduct } from "@/app/(customer)/products/detail/[id]/components/validate-form-detail-product";
 import { getMinMaxVariantPrice } from "@/utils/price-utils";
 import { getTotalStock } from "@/utils/stock-utils";
+import { FloatingQuickBuyBar } from "./floating-quick-buy-bar";
+import { ProductAccordionInfo } from "./product-accordion-info";
 
 type FormDetailProductProps = {
   productDetail: Product;
@@ -89,21 +91,23 @@ export const FormDetailProduct = ({
     selectedVariant?.stock ?? getTotalStock(productDetail.Variants);
 
   return (
-    <div className="w-full px-1.5 md:px-4 lg:px-6 flex flex-col gap-2.5 lg:h-full">
-      <div>
-        <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold text-foreground">
+    <div className="w-full flex flex-col space-y-5 pt-0">
+      {/* Title & Price Header */}
+      <div className="space-y-2">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-wide text-neutral-900 leading-snug mt-0 pt-0 uppercase">
           {productDetail.name}
         </h1>
-        <h3 className="text-base md:text-xl lg:text-2xl font-semibold text-foreground/70 my-2">
+        <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight pt-1">
           {priceDisplay !== undefined
             ? formatCurrency(Number(priceDisplay))
             : `${formatCurrency(Number(minMaxPrice?.min))} - ${formatCurrency(Number(minMaxPrice?.max))}`}
-        </h3>
-        <Separator />
+        </div>
       </div>
 
+      <Separator className="my-1" />
+
       <Form {...form}>
-        <div className="flex flex-col gap-6 h-full justify-between ">
+        <div className="flex flex-col space-y-5">
           <InputsFormProduct
             control={form.control}
             variants={variantOptions}
@@ -112,12 +116,12 @@ export const FormDetailProduct = ({
           <QuantityInput stockProduct={stockProduct} control={form.control} />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full items-stretch sm:items-center">
+        <div id="main-buy-buttons-target" className="flex flex-col sm:flex-row gap-3 pt-4 w-full items-stretch sm:items-center">
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}
             priceProduct={Number(priceDisplay)}
-            imageProduct={image}
+            imageProduct={productDetail.ProductImages?.[0]?.imageUrl || image}
             variant="outline"
             data={{
               ...formValues,
@@ -128,14 +132,14 @@ export const FormDetailProduct = ({
             variantOptions={rawVariantOptions}
             totalStock={stockProduct}
           >
-            <ShoppingCart />
-            <span className="mx-2">Masukkan Keranjang</span>
+            <ShoppingCart className="w-4 h-4" />
+            <span className="mx-1.5 font-medium">Masukkan Keranjang</span>
           </ValidateFormDetailProduct>
 
           <ValidateFormDetailProduct
             nameProduct={productDetail.name}
             priceProduct={Number(priceDisplay)}
-            imageProduct={image}
+            imageProduct={productDetail.ProductImages?.[0]?.imageUrl || image}
             variant="default"
             data={{
               ...formValues,
@@ -148,10 +152,34 @@ export const FormDetailProduct = ({
             variantOptions={rawVariantOptions}
             totalStock={stockProduct}
           >
-            <span className="mx-2">Beli Sekarang</span>
+            <span className="mx-1.5 font-medium">Beli Sekarang</span>
           </ValidateFormDetailProduct>
         </div>
       </Form>
+
+      {/* Luxury Collapsible Accordions: Product Description, Shipping, Warranty (Bamboo Blonde Style) */}
+      <ProductAccordionInfo description={productDetail.description} />
+
+      {/* Floating Quick Buy Pill (Bamboo Blonde Style when scrolled past form) */}
+      <FloatingQuickBuyBar
+        productId={productDetail.id}
+        name={productDetail.name}
+        image={productDetail.ProductImages?.[0]?.imageUrl || image}
+        price={Number(priceDisplay || minMaxPrice?.min || 0)}
+        stock={stockProduct}
+        selectedVariantName={selectedVariant?.name !== "-" ? selectedVariant?.name : undefined}
+        selectedPhoneTypeName={
+          phoneTypeOptions.find((p) => p.id === formValues.phone_type)?.model
+        }
+        formValues={{
+          ...formValues,
+          variant: selectedVariant?.id,
+        }}
+        onQuantityChange={(qty) => form.setValue("quantity", qty)}
+        onSyncParent={handleSyncParent}
+        phoneTypeOptions={phoneTypeOptions}
+        variantOptions={rawVariantOptions}
+      />
     </div>
   );
 };

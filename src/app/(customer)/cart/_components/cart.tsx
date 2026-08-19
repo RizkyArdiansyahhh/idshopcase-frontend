@@ -1,11 +1,8 @@
 "use client";
-import { LoadingDialog } from "@/components/shared/loading-dialog";
-import { UserAvatar } from "@/components/shared/user-avatar";
-import { Badge } from "@/components/ui/badge";
+
 import { useGetCarts } from "@/features/cart/api/get-carts";
 import { CartDetail } from "@/features/cart/components/cart-detail";
 import { CartList } from "@/features/cart/components/cart-list";
-import { useAuthStore } from "@/store/profile-store";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,90 +10,61 @@ import { useEffect, useState } from "react";
 export const Cart = () => {
   const [selectedCartItems, setSelectedCartItems] = useState<number[]>([]);
   const { data: cartItems, isLoading: fetchCartsLoading } = useGetCarts();
-  const profileUser = useAuthStore((state) => state.user);
 
+  // Select all items by default on initial load
   useEffect(() => {
-    if (!cartItems) return;
+    if (!cartItems || cartItems.length === 0) return;
 
-    setSelectedCartItems((prev) =>
-      prev.filter((id) => cartItems.some((item) => item.id === id)),
-    );
+    setSelectedCartItems((prev) => {
+      if (prev.length === 0) {
+        return cartItems.map((item) => item.id);
+      }
+      return prev.filter((id) => cartItems.some((item) => item.id === id));
+    });
   }, [cartItems]);
 
   return (
-    <div className="h-screen flex flex-col ">
-      {/* optional header space */}
-      <div className=" w-full shrink-0 flex flex-row justify-between items-center pt-3">
-        <div className="flex flex-row gap-2 items-center">
-          <Link href="/">
-            <ChevronLeft />
-          </Link>
-          <span className="text-base text-foreground font-medium">Beranda</span>
-        </div>
-        <div className="flex flex-row gap-4">
-          <Badge variant={"outline"} className="px-3 font-semibold">
-            {cartItems?.length ?? 0} Barang
-          </Badge>
-          <Link href={"account/profile"}>
-            <UserAvatar
-              name="Guest"
-              className="h-8 w-8 md:h-10 md:w-10"
-              image={profileUser?.profile_picture ?? ""}
-            ></UserAvatar>
-          </Link>
-        </div>
+    <div className="w-full max-w-7xl mx-auto pt-0 pb-8 px-0 font-sans select-none min-h-[60vh]">
+      {/* Top Back Navigation Link (Matching Screenshot) */}
+      <div className="mb-2 sm:mb-3">
+        <Link
+          href="/products/collections"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors uppercase tracking-wider"
+        >
+          <ChevronLeft className="w-4 h-4 stroke-[2]" />
+          Back
+        </Link>
       </div>
 
-      <div className="flex-1 flex flex-col gap-2 min-h-0">
-        <h1 className="text-foreground font-bold text-base md:text-lg lg:text-2xl shrink-0">
-          Keranjang Saya
+      {/* Main Page Title: YOUR CART */}
+      <div className="mb-5 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-wide text-neutral-900 uppercase font-sans">
+          YOUR CART
         </h1>
+      </div>
 
-        <div className="flex flex-1 gap-6 min-h-0">
-          {/* LEFT SIDE (CART LIST) */}
-          <div className="w-full lg:w-4/6 flex flex-col min-h-0">
-            {/* table header */}
-            <div className="hidden w-full border rounded-sm py-3 px-14 md:flex justify-around shrink-0">
-              {["Produk", "Harga Satuan", "Total Harga"].map((item, index) => (
-                <p
-                  key={index}
-                  className={`${
-                    index === 0
-                      ? "md:w-[65%] lg:w-8/12"
-                      : "md:w-[17.5%] lg:w-2/12 text-center"
-                  } text-xs md:text-base font-semibold text-foreground/50`}
-                >
-                  {item}
-                </p>
-              ))}
-            </div>
-            <div className="hidden md:block w-full h-1 bg-transparent"></div>
+      {/* 2-Column Luxury Cart Layout */}
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+        {/* LEFT COLUMN: Cart Items Table + Coupon Section */}
+        <div className="w-full lg:w-[62%] min-w-0">
+          <CartList
+            selectedCartItems={selectedCartItems}
+            setSelectedCartItems={setSelectedCartItems}
+            cartItems={cartItems || []}
+            fetchCartsLoading={fetchCartsLoading}
+          />
+        </div>
 
-            {/*  SCROLL AREA */}
-            <div className="flex-1 min-h-0 overflow-y-auto pb-40 md:pb-48 lg:pb-0">
-              <CartList
-                selectedCartItems={selectedCartItems}
-                setSelectedCartItems={setSelectedCartItems}
-                cartItems={cartItems || []}
-                fetchCartsLoading={fetchCartsLoading}
-              ></CartList>
-            </div>
-            <div className="w-full h-8 bg-transparent"></div>
-          </div>
-
-          {/* RIGHT SIDE (SUMMARY) */}
-          <div
-            className="  w-full
-      fixed bottom-0 left-0 z-50
-      lg:sticky lg:top-24 lg:w-[28%] lg:self-start "
-          >
-            <CartDetail
-              selectedCartItems={selectedCartItems}
-              cartItems={cartItems || []}
-            ></CartDetail>
-          </div>
+        {/* RIGHT COLUMN: Cart Totals Summary (With Vertical Left Border) */}
+        <div className="w-full lg:w-[38%] min-w-0 lg:border-l lg:border-neutral-200 lg:pl-8 lg:sticky lg:top-24 self-start">
+          <CartDetail
+            selectedCartItems={selectedCartItems}
+            cartItems={cartItems || []}
+          />
         </div>
       </div>
     </div>
   );
 };
+
+export default Cart;

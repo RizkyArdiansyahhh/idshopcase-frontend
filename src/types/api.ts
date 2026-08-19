@@ -240,3 +240,23 @@ type OrderItemSummary = {
   subtotal: number;
   variantId: number;
 };
+
+export type Review = {
+  id: number | string;
+  shopee_rating_id?: string;
+  username: string;
+  user_avatar?: string | null;
+  rating_star: number;
+  comment: string;
+  images?: string[] | string;
+  is_visible?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  variant?: string;
+};
+
+export type ReviewsResponse = {
+  success: boolean;
+  data: Review[];
+};
+

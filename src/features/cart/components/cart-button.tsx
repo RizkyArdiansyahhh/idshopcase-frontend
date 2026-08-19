@@ -1,18 +1,18 @@
 import Link from "next/link";
-import { FaCartArrowDown } from "react-icons/fa";
 import { useGetCarts } from "../api/get-carts";
+import { ShoppingBag } from "lucide-react";
 
-export const CartButton = () => {
+export const CartButton = ({ className = "" }: { className?: string }) => {
   const { data: cartItems } = useGetCarts();
   const count = cartItems?.length ?? 0;
 
   return (
-    <div className="relative">
-      <Link href={"/cart"}>
-        <FaCartArrowDown size={24} color="white" />
+    <div className={`relative flex items-center justify-center ${className}`}>
+      <Link href={"/cart"} className="text-current hover:opacity-75 transition-opacity flex items-center justify-center p-0.5">
+        <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
       </Link>
       {count > 0 && (
-        <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full min-w-[18px] min-h-[18px]">
+        <span className="absolute -top-1.5 -right-2 inline-flex items-center justify-center px-1 text-[9px] font-bold leading-none text-white bg-black dark:bg-white dark:text-black rounded-full min-w-[15px] h-[15px] border border-white dark:border-black">
           {count}
         </span>
       )}

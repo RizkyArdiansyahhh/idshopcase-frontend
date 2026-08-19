@@ -5,8 +5,8 @@ import { PreviewImageProduct } from "./preview-image-product";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbCustom } from "@/components/shared/breadCrumbCustom";
 import { ListProductsDetail } from "./list-products";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PreviewCustomCase from "@/app/(customer)/products/detail/[id]/components/preview-custom-case";
+import { ProductReviewsSection } from "@/features/reviews/components/product-reviews-section";
+import { FloatingCustomizerButton } from "./floating-customizer-button";
 import Loader from "@/components/shared/loaders";
 
 type DetailProductProps = {
@@ -47,54 +47,39 @@ export const DetailProduct = (props: DetailProductProps) => {
     );
   }
 
-  const isCustomCase = product.category === "custom_case";
-
   return (
-    <div className="w-full max-w-full overflow-x-hidden">
+    <div className="w-full max-w-7xl mx-auto relative py-2">
+      {/* Right-Middle Floating Custom Studio Widget (Always accessible for all products) */}
+      <FloatingCustomizerButton />
+
       <div className="w-full my-2">
         <BreadcrumbCustom></BreadcrumbCustom>
       </div>
-      <div className="w-full h-full flex lg:flex-row flex-col gap-6 min-w-0">
-        <div className="w-full lg:w-[50%] h-full min-w-0">
-          <div className="w-full h-full lg:h-5/6 flex flex-col min-w-0">
-            <PreviewImageProduct
-              isLoading={fetchProductLoading}
-              images={product.ProductImages}
-            ></PreviewImageProduct>
-          </div>
+      <div className="w-full h-full flex lg:flex-row flex-col gap-8 lg:gap-10 min-w-0 items-start">
+        {/* Left Column: Longines-Style Luxury Photo Gallery */}
+        <div className="w-full lg:w-[58%] min-w-0">
+          <PreviewImageProduct
+            isLoading={fetchProductLoading}
+            images={product.ProductImages}
+          ></PreviewImageProduct>
         </div>
-        <div className="w-full lg:w-[50%] lg:px-8 flex flex-col gap-2.5 min-w-0">
+
+        {/* Right Column: Sticky Purchasing Options & Buy Box */}
+        <div className="w-full lg:w-[42%] min-w-0 lg:sticky lg:top-20 self-start">
           <FormDetailProduct
             productDetail={product}
             image={image ?? ""}
           ></FormDetailProduct>
         </div>
       </div>
-      <div className="w-full mt-5 md:mt-10 lg:mt-16 flex">
-        <Tabs defaultValue="detailProduct" className="w-full">
-          <TabsList>
-            <TabsTrigger value="detailProduct">Detail</TabsTrigger>
-            {isCustomCase && (
-              <TabsTrigger value="previewProduct">Preview</TabsTrigger>
-            )}
-          </TabsList>
-          <Separator className="w-full"></Separator>
 
-          <TabsContent value="detailProduct" className="w-full">
-            <div className="py-5 w-full  whitespace-pre-line text-xs md:text-sm">
-              {product.description}
-            </div>
-          </TabsContent>
-          {isCustomCase && (
-            <TabsContent value="previewProduct">
-              <PreviewCustomCase></PreviewCustomCase>
-            </TabsContent>
-          )}
-        </Tabs>
-      </div>
+      <Separator className="my-6 md:my-8" />
 
-      <Separator></Separator>
-      <ListProductsDetail></ListProductsDetail>
+      {/* Dedicated Full-Width Customer Reviews Section with Photo Testimonials */}
+      <ProductReviewsSection />
+
+      <Separator className="my-6 md:my-8" />
+      <ListProductsDetail />
     </div>
   );
 };

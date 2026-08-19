@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col items-center">
-      <Navbar isBlur={true} />
+      <Navbar isTransparentOnTop={true} />
       <CarouselHomePage />
       <div className="h-[70vh] w-screen flex justify-center items-center">
         <SectionCategories />

@@ -14,10 +14,13 @@ const verifyOtp = async (data: verifyOtpRequest) => {
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error.response?.status === 400) {
-      throw new Error(error.response?.data?.message || "Kode OTP salah atau expired");
+    if (error.response?.status === 429) {
+      throw new Error("Terlalu banyak percobaan. Harap tunggu beberapa saat.");
     }
-    throw error;
+    if (error.response?.status === 400 || error.response?.status === 401) {
+      throw new Error(error.response?.data?.message || "Kode OTP salah atau telah kedaluwarsa.");
+    }
+    throw new Error(error.response?.data?.message || "Kode OTP tidak valid.");
   }
 };
 

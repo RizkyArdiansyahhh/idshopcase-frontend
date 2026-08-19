@@ -27,15 +27,17 @@ export const VariantInput = ({ control, variants }: InputProps) => {
       control={control}
       render={({ field }) => (
         <FormItem>
-          <div className="flex flex-row justify-between items-center mb-1">
-            <FormLabel className="text-sm font-semibold">Varian</FormLabel>
+          <div className="flex flex-row justify-between items-center mb-2">
+            <FormLabel className="text-xs font-bold text-neutral-600 uppercase tracking-wider">
+              Varian
+            </FormLabel>
             <FormMessage />
           </div>
 
           <RadioGroup
             onValueChange={field.onChange}
             value={field.value || undefined}
-            className="flex flex-wrap gap-2 w-full max-w-full py-1"
+            className="flex flex-wrap gap-2.5 w-full max-w-full"
           >
             {variants?.map((item) => {
               const isSelected = field.value === item.id;
@@ -43,7 +45,7 @@ export const VariantInput = ({ control, variants }: InputProps) => {
                 <label
                   key={item.id}
                   htmlFor={`variant-${item.id}`}
-                  className={`inline-flex items-center justify-center cursor-pointer border rounded-lg px-3.5 py-2 text-xs md:text-sm font-medium transition-all duration-150 select-none ${
+                  className={`inline-flex items-center justify-center cursor-pointer border rounded-none px-3.5 py-2 text-xs md:text-sm font-medium transition-all duration-150 select-none ${
                     isSelected
                       ? "border-foreground bg-foreground text-background font-semibold shadow-xs"
                       : "border-input bg-background hover:bg-muted/70 text-foreground"
@@ -104,8 +106,12 @@ export const QuantityInput = (props: InputProps) => {
       render={({ field }) => (
         <FormItem className="flex flex-row justify-between items-start">
           <div>
-            <FormLabel>Kuantitas</FormLabel>
-            <FormDescription>Tersedia {stockProduct}</FormDescription>
+            <FormLabel className="text-xs font-bold text-neutral-600 uppercase tracking-wider">
+              Kuantitas
+            </FormLabel>
+            <FormDescription className="text-xs text-neutral-400">
+              Tersedia {stockProduct}
+            </FormDescription>
           </div>
 
           <CardQuantity field={field} stock={stockProduct}></CardQuantity>
