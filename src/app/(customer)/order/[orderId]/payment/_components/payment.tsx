@@ -18,7 +18,7 @@ export const Payment = () => {
     isFetching,
     refetch,
   } = useGetOrder({
-    id: Number(orderId),
+    id: orderId!,
     queryConfig: {
       refetchInterval: (query) => {
         const status = query.state.data?.Payment?.status;

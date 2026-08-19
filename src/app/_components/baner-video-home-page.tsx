@@ -11,16 +11,17 @@ export const BannerVideoHomePage = () => {
     offset: ["start start", "end start"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.4], [1, 0.7]);
-  const textOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
-  const textY = useTransform(scrollYProgress, [0.4, 0.7], [60, 0]);
+  // Animasi dibuat responsif & cepat muncul saat mulai di-scroll
+  const scale = useTransform(scrollYProgress, [0, 0.25], [1, 0.75]);
+  const textOpacity = useTransform(scrollYProgress, [0.03, 0.22], [0, 1]);
+  const textY = useTransform(scrollYProgress, [0.03, 0.22], [30, 0]);
 
   return (
-    <section ref={ref} className="h-[200vh] w-screen">
+    <section ref={ref} className="h-[130vh] w-screen">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center gap-6 px-5">
         <motion.div
           style={{ scale }}
-          className="w-full h-[65vh] overflow-hidden rounded-xs"
+          className="w-full h-[60vh] sm:h-[65vh] overflow-hidden rounded-xs"
         >
           <video
             autoPlay
@@ -36,9 +37,9 @@ export const BannerVideoHomePage = () => {
 
         <motion.div
           style={{ opacity: textOpacity, y: textY }}
-          className="text-center max-w-3xl mb-20"
+          className="text-center max-w-3xl mb-12 sm:mb-16 md:mb-20 px-2"
         >
-          <h1 className="text-foreground text-5xl font-bold leading-tight">
+          <h1 className="text-foreground text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
             Perlindungan <span className="text-foreground/40">Maksimal</span>{" "}
             Dengan Desain Yang Tetap{" "}
             <span className="text-foreground/40">Elegan</span>.

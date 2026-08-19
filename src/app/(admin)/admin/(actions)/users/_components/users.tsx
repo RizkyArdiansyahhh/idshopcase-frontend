@@ -207,7 +207,7 @@ const Users = () => {
       ></DrawerUser>
       {selectedUser && (
         <DeleteUser
-          id={Number(selectedUser.id)}
+          id={selectedUser.id}
           isOpen={isOpenDialogDelete}
           setIsOpen={setIsOpenDialogDelete}
           setSelectedUser={setSelectedUser}

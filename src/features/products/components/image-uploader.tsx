@@ -8,14 +8,14 @@ import { cleanImageUrl } from "@/utils/image-utils";
 import { toast } from "sonner";
 
 export type ExistingImageItem = {
-  id: number;
+  id: string | number;
   imageUrl: string;
   isPrimary?: boolean;
 };
 
 type ImageUploaderProps = {
   existingImages?: ExistingImageItem[];
-  onRemoveExisting?: (id: number) => void;
+  onRemoveExisting?: (id: string | number) => void;
   value: File[];
   onChange: (files: File[]) => void;
   maxImages?: number;

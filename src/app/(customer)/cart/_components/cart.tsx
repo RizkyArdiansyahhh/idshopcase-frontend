@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const Cart = () => {
-  const [selectedCartItems, setSelectedCartItems] = useState<number[]>([]);
+  const [selectedCartItems, setSelectedCartItems] = useState<string[]>([]);
   const { data: cartItems, isLoading: fetchCartsLoading } = useGetCarts();
 
   // Select all items by default on initial load

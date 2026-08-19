@@ -10,8 +10,8 @@ import { toast } from "sonner";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 
 type CartListProps = {
-  selectedCartItems: number[];
-  setSelectedCartItems: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedCartItems: string[];
+  setSelectedCartItems: React.Dispatch<React.SetStateAction<string[]>>;
   cartItems: CartItem[];
   fetchCartsLoading: boolean;
 };

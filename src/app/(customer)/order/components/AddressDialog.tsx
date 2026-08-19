@@ -18,7 +18,7 @@ type AddressDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   addresses: Address[];
-  selectedAddressId: number;
+  selectedAddressId: string | number;
   onSelectAddress: (addr: Address) => void;
 };
 

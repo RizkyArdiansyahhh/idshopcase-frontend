@@ -14,7 +14,7 @@ type CreateVariantProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<any>;
   activeVariant: Variant | null;
-  setActiveVariant: (id: number | null) => void;
+  setActiveVariant: (id: string | number | null) => void;
 };
 
 export function CreateVariant({

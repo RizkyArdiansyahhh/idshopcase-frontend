@@ -27,7 +27,7 @@ import { useGetUser } from "@/features/auth/api/get-user";
 import { useAuthModalStore } from "@/stores/auth-modal-store";
 
 type ValidateFormDetailProductProps = {
-  productId: number;
+  productId: string | number;
   children: React.ReactNode;
   variant: "default" | "outline";
   imageProduct: string;
@@ -166,10 +166,10 @@ export const ValidateFormDetailProduct = (
     }
 
     const cartData = {
-      productId: productId,
+      productId: String(productId),
       quantity: Number(formData.quantity || 1),
-      phoneTypeId: Number(formData.phone_type) || null,
-      variantId: Number(selectedVariant.id),
+      phoneTypeId: formData.phone_type ? String(formData.phone_type) : null,
+      variantId: String(selectedVariant.id),
     };
     createCartItem(cartData);
   };
@@ -192,16 +192,16 @@ export const ValidateFormDetailProduct = (
     );
 
     setDataCheckout({
-      productId,
+      productId: String(productId),
       quantity: Number(formData.quantity || 1),
       variant: {
-        id: Number(selectedVariant.id),
+        id: String(selectedVariant.id),
         name: selectedVariant.name,
         price: selectedVariant.price,
         stock: selectedVariant.stock,
         max_images: selectedVariant.max_images,
       },
-      phoneTypeId: formData.phone_type ? Number(formData.phone_type) : null,
+      phoneTypeId: formData.phone_type ? String(formData.phone_type) : null,
       phoneTypeName: selectedPhoneType?.model || null,
     });
 

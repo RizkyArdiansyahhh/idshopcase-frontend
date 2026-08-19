@@ -7,15 +7,15 @@ type GetAddressByIdItemRequest = Omit<
   Address,
   "province_id" | "city_id" | "district_id" | "sub_district_id"
 >;
-const getAddressById = async (id: number) => {
+const getAddressById = async (id: string | number) => {
   const response = await api.get<{ address: GetAddressByIdItemRequest }>(
     `/user/addresses/${id}`
   );
   return response.data.address;
 };
 
-export const getAddressByIdQueryKey = (id: number) => ["address", id];
-export const getAddressByIdQueryOptions = (id: number) => {
+export const getAddressByIdQueryKey = (id: string | number) => ["address", id];
+export const getAddressByIdQueryOptions = (id: string | number) => {
   return queryOptions({
     queryKey: getAddressByIdQueryKey(id),
     queryFn: () => getAddressById(id),
@@ -23,7 +23,7 @@ export const getAddressByIdQueryOptions = (id: number) => {
 };
 type UseGetAddressByIdParams = {
   queryConfig?: QueryConfig<typeof getAddressByIdQueryOptions>;
-  id: number;
+  id: string | number;
 };
 
 export const useGetAddressById = ({

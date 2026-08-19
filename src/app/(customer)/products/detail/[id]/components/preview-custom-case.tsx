@@ -273,7 +273,6 @@ export default function CasePreview() {
 
       {/* === RIGHT: PREVIEW & CONTROLS === */}
       <div className="h-full flex gap-7 p-2 sm:p-6 font-sans flex-col lg:flex-row items-center lg:items-start justify-center">
-        
         {/* Mockup Canvas: Pure White Studio Look */}
         <div className="relative w-[280px] sm:w-[320px] aspect-[1024/1536] flex items-center justify-center select-none cursor-default group bg-white rounded-3xl border border-gray-100 shadow-[0_4px_30px_rgba(0,0,0,0.03)] p-4">
           {/* LAYER 1: Full Phone Body (Authentic Color Mockup) */}

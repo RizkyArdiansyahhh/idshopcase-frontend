@@ -1,12 +1,25 @@
 import axios from "axios";
 import { useAuthModalStore } from "@/stores/auth-modal-store";
 
-const getApiBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
-  if (typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+export const getApiBaseUrl = () => {
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1" &&
+    !window.location.hostname.startsWith("192.168.") &&
+    !window.location.hostname.startsWith("10.")
+  ) {
+    if (
+      process.env.NEXT_PUBLIC_API_URL &&
+      !process.env.NEXT_PUBLIC_API_URL.includes("localhost") &&
+      !process.env.NEXT_PUBLIC_API_URL.includes("127.0.0.1")
+    ) {
+      return process.env.NEXT_PUBLIC_API_URL;
+    }
     return "https://api.idshopcase.com/api";
   }
-  return "http://localhost:5001/api";
+
+  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
 };
 
 export const api = axios.create({
@@ -27,6 +40,9 @@ export const apiUpload = axios.create({
 });
 
 const attachAuthToken = (config: any) => {
+  // Dynamically ensure baseURL points to correct environment (production domain on live site)
+  config.baseURL = getApiBaseUrl();
+
   if (typeof window !== "undefined") {
     const token = localStorage.getItem("better-auth.session_token");
     if (token) {

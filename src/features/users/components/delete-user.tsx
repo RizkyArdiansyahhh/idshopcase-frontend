@@ -8,7 +8,7 @@ export const DeleteUser = ({
   setIsOpen,
   setSelectedUser,
 }: {
-  id: number;
+  id: string | number;
   isOpen: boolean;
   setIsOpen: (v: boolean) => void;
   setSelectedUser: (v: User | null) => void;

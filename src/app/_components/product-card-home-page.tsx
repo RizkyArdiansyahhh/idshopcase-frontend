@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 type ProductCardProps = {
-  id: number;
+  id: string | number;
   name: string;
   category: string;
   images: ProductImage[];

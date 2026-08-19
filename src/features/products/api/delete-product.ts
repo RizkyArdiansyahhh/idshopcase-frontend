@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getProductsQueryKey } from "./get-ptoducts";
 import { toast } from "sonner";
 
-const deleteProduct = async (id: number) => {
+const deleteProduct = async (id: string | number) => {
   return await api.delete(`product/${id}`);
 };
 

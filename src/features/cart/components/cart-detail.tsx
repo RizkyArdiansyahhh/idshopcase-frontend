@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
 type CartDetailProps = {
-  selectedCartItems: number[];
+  selectedCartItems: string[];
   cartItems: CartItem[];
 };
 

@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const Status = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const { data: order, isLoading } = useGetOrder({
-    id: Number(orderId),
+    id: orderId!,
     queryConfig: {
       staleTime: 0,
       refetchOnMount: "always",

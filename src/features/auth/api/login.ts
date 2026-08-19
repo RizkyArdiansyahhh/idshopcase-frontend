@@ -42,6 +42,8 @@ export const useLogin = (params: useLoginPrams = {}) => {
     onSuccess: (data, variables, onMutateResult, context) => {
       if (data?.token && typeof window !== "undefined") {
         localStorage.setItem("better-auth.session_token", data.token);
+        const isSecure = window.location.protocol === "https:";
+        document.cookie = `better-auth.session_token=${data.token}; path=/; max-age=604800; SameSite=Lax${isSecure ? "; Secure" : ""}`;
       }
       queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
       params.mutationConfig?.onSuccess?.(
@@ -95,6 +97,7 @@ export const useLogout = () => {
     onSuccess: () => {
       if (typeof window !== "undefined") {
         localStorage.removeItem("better-auth.session_token");
+        document.cookie = "better-auth.session_token=; path=/; max-age=0; SameSite=Lax";
       }
       queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
       queryClient.clear();

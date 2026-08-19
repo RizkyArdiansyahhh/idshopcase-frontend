@@ -3,14 +3,14 @@ import { QueryConfig } from "@/lib/react-query";
 import { OrderAdmin } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getOrderAdmin = async (id: number) => {
+const getOrderAdmin = async (id: string | number) => {
   const response = await api.get<{ order: OrderAdmin }>(`/order/admin/${id}`);
   return response.data.order;
 };
 
-export const getOrderAdminQueryKey = (id: number) => ["order-admin", id];
+export const getOrderAdminQueryKey = (id: string | number) => ["order-admin", id];
 
-const getOrderAdminQueryOptions = (id: number) => {
+const getOrderAdminQueryOptions = (id: string | number) => {
   return queryOptions({
     queryKey: getOrderAdminQueryKey(id),
     queryFn: () => getOrderAdmin(id),
@@ -19,7 +19,7 @@ const getOrderAdminQueryOptions = (id: number) => {
 
 type UseGetOrderAdminParams = {
   queryConfig?: QueryConfig<typeof getOrderAdminQueryOptions>;
-  id: number;
+  id: string | number;
 };
 
 export const useGetOrderAdmin = ({

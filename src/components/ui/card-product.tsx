@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 type CardProductType = {
-  id: number;
+  id: string | number;
   name: string;
   price: number;
   image: string;

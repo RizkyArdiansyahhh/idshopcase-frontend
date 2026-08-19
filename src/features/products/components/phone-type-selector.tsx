@@ -11,13 +11,13 @@ import { Separator } from "@/components/ui/separator";
 
 type PhoneTypeSelectorProps = {
   options: PhoneType[];
-  value?: number[];
-  onChange: (val: number[]) => void;
+  value?: string[];
+  onChange: (val: string[]) => void;
 };
 
 export const PhoneTypeSelector = (props: PhoneTypeSelectorProps) => {
   const { options = [], value = [], onChange } = props;
-  const toggleSelect = (id: number) => {
+  const toggleSelect = (id: string) => {
     if (value.includes(id)) {
       onChange(value.filter((v) => v !== id));
     } else {

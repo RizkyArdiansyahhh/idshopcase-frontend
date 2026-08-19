@@ -55,13 +55,13 @@ import { useGetAddresses } from "../api/get-address";
 import { AlertCircle } from "lucide-react";
 
 export type FormAddressSchemaType = z.infer<typeof formAddressSchema>;
-export const Address = ({ addressId }: { addressId?: number }) => {
+export const Address = ({ addressId }: { addressId?: string | number }) => {
   const router = useRouter();
   const { data: addresses } = useGetAddresses();
   const isMaxReached = !addressId && (addresses?.length || 0) >= 5;
 
   const { data: address, isLoading: fetchAddressLoading } = useGetAddressById({
-    id: Number(addressId),
+    id: addressId!,
     queryConfig: {
       enabled: !!addressId,
     },

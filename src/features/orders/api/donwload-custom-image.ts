@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 
-export const downloadCustomImage = async (id: number) => {
+export const downloadCustomImage = async (id: string | number) => {
   const response = await api.get(`/product/custom/${id}/download`, {
     responseType: "blob", // <--- ini penting
   });

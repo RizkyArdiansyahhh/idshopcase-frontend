@@ -8,17 +8,17 @@ type VariantSelectorProps = {
   value?: Variant[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<any>;
-  setActiveVariant: (id: number) => void;
+  setActiveVariant: (id: string | number) => void;
 };
 
 export const VariantSelector = (props: VariantSelectorProps) => {
   const { value = [], form, setActiveVariant } = props;
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string | number) => {
     const currentVariants = form.getValues("variant") || [];
     form.setValue(
       "variant",
-      currentVariants.filter((v: number) => v !== id),
+      currentVariants.filter((v: string | number) => String(v) !== String(id)),
     );
   };
 

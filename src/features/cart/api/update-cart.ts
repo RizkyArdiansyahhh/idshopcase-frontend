@@ -5,7 +5,7 @@ import { getCartsQueryKey } from "./get-carts";
 import { toast } from "sonner";
 
 type UpdateCartItemRequest = {
-  id: number;
+  id: string | number;
   quantity: number;
 };
 const updateCartItem = async ({ id, quantity }: UpdateCartItemRequest) => {

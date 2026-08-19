@@ -49,7 +49,7 @@ export const AddressCard = (props: AddressCardProps) => {
           </span>
         </address>
         <div className="flex flex-row gap-3">
-          <DeleteAddress id={Number(id)}></DeleteAddress>
+          <DeleteAddress id={id}></DeleteAddress>
           <TooltipCustom message="ubah">
             <Link
               href={`/account/address/edit/${id}`}

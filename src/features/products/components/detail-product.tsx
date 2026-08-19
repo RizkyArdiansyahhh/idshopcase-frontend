@@ -10,7 +10,7 @@ import { FloatingCustomizerButton } from "./floating-customizer-button";
 import Loader from "@/components/shared/loaders";
 
 type DetailProductProps = {
-  id: number;
+  id: string | number;
 };
 export const DetailProduct = (props: DetailProductProps) => {
   const { id } = props;

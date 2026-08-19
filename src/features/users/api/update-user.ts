@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { getUsersQueryKey } from "./get-users";
 
 type UpdateUserProps = {
-  id: number;
+  id: string | number;
   data: Omit<User, "id" | "profile_picture">;
 };
 const UpdateUser = async ({ id, data }: UpdateUserProps) => {

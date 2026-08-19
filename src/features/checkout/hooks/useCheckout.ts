@@ -63,7 +63,7 @@ export const useCheckout = () => {
       };
     }
   } else if (cartItems?.length) {
-    const cartItemIds: number[] = [];
+    const cartItemIds: string[] = [];
 
     cartItems.forEach((item) => {
       const productItem = products?.find((p) => p.id === item.productId);

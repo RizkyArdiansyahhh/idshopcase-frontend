@@ -20,7 +20,7 @@ import z from "zod";
 import { useUpdateUser } from "../api/update-user";
 
 type ProfileFormProps = {
-  id: number;
+  id: string | number;
   name: string;
   email: string;
   phone: string;

@@ -3,15 +3,15 @@ import { QueryConfig } from "@/lib/react-query";
 import { Product } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getProduct = async (id: number) => {
+const getProduct = async (id: string | number) => {
   const response = await api.get<{ data: Product }>(`/product/${id}`);
 
   return response.data.data;
 };
 
-export const getProductQueryKey = (id: number) => ["product", id];
+export const getProductQueryKey = (id: string | number) => ["product", id];
 
-export const getProductQueryOptions = (id: number) => {
+export const getProductQueryOptions = (id: string | number) => {
   return queryOptions({
     queryKey: getProductQueryKey(id),
     queryFn: () => getProduct(id),
@@ -20,7 +20,7 @@ export const getProductQueryOptions = (id: number) => {
 
 type UseGetProductParams = {
   queryConfig?: QueryConfig<typeof getProductQueryOptions>;
-  id: number;
+  id: string | number;
 };
 
 export const useGetProduct = ({ queryConfig, id }: UseGetProductParams) => {

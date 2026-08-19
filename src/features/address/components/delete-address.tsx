@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FaTrash } from "react-icons/fa";
 import { useDeleteAddress } from "../api/delete-address";
 
-export const DeleteAddress = ({ id }: { id: number }) => {
+export const DeleteAddress = ({ id }: { id: string | number }) => {
   const { mutate: deleteAddress, isPending: deleteAddressIsLoading } =
     useDeleteAddress();
   return (

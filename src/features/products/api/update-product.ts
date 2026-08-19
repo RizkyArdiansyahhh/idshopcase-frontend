@@ -5,7 +5,7 @@ import { getProductsQueryKey } from "./get-ptoducts";
 import { toast } from "sonner";
 import { getProductQueryKey } from "./get-productById";
 
-const UpdateProduct = async ({ id, data }: { id: number; data: FormData }) => {
+const UpdateProduct = async ({ id, data }: { id: string | number; data: FormData }) => {
   data.forEach((value, key) => {
     console.log(key, value);
   });

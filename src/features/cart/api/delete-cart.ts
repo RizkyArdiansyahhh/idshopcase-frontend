@@ -5,7 +5,7 @@ import { getCartsQueryKey } from "./get-carts";
 import { toast } from "sonner";
 
 type DeleteCartItemRequest = {
-  cartId: number;
+  cartId: string | number;
 };
 const deleteCartItem = async ({ cartId }: DeleteCartItemRequest) => {
   return api.delete(`/cart/${cartId}`);
