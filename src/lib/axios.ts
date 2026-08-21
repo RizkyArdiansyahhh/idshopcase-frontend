@@ -56,16 +56,6 @@ const attachAuthToken = (config: any) => {
 };
 
 const handleResponseError = (error: any) => {
-  if (typeof window !== "undefined" && error.response?.status === 401) {
-    const currentPath = window.location.pathname;
-    // Don't trigger modal if user is already on auth pages
-    if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
-      useAuthModalStore.getState().openModal({
-        reason: "session_expired",
-        redirectUrl: `${currentPath}${window.location.search}`,
-      });
-    }
-  }
   return Promise.reject(error);
 };
 

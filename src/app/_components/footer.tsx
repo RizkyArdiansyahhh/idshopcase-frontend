@@ -1,11 +1,17 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
+import { Link } from "@/i18n/navigation";
 import { FaInstagram } from "react-icons/fa";
 import { TbBrandShopee } from "react-icons/tb";
 import { PiTiktokLogo } from "react-icons/pi";
+import { useTranslations } from "next-intl";
 
 import { FooterAccordionMobile, FooterLink } from "./footer-link";
 
 export const Footer = () => {
+  const t = useTranslations("footer");
+
   return (
     <>
       <footer className="w-full pt-10 pb-4 md:h-fit lg:min-h-[50vh] bg-white border-t border-neutral-200 text-neutral-900 flex flex-col justify-between font-sans select-none">
@@ -17,7 +23,7 @@ export const Footer = () => {
                 IDSHOPCASE.
               </h2>
               <p className="text-xs md:text-sm font-normal text-neutral-500 mt-1.5 leading-relaxed">
-                Ekspresikan Gaya & Uniknya Dirimu Lewat Custom Case Premium
+                {t("brandTagline")}
               </p>
             </div>
 
@@ -89,8 +95,7 @@ export const Footer = () => {
                 </div>
                 <div>
                   <p className="text-xs text-neutral-500 font-normal leading-relaxed">
-                    Ikuti kami di media sosial dan e-commerce resmi untuk
-                    update produk terbaru dan promo menarik.
+                    {t("socialNote")}
                   </p>
                 </div>
               </div>
@@ -120,7 +125,7 @@ export const Footer = () => {
             <div className="flex-1 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-6 md:justify-between lg:justify-start">
               <div className="flex flex-col gap-1">
                 <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                  Telepon / WhatsApp
+                  {t("phoneWhatsApp")}
                 </h3>
                 <a
                   href="https://wa.me/message/UGIJPSGHHWKHL1"
@@ -133,7 +138,7 @@ export const Footer = () => {
               </div>
               <div className="flex flex-col gap-1">
                 <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                  Email Kami
+                  {t("emailUs")}
                 </h3>
                 <a
                   href="mailto:idshopcase.id@gmail.com"
@@ -144,7 +149,7 @@ export const Footer = () => {
               </div>
               <div className="flex flex-col gap-1">
                 <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                  Lokasi Toko
+                  {t("storeLocation")}
                 </h3>
                 <a
                   href="https://maps.app.goo.gl/U8q1VCrTGxTXAFcx9"
@@ -152,20 +157,28 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
                 >
-                  Temukan Toko Kami
+                  {t("findStore")}
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Copyright */}
+        {/* Bottom Copyright & Legal Links */}
         <div className="w-full pt-6 mt-6">
           <Separator className="border-neutral-200" />
-          <div className="w-full px-5 md:px-10 lg:px-16 flex items-center justify-center md:justify-start py-4">
+          <div className="w-full px-5 md:px-10 lg:px-16 flex flex-col sm:flex-row items-center justify-between gap-2 py-4">
             <p className="text-neutral-400 text-xs font-normal">
-              © 2026 Idshopcase. All rights reserved.
+              {t("copyright")}
             </p>
+            <div className="flex items-center gap-4 text-xs">
+              <Link
+                href="/privacy"
+                className="text-neutral-500 hover:text-neutral-900 transition-colors"
+              >
+                {t("privacyPolicy")}
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,36 +12,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CheckCircle,
-  CircleCheck,
-  CircleX,
+  Check,
   Eye,
-  EyeClosed,
-  XCircle,
+  EyeOff,
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import z from "zod";
-import { is } from "zod/v4/locales";
 import { useUpdatePassword } from "../api/update-password";
 import { SpinnerV2 } from "@/components/ui/spinner";
 
 export const FormUpdatePassword = () => {
+  const t = useTranslations("account.password");
   const [isOldPasswordVisible, setIsOldPasswordVisible] = useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
 
   const formUpdatePasswordSchema = z.object({
-    oldPassword: z.string({ message: "Old password is required" }),
+    oldPassword: z.string().nonempty(),
     newPassword: z
-      .string({ message: "New password is required" })
-      .min(8, { message: "Password must be at least 8 characters" })
-      .regex(/[A-Z]/, {
-        message: "Must contain at least one uppercase letter",
-      })
-      .regex(/[a-z]/, {
-        message: "Must contain at least one lowercase letter",
-      })
-      .regex(/\d/, { message: "Must contain at least one number" }),
+      .string()
+      .min(8)
+      .regex(/[A-Z]/)
+      .regex(/[a-z]/)
+      .regex(/\d/),
   });
 
   type FormUpdatePasswordType = z.infer<typeof formUpdatePasswordSchema>;
@@ -52,20 +47,20 @@ export const FormUpdatePassword = () => {
 
   const passwordRules = [
     {
-      label: "Minimal 8 karakter",
-      valid: (pw: string) => pw.length >= 8,
+      label: t("rules.min8"),
+      valid: (pw: string) => (pw?.length || 0) >= 8,
     },
     {
-      label: "Harus ada huruf besar",
-      valid: (pw: string) => /[A-Z]/.test(pw),
+      label: t("rules.uppercase"),
+      valid: (pw: string) => /[A-Z]/.test(pw || ""),
     },
     {
-      label: "Harus ada huruf kecil",
-      valid: (pw: string) => /[a-z]/.test(pw),
+      label: t("rules.lowercase"),
+      valid: (pw: string) => /[a-z]/.test(pw || ""),
     },
     {
-      label: "Harus ada angka",
-      valid: (pw: string) => /\d/.test(pw),
+      label: t("rules.number"),
+      valid: (pw: string) => /\d/.test(pw || ""),
     },
   ];
 
@@ -78,122 +73,157 @@ export const FormUpdatePassword = () => {
       },
     });
 
-  const handleUpdatePassword = (data: FormUpdatePasswordType) => {
+  const onSubmit = (data: FormUpdatePasswordType) => {
     updatePassword(data);
   };
+
+  const newPasswordValue = form.watch("newPassword") || "";
+
   return (
-    <>
-      <div className="w-1/2 h-fit">
+    <div className="w-full space-y-6 font-sans text-neutral-900 select-none">
+      {/* Form Container */}
+      <div className="p-5 sm:p-7 rounded-2xl border border-neutral-200 bg-white shadow-2xs space-y-6">
+        <div className="space-y-1 pb-4 border-b border-neutral-100">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
+            {t("title")}
+          </h2>
+          <p className="text-xs text-neutral-500 font-normal">
+            {t("subtitle")}
+          </p>
+        </div>
+
         <Form {...form}>
-          <form
-            className="flex flex-col gap-5"
-            onSubmit={form.handleSubmit(handleUpdatePassword)}
-          >
-            <FormField
-              name="oldPassword"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password Lama</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type={isOldPasswordVisible ? "text" : "password"}
-                        placeholder="Password Lama"
-                        value={field.value || ""}
-                      />
-                      <div
-                        onClick={() =>
-                          setIsOldPasswordVisible(!isOldPasswordVisible)
-                        }
-                        className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
-                      >
-                        {isOldPasswordVisible ? (
-                          <EyeClosed className="text-ring" />
-                        ) : (
-                          <Eye className="text-ring" />
-                        )}
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="newPassword"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password Baru</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type={isNewPasswordVisible ? "text" : "password"}
-                        placeholder="Password Baru"
-                        value={field.value || ""}
-                      />
-                      <div
-                        onClick={() =>
-                          setIsNewPasswordVisible(!isNewPasswordVisible)
-                        }
-                        className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer "
-                      >
-                        {isNewPasswordVisible ? (
-                          <EyeClosed className="text-ring" />
-                        ) : (
-                          <Eye className="text-ring" />
-                        )}
-                      </div>
-                    </div>
-                  </FormControl>
-                  <ul className="mt-2 text-sm">
-                    {passwordRules.map((rule) => {
-                      const isValid = rule.valid(field.value || "");
-                      return (
-                        <li
-                          key={rule.label}
-                          className="flex items-center gap-1"
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <div className="space-y-4">
+              {/* Old Password */}
+              <FormField
+                control={form.control}
+                name="oldPassword"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs font-semibold text-neutral-700">
+                      {t("oldPassword")}
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={isOldPasswordVisible ? "text" : "password"}
+                          placeholder={t("oldPasswordPlaceholder")}
+                          className="h-10 text-xs sm:text-sm rounded-xl border-neutral-300 focus-visible:ring-0 focus-visible:border-black pr-10 bg-white"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setIsOldPasswordVisible(!isOldPasswordVisible)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 transition-colors"
                         >
-                          {isValid ? (
-                            <CircleCheck className="text-green-600 w-4 h-4" />
+                          {isOldPasswordVisible ? (
+                            <EyeOff className="w-4 h-4" />
                           ) : (
-                            <XCircle className="text-foreground/40 w-4 h-4" />
+                            <Eye className="w-4 h-4" />
                           )}
-                          <span
-                            className={
-                              isValid ? "text-green-600" : "text-foreground/40"
-                            }
-                          >
-                            {rule.label}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </FormItem>
-              )}
-            />
-            <div className="flex flex-row gap-5">
-              <Button variant={"outline"} onClick={() => form.reset()}>
-                Batal
-              </Button>
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* New Password */}
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs font-semibold text-neutral-700">
+                      {t("newPassword")}
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={isNewPasswordVisible ? "text" : "password"}
+                          placeholder={t("newPasswordPlaceholder")}
+                          className="h-10 text-xs sm:text-sm rounded-xl border-neutral-300 focus-visible:ring-0 focus-visible:border-black pr-10 bg-white"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setIsNewPasswordVisible(!isNewPasswordVisible)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 transition-colors"
+                        >
+                          {isNewPasswordVisible ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Password Validation Checklist */}
+            <div className="p-3.5 rounded-xl border border-neutral-200 bg-neutral-50/60 space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block">
+                {t("rules.title")}
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {passwordRules.map((rule, idx) => {
+                  const isValid = rule.valid(newPasswordValue);
+                  return (
+                    <div key={idx} className="flex items-center gap-2">
+                      <div
+                        className={`w-4 h-4 rounded-full flex items-center justify-center transition-all shrink-0 ${
+                          isValid
+                            ? "bg-black text-white"
+                            : "bg-neutral-200 text-neutral-400"
+                        }`}
+                      >
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      </div>
+                      <span
+                        className={
+                          isValid
+                            ? "text-neutral-900 font-semibold"
+                            : "text-neutral-400 font-normal"
+                        }
+                      >
+                        {rule.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="pt-2">
               <Button
                 type="submit"
-                disabled={updatePasswordIsLoading || !form.formState.isValid}
+                disabled={updatePasswordIsLoading}
+                className="px-6 h-10 font-bold text-xs bg-black hover:bg-neutral-800 text-white rounded-full transition-all cursor-pointer"
               >
                 {updatePasswordIsLoading ? (
-                  <SpinnerV2 className="mr-2" />
+                  <SpinnerV2 className="size-4 text-white" />
                 ) : (
-                  "Simpan Perubahan"
+                  t("updateButton")
                 )}
               </Button>
             </div>
           </form>
         </Form>
       </div>
-    </>
+
+      {/* Security Tip Note */}
+      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200/60 text-neutral-500 text-[11px] leading-relaxed">
+        <strong className="text-neutral-800">{t("tips.title")}: </strong>
+        {t("tips.description")}
+      </div>
+    </div>
   );
 };

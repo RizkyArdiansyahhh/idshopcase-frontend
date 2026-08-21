@@ -20,13 +20,14 @@ export const useResendOtp = ({ mutationConfig }: UseResendOtpParams = {}) => {
   return useMutation({
     mutationFn: resendOtp,
     ...mutationConfig,
-    onError: (error: any) => {
+    onError: (error: any, variables, onMutateResult, context) => {
       const msg = error.response?.data?.message || error.message || "Gagal mengirim ulang OTP";
       toast.error(msg);
-      console.error(error);
+      mutationConfig?.onError?.(error, variables, onMutateResult, context);
     },
-    onSuccess: (data) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       toast.success(data.message || "Kode OTP berhasil dikirim ulang");
+      mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
     },
   });
 };

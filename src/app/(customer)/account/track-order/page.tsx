@@ -1,27 +1,26 @@
 "use client";
 
-import { useGetTrackOrder } from "@/features/orders/api/get-track-order";
-import z from "zod";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 import { FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { IoSearch } from "react-icons/io5";
-import { Separator } from "@/components/ui/separator";
+import { SpinnerV2 } from "@/components/ui/spinner";
+import { useGetTrackOrder } from "@/features/orders/api/get-track-order";
 import { TrackOrderTimeline } from "./_components/track-order";
-import { useEffect, useState } from "react";
-import { Spinner } from "@/components/ui/spinner";
-import { useSearchParams } from "next/navigation";
-import { PackageSearch } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const searchTrackingSchema = z.object({
-  trackingNumber: z.string().min(1, { message: "ID Order wajib diisi" }),
+  trackingNumber: z.string().min(1),
 });
 
 type SearchTrackingSchema = z.infer<typeof searchTrackingSchema>;
 
-export const TrackOrderPage = () => {
+export default function TrackOrderPage() {
+  const t = useTranslations("account.tracking");
   const searchParams = useSearchParams();
   const initialOrderId = searchParams.get("order_id") || "";
 
@@ -40,7 +39,7 @@ export const TrackOrderPage = () => {
   }, [initialOrderId, form]);
 
   const {
-    data: tracking,
+    data: trackingData,
     isLoading,
     isError,
   } = useGetTrackOrder({
@@ -55,68 +54,82 @@ export const TrackOrderPage = () => {
   });
 
   return (
-    <div className="p-4 md:p-6 h-full max-w-4xl mx-auto flex flex-col">
-      <div className="mb-4">
-        <h1 className="text-xl md:text-2xl font-bold text-foreground">Lacak Pengiriman Paket</h1>
-        <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-          Pantau status pengiriman pesanan Anda secara real-time via ekspedisi J&T Express
-        </p>
-      </div>
-
-      <form onSubmit={handleSearch} className="flex gap-3 w-full items-center">
-        <div className="flex-1">
-          <FormField
-            name="trackingNumber"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <Input
-                  {...field}
-                  placeholder="Masukkan Nomor / ID Order (Contoh: 2 atau ORD-2)"
-                  autoComplete="off"
-                />
-              </FormItem>
-            )}
-          />
-        </div>
-        <Button
-          type="submit"
-          className="flex items-center gap-2 font-semibold"
-          disabled={isLoading}
-        >
-          <IoSearch size={18} /> Cari
-        </Button>
-      </form>
-
-      <Separator className="my-5" />
-
-      {isLoading ? (
-        <div className="flex-1 flex flex-col items-center justify-center py-16 gap-3">
-          <Spinner className="size-10 text-primary" />
-          <p className="text-sm text-muted-foreground">Menghubungi server pelacakan J&T...</p>
-        </div>
-      ) : tracking ? (
-        <TrackOrderTimeline tracking={tracking} />
-      ) : searchQuery.length > 0 && isError ? (
-        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
-          <p className="font-semibold text-foreground">Data Pengiriman Belum Tersedia</p>
-          <p className="text-xs md:text-sm text-muted-foreground max-w-md mt-1">
-            Pesanan atau resi &quot;{searchQuery}&quot; belum memiliki data pelacakan atau nomor resi belum aktif di sistem J&amp;T Express.
+    <div className="w-full space-y-6 font-sans text-neutral-900 select-none">
+      {/* =========================================================================
+          1. SEARCH BAR
+         ========================================================================= */}
+      <div className="p-5 sm:p-7 rounded-none border border-neutral-200 bg-white space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
+            {t("title")}
+          </h2>
+          <p className="text-xs text-neutral-500 font-normal">
+            {t("subtitle")}
           </p>
         </div>
-      ) : (
-        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
-          <div className="p-4 rounded-full bg-muted text-muted-foreground mb-3">
-            <PackageSearch size={48} />
+
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2.5">
+          <div className="flex-1">
+            <FormField
+              name="trackingNumber"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <Input
+                    {...field}
+                    placeholder={t("searchPlaceholder")}
+                    className="h-10 text-xs sm:text-sm font-mono border-neutral-300 focus-visible:ring-0 focus-visible:border-black rounded-none bg-white"
+                  />
+                </FormItem>
+              )}
+            />
           </div>
-          <p className="font-semibold text-foreground">Masukkan ID Pesanan Anda</p>
-          <p className="text-xs md:text-sm text-muted-foreground max-w-sm mt-1">
-            Ketik nomor pesanan pada kolom pencarian di atas untuk melihat rute perjalanan paket.
+
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="h-10 px-6 font-bold text-xs bg-black hover:bg-neutral-800 text-white rounded-none transition-all cursor-pointer"
+          >
+            {isLoading ? (
+              <SpinnerV2 className="size-4 text-white" />
+            ) : (
+              t("trackButton")
+            )}
+          </Button>
+        </form>
+      </div>
+
+      {/* =========================================================================
+          2. TRACKING CONTENT / STATES
+         ========================================================================= */}
+      {isLoading ? (
+        <div className="p-12 border border-neutral-200 bg-white flex flex-col items-center justify-center space-y-3">
+          <SpinnerV2 className="size-6 text-black" />
+          <p className="text-xs text-neutral-500 font-medium tracking-wide uppercase">
+            {t("connecting")}
+          </p>
+        </div>
+      ) : isError ? (
+        <div className="p-8 border border-neutral-200 bg-white space-y-2 text-center">
+          <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
+            {t("notFoundTitle")}
+          </p>
+          <p className="text-xs text-neutral-500 font-normal max-w-md mx-auto leading-relaxed">
+            {t("notFoundDesc", { id: searchQuery })}
+          </p>
+        </div>
+      ) : trackingData ? (
+        <TrackOrderTimeline tracking={trackingData} />
+      ) : (
+        <div className="p-12 border border-neutral-200 bg-white text-center space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
+            {t("noOrderTitle")}
+          </p>
+          <p className="text-xs text-neutral-500 font-normal max-w-sm mx-auto">
+            {t("noOrderDesc")}
           </p>
         </div>
       )}
     </div>
   );
-};
-
-export default TrackOrderPage;
+}

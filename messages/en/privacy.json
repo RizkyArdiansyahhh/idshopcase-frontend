@@ -1,0 +1,52 @@
+{
+  "privacy": {
+    "title": "PRIVACY POLICY",
+    "subtitle": "PERSONAL DATA & COOKIES POLICY",
+    "lastUpdated": "Last updated: August 19, 2026",
+    "close": "Close",
+    "sections": {
+      "general": {
+        "title": "1. GENERAL INFORMATION",
+        "p1": "Idshopcase may collect personal data via the Site from users in relation notably with order placement, product customization, account creation, and customer support services (such as full name, email address, telephone/WhatsApp number, delivery address, and product preferences).",
+        "p2": "Any personal data you provide to Idshopcase is handled responsibly and protected in compliance with applicable data protection regulations and standards."
+      },
+      "customImages": {
+        "title": "2. CUSTOM IMAGES & DESIGN PRIVACY",
+        "p1": "As a custom phone case and accessory provider, Idshopcase receives customer uploads of personal photographs, artwork, and designs.",
+        "p2": "We are fully committed to ensuring that all uploaded images are used solely and exclusively for the production and printing of your ordered items.",
+        "p3": "Idshopcase will never sell, distribute, or use personal customer photographs for public marketing purposes without express written consent from the owner."
+      },
+      "rights": {
+        "title": "2. RIGHT TO ACCESS, CORRECT AND DELETE DATA AND TO OBJECT TO DATA PROCESSING",
+        "p1": "You are entitled to access, correct, update, and request the deletion of your personal data stored in our systems at any time.",
+        "p2": "You may exercise this right by updating your details directly in your Account settings or by contacting our customer care team via email at privacy@idshopcase.com or official Idshopcase WhatsApp support."
+      },
+      "management": {
+        "title": "3.1 MANAGEMENT OF PERSONAL DATA",
+        "intro": "Idshopcase collects and processes your personal data via the Site only for the following purposes:",
+        "items": [
+          "Processing, custom production, and fulfillment of your orders;",
+          "Sending one-time verification codes (OTP) for account security;",
+          "Order status notifications and courier tracking updates;",
+          "Customer support and resolution of transaction inquiries;",
+          "Statistical studies, performance analysis, and continuous improvement of the Idshopcase website and services."
+        ]
+      },
+      "securityPayment": {
+        "title": "4. PAYMENT & SECURITY",
+        "p1": "All payment transactions on Idshopcase are processed through certified and encrypted gateways (DOKU Payment Gateway).",
+        "p2": "Idshopcase never stores sensitive financial credentials, including full credit card numbers, CVV, or banking passwords."
+      },
+      "thirdParty": {
+        "title": "5. THIRD-PARTY LOGISTICS",
+        "p1": "Your delivery address and phone number are shared solely with our authorized courier partner (J&T Express) for the sole purpose of accurate parcel delivery.",
+        "p2": "We do not sell or lease your personal information to any third parties for advertising purposes."
+      },
+      "cookies": {
+        "title": "6. COOKIES & SESSIONS",
+        "p1": "Our website utilizes secure cookies and session tokens to recognize your device, preserve shopping bag items, remember language preferences, and ensure your authenticated sessions remain protected.",
+        "p2": "You may manage or disable cookies in your browser settings; however, certain website features may not operate as intended."
+      }
+    }
+  }
+}

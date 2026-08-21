@@ -41,9 +41,8 @@ export const useVerifyOtp = ({ mutationConfig }: useVerifyOtpParams = {}) => {
       queryClient.invalidateQueries({ queryKey: getUserQueryKey() });
       mutationConfig?.onSuccess?.(data, variables, onMutateResult, context);
     },
-    onError: (error) => {
-      toast.error(error.message || "Terjadi Kesalahan");
-      console.error(error);
+    onError: (error, variables, onMutateResult, context) => {
+      mutationConfig?.onError?.(error, variables, onMutateResult, context);
     },
   });
 };

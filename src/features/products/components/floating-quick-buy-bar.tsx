@@ -10,7 +10,7 @@ import { cleanImageUrl } from "@/utils/image-utils";
 import { ValidateFormDetailProduct } from "@/app/(customer)/products/detail/[id]/components/validate-form-detail-product";
 
 interface FloatingQuickBuyBarProps {
-  productId: number;
+  productId: string | number;
   name: string;
   image: string;
   price: number;

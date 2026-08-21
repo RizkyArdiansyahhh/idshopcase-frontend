@@ -1,0 +1,52 @@
+{
+  "privacy": {
+    "title": "PRIVACY POLICY",
+    "subtitle": "PERSONAL DATA & COOKIES POLICY",
+    "lastUpdated": "Terakhir diperbarui: 19 Agustus 2026",
+    "close": "Tutup",
+    "sections": {
+      "general": {
+        "title": "1. INFORMASI UMUM",
+        "p1": "Idshopcase dapat mengumpulkan data pribadi melalui Situs dari pengguna sehubungan dengan pembuatan pesanan, kustomisasi produk, pembuatan akun, dan layanan bantuan pelanggan (seperti nama lengkap, alamat email, nomor telepon/WhatsApp, alamat pengiriman, dan preferensi produk).",
+        "p2": "Setiap data pribadi yang Anda berikan kepada Idshopcase dikelola secara bertanggung jawab dan dilindungi sesuai dengan prinsip perlindungan data pribadi dan peraturan perundang-undangan yang berlaku."
+      },
+      "customImages": {
+        "title": "2. PRIVASI FOTO & DESAIN KUSTOM",
+        "p1": "Sebagai penyedia produk custom case dan aksesoris, Idshopcase menerima unggahan foto pribadi, gambar, atau desain dari pelanggan.",
+        "p2": "Kami memberikan komitmen penuh bahwa seluruh foto yang diunggah hanya dan semata-mata digunakan untuk proses produksi pencetakan produk pesanan Anda.",
+        "p3": "Idshopcase tidak akan pernah menjual, menyebarluaskan, atau menggunakan foto pribadi pelanggan untuk materi promosi publik tanpa persetujuan tertulis dari pemilik."
+      },
+      "rights": {
+        "title": "3. HAK AKSES, PERBAIKAN, DAN PENGHAPUSAN DATA",
+        "p1": "Anda berhak untuk mengakses, memperbarui, mengoreksi, dan meminta penghapusan data pribadi Anda yang tersimpan di sistem kami kapan saja.",
+        "p2": "Untuk menggunakan hak ini, Anda dapat memperbarui informasi secara mandiri melalui menu Akun Saya atau menghubungi tim layanan pelanggan kami melalui email di privacy@idshopcase.com atau WhatsApp resmi Idshopcase."
+      },
+      "management": {
+        "title": "4. PENGELOLAAN & PENGGUNAAN DATA PRIBADI",
+        "intro": "Idshopcase mengumpulkan dan mengelola data pribadi Anda hanya untuk tujuan-tujuan berikut:",
+        "items": [
+          "Pemrosesan, produksi custom, dan pengiriman pesanan Anda;",
+          "Pengiriman kode verifikasi satu kali (OTP) untuk keamanan akun;",
+          "Pemberitahuan status pesanan dan pembaruan nomor resi pelacakan pengiriman;",
+          "Penyediaan layanan bantuan pelanggan dan penyelesaian kendala transaksi;",
+          "Analisis dan peningkatan kualitas layanan, produk, dan performa website Idshopcase."
+        ]
+      },
+      "securityPayment": {
+        "title": "5. KEAMANAN PEMBAYARAN & TRANSAKSI",
+        "p1": "Seluruh transaksi pembayaran di Idshopcase diproses melalui gerbang pembayaran resmi dan terenkripsi (DOKU Payment Gateway).",
+        "p2": "Idshopcase tidak pernah menyimpan data sensitif perbankan, seperti nomor kartu kredit lengkap, PIN, CVV, atau kata sandi rekening perbankan pengguna."
+      },
+      "thirdParty": {
+        "title": "6. PENYEDIA LAYANAN PIHAK KETIGA",
+        "p1": "Data alamat dan nomor telepon Anda dibagikan secara terbatas hanya kepada mitra logistik resmi (J&T Express) untuk keperluan pengantaran paket pesanan secara akurat ke lokasi Anda.",
+        "p2": "Kami tidak menjual atau menyewakan data pribadi Anda kepada pihak ketiga manapun untuk tujuan periklanan tanpa izin Anda."
+      },
+      "cookies": {
+        "title": "7. KEBIJAKAN COOKIES & PENYIMPANAN SESI",
+        "p1": "Situs kami menggunakan cookies dan token sesi yang aman untuk mengenali perangkat Anda, menyimpan item di keranjang belanja, mengingat preferensi bahasa, dan menjaga sesi login Anda tetap terlindungi.",
+        "p2": "Anda dapat mengelola atau menonaktifkan cookies melalui pengaturan browser Anda, namun beberapa fungsi website mungkin tidak berjalan optimal."
+      }
+    }
+  }
+}

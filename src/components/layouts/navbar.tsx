@@ -11,6 +11,8 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { HiOutlineUser } from "react-icons/hi2";
 import { SearchModal } from "./search-modal";
 
+import { TopAnnouncementBar } from "./top-announcement-bar";
+
 interface NavbarProps {
   isTransparentOnTop?: boolean;
 }
@@ -102,9 +104,10 @@ export const Navbar = ({ isTransparentOnTop = false }: NavbarProps) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 font-sans select-none ${headerBg} ${textColor}`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] font-sans select-none ${headerBg} ${textColor}`}
     >
-      <div className="w-full max-w-[1400px] mx-auto h-16 sm:h-18 px-4 sm:px-8 lg:px-12 flex items-center justify-between">
+      <TopAnnouncementBar isScrolled={isScrolled} />
+      <div className="w-full h-16 sm:h-18 px-4 sm:px-6 md:px-8 lg:px-10 flex items-center justify-between">
         
         {/* 1. LEFT: Brand Logo (IDSHOP font-semibold, CASE font-black) */}
         <div className="flex items-center">

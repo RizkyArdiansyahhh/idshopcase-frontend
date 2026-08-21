@@ -116,14 +116,14 @@ export function SectionEndorse() {
   return (
     <section
       ref={sectionRef}
-      className="w-full px-1 sm:px-2 py-6 md:py-10 overflow-hidden"
+      className="w-full px-1 sm:px-2 py-6 md:py-10 overflow-hidden font-[family-name:var(--font-fustat)] select-none"
     >
-      {/* Title Header (Dynamic i18n translation) */}
-      <div className="text-center max-w-3xl mx-auto mb-4 md:mb-6 space-y-2">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
+      {/* Title Header (Dynamic i18n translation in Fustat) */}
+      <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8 space-y-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight uppercase text-neutral-900 font-[family-name:var(--font-fustat)]">
           {t("endorseTitle")}
         </h2>
-        <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-normal">
+        <p className="text-xs sm:text-sm md:text-base text-neutral-500 font-normal max-w-xl mx-auto">
           {t("endorseSubtitle")}
         </p>
       </div>

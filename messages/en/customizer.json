@@ -1,0 +1,33 @@
+{
+  "customizer": {
+    "tutorial": {
+      "title": "Custom Case & Popstand Preview Guide",
+      "subtitle": "Follow the instructions below for the best customization results",
+      "step1Title": "Step 1 : Choose Device Type, Model & Color",
+      "step1Desc": "Select your device category, phone model (e.g. iPhone 17 Pro Max or iPhone 16), and favorite device color from the studio panel on the right.",
+      "step2Title": "Step 2 : Upload Portrait / Face Photo",
+      "step2Desc": "Upload 1 to 3 portrait photos in transparent PNG format using the round upload button on the left sidebar.",
+      "step2FormatTitle": "Custom Case Preview Format",
+      "step2FormatDesc": "Use transparent PNG photos (no background) for a seamless print finish. You can easily remove backgrounds for free at remove.bg.",
+      "step3Title": "Step 3 : Select Sticker Layout Formation",
+      "step3Desc": "Choose your preferred layout formation (such as Staircase Zigzag) to combine stickers seamlessly across the case.",
+      "close": "Close Guide"
+    },
+    "actions": {
+      "uploadPhoto": "Upload Photo",
+      "resetPhoto": "Reset Photo",
+      "guide": "Guide"
+    },
+    "accordion": {
+      "step1": "01. Product Type",
+      "phoneCases": "Phone Cases",
+      "gripStand": "Grip Stand",
+      "step2": "02. Select Phone Model",
+      "step3": "03. Device Color",
+      "step4": "04. Sticker Pattern Layout",
+      "finish": "Complete & Order",
+      "prev": "Previous",
+      "next": "Next"
+    }
+  }
+}

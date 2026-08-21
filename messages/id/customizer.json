@@ -1,0 +1,33 @@
+{
+  "customizer": {
+    "tutorial": {
+      "title": "Panduan Preview Custom Case & Popstand",
+      "subtitle": "Ikuti petunjuk di bawah ini untuk hasil kustomisasi terbaik",
+      "step1Title": "Step 1 : Pilih Tipe, Model & Warna Handphone",
+      "step1Desc": "Anda dapat memilih jenis tipe handphone, pilihan device model (seperti iPhone 17 Pro Max atau iPhone 16), hingga varian warna favorit pada panel studio sebelah kanan.",
+      "step2Title": "Step 2 : Tambahkan Foto Wajah",
+      "step2Desc": "Silakan unggah 1 hingga 3 foto wajah Anda dengan format PNG transparan melalui tombol upload bulat di samping kiri.",
+      "step2FormatTitle": "Format Preview Custom Case",
+      "step2FormatDesc": "Gunakan foto PNG transparan (tanpa background) agar hasil cetak menyatu rapi. Anda bisa menghapus background foto secara gratis di remove.bg.",
+      "step3Title": "Step 3 : Pilih Pola Tata Letak Stiker",
+      "step3Desc": "Tentukan formasi susunan pola stiker favorit Anda (seperti Zigzag Tangga) untuk digabungkan secara presisi pada bodi casing.",
+      "close": "Tutup Panduan"
+    },
+    "actions": {
+      "uploadPhoto": "Upload Foto",
+      "resetPhoto": "Reset Foto",
+      "guide": "Panduan"
+    },
+    "accordion": {
+      "step1": "01. Tipe Produk",
+      "phoneCases": "Casing HP",
+      "gripStand": "Popstand",
+      "step2": "02. Pilih Model & Tipe HP",
+      "step3": "03. Pilihan Warna HP",
+      "step4": "04. Pola Tata Letak Stiker",
+      "finish": "Selesai & Pesan",
+      "prev": "Sebelumnya",
+      "next": "Selanjutnya"
+    }
+  }
+}

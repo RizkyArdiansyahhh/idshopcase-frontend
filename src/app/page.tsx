@@ -1,7 +1,9 @@
 import { Navbar } from "@/components/layouts/navbar";
-import { ListProductsHomePage } from "@/features/products/components/list-products";
-import GradientFillButton from "@/components/shared/gradient-fill-button";
+import { SectionCustomStudioStatement } from "./_components/section-custom-studio-statement";
+import { SectionFeaturedGrid } from "./_components/section-featured-grid";
 import { BannerVideoHomePage } from "./_components/baner-video-home-page";
+import { SectionShopTheLook } from "./_components/section-shop-the-look";
+import { SectionBrandPromise } from "./_components/section-brand-promise";
 import { Separator } from "@/components/ui/separator";
 import { CarouselHomePage } from "./_components/carousel-homepage";
 import { SectionCategories } from "./_components/section-categories";
@@ -20,67 +22,57 @@ export default async function Home() {
     <div className="flex flex-col items-center">
       <Navbar isTransparentOnTop={true} />
       <CarouselHomePage />
-      <div className="w-screen py-4 sm:py-6 md:py-8 flex justify-center items-center">
+
+      {/* Categories Showcase (With smooth margin gap from Carousel) */}
+      <div className="w-screen mt-4 sm:mt-6 md:mt-8 pt-2 pb-2 sm:pt-3 sm:pb-3 flex justify-center items-center">
         <SectionCategories />
       </div>
-      <div className="w-full flex justify-end">
-        <div className="px-10 flex flex-col gap-2 py-6">
-          <h1 className="text-5xl font-bold w-4/5 leading-16">
-            {t("featuredProducts")}{" "}
-            <span className="text-foreground/40 font-black text-5xl">
-              IDSHOPCASE
-            </span>
-            .
-          </h1>
-          <div className="flex flex-col gap-5">
-            <p className="w-2/3 font-semibold text-base text-foreground/60">
-              {t("featuredSubtitle")}
-            </p>
-            <GradientFillButton />
-          </div>
-        </div>
-        <div className="w-2/3 py-6 overflow-hidden">
-          <ListProductsHomePage />
-        </div>
-      </div>
-      <BannerVideoHomePage />
-      <div className="w-full h-fit py-4 px-4 flex flex-row gap-4" />
 
-      <Separator className="my-6" />
-      
+      {/* Bold Custom Studio Statement Callout (Compact Vertical Spacing) */}
+      <SectionCustomStudioStatement />
+      <BannerVideoHomePage />
+      {/* 4-Column Editorial Featured Collection Grid (Sejauh Reference Style) */}
+      <SectionFeaturedGrid />
+
+      <Separator className="my-8 md:my-10 max-w-[1240px]" />
+
       {/* Endorse & Creator Spotlight Section */}
-      <SectionEndorse />
+      <div className="w-full">
+        <SectionEndorse />
+      </div>
+
+      <Separator className="my-8 md:my-10 max-w-[1240px]" />
+
+      {/* Interactive Shop The Look Section */}
+      <SectionShopTheLook />
 
       <Separator className="my-8" />
 
       {/* Customer Reviews Accommodation Section (Static Left Stats Card + Infinite Looping Cards via LogoLoop) */}
       <SectionReviews />
 
-      <Separator className="mt-10" />
-      <div className="h-[90vh] w-screen flex flex-col justify-center gap-3">
-        <h1 className="text-center text-4xl font-semibold">
+      {/* Brand Craft & Quality Guarantee Section (2-Column Editorial Reference) */}
+      <div className="w-full mt-10">
+        <SectionBrandPromise />
+      </div>
+
+      <div className="h-[90vh] w-screen flex flex-col justify-center gap-4 font-[family-name:var(--font-fustat)] select-none">
+        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight uppercase text-neutral-900 font-[family-name:var(--font-fustat)]">
           {t("followInstagram")}{" "}
           <a
             href="https://www.instagram.com/idshopcase/"
             target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground/40 underline font-bold"
+            rel="noreferrer"
+            className="text-neutral-400 font-bold hover:text-black transition-colors lowercase"
           >
-            Instagram
+            @idshopcase
           </a>
-        </h1>
-        <div className="w-full flex justify-center items-center">
-          <SectionInstagram />
-        </div>
+        </h2>
+        <SectionInstagram />
       </div>
-
-      <Separator />
-      {/* FAQ Section */}
       <SectionFaqHome />
-
-      <Separator />
-      <Footer />
       <WhatsAppWidget />
+      <Footer />
     </div>
   );
 }

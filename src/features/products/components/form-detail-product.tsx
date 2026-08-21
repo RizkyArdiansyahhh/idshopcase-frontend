@@ -1,7 +1,10 @@
+"use client";
+
 import { ShoppingCart } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { useTranslations } from "next-intl";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/types/api";
@@ -24,6 +27,8 @@ export const FormDetailProduct = ({
   productDetail,
   image,
 }: FormDetailProductProps) => {
+  const t = useTranslations("product");
+
   const phoneTypeOptions =
     productDetail.PhoneTypes?.map((p) => ({
       id: String(p.id),
@@ -45,24 +50,24 @@ export const FormDetailProduct = ({
   const variantOptions = Array.from(
     new Map(filteredVariants.map((v) => [v.name.trim(), v])).values()
   );
-  const baseVariant = rawVariantOptions.find((v) => v.name === "-");
+  const baseVariant = rawVariantOptions.find((v) => v.name === "-") || rawVariantOptions[0];
   const hasVariant = variantOptions.length > 0;
 
   const formSchema = z.object({
     variant:
       variantOptions.length > 0
         ? z.enum(variantOptions.map((v) => v.id) as [string, ...string[]], {
-            message: "Pilih varian terlebih dahulu",
+            message: t("variantRequired"),
           })
         : z.string().optional(),
 
     phone_type: phoneTypeOptions.length
       ? z.enum(phoneTypeOptions.map((p) => p.id) as [string, ...string[]], {
-          message: "Pilih tipe ponsel terlebih dahulu",
+          message: t("phoneTypeRequired"),
         })
       : z.string().optional(),
 
-    quantity: z.number().min(1, "Minimal 1 item"),
+    quantity: z.number().min(1, t("minQuantity")),
   });
 
   type FormValues = z.infer<typeof formSchema>;
@@ -86,9 +91,24 @@ export const FormDetailProduct = ({
     : baseVariant;
 
   const priceDisplay = selectedVariant?.price;
-  const minMaxPrice = getMinMaxVariantPrice(variantOptions);
+  const minMaxPrice = getMinMaxVariantPrice(rawVariantOptions);
   const stockProduct =
     selectedVariant?.stock ?? getTotalStock(productDetail.Variants);
+
+  const renderHeaderPrice = () => {
+    if (priceDisplay !== undefined && priceDisplay !== null && !isNaN(Number(priceDisplay))) {
+      return formatCurrency(Number(priceDisplay));
+    }
+    if (minMaxPrice && !isNaN(minMaxPrice.min) && !isNaN(minMaxPrice.max)) {
+      if (minMaxPrice.min === minMaxPrice.max) {
+        return formatCurrency(minMaxPrice.min);
+      }
+      return `${formatCurrency(minMaxPrice.min)} – ${formatCurrency(minMaxPrice.max)}`;
+    }
+    return "Rp 35.000";
+  };
+
+  const effectivePrice = Number(priceDisplay || minMaxPrice?.min || 35000);
 
   return (
     <div className="w-full flex flex-col space-y-5 pt-0">
@@ -98,9 +118,7 @@ export const FormDetailProduct = ({
           {productDetail.name}
         </h1>
         <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight pt-1">
-          {priceDisplay !== undefined
-            ? formatCurrency(Number(priceDisplay))
-            : `${formatCurrency(Number(minMaxPrice?.min))} - ${formatCurrency(Number(minMaxPrice?.max))}`}
+          {renderHeaderPrice()}
         </div>
       </div>
 
@@ -120,7 +138,7 @@ export const FormDetailProduct = ({
           <ValidateFormDetailProduct
             productId={productDetail.id}
             nameProduct={productDetail.name}
-            priceProduct={Number(priceDisplay)}
+            priceProduct={effectivePrice}
             imageProduct={productDetail.ProductImages?.[0]?.imageUrl || image}
             variant="outline"
             data={{
@@ -133,12 +151,12 @@ export const FormDetailProduct = ({
             totalStock={stockProduct}
           >
             <ShoppingCart className="w-4 h-4" />
-            <span className="mx-1.5 font-medium">Masukkan Keranjang</span>
+            <span className="mx-1.5 font-medium">{t("addToCart")}</span>
           </ValidateFormDetailProduct>
 
           <ValidateFormDetailProduct
             nameProduct={productDetail.name}
-            priceProduct={Number(priceDisplay)}
+            priceProduct={effectivePrice}
             imageProduct={productDetail.ProductImages?.[0]?.imageUrl || image}
             variant="default"
             data={{
@@ -152,20 +170,20 @@ export const FormDetailProduct = ({
             variantOptions={rawVariantOptions}
             totalStock={stockProduct}
           >
-            <span className="mx-1.5 font-medium">Beli Sekarang</span>
+            <span className="mx-1.5 font-medium">{t("buyNow")}</span>
           </ValidateFormDetailProduct>
         </div>
       </Form>
 
-      {/* Luxury Collapsible Accordions: Product Description, Shipping, Warranty (Bamboo Blonde Style) */}
+      {/* Luxury Collapsible Accordions: Product Description, Shipping, Warranty */}
       <ProductAccordionInfo description={productDetail.description} />
 
-      {/* Floating Quick Buy Pill (Bamboo Blonde Style when scrolled past form) */}
+      {/* Floating Quick Buy Pill */}
       <FloatingQuickBuyBar
         productId={productDetail.id}
         name={productDetail.name}
         image={productDetail.ProductImages?.[0]?.imageUrl || image}
-        price={Number(priceDisplay || minMaxPrice?.min || 0)}
+        price={effectivePrice}
         stock={stockProduct}
         selectedVariantName={selectedVariant?.name !== "-" ? selectedVariant?.name : undefined}
         selectedPhoneTypeName={

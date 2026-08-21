@@ -13,6 +13,8 @@ import { SkeletonProduct } from "@/components/shared/skeleton-product";
 import { ProductCardHomePage } from "@/app/_components/product-card-home-page";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { formatCategoryName } from "@/utils/category-utils";
 
 interface ListProductsHomePageProps {
   visibleSlides?: number;
@@ -125,20 +127,12 @@ export const ListProductsHomePage: React.FC<ListProductsHomePageProps> = ({
   );
 };
 
-// Subtle luxury pastel color dots for variant preview
-const SAMPLE_SWATCH_COLORS = [
-  ["#fbcfe8", "#bae6fd", "#171717", "#f5f5f5"],
-  ["#171717", "#ffffff", "#d4d4d8"],
-  ["#fde047", "#fed7aa", "#171717", "#ffffff"],
-  ["#171717", "#e5e5e5"],
-];
-
 interface RelatedProductCardProps {
   product: Product;
-  index: number;
+  index?: number;
 }
 
-const RelatedProductCard: React.FC<RelatedProductCardProps> = ({ product, index }) => {
+const RelatedProductCard: React.FC<RelatedProductCardProps> = ({ product }) => {
   const router = useRouter();
 
   const primaryImage =
@@ -150,15 +144,12 @@ const RelatedProductCard: React.FC<RelatedProductCardProps> = ({ product, index 
   const minPrice = priceObj?.min ?? 129000;
   const isRange = priceObj && priceObj.min !== priceObj.max;
 
-  // Swatch colors matching the reference screenshot
-  const swatchColors = SAMPLE_SWATCH_COLORS[index % SAMPLE_SWATCH_COLORS.length];
-
   return (
     <div
       onClick={() => router.push(`/products/detail/${product.id}`)}
-      className="flex flex-col shrink-0 w-[260px] sm:w-[300px] md:w-[330px] lg:w-[350px] cursor-pointer group select-none"
+      className="flex flex-col shrink-0 w-[260px] sm:w-[300px] md:w-[330px] lg:w-[350px] cursor-pointer group select-none font-[family-name:var(--font-fustat)]"
     >
-      {/* 1. Image Container with Red SALE Badge */}
+      {/* 1. Image Container with Black Flush Category Badge */}
       <div className="relative w-full aspect-[3/4] bg-neutral-100 rounded-none overflow-hidden border border-neutral-200/80">
         <Image
           src={cleanImageUrl(primaryImage)}
@@ -168,37 +159,20 @@ const RelatedProductCard: React.FC<RelatedProductCardProps> = ({ product, index 
           className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
         />
 
-        {/* Red SALE Badge (Exact Reference Style) */}
-        <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-none uppercase tracking-wider shadow-2xs">
-          SALE
-        </div>
+        {/* Flush Black Category Badge (No Red Color) */}
+        <span className="absolute top-0 left-0 bg-black text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-none uppercase tracking-wider">
+          {formatCategoryName(product.category) || "Custom"}
+        </span>
       </div>
 
-      {/* 2. Color Swatch Dots */}
-      <div className="flex items-center gap-1.5 pt-3 pb-1">
-        {swatchColors.map((color, cIdx) => (
-          <span
-            key={`swatch-${cIdx}`}
-            className="w-3 h-3 rounded-full border border-neutral-300 transition-transform group-hover:scale-110"
-            style={{ backgroundColor: color }}
-          />
-        ))}
-      </div>
-
-      {/* 3. Product Info */}
-      <div className="space-y-0.5 pt-0.5">
+      {/* 2. Product Info */}
+      <div className="space-y-0.5 pt-3 text-left">
         <h4 className="text-xs sm:text-sm font-semibold text-neutral-900 truncate uppercase tracking-tight group-hover:underline">
           {product.name}
         </h4>
-        <p className="text-[11px] text-neutral-500 font-normal">
-          {product.category || "Custom Case"}
-        </p>
         <div className="flex items-center gap-2 pt-0.5 text-xs font-semibold text-neutral-900">
           <span>
             {isRange ? `from ${formatCurrency(minPrice)}` : formatCurrency(minPrice)}
-          </span>
-          <span className="text-[11px] text-neutral-400 font-normal line-through">
-            {formatCurrency(minPrice * 1.3)}
           </span>
         </div>
       </div>
@@ -207,6 +181,7 @@ const RelatedProductCard: React.FC<RelatedProductCardProps> = ({ product, index 
 };
 
 export const ListProductsDetail = () => {
+  const t = useTranslations("product");
   const { data: products = [], isLoading } = useGetProducts();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -240,9 +215,9 @@ export const ListProductsDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full py-8 space-y-6">
-        <h3 className="text-base sm:text-lg font-bold tracking-wider text-neutral-900 uppercase">
-          WE THINK YOU WOULD LOVE
+      <div className="w-full py-8 space-y-6 font-[family-name:var(--font-fustat)]">
+        <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-neutral-900 uppercase">
+          {t("relatedTitle")}
         </h3>
         <div className="flex gap-4 overflow-hidden">
           {[1, 2, 3, 4].map((i) => (
@@ -256,11 +231,11 @@ export const ListProductsDetail = () => {
   if (!products || products.length === 0) return null;
 
   return (
-    <section className="w-full py-4 md:py-6 space-y-4 font-sans select-none">
-      {/* Header Title */}
+    <section className="w-full py-6 md:py-8 space-y-5 font-[family-name:var(--font-fustat)] select-none">
+      {/* Header Title in Fustat */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm sm:text-base font-bold tracking-wider text-neutral-900 uppercase font-sans">
-          WE THINK YOU WOULD LOVE
+        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 uppercase font-[family-name:var(--font-fustat)]">
+          {t("relatedTitle")}
         </h3>
       </div>
 

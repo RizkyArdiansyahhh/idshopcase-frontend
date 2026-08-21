@@ -9,13 +9,11 @@ export const Profile = () => {
   }
 
   return (
-    <>
-      <div className="py-7">
-        <ProfileForm
-          {...user}
-          imageurl={user.profile_picture ?? user.image ?? ""}
-        ></ProfileForm>
-      </div>
-    </>
+    <div className="w-full">
+      <ProfileForm
+        {...user}
+        imageurl={user.profile_picture ?? user.image ?? ""}
+      />
+    </div>
   );
 };

@@ -8,6 +8,7 @@ import {
 import { motion } from "framer-motion";
 
 type OtpGroupProps = {
+  value: string;
   setOtp: (otp: string) => void;
   disabled?: boolean;
   shakeKey?: number;
@@ -15,6 +16,7 @@ type OtpGroupProps = {
 };
 
 export const OtpGroup = ({
+  value,
   setOtp,
   disabled = false,
   shakeKey = 0,
@@ -32,11 +34,12 @@ export const OtpGroup = ({
       className="w-full"
     >
       <InputOTP
+        value={value}
         maxLength={6}
         disabled={disabled}
         autoFocus
-        onChange={(value) => {
-          setOtp(value);
+        onChange={(val) => {
+          setOtp(val);
         }}
       >
         <InputOTPGroup className="gap-2 sm:gap-3 w-full justify-between">

@@ -7,7 +7,6 @@ import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
-import { UnauthorizedModal } from "@/components/shared/unauthorized-modal";
 
 const fustat = Fustat({
   subsets: ["latin"],
@@ -110,7 +109,6 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
             {children}
-            <UnauthorizedModal />
           </QueryProvider>
         </NextIntlClientProvider>
         <Toaster position="top-center"></Toaster>

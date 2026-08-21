@@ -1,78 +1,118 @@
-import { useGetProducts } from "../api/get-ptoducts";
-import Loader from "@/components/shared/loaders";
-import { ProductCardCollection } from "@/app/(customer)/products/collections/components/product-card";
-import { useMemo } from "react";
+"use client";
 
-import { useSearchParams } from "next/navigation";
+import React, { useMemo, useState } from "react";
+import { useGetProducts } from "../api/get-ptoducts";
+import { ProductCardCollection } from "@/app/(customer)/products/collections/components/product-card";
+import { SkeletonProduct } from "@/components/shared/skeleton-product";
+import { getMinMaxVariantPrice } from "@/utils/price-utils";
+import { QuickViewModal } from "./quick-view-modal";
+import { Product } from "@/types/api";
+import { LuSparkles } from "react-icons/lu";
 
 type CollectionsProductProps = {
-  layoutActive: "small" | "medium" | "large";
-  categories: string[];
+  categories?: string[];
+  sortBy?: "featured" | "price_asc" | "price_desc" | "name_asc";
+  searchQuery?: string;
+  onResetFilters?: () => void;
 };
 
 export const CollectionsProduct = ({
-  layoutActive,
-  categories,
+  categories = [],
+  sortBy = "featured",
+  searchQuery = "",
+  onResetFilters,
 }: CollectionsProductProps) => {
   const { data: products = [], isLoading } = useGetProducts();
-  const searchParams = useSearchParams();
-  const searchQuery = (searchParams.get("search") || "").trim().toLowerCase();
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   const filteredProducts = useMemo(() => {
-    let result = products;
+    let result = [...products];
 
+    // 1. Filter by Category
     if (categories.length > 0) {
       result = result.filter((product) => categories.includes(product.category));
     }
 
-    if (searchQuery) {
+    // 2. Filter by Search Query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
       result = result.filter(
         (product) =>
-          product.name?.toLowerCase().includes(searchQuery) ||
-          product.category?.toLowerCase().includes(searchQuery) ||
-          product.description?.toLowerCase().includes(searchQuery)
+          product.name?.toLowerCase().includes(q) ||
+          product.category?.toLowerCase().includes(q) ||
+          product.description?.toLowerCase().includes(q)
       );
     }
 
+    // 3. Sort Results
+    result.sort((a, b) => {
+      const priceA = getMinMaxVariantPrice(a.Variants)?.min || 0;
+      const priceB = getMinMaxVariantPrice(b.Variants)?.min || 0;
+
+      if (sortBy === "price_asc") return priceA - priceB;
+      if (sortBy === "price_desc") return priceB - priceA;
+      if (sortBy === "name_asc") return a.name.localeCompare(b.name);
+      return 0; // "featured"
+    });
+
     return result;
-  }, [products, categories, searchQuery]);
+  }, [products, categories, searchQuery, sortBy]);
 
   if (isLoading) {
     return (
-      <div className="w-full flex justify-center h-[30vh] items-center">
-        <Loader />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-3 sm:gap-x-5 lg:gap-x-6 gap-y-8 sm:gap-y-12 w-full">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <SkeletonProduct key={i} />
+        ))}
       </div>
     );
   }
 
   if (filteredProducts.length === 0) {
-    return <h1>Produk Tidak Ditemukan</h1>;
+    return (
+      <div className="w-full py-20 flex flex-col items-center justify-center text-center space-y-4 font-[family-name:var(--font-fustat)]">
+        <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
+          <LuSparkles className="w-5 h-5" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="text-base sm:text-lg font-bold uppercase tracking-wider text-neutral-900">
+            No Products Found
+          </h3>
+          <p className="text-xs text-neutral-500 max-w-sm">
+            No products match the selected filter. Try clearing your filters.
+          </p>
+        </div>
+        {onResetFilters && (
+          <button
+            type="button"
+            onClick={onResetFilters}
+            className="px-5 py-2 border border-neutral-900 text-neutral-900 text-xs uppercase font-semibold tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer"
+          >
+            Clear Filter
+          </button>
+        )}
+      </div>
+    );
   }
 
   return (
-    <div
-      className={`
-        w-full min-h-0 grid pb-10
-        ${
-          layoutActive === "large"
-            ? "grid-cols-1 gap-5 md:grid-cols-2 md:gap-5"
-            : layoutActive === "medium"
-              ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
-              : "grid-cols-3 gap-1 md:grid-cols-4 lg:grid-cols-5 md:gap-5"
-        }
-      `}
-    >
-      {filteredProducts.map((product) => (
-        <ProductCardCollection
-          key={product.id}
-          id={product.id}
-          images={product.ProductImages}
-          variant={product.Variants}
-          name={product.name}
-          category={product.category}
-          layoutActive={layoutActive}
-        />
-      ))}
-    </div>
+    <>
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-x-3 sm:gap-x-5 lg:gap-x-6 gap-y-8 sm:gap-y-12">
+        {filteredProducts.map((product) => (
+          <ProductCardCollection
+            key={product.id}
+            product={product}
+            onQuickView={(p) => setQuickViewProduct(p)}
+          />
+        ))}
+      </div>
+
+      {/* Interactive Quick View Modal Dialog */}
+      <QuickViewModal
+        product={quickViewProduct}
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
+    </>
   );
 };

@@ -224,14 +224,14 @@ export function SectionReviews() {
   return (
     <section
       ref={sectionRef}
-      className="w-full py-8 md:py-14 overflow-hidden"
+      className="w-full py-8 md:py-14 overflow-hidden font-[family-name:var(--font-fustat)] select-none"
     >
-      {/* Title Header (Left Aligned matching Reference Image) */}
+      {/* Title Header (Fustat Font & Standard Hierarchy) */}
       <div className="w-full text-left max-w-7xl mx-auto mb-6 md:mb-8 px-2 sm:px-4 lg:px-6 space-y-2">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight uppercase text-neutral-900 font-[family-name:var(--font-fustat)]">
           {t("reviewsTitle")}
         </h2>
-        <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-normal max-w-2xl">
+        <p className="text-xs sm:text-sm md:text-base text-neutral-500 font-normal max-w-2xl">
           {t("reviewsSubtitle")}
         </p>
       </div>

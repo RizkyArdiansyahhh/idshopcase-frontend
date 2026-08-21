@@ -81,6 +81,14 @@ export const FooterLink = () => {
             </li>
             <li>
               <Link
+                href="/privacy"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
+              >
+                {t("privacyPolicy")}
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/faq"
                 className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
               >
@@ -154,7 +162,7 @@ export const FooterLink = () => {
             </div>
             <div className="flex flex-col gap-2">
               <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                Payment Gateway
+                {t("paymentGateway")}
               </h3>
               <div>
                 <PaymentGateway />
@@ -237,6 +245,14 @@ export function FooterAccordionMobile() {
               >
                 {t("warrantyPolicy")}
               </a>
+            </li>
+            <li>
+              <Link
+                href="/privacy"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors w-fit inline-block"
+              >
+                {t("privacyPolicy")}
+              </Link>
             </li>
             <li>
               <Link

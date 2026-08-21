@@ -36,7 +36,7 @@ export const SectionCategories = () => {
   ];
 
   return (
-    <div className="h-[52vh] md:h-[46vh] w-screen grid grid-cols-2 md:grid-cols-4 gap-2 px-3 sm:px-5">
+    <div className="h-[60vh] md:h-[68vh] w-screen grid grid-cols-2 md:grid-cols-4 gap-2 px-1.5 sm:px-3">
       {categories.map((category) => (
         <Link
           key={category.id}

@@ -2,52 +2,15 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/format-currency";
 import { formatDate, timeAgo } from "@/lib/format-date";
 import { OrderItemAdmin } from "@/types/api";
 import { imageUrlPrimary } from "@/utils/image-utils";
-import { MapPin, Truck } from "lucide-react";
+import { MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TbShoppingBag } from "react-icons/tb";
-
-export const ArrowCustom = () => {
-  return (
-    <div className="flex items-center gap-1">
-      <span className="h-2 w-2 rounded-full bg-foreground" />
-
-      <svg
-        width="40"
-        height="2"
-        viewBox="0 0 40 2"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <line
-          x1="0"
-          y1="1"
-          x2="38"
-          y2="1"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeDasharray="4 4"
-        />
-      </svg>
-
-      <svg
-        width="8"
-        height="8"
-        viewBox="0 0 8 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="text-foreground"
-      >
-        <path d="M0 0L8 4L0 8V0Z" fill="currentColor" />
-      </svg>
-    </div>
-  );
-};
+import { useTranslations } from "next-intl";
 
 type CardOrderProps = {
   orderId: string;
@@ -88,47 +51,6 @@ export const getEffectiveOrderStatus = (
   return "pending";
 };
 
-const renderStatusBadge = (status: string) => {
-  switch (status?.toLowerCase()) {
-    case "pending":
-      return (
-        <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-xs font-semibold">
-          Menunggu Pembayaran
-        </Badge>
-      );
-    case "paid":
-      return (
-        <Badge className="bg-green-500/10 text-green-700 border-green-500/20 text-xs font-semibold">
-          Diproses / Lunas
-        </Badge>
-      );
-    case "shipped":
-      return (
-        <Badge className="bg-blue-500/10 text-blue-700 border-blue-500/20 text-xs font-semibold">
-          Sedang Dikirim
-        </Badge>
-      );
-    case "delivered":
-      return (
-        <Badge className="bg-foreground/10 text-foreground border-foreground/20 text-xs font-semibold">
-          Selesai
-        </Badge>
-      );
-    case "cancelled":
-      return (
-        <Badge className="bg-destructive/10 text-destructive border-destructive/20 text-xs font-semibold">
-          Dibatalkan / Gagal
-        </Badge>
-      );
-    default:
-      return (
-        <Badge variant="outline" className="text-xs">
-          {status}
-        </Badge>
-      );
-  }
-};
-
 export const CardOrder = (props: CardOrderProps) => {
   const {
     orderId,
@@ -140,46 +62,85 @@ export const CardOrder = (props: CardOrderProps) => {
     total_price,
   } = props;
   const { push } = useRouter();
+  const t = useTranslations("account.orders");
 
   const effectiveStatus = getEffectiveOrderStatus(status, paymentStatus);
   const isPending = effectiveStatus === "pending";
   const isShipped = effectiveStatus === "shipped";
   const isDelivered = effectiveStatus === "delivered";
 
+  const renderStatusBadge = (s: string) => {
+    switch (s?.toLowerCase()) {
+      case "pending":
+        return (
+          <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-xs font-semibold">
+            {t("filter.pending")}
+          </Badge>
+        );
+      case "paid":
+        return (
+          <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20 text-xs font-semibold">
+            {t("filter.paid")}
+          </Badge>
+        );
+      case "shipped":
+        return (
+          <Badge className="bg-purple-500/10 text-purple-600 border-purple-500/20 text-xs font-semibold">
+            {t("filter.shipped")}
+          </Badge>
+        );
+      case "delivered":
+        return (
+          <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-xs font-semibold">
+            {t("filter.delivered")}
+          </Badge>
+        );
+      case "cancelled":
+        return (
+          <Badge className="bg-red-500/10 text-red-600 border-red-500/20 text-xs font-semibold">
+            {t("filter.cancelled")}
+          </Badge>
+        );
+      default:
+        return (
+          <Badge variant="outline" className="text-xs">
+            {s}
+          </Badge>
+        );
+    }
+  };
+
   return (
-    <div className="border rounded-xl shadow-xs w-full overflow-hidden bg-card">
-      <div className="p-3 md:p-4">
-        {/* Header Order */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <TbShoppingBag className="text-xl text-primary" />
-            <div>
-              <p className="text-xs text-muted-foreground">Nomor Pesanan</p>
-              <p className="text-sm font-bold font-mono text-foreground">
-                #ORD-{orderId}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {renderStatusBadge(effectiveStatus)}
-            <Badge variant="outline" className="text-xs text-muted-foreground">
-              {timeAgo(createdAt)}
-            </Badge>
-          </div>
+    <div className="w-full border border-neutral-200 rounded-none bg-white font-sans text-neutral-900 shadow-2xs overflow-hidden">
+      {/* Header Info */}
+      <div className="w-full py-3.5 px-4 bg-neutral-50/60 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <span className="flex items-center gap-1.5 font-bold text-neutral-900">
+            <TbShoppingBag className="text-sm" />
+            <span>Belanja</span>
+          </span>
+          <span className="text-neutral-400">•</span>
+          <span className="text-neutral-500 font-mono text-[11px]">
+            {formatDate(createdAt)}
+          </span>
+          <span className="text-neutral-400 text-[10px]">
+            ({timeAgo(createdAt)})
+          </span>
+          <span className="text-neutral-400">•</span>
+          <span className="font-mono text-neutral-600 text-xs">
+            #{orderId}
+          </span>
         </div>
 
-        {/* Info Rute Pengiriman */}
+        <div>{renderStatusBadge(effectiveStatus)}</div>
+      </div>
+
+      {/* Konten Card */}
+      <div className="p-4 flex flex-col gap-3">
         {address && address !== "-" && (
-          <div className="hidden md:flex p-2.5 bg-muted/40 rounded-lg flex-row justify-between items-center mb-3">
-            <Badge variant="outline" className="bg-background">
-              <Truck size={14} className="mr-1.5" />
-              <span>Gudang Idshopcase</span>
-            </Badge>
-            <ArrowCustom />
-            <Badge variant="outline" className="bg-background">
-              <MapPin size={14} className="mr-1.5" />
-              <span className="text-xs">{address}</span>
-            </Badge>
+          <div className="flex items-center text-xs text-neutral-500">
+            <MapPin size={13} className="mr-1.5 text-neutral-400 shrink-0" />
+            <span className="truncate">{address}</span>
           </div>
         )}
 
@@ -188,9 +149,9 @@ export const CardOrder = (props: CardOrderProps) => {
           {orderItems?.map((item) => (
             <div
               key={item.id}
-              className="h-20 w-full border rounded-lg overflow-hidden flex flex-row gap-3 p-1.5 bg-background"
+              className="w-full border border-neutral-100 rounded-none flex flex-row gap-3 p-2 bg-neutral-50/30"
             >
-              <div className="h-full w-16 relative rounded-md overflow-hidden bg-muted flex-shrink-0">
+              <div className="h-16 w-16 relative rounded-none overflow-hidden bg-neutral-100 shrink-0">
                 <Image
                   src={imageUrlPrimary(item.Product?.ProductImages) ?? ""}
                   alt={item.Product?.name || "product"}
@@ -199,18 +160,18 @@ export const CardOrder = (props: CardOrderProps) => {
                 />
               </div>
               <div className="flex-1 flex flex-col justify-center min-w-0">
-                <p className="text-xs md:text-sm font-semibold text-foreground truncate">
+                <p className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
                   {item.Product?.name}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                  {item.Variant && <span>Varian: {item.Variant.name}</span>}
+                <div className="flex items-center gap-2 text-[11px] text-neutral-500 mt-0.5">
+                  {item.Variant && <span>{t("variant")}: {item.Variant.name}</span>}
                   {item.PhoneType && <span>• {item.PhoneType.model}</span>}
                 </div>
-                <div className="flex items-center justify-between mt-1">
-                  <span className="text-xs font-semibold text-foreground">
+                <div className="flex items-center justify-between mt-1 text-xs">
+                  <span className="font-bold text-neutral-900">
                     {formatCurrency(Number(item.price || item.Variant?.price || 0))}
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-neutral-500 font-mono">
                     x{item.quantity || 1}
                   </span>
                 </div>
@@ -221,14 +182,14 @@ export const CardOrder = (props: CardOrderProps) => {
       </div>
 
       {/* Footer Total & Aksi */}
-      <div className="w-full py-3.5 px-4 bg-muted/30 border-t flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <div className="flex items-center gap-1.5">
-          <span className="text-muted-foreground text-xs md:text-sm">Total Tagihan:</span>
-          <span className="text-foreground font-bold text-sm md:text-base">
+      <div className="w-full py-3 px-4 bg-white border-t border-neutral-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <div className="flex items-baseline gap-1.5 text-xs">
+          <span className="text-neutral-500">{t("totalBill")}:</span>
+          <span className="text-neutral-900 font-bold text-sm">
             {formatCurrency(total_price)}
           </span>
-          <span className="text-muted-foreground text-xs">
-            ({orderItems?.length || 0} item)
+          <span className="text-neutral-400 text-[11px]">
+            ({orderItems?.length || 0} {t("items")})
           </span>
         </div>
 
@@ -237,33 +198,31 @@ export const CardOrder = (props: CardOrderProps) => {
             type="button"
             variant="outline"
             size="sm"
-            className="text-xs"
+            className="text-xs rounded-none border-neutral-300 hover:border-black"
             onClick={() => push(`/account/orders/detail/${orderId}`)}
           >
-            Detail
+            {t("detail")}
           </Button>
 
           {isPending && (
             <Button
               type="button"
-              variant="default"
               size="sm"
-              className="text-xs font-semibold"
+              className="text-xs font-bold bg-black hover:bg-neutral-800 text-white rounded-none"
               onClick={() => push(`/order/${orderId}/payment`)}
             >
-              Bayar Sekarang
+              {t("payNow")}
             </Button>
           )}
 
           {(isShipped || isDelivered) && (
             <Button
               type="button"
-              variant="default"
               size="sm"
-              className="text-xs font-semibold"
+              className="text-xs font-bold bg-black hover:bg-neutral-800 text-white rounded-none"
               onClick={() => push(`/account/track-order?order_id=${orderId}`)}
             >
-              Lacak Pengiriman
+              {t("trackShipment")}
             </Button>
           )}
         </div>

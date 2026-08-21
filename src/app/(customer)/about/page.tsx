@@ -1,143 +1,122 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { Sparkles, ShieldCheck, HeartHandshake, ArrowRight, Award } from "lucide-react";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Tentang Kami | IDSHOPCASE",
-  description:
-    "Mengenal IDSHOPCASE — Penyedia custom case HP premium dan aksesoris berkualitas sejak 2019.",
-};
+import Image from "next/image";
+import { Link } from "@/i18n/navigation";
+import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
 
 export default function AboutPage() {
+  const t = useTranslations("about");
+
   return (
-    <div className="w-full min-h-screen bg-background text-foreground pt-20 pb-16">
-      {/* Hero Banner Section */}
-      <section className="relative w-full py-20 bg-foreground text-background overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
+    <div className="w-full max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-14 font-[family-name:var(--font-fustat)] text-neutral-900 select-none">
+      {/* Header Section */}
+      <div className="space-y-3 max-w-3xl">
+        <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+          {t("badge")}
+        </p>
+        <h1 className="font-[family-name:var(--font-fustat)] text-3xl sm:text-5xl font-black tracking-tight text-neutral-900 uppercase">
+          {t("title")}
+        </h1>
+        <p className="text-base sm:text-lg text-neutral-500 font-normal leading-relaxed">
+          {t("subtitle")}
+        </p>
+      </div>
+
+      <Separator className="my-8 sm:my-10 border-neutral-200" />
+
+      {/* Editorial Story Section with Image */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="space-y-5 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal">
+          <h2 className="font-[family-name:var(--font-fustat)] text-2xl sm:text-3xl font-extrabold text-neutral-900 uppercase tracking-tight">
+            {t("storyTitle")}
+          </h2>
+          <p>{t("storyP1")}</p>
+          <p>{t("storyP2")}</p>
+        </div>
+
+        <div className="relative aspect-[4/3] rounded-none overflow-hidden border border-neutral-200 shadow-2xs">
           <Image
-            src="/images/banner-collection.jpeg"
-            alt="IDSHOPCASE Background"
+            src="/images/katalog-instagram/4.jpg"
+            alt="IDSHOPCASE Studio"
             fill
             className="object-cover"
           />
         </div>
-        <div className="relative max-w-5xl mx-auto px-6 text-center space-y-4">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-background/20 backdrop-blur-md text-xs sm:text-sm font-semibold tracking-wider uppercase text-background">
-            Sejak 2019
-          </span>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-background">
-            Ekspresikan Dirimu Lewat Case
-          </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-background/80 font-normal">
-            IDSHOPCASE hadir untuk melengkapi gaya ponselmu dengan casing kustom berkualitas tinggi, keychain aesthetic, dan aksesoris yang dibuat dengan penuh dedikasi.
+      </div>
+
+      <Separator className="my-10 sm:my-14 border-neutral-200" />
+
+      {/* 3 Core Values */}
+      <div className="space-y-8">
+        <div className="space-y-1">
+          <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+            {t("philosophyBadge")}
           </p>
-        </div>
-      </section>
-
-      {/* Main Story & Brand Philosophy */}
-      <section className="max-w-5xl mx-auto px-6 py-16 space-y-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Perjalanan Kami Memulai Karya
-            </h2>
-            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-              Dimulai pada tahun <strong className="text-foreground">2019</strong>, IDSHOPCASE lahir dari ide sederhana: setiap pengguna smartphone berhak memiliki casing HP yang unik, tahan lama, dan mencerminkan karakter diri mereka.
-            </p>
-            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-              Dari pesanan rumahan skala kecil, kini IDSHOPCASE telah tumbuh menjadi brand kepercayaan puluhan ribu pelanggan di seluruh Indonesia, menyediakan berbagai pilihan kustomisasi casing mulai dari Clear Case, Impact Case, Magsafe, hingga Keychain & Phone Charm cantik.
-            </p>
-            <div className="pt-2">
-              <Link
-                href="/products/collections"
-                className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 rounded-full text-sm font-medium transition-transform duration-200 hover:scale-105"
-              >
-                Jelajahi Koleksi Produk <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative h-[360px] sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl border border-border">
-            <Image
-              src="/images/main-assets/banner1.jpg"
-              alt="IDSHOPCASE Craftsmanship"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Core Values */}
-        <div className="space-y-8 pt-8 border-t border-border">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold">Mengapa Memilih IDSHOPCASE?</h2>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              Komitmen kami terhadap kualitas dan kepuasan pelanggan
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-lg bg-foreground/5 flex items-center justify-center">
-                <Award className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="font-semibold text-lg">Pengalaman Sejak 2019</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Telah berpengalaman lebih dari 5 tahun dalam dunia kustomisasi casing HP dan aksesoris.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-lg bg-foreground/5 flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="font-semibold text-lg">Desain Aesthetic</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Pilihan desain modern, elegan, dan bisa dikustomisasi sesuai foto atau kreasi favoritmu.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-lg bg-foreground/5 flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="font-semibold text-lg">Bahan Presisi & Protektif</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Material pilihan yang melindungi smartphone dari benturan dengan presisi tombol maksimal.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-lg bg-foreground/5 flex items-center justify-center">
-                <HeartHandshake className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="font-semibold text-lg">Layanan Ramah & Cepat</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Tim CS kami selalu siap membantu pertanyaan dan koordinasi cetak custom case kamu.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Banner */}
-        <div className="rounded-2xl bg-foreground text-background p-8 sm:p-12 text-center space-y-6">
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-background">
-            Siap Membuat Case Kustom Impianmu?
+          <h2 className="font-[family-name:var(--font-fustat)] text-2xl sm:text-3xl font-extrabold text-neutral-900 uppercase tracking-tight">
+            {t("principlesTitle")}
           </h2>
-          <p className="max-w-xl mx-auto text-sm sm:text-base text-background/80">
-            Pilih jenis casing favoritmu dan tambahkan sentuhan personalmu sekarang.
-          </p>
-          <div className="pt-2">
-            <Link
-              href="/products/collections"
-              className="inline-flex items-center gap-2 bg-background text-foreground px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-background/90 transition-all duration-200"
-            >
-              Lihat Katalog Produk
-            </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-2.5">
+            <span className="text-xs font-mono font-bold text-neutral-400 tracking-wider">
+              01
+            </span>
+            <h3 className="text-base font-bold text-neutral-900 uppercase tracking-tight font-[family-name:var(--font-fustat)]">
+              {t("val1Title")}
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal">
+              {t("val1Desc")}
+            </p>
+          </div>
+
+          <div className="space-y-2.5">
+            <span className="text-xs font-mono font-bold text-neutral-400 tracking-wider">
+              02
+            </span>
+            <h3 className="text-base font-bold text-neutral-900 uppercase tracking-tight font-[family-name:var(--font-fustat)]">
+              {t("val2Title")}
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal">
+              {t("val2Desc")}
+            </p>
+          </div>
+
+          <div className="space-y-2.5">
+            <span className="text-xs font-mono font-bold text-neutral-400 tracking-wider">
+              03
+            </span>
+            <h3 className="text-base font-bold text-neutral-900 uppercase tracking-tight font-[family-name:var(--font-fustat)]">
+              {t("val3Title")}
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal">
+              {t("val3Desc")}
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+
+      <Separator className="my-10 sm:my-14 border-neutral-200" />
+
+      {/* Minimalist CTA Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 py-4">
+        <div className="space-y-1">
+          <h3 className="text-base sm:text-lg font-bold text-neutral-900 uppercase font-[family-name:var(--font-fustat)]">
+            {t("ctaTitle")}
+          </h3>
+          <p className="text-xs sm:text-sm text-neutral-500 font-normal">
+            {t("ctaSubtitle")}
+          </p>
+        </div>
+
+        <Link
+          href="/customizer"
+          className="px-8 py-3 rounded-none bg-black text-white text-xs sm:text-sm font-bold uppercase tracking-wider border border-black hover:bg-transparent hover:text-black transition-all cursor-pointer shrink-0"
+        >
+          {t("ctaButton")}
+        </Link>
+      </div>
     </div>
   );
 }

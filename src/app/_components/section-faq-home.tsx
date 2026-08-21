@@ -48,15 +48,15 @@ export const SectionFaqHome = () => {
   ];
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-6 md:px-8 py-12 md:py-20">
+    <section className="w-full max-w-5xl mx-auto px-6 md:px-8 py-12 md:py-20 font-[family-name:var(--font-fustat)] select-none">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Column: Header & Action Link */}
         <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6 md:space-y-8">
           <div>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground leading-[1.2]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 uppercase leading-[1.1] font-[family-name:var(--font-fustat)]">
               {tHome("faqHeader1")}
               <br />
-              <span className="font-bold text-foreground">
+              <span className="font-extrabold text-neutral-900">
                 {tHome("faqHeader2")}
               </span>
             </h2>

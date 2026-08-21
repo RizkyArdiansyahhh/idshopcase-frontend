@@ -1,6 +1,8 @@
 "use client";
 
-import { UserAvatar } from "@/components/shared/user-avatar";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,9 +15,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { SpinnerV2 } from "@/components/ui/spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LuPencil } from "react-icons/lu";
+import { useTranslations } from "next-intl";
+import { useLogout } from "@/features/auth/api/login";
+import {
+  LuUser,
+  LuMail,
+  LuPhone,
+  LuCamera,
+  LuArrowRight,
+  LuCheck,
+  LuLogOut,
+} from "react-icons/lu";
 import z from "zod";
 import { useUpdateUser } from "../api/update-user";
 
@@ -26,8 +37,13 @@ type ProfileFormProps = {
   phone: string;
   imageurl: string;
 };
+
 export const ProfileForm = (props: ProfileFormProps) => {
   const { name, email, phone, imageurl } = props;
+  const t = useTranslations("account");
+  const tp = useTranslations("account.profileForm");
+  const router = useRouter();
+  const logout = useLogout();
 
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(imageurl);
@@ -43,28 +59,29 @@ export const ProfileForm = (props: ProfileFormProps) => {
 
   const profileFormSchema = z.object({
     name: z
-      .string({ message: "First name is required" })
-      .min(4, {
-        message: "First name must be at least 8 characters",
-      })
-      .nonempty("First name is required"),
-    email: z.email().nonempty("Email is required"),
-    phone: z
-      .string({ message: "Phone number is required" })
-      .min(12, {
-        message: "Phone number must be at least 12 characters",
-      })
+      .string()
+      .min(3)
       .nonempty(),
+    email: z.string().email().nonempty(),
+    phone: z
+      .string()
+      .regex(/^[0-9]+$/, { message: "Hanya angka" })
+      .min(9)
+      .max(15)
+      .optional()
+      .or(z.literal("")),
     image: z.instanceof(File).optional(),
   });
-  type ProfileFormType = z.infer<typeof profileFormSchema>;
 
-  const form = useForm<ProfileFormType>({
+  type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
+  const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: name,
-      email: email,
-      phone: phone,
+      name: name || "",
+      email: email || "",
+      phone: phone || "",
+      image: undefined,
     },
   });
 
@@ -72,19 +89,22 @@ export const ProfileForm = (props: ProfileFormProps) => {
     mutationConfig: {
       onSuccess: () => {
         setIsEditing(false);
-        // router.refresh();
       },
     },
   });
 
-  const onSubmit = (data: ProfileFormType) => {
-    if (!isEditing) return;
+  const handleLogout = () => {
+    logout.mutate(undefined, {
+      onSuccess: () => router.replace("/login"),
+    });
+  };
+
+  const onSubmit = (data: ProfileFormValues) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("email", data.email);
-    formData.append("phone", data.phone);
+    formData.append("phone", data.phone || "");
     if (data.image) {
-      console.log(data.image);
       formData.append("profile_picture", data.image);
     }
     formData.append("role", "customer");
@@ -92,205 +112,287 @@ export const ProfileForm = (props: ProfileFormProps) => {
     updateUser(formData);
   };
 
-  console.log(previewImage, "previewImage");
   return (
-    <div className="w-full">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Column: Avatar Picture Box (Tokopedia Style) */}
-            <div className="lg:col-span-4 flex flex-col items-center text-center p-6 bg-muted/20 rounded-2xl border border-border/40 space-y-4">
-              <div className="relative group">
-                <UserAvatar
-                  key={previewImage}
-                  name={name}
-                  image={previewImage}
-                  className="h-32 w-32 sm:h-40 sm:w-40 border-4 border-background shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-                {isEditing && (
-                  <button
-                    type="button"
-                    onClick={() => imageRef.current?.click()}
-                    className="absolute inset-0 flex items-center justify-center bg-black/40 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer font-medium text-xs"
-                  >
-                    Ubah Foto
-                  </button>
-                )}
-              </div>
+    <div className="w-full space-y-6 font-sans text-neutral-900 select-none">
+      {/* Hidden File Input */}
+      <input
+        type="file"
+        ref={imageRef}
+        accept="image/*"
+        className="hidden"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          if (file) {
+            form.setValue("image", file, { shouldDirty: true });
+            setPreviewImage(URL.createObjectURL(file));
+            if (!isEditing) setIsEditing(true);
+          }
+        }}
+      />
 
-              <div className="space-y-2 w-full">
-                <Button
-                  variant="outline"
-                  type="button"
-                  disabled={!isEditing}
-                  onClick={() => imageRef.current?.click()}
-                  className="w-full font-semibold rounded-xl"
-                >
-                  Pilih Foto
-                </Button>
-                <div className="text-[11px] text-muted-foreground leading-relaxed space-y-0.5">
-                  <p>Ukuran file maksimum 2MB</p>
-                  <p>Format yang diterima: JPG, JPEG, PNG</p>
-                </div>
-              </div>
+      {/* Mode Edit Form */}
+      {isEditing ? (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 p-6 rounded-2xl border border-neutral-200 bg-neutral-50/50">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
+              <h3 className="text-sm font-bold text-neutral-900">
+                {tp("editMode")}
+              </h3>
+              <button
+                type="button"
+                onClick={() => imageRef.current?.click()}
+                className="text-xs font-semibold text-neutral-600 hover:text-black underline cursor-pointer"
+              >
+                {tp("uploadPhoto")}
+              </button>
             </div>
 
-            {/* Right Column: User Info Form Fields (Tokopedia Style) */}
-            <div className="lg:col-span-8 space-y-6">
-              <div className="flex items-center justify-between pb-3 border-b border-border/40">
-                <h2 className="text-base sm:text-lg font-bold text-foreground">
-                  Ubah Biodata Diri
-                </h2>
-                {!isEditing ? (
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsEditing(true);
-                    }}
-                    className="gap-2 rounded-xl font-semibold text-xs sm:text-sm"
-                  >
-                    <LuPencil className="w-3.5 h-3.5" />
-                    Ubah Profile
-                  </Button>
-                ) : (
-                  <span className="text-xs text-primary font-semibold animate-pulse">
-                    Mode Pengeditan Aktif
-                  </span>
-                )}
-              </div>
-
-              {/* Hidden File Input */}
+            <div className="space-y-4">
               <FormField
-                name="image"
                 control={form.control}
+                name="name"
                 render={({ field }) => (
-                  <FormItem className="hidden">
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs font-semibold text-neutral-700">
+                      {tp("fullName")}
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        type="file"
-                        ref={imageRef}
-                        accept="image/*"
-                        disabled={!isEditing}
-                        onChange={(event) => {
-                          const file = event.target.files?.[0];
-                          if (file) {
-                            field.onChange(file);
-                            setPreviewImage(URL.createObjectURL(file));
-                          }
-                        }}
+                        {...field}
+                        className="rounded-xl h-10 border-neutral-300 focus-visible:ring-0 focus-visible:border-black text-sm bg-white"
+                        placeholder={tp("fullName")}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Form Input Fields */}
-              <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-xs sm:text-sm font-semibold">
-                        Nama Lengkap
-                      </FormLabel>
-                      <FormControl>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs font-semibold text-neutral-700">
+                      {tp("email")}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        {...field}
+                        value={field.value || ""}
+                        className="rounded-xl h-10 border-neutral-300 focus-visible:ring-0 focus-visible:border-black text-sm bg-white"
+                        placeholder="alamat@email.com"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel className="text-xs font-semibold text-neutral-700">
+                      {tp("phone")}
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative w-full">
+                        <span className="text-xs font-semibold text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2">
+                          (+62)
+                        </span>
                         <Input
                           type="text"
-                          {...field}
-                          disabled={!isEditing}
-                          className="rounded-xl h-11 focus-visible:ring-primary disabled:opacity-75 disabled:bg-muted/30"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-xs sm:text-sm font-semibold">
-                        Email
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
+                          className="pl-13 rounded-xl h-10 border-neutral-300 focus-visible:ring-0 focus-visible:border-black text-sm bg-white"
                           {...field}
                           value={field.value || ""}
-                          disabled={!isEditing}
-                          className="rounded-xl h-11 focus-visible:ring-primary disabled:opacity-75 disabled:bg-muted/30"
+                          placeholder="81234567890"
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-xs sm:text-sm font-semibold">
-                        Nomor Telepon
-                      </FormLabel>
-                      <FormControl>
-                        <div className="relative w-full">
-                          <span className="text-sm font-semibold text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2">
-                            (+62)
-                          </span>
-                          <Input
-                            type="text"
-                            className="pl-14 rounded-xl h-11 focus-visible:ring-primary disabled:opacity-75 disabled:bg-muted/30"
-                            {...field}
-                            value={field.value || ""}
-                            disabled={!isEditing}
-                          />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Save & Cancel Buttons */}
-              {isEditing && (
-                <div className="flex items-center gap-3 pt-4 border-t border-border/40">
-                  <Button
-                    disabled={updateUserPending}
-                    type="submit"
-                    className="px-8 h-11 font-semibold rounded-xl shadow-md shadow-primary/10"
-                  >
-                    {updateUserPending ? (
-                      <SpinnerV2 className="size-5" />
-                    ) : (
-                      "Simpan Perubahan"
-                    )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="px-6 h-11 font-semibold rounded-xl"
-                    onClick={() => {
-                      form.reset();
-                      setPreviewImage(imageurl);
-                      setIsEditing(false);
-                    }}
-                  >
-                    Batal
-                  </Button>
-                </div>
-              )}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <Button
+                disabled={updateUserPending}
+                type="submit"
+                className="px-6 h-10 font-bold text-xs rounded-full bg-black hover:bg-neutral-800 text-white transition-all cursor-pointer"
+              >
+                {updateUserPending ? (
+                  <SpinnerV2 className="size-4 text-white" />
+                ) : (
+                  tp("saveChanges")
+                )}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="px-5 h-10 font-semibold text-xs rounded-full border-neutral-300 hover:border-black transition-all cursor-pointer"
+                onClick={() => {
+                  form.reset();
+                  setIsEditing(false);
+                }}
+              >
+                {tp("cancel")}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      ) : (
+        /* Action Rows */
+        <div className="space-y-2.5">
+          {/* Row 1: Profile Name */}
+          <div className="p-3.5 sm:p-4 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50/60 transition-all flex items-center justify-between gap-4 group">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-10 h-10 rounded-full bg-neutral-100 border border-neutral-200/80 flex items-center justify-center shrink-0">
+                <LuUser className="w-4 h-4 text-neutral-700" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
+                  {tp("fullName")}
+                </h4>
+                <p className="text-xs text-neutral-500 font-normal truncate">
+                  {name || tp("notSet")}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 group-hover:text-black group-hover:underline cursor-pointer shrink-0 transition-all"
+            >
+              <span>{tp("editData")}</span>
+              <LuArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
           </div>
-        </form>
-      </Form>
+
+          {/* Row 2: Email */}
+          <div className="p-3.5 sm:p-4 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50/60 transition-all flex items-center justify-between gap-4 group">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-10 h-10 rounded-full bg-neutral-100 border border-neutral-200/80 flex items-center justify-center shrink-0">
+                <LuMail className="w-4 h-4 text-neutral-700" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
+                    {tp("email")}
+                  </h4>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-neutral-100 text-[10px] font-semibold text-neutral-600">
+                    <LuCheck className="w-3 h-3 text-emerald-600" />
+                    <span>{tp("verified")}</span>
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-500 font-normal truncate">
+                  {email || tp("notSet")}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 group-hover:text-black group-hover:underline cursor-pointer shrink-0 transition-all"
+            >
+              <span>{tp("editData")}</span>
+              <LuArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
+          </div>
+
+          {/* Row 3: WhatsApp Number */}
+          <div className="p-3.5 sm:p-4 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50/60 transition-all flex items-center justify-between gap-4 group">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-10 h-10 rounded-full bg-neutral-100 border border-neutral-200/80 flex items-center justify-center shrink-0">
+                <LuPhone className="w-4 h-4 text-neutral-700" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
+                  {tp("phone")}
+                </h4>
+                <p className="text-xs text-neutral-500 font-normal truncate">
+                  {phone ? `(+62) ${phone}` : tp("notSet")}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 group-hover:text-black group-hover:underline cursor-pointer shrink-0 transition-all"
+            >
+              <span>{tp("editData")}</span>
+              <LuArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
+          </div>
+
+          {/* Row 4: Photo Profile */}
+          <div className="p-3.5 sm:p-4 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50/60 transition-all flex items-center justify-between gap-4 group">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-neutral-200 bg-neutral-100 shrink-0">
+                {previewImage ? (
+                  <Image
+                    src={previewImage}
+                    alt={name}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                    <LuCamera className="w-4 h-4" />
+                  </div>
+                )}
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
+                  {tp("photo")}
+                </h4>
+                <p className="text-xs text-neutral-500 font-normal truncate">
+                  {previewImage ? tp("customPhotoSet") : tp("photoFormat")}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => imageRef.current?.click()}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 group-hover:text-black group-hover:underline cursor-pointer shrink-0 transition-all"
+            >
+              <span>{tp("changePhoto")}</span>
+              <LuArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Subtle Security & Privacy Footnote */}
+      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200/60 text-neutral-500 text-[11px] leading-relaxed">
+        <p>
+          {tp("securityNote")}
+        </p>
+      </div>
+
+      {/* Clean Sign Out Action (Matching Reference Design) */}
+      <div className="pt-3 flex items-center gap-4">
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={logout.isPending}
+          className="px-4 py-2 text-xs font-bold rounded-lg border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-900 transition-all cursor-pointer shadow-2xs inline-flex items-center gap-2"
+        >
+          <LuLogOut className="w-3.5 h-3.5 text-neutral-600" />
+          <span>{t("signOut")}</span>
+        </button>
+        <span className="text-xs text-neutral-400 font-normal">
+          {t("signOutDescription")}
+        </span>
+      </div>
     </div>
   );
 };

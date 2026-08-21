@@ -12,15 +12,15 @@ export const SidebarLink = (props: SidebarLinkProps) => {
   const { href, children, icon, isActive } = props;
   return (
     <Link
-      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-colors duration-200 cursor-pointer ${
+      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-none font-semibold text-xs transition-colors duration-150 cursor-pointer ${
         isActive
-          ? "bg-foreground text-background shadow-xs"
-          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+          ? "bg-black text-white"
+          : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900"
       }`}
       href={href}
     >
       {icon && (
-        <span className={isActive ? "text-background" : "text-muted-foreground"}>
+        <span className={isActive ? "text-white" : "text-neutral-500"}>
           {icon}
         </span>
       )}

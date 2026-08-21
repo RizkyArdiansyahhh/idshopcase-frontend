@@ -1,8 +1,12 @@
+"use client";
+
 import { useGetAddresses } from "../api/get-address";
 import { AddressCard } from "@/app/(customer)/account/address/_components/address-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 
 export const AddressesList = () => {
+  const t = useTranslations("account.address");
   const { data: addresses, isLoading: fetchAddressesLoading } =
     useGetAddresses();
 
@@ -18,10 +22,10 @@ export const AddressesList = () => {
         Array.from({ length: 3 }).map((_, index) => (
           <Skeleton
             key={index}
-            className="w-full h-[20%] rounded-sm py-3 px-7 bg-accent/90"
+            className="w-full h-24 rounded-none py-3 px-7 bg-neutral-100"
           />
         ))
-      ) : addresses ? (
+      ) : addresses && addresses.length > 0 ? (
         sortedAddresses.map((address) => (
           <AddressCard
             key={address.id}
@@ -37,9 +41,9 @@ export const AddressesList = () => {
           />
         ))
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <p className="text-app-light-sm">
-            Tidak ada alamat, silahkan tambah alamat
+        <div className="w-full py-12 flex flex-col items-center justify-center text-center">
+          <p className="text-xs text-neutral-400 font-normal">
+            {t("empty")}
           </p>
         </div>
       )}

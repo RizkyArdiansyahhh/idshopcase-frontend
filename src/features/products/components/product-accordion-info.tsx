@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Minus, Truck, ShieldCheck, FileText } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface ProductAccordionInfoProps {
   description?: string;
@@ -11,8 +12,10 @@ interface ProductAccordionInfoProps {
 export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
   description,
 }) => {
+  const t = useTranslations("product.accordion");
+
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    description: false, // all closed by default
+    description: false,
     shipping: false,
     warranty: false,
   });
@@ -34,7 +37,7 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
           className="w-full flex items-center justify-between text-left group cursor-pointer"
         >
           <span className="text-xs sm:text-[13px] font-bold tracking-wider text-neutral-900 uppercase font-sans">
-            PRODUCT DESCRIPTION
+            {t("descriptionTitle")}
           </span>
           <span className="text-neutral-600 transition-transform duration-200">
             {openSections.description ? (
@@ -55,20 +58,17 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
               className="overflow-hidden"
             >
               <div className="pt-3 pb-1 text-xs sm:text-[13px] text-neutral-600 leading-relaxed whitespace-pre-line space-y-3 font-normal">
-                <p>
-                  {description ||
-                    "Custom case eksklusif berkualitas tinggi dengan cetakan UV HD Ultra-Glossy yang tajam, awet, dan anti-pudar. Dirancang presisi untuk melindungi smartphone kesayangan Anda dari goresan dan benturan."}
-                </p>
+                <p>{description || t("defaultDescription")}</p>
 
                 <div className="space-y-1.5 pt-1">
                   <p className="font-bold text-neutral-900 uppercase tracking-wide text-[11px]">
-                    DETAILS & HIGHLIGHTS:
+                    {t("highlightsTitle")}
                   </p>
                   <ul className="list-disc pl-4 space-y-1 text-neutral-600">
-                    <li>High-Definition UV Printing Tech (Anti-peel & Anti-scratch)</li>
-                    <li>Presisi 100% pada port charger, speaker, dan tombol responsif</li>
-                    <li>Raised Bezel di sekeliling kamera dan layar untuk proteksi ekstra</li>
-                    <li>Material premium yang nyaman digenggam dan tidak licin</li>
+                    <li>{t("highlight1")}</li>
+                    <li>{t("highlight2")}</li>
+                    <li>{t("highlight3")}</li>
+                    <li>{t("highlight4")}</li>
                   </ul>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
           className="w-full flex items-center justify-between text-left group cursor-pointer"
         >
           <span className="text-xs sm:text-[13px] font-bold tracking-wider text-neutral-900 uppercase font-sans">
-            SHIPPING & DELIVERY
+            {t("shippingTitle")}
           </span>
           <span className="text-neutral-600 transition-transform duration-200">
             {openSections.shipping ? (
@@ -106,15 +106,17 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
               className="overflow-hidden"
             >
               <div className="pt-3 pb-1 text-xs sm:text-[13px] text-neutral-600 leading-relaxed space-y-2 font-normal">
-                <p>
-                  <strong className="text-neutral-900 font-semibold">Estimasi Produksi & Kirim:</strong> 1-2 Hari Kerja setelah pembayaran terkonfirmasi.
-                </p>
-                <p>
-                  <strong className="text-neutral-900 font-semibold">Ekspedisi:</strong> JNE, SiCepat, J&T, Anteraja, Paxel & Instant Courier (Gojek / Grab).
-                </p>
-                <p className="text-[11px] text-neutral-500">
-                  Semua pesanan dikemas dengan bubble wrap tebal berlapis dan dus premium anti-benturan.
-                </p>
+                <p>{t("shippingLead")}</p>
+                <div className="space-y-1 pt-1">
+                  <p className="font-bold text-neutral-900 uppercase tracking-wide text-[11px]">
+                    {t("shippingEstTitle")}
+                  </p>
+                  <ul className="list-disc pl-4 space-y-1 text-neutral-600">
+                    <li>{t("shippingEst1")}</li>
+                    <li>{t("shippingEst2")}</li>
+                    <li>{t("shippingEst3")}</li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           )}
@@ -129,7 +131,7 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
           className="w-full flex items-center justify-between text-left group cursor-pointer"
         >
           <span className="text-xs sm:text-[13px] font-bold tracking-wider text-neutral-900 uppercase font-sans">
-            WARRANTY & RETURN POLICY
+            {t("warrantyTitle")}
           </span>
           <span className="text-neutral-600 transition-transform duration-200">
             {openSections.warranty ? (
@@ -150,12 +152,17 @@ export const ProductAccordionInfo: React.FC<ProductAccordionInfoProps> = ({
               className="overflow-hidden"
             >
               <div className="pt-3 pb-1 text-xs sm:text-[13px] text-neutral-600 leading-relaxed space-y-2 font-normal">
-                <p>
-                  <strong className="text-neutral-900 font-semibold">Garansi 100% Ganti Baru:</strong> Jika produk diterima dalam keadaan cacat cetak, retak, atau salah tipe hp, kami ganti baru gratis tanpa biaya tambahan.
-                </p>
-                <p className="text-[11px] text-neutral-500">
-                  Cukup sertakan video unboxing saat paket pertama kali dibuka ke WhatsApp Customer Service kami.
-                </p>
+                <p>{t("warrantyLead")}</p>
+                <div className="space-y-1 pt-1">
+                  <p className="font-bold text-neutral-900 uppercase tracking-wide text-[11px]">
+                    {t("warrantyTermsTitle")}
+                  </p>
+                  <ul className="list-disc pl-4 space-y-1 text-neutral-600">
+                    <li>{t("warrantyTerm1")}</li>
+                    <li>{t("warrantyTerm2")}</li>
+                    <li>{t("warrantyTerm3")}</li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           )}
