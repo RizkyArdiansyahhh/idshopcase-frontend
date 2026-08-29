@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Plus, Minus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Minus, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { DeviceConfig, PatternMode, PhoneColorVariant, ProductTypeItem } from "../types/customizer.types";
 
 interface CustomizerAccordionProps {
@@ -43,6 +44,8 @@ export const CustomizerAccordion = ({
   onPrevStep,
   onNextStep,
 }: CustomizerAccordionProps) => {
+  const t = useTranslations("customizer");
+
   return (
     <aside className="w-full sm:w-[360px] md:w-[400px] lg:w-[420px] h-[85vh] max-h-[780px] bg-white rounded-3xl border border-neutral-200/90 shadow-xl overflow-hidden flex flex-col justify-between pointer-events-auto flex-shrink-0">
       {/* Upper Accordion Options List */}
@@ -364,6 +367,21 @@ export const CustomizerAccordion = ({
             </div>
           </>
         )}
+      </div>
+
+      {/* Clean Minimal Disclaimer Notice */}
+      <div className="p-3 sm:p-3.5 bg-neutral-50/80 border-t border-neutral-100 text-xs">
+        <div className="flex items-start gap-2 sm:gap-2.5 text-neutral-600">
+          <Info className="w-3.5 h-3.5 text-neutral-500 shrink-0 mt-0.5" />
+          <div className="space-y-0.5">
+            <p className="text-[11px] font-semibold text-neutral-800 tracking-tight">
+              {t("disclaimer.title")}
+            </p>
+            <p className="text-[10px] text-neutral-500 leading-relaxed font-normal">
+              {t("disclaimer.desc")}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Bottom Stepper Bar (Only for Phone Case) */}

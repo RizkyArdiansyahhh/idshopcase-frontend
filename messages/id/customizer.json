@@ -28,6 +28,10 @@
       "finish": "Selesai & Pesan",
       "prev": "Sebelumnya",
       "next": "Selanjutnya"
+    },
+    "disclaimer": {
+      "title": "Catatan Preview & Cetak",
+      "desc": "Tampilan preview merupakan simulasi desain secara digital. Hasil cetak fisik kemungkinan memiliki sedikit perbedaan tone warna dikarenakan variasi pencahayaan layar, serta penyesuaian tata letak proporsional mengikuti modul kamera tipe handphone yang dipilih. Seluruh pesanan melalui quality control ketat untuk memastikan presisi dan kualitas cetak terbaik."
     }
   }
 }
