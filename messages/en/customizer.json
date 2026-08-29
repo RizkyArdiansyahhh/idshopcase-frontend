@@ -28,6 +28,10 @@
       "finish": "Complete & Order",
       "prev": "Previous",
       "next": "Next"
+    },
+    "disclaimer": {
+      "title": "Preview & Print Disclaimer",
+      "desc": "The customizer preview is a digital simulation. Actual physical print colors may slightly vary due to screen display settings, and sticker placement is proportionally adjusted to fit your device's camera module. Every order undergoes strict quality control to ensure maximum precision and print quality."
     }
   }
 }
