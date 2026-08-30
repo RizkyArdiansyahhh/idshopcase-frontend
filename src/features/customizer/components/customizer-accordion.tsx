@@ -47,9 +47,14 @@ export const CustomizerAccordion = ({
   const t = useTranslations("customizer");
 
   return (
-    <aside className="w-full sm:w-[360px] md:w-[400px] lg:w-[420px] h-[85vh] max-h-[780px] bg-white rounded-3xl border border-neutral-200/90 shadow-xl overflow-hidden flex flex-col justify-between pointer-events-auto flex-shrink-0">
+    <aside className="w-full h-full flex flex-col justify-between overflow-hidden">
+      {/* Mobile Handle Indicator */}
+      <div className="pt-2.5 pb-0.5 lg:hidden flex justify-center items-center shrink-0">
+        <div className="w-10 h-1 bg-neutral-300/80 rounded-full" />
+      </div>
+
       {/* Upper Accordion Options List */}
-      <div className="flex-1 overflow-y-auto min-h-0 p-2 sm:p-3 divide-y divide-neutral-100">
+      <div className="flex-1 overflow-y-auto overscroll-contain min-h-0 p-2 sm:p-3 divide-y divide-neutral-100">
         {/* STEP 1: Device / Product Type (ALWAYS OPEN) */}
         <div className="py-2.5 px-3">
           <div className="w-full flex items-center justify-between text-left font-medium text-xs sm:text-sm text-neutral-800">
@@ -370,7 +375,7 @@ export const CustomizerAccordion = ({
       </div>
 
       {/* Clean Minimal Disclaimer Notice */}
-      <div className="p-3 sm:p-3.5 bg-neutral-50/80 border-t border-neutral-100 text-xs">
+      <div className="p-3 sm:p-3.5 bg-neutral-50/80 border-t border-neutral-100 text-xs shrink-0">
         <div className="flex items-start gap-2 sm:gap-2.5 text-neutral-600">
           <Info className="w-3.5 h-3.5 text-neutral-500 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
@@ -384,9 +389,9 @@ export const CustomizerAccordion = ({
         </div>
       </div>
 
-      {/* Bottom Stepper Bar (Only for Phone Case) */}
+      {/* Bottom Stepper Bar (Desktop Only for Phone Case) */}
       {productCategory === "phone-case" && (
-        <div className="p-3 sm:p-4 bg-white border-t border-neutral-100 flex items-center justify-between">
+        <div className="hidden lg:flex p-3 sm:p-4 bg-white border-t border-neutral-100 items-center justify-between shrink-0">
           <button
             type="button"
             onClick={onPrevStep}
