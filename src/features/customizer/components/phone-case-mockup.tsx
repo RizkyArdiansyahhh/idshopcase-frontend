@@ -16,7 +16,6 @@ export const PhoneCaseMockup = ({
   activeColor,
   designImages,
   patternMode,
-  stickerSize = 66,
 }: PhoneCaseMockupProps) => {
   // Generate Pattern for Case
   const generatePattern = () => {
@@ -29,8 +28,7 @@ export const PhoneCaseMockup = ({
           <img
             src={currentImage}
             alt="center-custom-face"
-            className="object-contain drop-shadow-xl"
-            style={{ width: stickerSize * 2.1, height: stickerSize * 2.1 }}
+            className="w-[55%] aspect-square object-contain drop-shadow-xl"
           />
         </div>
       );
@@ -55,11 +53,9 @@ export const PhoneCaseMockup = ({
             key={`face-${r}-${c}`}
             src={currentImage}
             alt="custom-face"
-            className="object-contain drop-shadow-md shrink-0"
-            style={{
-              width: stickerSize,
-              height: stickerSize,
-            }}
+            className={`${
+              isIPhone16 ? "w-[40%]" : "w-[27%]"
+            } aspect-square object-contain drop-shadow-md shrink-0`}
           />,
         );
       }
@@ -75,7 +71,7 @@ export const PhoneCaseMockup = ({
                   paddingRight: isOdd ? "2%" : "22%",
                 }
               : {
-                  transform: isOdd ? "translateX(-25px)" : "translateX(0px)",
+                  transform: isOdd ? "translateX(-20%)" : "translateX(0px)",
                   paddingLeft: isOdd ? "0px" : "3px",
                   paddingRight: isOdd ? "0px" : "3px",
                 }
@@ -92,7 +88,7 @@ export const PhoneCaseMockup = ({
   };
 
   return (
-    <div className="relative h-[85vh] max-h-[780px] aspect-[1024/1536] flex items-center justify-center cursor-default">
+    <div className="relative h-full max-h-[35vh] sm:max-h-[42vh] md:max-h-[46vh] lg:max-h-[760px] lg:h-[82vh] aspect-[1024/1536] flex items-center justify-center cursor-default shrink-0">
       {/* LAYER 1: BASE BODY */}
       <img
         src={activeColor.bodyImage}

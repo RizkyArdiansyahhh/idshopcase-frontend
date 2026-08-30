@@ -134,7 +134,7 @@ export const CustomStudio = () => {
 
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-white flex flex-col font-sans select-none touch-none">
+    <div className="fixed inset-0 w-full h-[100dvh] overflow-hidden bg-neutral-100/50 flex flex-col font-sans select-none">
       {/* Hidden File Inputs */}
       <input
         id="casetifyUpload"
@@ -158,9 +158,9 @@ export const CustomStudio = () => {
       <StudioHeader />
 
       {/* Main Body: Mockup Canvas + Floating Actions + Options Panel */}
-      <div className="flex-1 w-full h-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 pb-4 sm:pb-6 gap-6 relative overflow-hidden">
+      <div className="flex-1 w-full min-h-0 flex flex-col lg:flex-row items-center justify-between px-2 sm:px-6 lg:px-8 pb-0 lg:pb-6 gap-2 sm:gap-4 lg:gap-6 relative overflow-hidden">
         {/* Center Canvas: Mockup View */}
-        <div className="flex-1 w-full h-full flex items-center justify-center relative select-none overflow-hidden">
+        <div className="h-[36vh] sm:h-[42vh] md:h-[46vh] lg:h-full lg:flex-1 w-full flex items-center justify-center relative select-none overflow-hidden shrink-0 lg:shrink">
           {productCategory === "phone-case" ? (
             <PhoneCaseMockup
               activeDevice={activeDevice}
@@ -171,46 +171,72 @@ export const CustomStudio = () => {
           ) : (
             <PopstandMockup popstandImage={popstandImage} />
           )}
+
+          {/* Floating Actions on Mobile (Floating over mockup preview canvas) */}
+          <div className="absolute right-3 bottom-2 sm:right-4 sm:bottom-3 lg:hidden z-30">
+            <FloatingActionBar
+              productCategory={productCategory}
+              designImagesCount={designImages.length}
+              hasPopstandImage={!!popstandImage}
+              onUploadClick={() => {
+                if (productCategory === "phone-case") {
+                  fileInputRef.current?.click();
+                } else {
+                  popstandFileRef.current?.click();
+                }
+              }}
+              onResetClick={
+                productCategory === "phone-case" ? handleCaseReset : handlePopstandReset
+              }
+              onOpenTutorial={() => setIsTutorialOpen(true)}
+            />
+          </div>
         </div>
 
-        {/* Floating Actions (Upload, Reset, Panduan) + Accordion Panel */}
-        <div className="flex items-end gap-3 sm:gap-4 h-[85vh] max-h-[780px] flex-shrink-0 z-30">
-          <FloatingActionBar
-            productCategory={productCategory}
-            designImagesCount={designImages.length}
-            hasPopstandImage={!!popstandImage}
-            onUploadClick={() => {
-              if (productCategory === "phone-case") {
-                fileInputRef.current?.click();
-              } else {
-                popstandFileRef.current?.click();
+        {/* Desktop Side Panel / Mobile Bottom Sheet */}
+        <div className="flex-1 lg:flex-none w-full lg:w-auto h-full lg:h-[85vh] lg:max-h-[780px] min-h-0 flex items-end gap-3 sm:gap-4 z-30 overflow-hidden bg-white lg:bg-transparent rounded-t-3xl lg:rounded-3xl border-t lg:border-none border-neutral-200/90 shadow-2xl lg:shadow-none">
+          {/* Floating Actions on Desktop (Left of Accordion) */}
+          <div className="hidden lg:flex items-end pb-2">
+            <FloatingActionBar
+              productCategory={productCategory}
+              designImagesCount={designImages.length}
+              hasPopstandImage={!!popstandImage}
+              onUploadClick={() => {
+                if (productCategory === "phone-case") {
+                  fileInputRef.current?.click();
+                } else {
+                  popstandFileRef.current?.click();
+                }
+              }}
+              onResetClick={
+                productCategory === "phone-case" ? handleCaseReset : handlePopstandReset
               }
-            }}
-            onResetClick={
-              productCategory === "phone-case" ? handleCaseReset : handlePopstandReset
-            }
-            onOpenTutorial={() => setIsTutorialOpen(true)}
-          />
+              onOpenTutorial={() => setIsTutorialOpen(true)}
+            />
+          </div>
 
-          <CustomizerAccordion
-            productCategory={productCategory}
-            setProductCategory={setProductCategory}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            toggleStep={toggleStep}
-            productTypes={PRODUCT_TYPES}
-            supportedDevices={SUPPORTED_DEVICES}
-            selectedDeviceId={selectedDeviceId}
-            onDeviceChange={handleDeviceChange}
-            activeDevice={activeDevice}
-            selectedColorId={selectedColorId}
-            setSelectedColorId={setSelectedColorId}
-            activeColor={activeColor}
-            patternMode={patternMode}
-            setPatternMode={setPatternMode}
-            onPrevStep={handlePrevStep}
-            onNextStep={handleNextStep}
-          />
+          {/* Accordion Box */}
+          <div className="w-full h-full lg:w-[380px] xl:w-[420px] bg-white rounded-t-3xl lg:rounded-3xl lg:border border-neutral-200/90 lg:shadow-xl overflow-hidden flex flex-col justify-between pointer-events-auto">
+            <CustomizerAccordion
+              productCategory={productCategory}
+              setProductCategory={setProductCategory}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+              toggleStep={toggleStep}
+              productTypes={PRODUCT_TYPES}
+              supportedDevices={SUPPORTED_DEVICES}
+              selectedDeviceId={selectedDeviceId}
+              onDeviceChange={handleDeviceChange}
+              activeDevice={activeDevice}
+              selectedColorId={selectedColorId}
+              setSelectedColorId={setSelectedColorId}
+              activeColor={activeColor}
+              patternMode={patternMode}
+              setPatternMode={setPatternMode}
+              onPrevStep={handlePrevStep}
+              onNextStep={handleNextStep}
+            />
+          </div>
         </div>
       </div>
 

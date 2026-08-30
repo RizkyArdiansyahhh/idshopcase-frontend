@@ -8,12 +8,12 @@ interface PopstandMockupProps {
 
 export const PopstandMockup = ({ popstandImage }: PopstandMockupProps) => {
   return (
-    <div className="relative w-full max-w-4xl h-[88vh] max-h-[820px] flex flex-col items-center justify-center cursor-default">
+    <div className="relative w-full max-w-4xl h-full max-h-[35vh] sm:max-h-[42vh] md:max-h-[46vh] lg:max-h-[760px] lg:h-[82vh] flex flex-col items-center justify-center cursor-default shrink-0">
       {/* DUO DISPLAY: Side View (Base Mockup Only) & Phone Front View (With Custom Photo) */}
-      <div className="w-full flex-1 grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 items-center justify-items-center py-2">
+      <div className="w-full h-full grid grid-cols-2 gap-2 sm:gap-4 items-center justify-items-center py-1">
         {/* VIEW 1: PERSPECTIVE 3D SIDE VIEW (Left - Pure Base Mockup, No Custom Overlay) */}
         <div className="w-full h-full flex flex-col items-center justify-center relative group">
-          <div className="relative w-full h-[440px] sm:h-[480px] md:h-[520px] max-h-[560px] flex items-center justify-center">
+          <div className="relative w-full h-full max-h-[32vh] sm:max-h-[40vh] md:max-h-[44vh] lg:max-h-[520px] flex items-center justify-center">
             {/* Pure Base Samping Mockup PNG without custom photo */}
             <img
               src="/images/mockup/popstand/samping_transparent.png"
@@ -25,7 +25,7 @@ export const PopstandMockup = ({ popstandImage }: PopstandMockupProps) => {
 
         {/* VIEW 2: PHONE MOCKUP FRONT VIEW (Right - With Interactive Custom Photo Overlay) */}
         <div className="w-full h-full flex flex-col items-center justify-center relative group">
-          <div className="relative w-full h-[440px] sm:h-[480px] md:h-[520px] max-h-[560px] flex items-center justify-center">
+          <div className="relative w-full h-full max-h-[32vh] sm:max-h-[40vh] md:max-h-[44vh] lg:max-h-[520px] flex items-center justify-center">
             {/* Phone with Popstand Base Mockup Layer */}
             <img
               src="/images/mockup/popstand/depan_phone.png"

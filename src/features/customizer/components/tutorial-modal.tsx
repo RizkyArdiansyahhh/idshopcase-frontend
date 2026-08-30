@@ -17,10 +17,10 @@ export const TutorialModal = ({ isOpen, onClose }: TutorialModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200 font-sans select-none">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl sm:max-w-2xl w-full shadow-2xl border border-neutral-100 relative space-y-5 animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 font-sans select-none">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 max-w-xl sm:max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-neutral-100 relative space-y-4 sm:space-y-5 animate-in zoom-in-95 duration-200 overflow-hidden">
         {/* Modal Header */}
-        <div className="flex items-start justify-between pb-3 border-b border-neutral-100">
+        <div className="flex items-start justify-between pb-3 border-b border-neutral-100 shrink-0">
           <div className="space-y-0.5">
             <h3 className="text-base sm:text-lg font-bold text-neutral-900">
               {t("title")}
@@ -38,6 +38,9 @@ export const TutorialModal = ({ isOpen, onClose }: TutorialModalProps) => {
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Scrollable Content for Mobile */}
+        <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 pr-1 min-h-0">
 
         {/* Step 1 Card: Tahapan Pilihan Tipe, Model & Warna */}
         <div className="border border-neutral-200/80 rounded-2xl flex flex-row gap-4 p-4 sm:p-5 items-center bg-neutral-50/50">
@@ -115,5 +118,6 @@ export const TutorialModal = ({ isOpen, onClose }: TutorialModalProps) => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
