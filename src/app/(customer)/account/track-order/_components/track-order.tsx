@@ -94,8 +94,14 @@ export const TrackOrderTimeline = ({ tracking }: { tracking: TrackingData }) => 
     }
   };
 
-  const latest = tracking?.history?.[0];
-  const currentStep = latest ? getTimelineStep(latest.status_code, latest.status) : 1;
+  const currentStep =
+    Array.isArray(tracking?.history) && tracking.history.length > 0
+      ? Math.max(
+          ...tracking.history.map((h) =>
+            getTimelineStep(h.status_code, h.status)
+          )
+        )
+      : 1;
 
   const steps = [
     { num: 1, label: t("steps.step1"), desc: t("steps.step1Desc") },
