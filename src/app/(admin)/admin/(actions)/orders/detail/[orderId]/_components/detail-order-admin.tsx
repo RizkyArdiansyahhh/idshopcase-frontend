@@ -29,11 +29,11 @@ export const DetailOrderAdmin = () => {
   console.log(order, "order");
 
   useEffect(() => {
-    if (order?.status === "pending") {
+    if (order?.status === "pending" || order?.status === "paid") {
       setInfoStatusMessage("Order sedang diproses");
     } else if (order?.status === "shipped") {
       setInfoStatusMessage("Order sedang disiapkan untuk dikirim");
-    } else if (order?.status === "completed") {
+    } else if (order?.status === "completed" || order?.status === "delivered") {
       setInfoStatusMessage("Order telah selesai");
     }
   }, [order]);

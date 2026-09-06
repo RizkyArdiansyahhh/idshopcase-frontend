@@ -12,7 +12,7 @@ export const ListCardStatusOrder = ({ status }: CardStatusOrderProps) => {
         <CardStatusOrder
           status="Pending"
           description="Order sedang diproses"
-          isActive={status === "pending"}
+          isActive={status === "pending" || status === "paid"}
         >
           <MdPendingActions size={30} className="text-background" />
         </CardStatusOrder>
@@ -26,7 +26,7 @@ export const ListCardStatusOrder = ({ status }: CardStatusOrderProps) => {
         <CardStatusOrder
           status="Completed"
           description="Order telah selesai"
-          isActive={status === "completed"}
+          isActive={status === "completed" || status === "delivered"}
         >
           <PackageCheck size={30} className="text-background" />
         </CardStatusOrder>

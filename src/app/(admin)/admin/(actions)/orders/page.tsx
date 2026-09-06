@@ -78,9 +78,9 @@ const OrdersPage = () => {
           return (
             <Badge variant={"outline"}>
               {" "}
-              {status === "pending" ? (
+              {status === "pending" || status === "paid" ? (
                 <ClipboardClock className="text-foreground/60" />
-              ) : status === "completed" ? (
+              ) : status === "completed" || status === "delivered" ? (
                 <CircleCheck className="text-green-600" />
               ) : status === "processing" ? (
                 <Loader className="text-foreground" />
@@ -160,7 +160,7 @@ const OrdersPage = () => {
       setColumnFilters([
         {
           id: "status",
-          value: status,
+          value: status === "completed" ? "delivered" : status,
         },
       ]);
     }
