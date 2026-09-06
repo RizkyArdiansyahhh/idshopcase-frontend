@@ -39,12 +39,7 @@ export const Payment = () => {
     }
   }, [paymentStatus, orderId, router]);
 
-  // 2. Auto-redirect ke DOKU checkout begitu paymentUrl tersedia
-  useEffect(() => {
-    if (paymentUrl && paymentStatus === "pending") {
-      window.location.href = paymentUrl;
-    }
-  }, [paymentUrl, paymentStatus]);
+
 
 
 
