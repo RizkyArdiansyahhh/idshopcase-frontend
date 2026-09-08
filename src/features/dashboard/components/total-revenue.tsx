@@ -19,8 +19,8 @@ export const TotalRevenue = () => {
   if (!orders) return null;
 
   const getMonthlyRevenue = (orders: OrderAdmin[]) => {
-    const completedOrders = orders.filter(
-      (order) => order.status === "shipped", // atau "completed" sesuaikan dengan backend
+    const completedOrders = orders.filter((order) =>
+      ["shipped", "completed", "processing"].includes(order.status)
     );
 
     const monthlyRevenue: Record<string, number> = {};
@@ -45,29 +45,43 @@ export const TotalRevenue = () => {
     .toString()
     .padStart(2, "0")}`;
 
+  const prevMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const prevMonth = `${prevMonthDate.getFullYear()}-${(prevMonthDate.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}`;
+
   const revenueThisMonth = monthlyRevenue[currentMonth] || 0;
+  const revenuePrevMonth = monthlyRevenue[prevMonth] || 0;
+
+  let growthText = "Bulan Baru";
+  if (revenuePrevMonth > 0) {
+    const diff = ((revenueThisMonth - revenuePrevMonth) / revenuePrevMonth) * 100;
+    growthText = `${diff >= 0 ? "+" : ""}${diff.toFixed(1)}%`;
+  } else if (revenueThisMonth > 0) {
+    growthText = "+100%";
+  }
 
   return (
-    <Card className="@container/card">
+    <Card className="@container/card border-border/60 min-w-0">
       <CardHeader>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center">
           <CardDescription>Pendapatan</CardDescription>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+            <Badge variant="outline" className="text-xs font-mono text-muted-foreground border-border/70">
+              <IconTrendingUp className="size-3.5 mr-1" />
+              {growthText}
             </Badge>
           </CardAction>
         </div>
       </CardHeader>
-      <CardContent className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+      <CardContent className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-foreground">
         {formatCurrency(revenueThisMonth)}
       </CardContent>
       <CardFooter className="flex-col items-start gap-1.5 text-sm">
-        <div className="line-clamp-1 flex gap-2 font-medium">
-          Tren naik bulan ini <IconTrendingUp className="size-4" />
+        <div className="line-clamp-1 flex gap-2 font-medium text-foreground">
+          Omset bulan ini <IconTrendingUp className="size-4" />
         </div>
-        <div className="text-muted-foreground">Total pendapatan bulan ini</div>
+        <div className="text-muted-foreground text-xs">Total pendapatan pesanan terkonfirmasi bulan ini</div>
       </CardFooter>
     </Card>
   );

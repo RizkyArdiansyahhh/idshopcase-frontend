@@ -14,7 +14,6 @@ import { IconUserPlus } from "@tabler/icons-react";
 
 export const TotalUserCard = () => {
   const { data: users } = useGetUsers();
-  console.log(users);
 
   if (!users) return null;
 
@@ -33,18 +32,25 @@ export const TotalUserCard = () => {
     monthlyNewUsers[monthKey] += 1;
   });
 
-  const lastMonthKey = Object.keys(monthlyNewUsers).pop();
-  const lastMonthUsers = lastMonthKey ? monthlyNewUsers[lastMonthKey] : 0;
+  const now = new Date();
+  const currentMonthKey = `${now.getFullYear()}-${(now.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}`;
+
+  const thisMonthUsers = monthlyNewUsers[currentMonthKey] || 0;
 
   return (
-    <Card className="@container/card">
+    <Card className="@container/card border-border/60 min-w-0">
       <CardHeader>
-        <CardDescription>Total User</CardDescription>
-        <CardAction>
-          <Badge variant="outline">
-            <IconUserPlus />+{lastMonthUsers} bulan ini
-          </Badge>
-        </CardAction>
+        <div className="flex flex-row justify-between items-center">
+          <CardDescription>Total User</CardDescription>
+          <CardAction>
+            <Badge variant="outline" className="text-xs font-mono text-muted-foreground border-border/70">
+              <IconUserPlus className="size-3.5 mr-1" />
+              +{thisMonthUsers} bulan ini
+            </Badge>
+          </CardAction>
+        </div>
       </CardHeader>
       <CardContent className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
         {totalUsers}

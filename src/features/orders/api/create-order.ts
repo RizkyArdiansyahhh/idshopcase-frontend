@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiUpload } from "@/lib/axios";
 import { MutationConfig, queryClient } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
@@ -28,9 +29,13 @@ export const useCreateOrder = ({ mutationConfig }: UseCreateOrder = {}) => {
       queryClient.invalidateQueries({ queryKey: getOrdersQueryKey() });
       queryClient.invalidateQueries({ queryKey: getCartsQueryKey() });
     },
-    onError: (err) => {
+    onError: (err: any, variables, context) => {
       console.error(err);
-      toast.error("Gagal membuat order, silahkan coba lagi");
+      const message =
+        err?.response?.data?.message ||
+        "Gagal membuat order, silahkan coba lagi";
+      toast.error(message);
+      (mutationConfig?.onError as any)?.(err, variables, context);
     },
   });
 };

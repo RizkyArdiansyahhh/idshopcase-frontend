@@ -38,17 +38,20 @@ export const TotalOrderCard = () => {
   const ordersThisMonth = monthlyOrders[currentMonthKey] ?? 0;
 
   return (
-    <Card className="@container/card">
+    <Card className="@container/card border-border/60 min-w-0">
       <CardHeader>
-        <CardDescription>Total Order</CardDescription>
-        <CardAction>
-          <Badge variant="outline">
-            <IconPackage />+{ordersThisMonth} bulan ini
-          </Badge>
-        </CardAction>
+        <div className="flex flex-row justify-between items-center">
+          <CardDescription>Total Order</CardDescription>
+          <CardAction>
+            <Badge variant="outline" className="text-xs font-mono text-muted-foreground border-border/70">
+              <IconPackage className="size-3.5 mr-1" />
+              +{ordersThisMonth} bulan ini
+            </Badge>
+          </CardAction>
+        </div>
       </CardHeader>
 
-      <CardContent className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+      <CardContent className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-foreground">
         {totalOrders}
       </CardContent>
 

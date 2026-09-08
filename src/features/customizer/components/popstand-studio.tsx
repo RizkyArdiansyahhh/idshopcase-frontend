@@ -45,6 +45,24 @@ export const PopstandStudio = () => {
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const extValid = /\.(jpe?g|png|webp)$/i.test(file.name.toLowerCase());
+      const typeValid =
+        ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(
+          file.type.toLowerCase(),
+        ) || extValid;
+
+      if (!typeValid) {
+        toast.error("Tipe file tidak didukung. Gunakan: JPEG, JPG, PNG, atau WEBP");
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Ukuran file terlalu besar. Maksimal 5MB per gambar");
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         const result = event.target?.result as string;
@@ -99,7 +117,7 @@ export const PopstandStudio = () => {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
         onChange={handleImageUpload}
         className="hidden"
       />

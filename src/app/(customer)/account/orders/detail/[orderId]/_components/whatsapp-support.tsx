@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Tooltip,
   TooltipContent,
@@ -6,6 +8,7 @@ import {
 import { formatDate } from "@/lib/format-date";
 import { ChevronRight } from "lucide-react";
 import { RiCustomerServiceFill } from "react-icons/ri";
+import { useTranslations } from "next-intl";
 
 type WhatsAppSupportProps = {
   orderId: string | number;
@@ -15,43 +18,40 @@ type WhatsAppSupportProps = {
 
 export const WhatsAppSupport = (props: WhatsAppSupportProps) => {
   const { orderId, username, date } = props;
-  const handleClick = () => {
-    const message = `Halo Customer Service,
-                    Saya ingin menanyakan status pesanan saya. 
-                    Berikut informasi pesanan saya:
+  const t = useTranslations("account.orders.orderDetail");
 
-                    - Nomor Order: INV-${orderId}
-                    - Nama Pemesan: ${username}
-                    - Tanggal Pemesanan: ${formatDate(date)}
-                    `;
+  const handleClick = () => {
+    const rawTemplate = t("waGreeting", {
+      orderId: String(orderId),
+      username: username || "-",
+      date: formatDate(date),
+    });
 
     const url = `https://wa.me/6285117453862?text=${encodeURIComponent(
-      message,
+      rawTemplate,
     )}`;
     window.open(url, "_blank");
   };
+
   return (
-    <>
-      <div className="flex flex-row justify-between items-center hover:underline transition-all duration-200 ease-in-out">
-        <p className="text-xs lg:text-sm text-foreground/50">
-          Jika ada pertanyaan, silahkan hubungi customer service kami
-        </p>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <ChevronRight
-              size={20}
-              onClick={handleClick}
-              className="cursor-pointer"
-            />
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="flex flex-row items-center gap-1">
-              <RiCustomerServiceFill />
-              <p>Customer Service</p>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-    </>
+    <div
+      onClick={handleClick}
+      className="flex flex-row justify-between items-center hover:underline transition-all duration-200 ease-in-out cursor-pointer"
+    >
+      <p className="text-xs lg:text-sm text-foreground/50">
+        {t("helpSubtitle")}
+      </p>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <ChevronRight size={20} className="cursor-pointer text-foreground/70" />
+        </TooltipTrigger>
+        <TooltipContent>
+          <div className="flex flex-row items-center gap-1">
+            <RiCustomerServiceFill />
+            <p>{t("customerService")}</p>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </div>
   );
 };

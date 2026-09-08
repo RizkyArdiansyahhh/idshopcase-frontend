@@ -3,6 +3,7 @@
 import Countdown from "react-countdown";
 import { AlertMessage } from "@/components/shared/alert-message";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 type WaitingPaymentProps = {
   paymentUrl: string;
@@ -13,57 +14,47 @@ export const WaitingPayment = ({
   paymentUrl,
   expiredAt,
 }: WaitingPaymentProps) => {
+  const t = useTranslations("account.orders.orderDetail");
+
   return (
-    <div className="w-full pb-2 flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-      <div className="w-full flex flex-row justify-between">
+    <div className="w-full pb-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+      <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <AlertMessage
           variant="info"
-          message="Silahkan lakukan pembayaran"
+          message={t("paymentWaiting")}
           clasname="text-xs"
         />
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
           <Countdown
             date={new Date(expiredAt)}
             renderer={({ hours, minutes, seconds, completed }) => {
               if (completed) {
                 return (
-                  <span className="text-xs text-destructive">
-                    Waktu pembayaran habis
+                  <span className="text-xs text-destructive font-medium">
+                    {t("paymentExpired")}
                   </span>
                 );
               }
 
               return (
-                <div className="px-3  py-2 border border-dashed rounded-md text-sm font-mono">
+                <div className="px-3 py-1.5 border border-dashed rounded-md text-sm font-mono">
                   {String(hours).padStart(2, "0")}:
                   {String(minutes).padStart(2, "0")}:
                   {String(seconds).padStart(2, "0")}
                 </div>
               );
             }}
-            onComplete={() => {
-              console.log("Payment expired");
-              // router.refresh()
-              // setDisabled(true)
-            }}
           />
 
           <Button
-            className="text-xs hidden md:block"
+            size="sm"
+            className="text-xs"
             onClick={() => window.open(paymentUrl, "_blank")}
           >
-            Bayar Sekarang
+            {t("payNow")}
           </Button>
         </div>
-      </div>
-      <div className="flex flex-row justify-end">
-        <Button
-          className="text-xs block md:hidden"
-          onClick={() => window.open(paymentUrl, "_blank")}
-        >
-          Bayar Sekarang
-        </Button>
       </div>
     </div>
   );

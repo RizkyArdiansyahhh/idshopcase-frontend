@@ -29,9 +29,11 @@ export default function AdminLayout({
           }
         >
           <AppSidebar variant="inset" />
-          <SidebarInset>
+          <SidebarInset className="min-w-0 max-w-full overflow-x-hidden">
             <SiteHeader />
-            {children}
+            <div className="flex-1 w-full min-w-0 max-w-full overflow-x-hidden">
+              {children}
+            </div>
           </SidebarInset>
         </SidebarProvider>
       </ProtectedRoute>

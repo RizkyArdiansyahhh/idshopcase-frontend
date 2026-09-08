@@ -29,6 +29,18 @@ const header = [
     label: "Orders",
     path: "/admin/orders",
   },
+  {
+    label: "Account",
+    path: "/admin/account",
+  },
+  {
+    label: "Billing & Settlement",
+    path: "/admin/billing",
+  },
+  {
+    label: "Panduan Admin",
+    path: "/admin/guide",
+  },
 ];
 
 export function SiteHeader() {

@@ -217,6 +217,8 @@ export type OrderAdmin = {
     payment_gateway: string;
     status: string;
     amount: string;
+    transaction_id?: string;
+    payment_url?: string;
   };
   Address: Address;
 };
